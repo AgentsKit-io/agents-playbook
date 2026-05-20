@@ -40,7 +40,7 @@ For most products, the trade-off is wrong. Hybrid keeps statelessness for the ho
 
 **Web app**: HttpOnly + Secure + SameSite=Lax cookies. CSRF protection via double-submit or origin header.
 
-**Mobile / API**: Authorization: Bearer <token>. Token in secure storage (Keychain / Keystore).
+**Mobile / API**: Authorization: Bearer \<token\>. Token in secure storage (Keychain / Keystore).
 
 **Both**: typical for products with web + mobile.
 

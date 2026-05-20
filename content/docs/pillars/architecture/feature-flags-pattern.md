@@ -63,7 +63,7 @@ The `evaluate` call:
 
 ### Naming conventions
 
-`<feature>.<concept>.<variant>`:
+`\<feature\>.\<concept\>.\<variant\>`:
 
 - `users.invite-flow.v2` (release)
 - `billing.pricing-table.experiment-q3` (experiment)

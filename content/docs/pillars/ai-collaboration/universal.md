@@ -65,7 +65,7 @@ Template: [`../../templates/MEMORY.md.template.md`](../../templates/MEMORY.md.te
 Before any action, confirm state is what you think it is.
 
 - Before opening an issue: search if it already exists.
-- Before fixing an issue: confirm it is still open (`gh issue view <n> --json state`). Another agent may have closed it.
+- Before fixing an issue: confirm it is still open (`gh issue view \<n\> --json state`). Another agent may have closed it.
 - Before pushing: `git fetch` and check if your branch is still up to date.
 - Before claiming a file exists: read it. Memories may reference files that were since renamed.
 - Before claiming duplication: pull the upstream `.d.ts` and read the real API. Naming similarity is not duplication.
@@ -137,7 +137,7 @@ Your branch is not the only branch. Another agent may be:
 Defensive practices:
 
 - `git fetch` at session start.
-- `gh pr list --search "is:open <path-fragment>"` to detect parallel work touching the same files.
+- `gh pr list --search "is:open \<path-fragment\>"` to detect parallel work touching the same files.
 - Rebase, don't merge, when integrating main into a feature branch.
 - Stash + verify red on a clean `origin/main` before "fixing" a CI failure — the failure may be pre-existing, not your fault.
 

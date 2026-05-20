@@ -36,7 +36,7 @@ Reference impl: [`../../scripts/check-file-size.example.mjs`](../../scripts/chec
 
 ### Extraction patterns
 
-When the gate fires, do not lower the budget. Do not split into `<file>-2.tsx`. Extract intentionally:
+When the gate fires, do not lower the budget. Do not split into `\<file\>-2.tsx`. Extract intentionally:
 
 **React component over 300 lines** → identify sub-renders:
 
@@ -73,7 +73,7 @@ The `parts/` convention is enforced: extractions go in a sibling `parts/` direct
 **Logic module over 500 lines** → identify cohesive responsibilities:
 
 - One file per public function family. If a 500-line file has CRUD for two unrelated entities, split by entity.
-- Helpers move to `<module>-helpers.ts`; types to `<module>-types.ts`.
+- Helpers move to `\<module\>-helpers.ts`; types to `\<module\>-types.ts`.
 
 ### Gate ergonomics
 

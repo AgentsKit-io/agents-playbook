@@ -91,7 +91,7 @@ This is **not deletion**. It is *demotion in discoverability*, with the trail in
 
 - **Tombstone without back-reference sweep.** Other docs still treat the retired file as authoritative. → Always sweep. A `check:back-refs` gate helps.
 - **Tombstone followed by "actually let me edit this".** Confuses readers — is it retired or not? → Decide first; if you edit, it's not a tombstone.
-- **Delete + new file with same name.** Loses the trail entirely. → Tombstone the old, new file goes by a new name (or same name with a clear `### Replaces tombstoned <old>` block at top).
+- **Delete + new file with same name.** Loses the trail entirely. → Tombstone the old, new file goes by a new name (or same name with a clear `### Replaces tombstoned \<old\>` block at top).
 - **Tombstone with no reason.** Reader has no idea why it was retired. → One-line reason is mandatory.
 
 ### See also

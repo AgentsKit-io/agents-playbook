@@ -111,12 +111,12 @@ Arabic, Hebrew, Persian, Urdu read right-to-left.
 
 CSS:
 
-- `dir="rtl"` on `<html>` or per-region.
+- `dir="rtl"` on `\<html\>` or per-region.
 - Logical properties: `margin-inline-start` (not `margin-left`), `padding-inline-end` (not `padding-right`).
 - Icons that imply direction (arrows, chevrons) mirror.
 - Text alignment: `text-align: start` (not `text-align: left`).
 
-Mixed-direction content (English text in Arabic UI): use `<bdi>` and `dir="auto"`.
+Mixed-direction content (English text in Arabic UI): use `\<bdi\>` and `dir="auto"`.
 
 Layouts that look fine in LTR can be broken in RTL:
 
@@ -242,7 +242,7 @@ Things that ARE translated:
 - **Hardcoded `margin-left`**. RTL breaks. → Logical properties.
 - **String concat for sentences**. `t("hello") + " " + name + "!"` → word order assumption baked in. → ICU.
 - **No RTL test**. Bidi bugs ship. → At least one RTL in CI snapshots.
-- **Mixed-language fragments**. `Welcome to {productName}, ${userName}!` — direction ambiguity. → `<bdi>` / `dir="auto"`.
+- **Mixed-language fragments**. `Welcome to {productName}, ${userName}!` — direction ambiguity. → `\<bdi\>` / `dir="auto"`.
 - **CLDR not bundled**. Locale features missing at runtime. → Include CLDR data for shipped locales (bundle size cost; trade-off).
 
 ### Tooling stack (typical)

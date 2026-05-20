@@ -14,13 +14,13 @@ Verified: every script `node --check`-clean. Orchestrator smoke-tested, gates ex
 |---|---|---|---|
 | `check-file-size.example.mjs` | architecture / quality | `.tsx` ≤ 300 lines, `.ts` ≤ 500 (calibrate); shrink-only baseline at `.file-size-baseline.json` | pre-commit + CI |
 | `check-named-exports.example.mjs` | architecture | No `export default` outside framework-mandated files | CI |
-| `check-no-any.example.mjs` | architecture | No `any` outside `// allow-any: <reason>`; counts only grow on a sweep | CI |
+| `check-no-any.example.mjs` | architecture | No `any` outside `// allow-any: \<reason\>`; counts only grow on a sweep | CI |
 | `check-error-raw.example.mjs` | architecture | No `throw new Error(...)` in boundary files (`methods/`, `handlers/`, `api/`) | CI |
 | `check-pr-intent.example.mjs` | governance | PR description has well-formed intent block; `removes:` matches diff | CI on PR |
 | `check-adr.example.mjs` | architecture | ADR sequence integrity; status values; superseder back-pointers | CI |
 | `check-rfc.example.mjs` | architecture | RFC index; review window; promotion linkage | CI |
 | `check-tokens.example.mjs` | ui-ux | No hex/rgb/hsl/oklch literals; no Tailwind arbitrary color classes; no inline color styles | CI |
-| `check-native-html.example.mjs` | ui-ux | No native `<button>`, `<input>`, `<select>`, `<dialog>`, `<form>`, `<table>`, `<a href>` in shipped surfaces | CI |
+| `check-native-html.example.mjs` | ui-ux | No native `\<button\>`, `\<input\>`, `\<select\>`, `\<dialog\>`, `\<form\>`, `\<table\>`, `\<a href\>` in shipped surfaces | CI |
 | `check-intl.example.mjs` | ui-ux | No JSX string literals or hardcoded `aria-label`/`title`/`placeholder`/`alt` | CI |
 | `check-secrets.example.mjs` | security / quality | No high-entropy strings, no PEM blocks, no API-key prefixes outside `ALLOW_FILES` | CI |
 | `check-completeness.example.mjs` | ui-ux / quality | No `TODO`/`FIXME`/`disabled:true` tab/`throw new Error('not implemented')` in shipped surfaces | CI |

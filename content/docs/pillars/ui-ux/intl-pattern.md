@@ -105,7 +105,7 @@ Exemptions:
 
 - Empty strings.
 - Strings matching the brand-token allowlist exactly.
-- Strings inside `<code>`, `<pre>`, `<kbd>` JSX elements.
+- Strings inside `\<code\>`, `\<pre\>`, `\<kbd\>` JSX elements.
 - Comments.
 
 Lint script ships at [`../../scripts/check-intl.example.mjs`](../../scripts/check-intl.example.mjs).
@@ -164,7 +164,7 @@ CI screenshots the app in pseudo locale; reviewer scans for hardcoded English.
 
 ### Common failure modes
 
-- **String concatenation in JSX**: `<div>Hello {name}!</div>`. The literal portions are not intl'd. → Use interpolation: `t("greeting", { name })`.
+- **String concatenation in JSX**: `\<div\>Hello {name}!\</div\>`. The literal portions are not intl'd. → Use interpolation: `t("greeting", { name })`.
 - **Conditional fragments**: `{isLoading ? "Loading..." : "Ready"}`. Both literals leaked. → Two keys.
 - **Concatenating intl results**: `t("a") + " " + t("b")`. Word order assumption baked in. → Single key with interpolation.
 - **Localizing error codes** in server responses. Client cannot pattern-match. → Server returns stable codes; client maps to localized message.

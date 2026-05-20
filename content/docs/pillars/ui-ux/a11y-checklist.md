@@ -24,10 +24,10 @@ Tick all before requesting review:
 
 **Semantics**
 
-- [ ] Page has a meaningful `<title>` per route.
-- [ ] One `<h1>` per page; headings descend in order (no `h1 → h3` skip).
-- [ ] Landmark elements present (`<header>`, `<main>`, `<nav>`, `<aside>`, `<footer>` — or aria landmark roles where appropriate).
-- [ ] Form fields have associated `<label>` (or `aria-labelledby` / `aria-label`).
+- [ ] Page has a meaningful `\<title\>` per route.
+- [ ] One `\<h1\>` per page; headings descend in order (no `h1 → h3` skip).
+- [ ] Landmark elements present (`\<header\>`, `\<main\>`, `\<nav\>`, `\<aside\>`, `\<footer\>` — or aria landmark roles where appropriate).
+- [ ] Form fields have associated `\<label\>` (or `aria-labelledby` / `aria-label`).
 - [ ] Buttons have accessible names (text content or `aria-label`).
 - [ ] Icons-only buttons have `aria-label`.
 
@@ -51,9 +51,9 @@ Tick all before requesting review:
 
 **Images**
 
-- [ ] Every `<img>` has `alt` (empty `alt=""` for decorative).
-- [ ] Icons inside `<button>` are `aria-hidden="true"` when there is a visible label.
-- [ ] SVG icons have `<title>` or `aria-label` when standalone.
+- [ ] Every `\<img\>` has `alt` (empty `alt=""` for decorative).
+- [ ] Icons inside `\<button\>` are `aria-hidden="true"` when there is a visible label.
+- [ ] SVG icons have `\<title\>` or `aria-label` when standalone.
 
 **Forms**
 
@@ -103,7 +103,7 @@ Pass:
 2. Confirm: page title makes sense.
 3. Confirm: each interactive element announces its purpose ("Save button", not "button button").
 4. Confirm: forms announce labels and errors.
-5. Confirm: navigation lands you on `<main>` quickly (skip-to-content link).
+5. Confirm: navigation lands you on `\<main\>` quickly (skip-to-content link).
 
 Document the pass in the PR description: "Screen reader: VoiceOver, 2026-MM-DD, all interactives announced cleanly."
 
@@ -122,7 +122,7 @@ Using `byRole` + accessible name forces the test to verify the a11y attribute ex
 ### Common failure modes
 
 - **`tabIndex={-1}` on every focusable element** to "fix" tab order. Now no element is reachable. → Fix the source order, not the tabindex.
-- **Custom `<div>` with `onClick`.** No keyboard handler; not reachable. → Use the `<Button>` primitive.
+- **Custom `\<div\>` with `onClick`.** No keyboard handler; not reachable. → Use the `\<Button\>` primitive.
 - **Aria attributes copied without understanding.** `aria-label="button"` is worse than no label. → Aria says what the element *is*, not its visual type.
 - **Tooltip as the only label for an icon button.** Screen readers may not announce tooltips. → `aria-label` on the button itself.
 - **`aria-hidden="true"` on an interactive element.** Hidden from screen readers but reachable by tab; very confusing. → `inert`, or actually remove from the tab order.

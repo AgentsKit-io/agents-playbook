@@ -75,7 +75,7 @@ The gate enforces:
 3. **`removes:` matches diff.** Every exported-symbol deletion in the diff is listed. Every listed removal exists in the diff.
 4. **`adds:` matches diff.** Every new exported symbol is listed.
 5. **`gates:` are all green.** If `gates:` lists `structural` and the structural gate failed, the PR fails.
-6. **Sub-unit references a real issue.** `gh issue view <n>` returns; state is `open` (or `closed` if this PR is the closer).
+6. **Sub-unit references a real issue.** `gh issue view \<n\>` returns; state is `open` (or `closed` if this PR is the closer).
 7. **`type:` matches change pattern.** A PR typed `docs` that modifies `src/**/*.ts` fails — type mismatch.
 
 ### Reviewer workflow

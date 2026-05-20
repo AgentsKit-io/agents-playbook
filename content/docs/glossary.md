@@ -9,7 +9,7 @@ Short definitions for the terms used across this playbook.
 | **Boundary** | Anywhere bytes enter the process from outside the trust boundary: HTTP, IPC, JSON-RPC, file IO, env, message bus. |
 | **Contract** | A schema (typically Zod / Pydantic / Protobuf) that defines the shape crossing a boundary. |
 | **Contract package** | The dependency-free package that owns all shared schemas + the error model. |
-| **Stable code** | A string error code (`<NS>_<REASON>`, all caps) that clients pattern-match on. Append-only. |
+| **Stable code** | A string error code (`\<NS\>_\<REASON\>`, all caps) that clients pattern-match on. Append-only. |
 | **AppError** | The single base error class. Every other error subclasses it. |
 | **Routing table** | The `AGENTS.md` mapping from "I want to change X" to "edit package Y". |
 | **PR-intent manifest** | YAML block in PR description: `adds:`, `changes:`, `removes:`, `tests:`, `docs:`. Verified by a gate. |

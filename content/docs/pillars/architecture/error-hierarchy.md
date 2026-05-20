@@ -88,10 +88,10 @@ export type ErrorCode = (typeof ERROR_CODES)[keyof typeof ERROR_CODES];
 
 Rules:
 
-- Format: `<NAMESPACE>_<REASON>`, all caps, snake-case, ASCII.
+- Format: `\<NAMESPACE\>_\<REASON\>`, all caps, snake-case, ASCII.
 - Append-only. **Never rename**; deprecate and add a new code.
 - One source file. If you need categorization, use comments and grouping. Do not split across files.
-- Every new code needs a one-line entry in `docs/errors/<CODE>.md` with: cause, hint, recovery, link to relevant ADR if any.
+- Every new code needs a one-line entry in `docs/errors/\<CODE\>.md` with: cause, hint, recovery, link to relevant ADR if any.
 
 ### When to throw what
 
@@ -127,7 +127,7 @@ Ban `throw new Error(` in boundary files:
 }
 ```
 
-Escape hatch: `// allow-raw-error: <reason>` on the line above; a gate counts these.
+Escape hatch: `// allow-raw-error: \<reason\>` on the line above; a gate counts these.
 
 ### Wire serialization rules
 
@@ -144,14 +144,14 @@ Each method's contract test (per [`contracts-zod-pattern.md`](./contracts-zod-pa
 - Reject path: invalid params produce a `ValidationError` with code `VALIDATION_ERROR`.
 - Auth path: missing `principalId` produces `AUTH_REQUIRED`.
 
-Plus, every error code is exercised somewhere in the test suite — a separate gate scans tests for `code: "<CODE>"` assertions and fails if any code in `ERROR_CODES` is never asserted.
+Plus, every error code is exercised somewhere in the test suite — a separate gate scans tests for `code: "\<CODE\>"` assertions and fails if any code in `ERROR_CODES` is never asserted.
 
 ### Common failure modes (sourced from production)
 
 - **Agent throws `new Error("not authorized")`.** Client cannot pattern-match. → Lint blocks raw `Error` in boundary files.
 - **Agent renames a code from `AUTH_FORBIDDEN` to `FORBIDDEN`.** Existing clients stop matching. → Codes are append-only; renames require an RFC + a deprecation cycle.
 - **Codes drift in naming convention.** Some `AUTH_REQUIRED`, some `AuthRequired`. → One source file + a gate that asserts shape.
-- **Stack trace in `error.data` over the wire.** Leaks `/Users/<dev>/.env` and the cwd. → Strip `cause` at serialization; log it server-side instead.
+- **Stack trace in `error.data` over the wire.** Leaks `/Users/\<dev\>/.env` and the cwd. → Strip `cause` at serialization; log it server-side instead.
 - **Error message changes break a client assertion.** Tests assert on `.message` instead of `.code`. → Tests assert on `.code`; messages are intl-resolved and may change.
 
 ### See also

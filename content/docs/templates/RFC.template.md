@@ -1,4 +1,4 @@
-# RFC-NNNN — <Short Title>
+# RFC-NNNN — \<Short Title\>
 
 - **Status:** Draft | Open | Final-Comment-Period | Accepted | Rejected | Withdrawn
 - **Author(s):** @name
@@ -32,7 +32,7 @@ Migration path:
 
 - For internal callers: …
 - For external plugin authors: …
-- Deprecation window: <N versions / months>.
+- Deprecation window: \<N versions / months\>.
 
 ## Migration plan (for this codebase)
 
@@ -49,11 +49,11 @@ What is worse after this lands?
 
 ## Alternatives
 
-### Alternative A — <name>
+### Alternative A — \<name\>
 
 …
 
-### Alternative B — <name>
+### Alternative B — \<name\>
 
 …
 

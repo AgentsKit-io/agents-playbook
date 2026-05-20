@@ -12,7 +12,7 @@ A slash command is a named, palette-invoked prompt template. One command = one w
 
 A slash command has:
 
-- **Trigger** — `/<name>` typed by the user (or auto-invoked by another agent / hook).
+- **Trigger** — `/\<name\>` typed by the user (or auto-invoked by another agent / hook).
 - **Args** — optional positional or named arguments parsed from the trigger line.
 - **Body** — a prompt template that instructs the agent.
 - **Tools** — the set the command is allowed to use.
@@ -25,7 +25,7 @@ Make one when **all** of the following hold:
 - The workflow runs ≥3 times per week.
 - The workflow has 5+ steps that benefit from being stated once.
 - The prompt body is the same each time (the args parameterise the variable part).
-- A human would rather type `/<name> <arg>` than re-type the prompt.
+- A human would rather type `/\<name\> \<arg\>` than re-type the prompt.
 
 If any condition fails, do not make a slash command — make a script or a snippet instead.
 
@@ -33,19 +33,19 @@ If any condition fails, do not make a slash command — make a script or a snipp
 
 | Command | Purpose | Args |
 |---|---|---|
-| `/goal <condition>` | Set a session goal + stop hook | the success condition |
-| `/loop [<interval>] <prompt>` | Recurring or self-paced runs | interval (optional), command body |
-| `/review [<pr#>]` | Multi-agent PR review | PR number; defaults to current branch |
+| `/goal \<condition\>` | Set a session goal + stop hook | the success condition |
+| `/loop [\<interval\>] \<prompt\>` | Recurring or self-paced runs | interval (optional), command body |
+| `/review [\<pr#\>]` | Multi-agent PR review | PR number; defaults to current branch |
 | `/clear` | Reset session context cleanly | none |
-| `/plan <task>` | Spawn `plan` sub-agent on the task | task description |
+| `/plan \<task\>` | Spawn `plan` sub-agent on the task | task description |
 | `/ship` | Run the release-gate checklist | none |
 | `/sanity` | Run cross-cutting audit, surface drift | none |
 
 Project-specific commands go on top. Examples worth defining:
 
-- `/issue-from-bug "<description>"` — files a structured bug report from a one-line description.
-- `/promote-rfc <rfc#>` — promotes an accepted RFC to an ADR.
-- `/tombstone <doc-path>` — adds a tombstone block to a retired doc.
+- `/issue-from-bug "\<description\>"` — files a structured bug report from a one-line description.
+- `/promote-rfc \<rfc#\>` — promotes an accepted RFC to an ADR.
+- `/tombstone \<doc-path\>` — adds a tombstone block to a retired doc.
 
 ### Body discipline
 

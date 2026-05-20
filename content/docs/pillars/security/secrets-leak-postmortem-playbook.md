@@ -157,7 +157,7 @@ Disclosure shape:
 - What data was potentially exposed (be specific).
 - What you've done to contain (rotation, revocation, additional monitoring).
 - What customers should do (rotate their side, watch for phishing, change passwords).
-- Contact for questions (security@<domain>).
+- Contact for questions (security@\<domain\>).
 
 Avoid:
 

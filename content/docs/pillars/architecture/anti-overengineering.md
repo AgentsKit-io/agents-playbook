@@ -63,7 +63,7 @@ When a budget breaks, the answer is **simplification, not increase the budget**.
 | Generic event bus | for 3 events | When event shape varies + decoupling needed | Direct call is clearer |
 | Config object | 8-field `{...opts}` | Many call sites with diverse needs | One caller; positional args fine |
 | Custom hook for one call | `useCount()` wraps `useState` | Reused logic ≥ 3 sites | Inline `useState` |
-| Wrapper component for one prop | `<Card variant="primary">` is a `<div>` with `class` | Variants justify it | Direct className |
+| Wrapper component for one prop | `<Card variant="primary">` is a `\<div\>` with `class` | Variants justify it | Direct className |
 | Indirection through manager | `WidgetManager.create(WidgetSpec)` for two widgets | Plugin ecosystem | Static dispatch |
 
 ### "Premature optimization is the root of all evil" — and its corollary

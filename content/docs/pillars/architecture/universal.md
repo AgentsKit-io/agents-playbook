@@ -95,7 +95,7 @@ Example budgets (calibrated for TS/React; adjust per language):
 Rules:
 
 - The gate is **baseline-shrink-only**: an existing file over budget is grandfathered, but new code in that file must shrink it; new files must respect the budget.
-- Hitting the budget = extract. Do not lower the budget to fit. Do not split into `<file>-2.<ext>`.
+- Hitting the budget = extract. Do not lower the budget to fit. Do not split into `\<file\>-2.\<ext\>`.
 
 **Failure mode prevented:** files becoming unreviewable; agents losing context inside a 1500-line component; reviewers approving PRs they cannot read.
 

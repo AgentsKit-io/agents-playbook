@@ -36,7 +36,7 @@ type AnalyticsEvent = {
 };
 ```
 
-Naming convention: `<surface>.<action>.<state>` — `flow.run.started`, `checkout.coupon.applied`, `dashboard.tab.opened`.
+Naming convention: `\<surface\>.\<action\>.\<state\>` — `flow.run.started`, `checkout.coupon.applied`, `dashboard.tab.opened`.
 
 Schema discipline:
 

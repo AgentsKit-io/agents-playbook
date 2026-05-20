@@ -39,15 +39,15 @@ Gate: lint scan for hex / rgb / hsl / oklch literals + arbitrary class values + 
 
 ### Rule 2 — Shared primitives — no bare HTML inputs in shipped surfaces
 
-`<button>`, `<input>`, `<select>`, `<dialog>`, `<form>`, `<table>`, `<a href>` are **banned** in shipped surfaces. Use the shared `Button`, `Input`, `Select`, `Dialog`, `Form`, `Table`, `Link` primitives.
+`\<button\>`, `\<input\>`, `\<select\>`, `\<dialog\>`, `\<form\>`, `\<table\>`, `\<a href\>` are **banned** in shipped surfaces. Use the shared `Button`, `Input`, `Select`, `Dialog`, `Form`, `Table`, `Link` primitives.
 
 Why: native primitives differ across browsers and lack the project's a11y / styling / event semantics. The shared primitive is the contract.
 
-Escape hatch: `// allow-native: <reason>` on the line. Counted by a gate that fails if the count grows.
+Escape hatch: `// allow-native: \<reason\>` on the line. Counted by a gate that fails if the count grows.
 
 Gate: lint regex for the banned tags in `**/screens/**`, `**/components/**` (configure paths per project). One escape hatch comment per offence.
 
-**Failure mode prevented:** new screen ships with native `<button>`; styling drifts; a11y attributes inconsistent; keyboard handling differs.
+**Failure mode prevented:** new screen ships with native `\<button\>`; styling drifts; a11y attributes inconsistent; keyboard handling differs.
 
 ### Rule 3 — Intl every user-visible string
 
@@ -63,7 +63,7 @@ Every visible string is keyed in a locale file and resolved via `useT()` (or you
 
 Brand tokens (product name, company name) are exempt — they live in a small allowlist and resolve from whitelabel runtime.
 
-Gate: lint AST scan for JSX text nodes with non-empty string literals + hardcoded `aria-*` / `title` / `placeholder` / `alt` attributes. Exempt: comments, `<code>` / `<pre>` content, allowlisted brand tokens.
+Gate: lint AST scan for JSX text nodes with non-empty string literals + hardcoded `aria-*` / `title` / `placeholder` / `alt` attributes. Exempt: comments, `\<code\>` / `\<pre\>` content, allowlisted brand tokens.
 
 **Failure mode prevented:** half-translated UI; aria attributes only in English; brand rename requires touching every screen.
 
@@ -78,7 +78,7 @@ Spinners are reserved for inline actions (a button while submitting; a row while
 
 Why: skeletons preserve layout (no jank when content arrives); communicate roughly what is coming (sets expectation); avoid the "what is this loading forever?" panic state.
 
-Gate: lint regex for `<Spinner>` (or equivalent) inside content-bearing layout containers. Combined with manual review for "this surface shows a spinner instead of a skeleton".
+Gate: lint regex for `\<Spinner\>` (or equivalent) inside content-bearing layout containers. Combined with manual review for "this surface shows a spinner instead of a skeleton".
 
 **Failure mode prevented:** layout jank on every page load; users panic at indeterminate spinners.
 
@@ -106,7 +106,7 @@ Every list / collection surface has an empty state component. The empty state:
 
 Different empty causes → different empty states. "No results match filter" is different from "No users in this workspace yet".
 
-Gate: a completeness check that flags `length === 0 ? <div>` patterns; the `<EmptyState>` primitive must be used.
+Gate: a completeness check that flags `length === 0 ? \<div\>` patterns; the `\<EmptyState\>` primitive must be used.
 
 **Failure mode prevented:** users land on an empty page with no idea what to do; honest empty cause is hidden behind generic "no results".
 
@@ -173,7 +173,7 @@ If a feature is not built, it does not ship in nav. Behind a feature flag, fine.
 
 Gate: a `check-completeness` script scans the shipped tree. See [`../../scripts/README.md`](../../scripts/README.md).
 
-Per-screen completeness contracts live in `docs/completion/<screen>.md` (or equivalent): what "done" means for that screen, what tabs / sub-views are in scope.
+Per-screen completeness contracts live in `docs/completion/\<screen\>.md` (or equivalent): what "done" means for that screen, what tabs / sub-views are in scope.
 
 **Failure mode prevented:** screens that look done but break on click; demo gets to a tab that crashes; investor sees `[NOT IMPL]` in production.
 

@@ -4,7 +4,7 @@ How to ship a one-package primitives catalog so every screen looks like the same
 
 ## TL;DR (human)
 
-One UI package owns every interactive primitive. Components in screens import from that package. Native HTML elements (`<button>`, `<input>`, `<select>`, etc.) are lint-banned in shipped surfaces. Primitives are styled with design tokens; brand swap reaches them automatically.
+One UI package owns every interactive primitive. Components in screens import from that package. Native HTML elements (`\<button\>`, `\<input\>`, `\<select\>`, etc.) are lint-banned in shipped surfaces. Primitives are styled with design tokens; brand swap reaches them automatically.
 
 ## For agents
 
@@ -14,21 +14,21 @@ Minimum viable primitives catalog:
 
 | Primitive | Replaces native | Variants |
 |---|---|---|
-| `Button` | `<button>`, `<a href>` (action) | primary / secondary / ghost / danger; sm / md / lg |
-| `IconButton` | `<button>` with icon-only content | size + variant |
-| `Link` | `<a href>` (navigation) | primary / muted |
+| `Button` | `\<button\>`, `\<a href\>` (action) | primary / secondary / ghost / danger; sm / md / lg |
+| `IconButton` | `\<button\>` with icon-only content | size + variant |
+| `Link` | `\<a href\>` (navigation) | primary / muted |
 | `Input` | `<input type="text|email|...">`| with-label / inline / search / password |
-| `Textarea` | `<textarea>` | auto-resize / fixed |
-| `Select` | `<select>` | single / multi (using Radix or equivalent) |
+| `Textarea` | `\<textarea\>` | auto-resize / fixed |
+| `Select` | `\<select\>` | single / multi (using Radix or equivalent) |
 | `Checkbox` | `<input type="checkbox">` | with-label / indeterminate |
 | `Radio`, `RadioGroup` | `<input type="radio">` | with-label |
 | `Switch` | `<input type="checkbox">` (toggle role) | |
-| `Dialog` | `<dialog>` | modal / drawer |
+| `Dialog` | `\<dialog\>` | modal / drawer |
 | `Tooltip` | `title` attr | |
 | `Tabs` | `role="tablist"` boilerplate | |
-| `Table` | `<table>` | sortable / paginated |
-| `Badge` | `<span>` with class | status colors |
-| `Avatar` | `<img>` | with-initials / with-presence |
+| `Table` | `\<table\>` | sortable / paginated |
+| `Badge` | `\<span\>` with class | status colors |
+| `Avatar` | `\<img\>` | with-initials / with-presence |
 | `EmptyState` | (none — new primitive) | with-icon / with-illustration |
 | `Skeleton` | (loading shimmer) | text / block / row |
 | `Toast` | (system notification) | success / error / info |
@@ -126,7 +126,7 @@ Lint rule:
 
 Per file overrides for framework-mandated places (Next.js layouts, MDX content, raw HTML editors).
 
-Escape hatch: `// allow-native: <reason>`. Counted by a gate that fails on growth.
+Escape hatch: `// allow-native: \<reason\>`. Counted by a gate that fails on growth.
 
 ### Migration path
 
@@ -135,13 +135,13 @@ Brownfield: large existing app, lots of native elements.
 1. Ship primitives.
 2. Generate baseline of native-html offenders.
 3. Gate to shrink-only.
-4. Codemod where possible (`<button onClick={...}>X</button>` → `<Button onClick={...}>X</Button>`).
-5. Manual sweep for tricky cases (forms; `<a>` that mixes nav with action).
+4. Codemod where possible (`<button onClick={...}>X\</button\>` → `<Button onClick={...}>X\</Button\>`).
+5. Manual sweep for tricky cases (forms; `\<a\>` that mixes nav with action).
 
 ### Common failure modes
 
 - **Primitive that wraps a native element 1:1 with no value-add.** Just use the native. → Primitive must add tokens + a11y + consistent API.
-- **Primitive that does too much.** A `<Button>` with 30 props. → Split into composable primitives (`Button`, `Spinner`, `Icon` separately).
+- **Primitive that does too much.** A `\<Button\>` with 30 props. → Split into composable primitives (`Button`, `Spinner`, `Icon` separately).
 - **Primitive with a `style` prop accepted unchecked.** Defeats tokens. → `className` prop only; styles internal.
 - **One-off variant added inline in a screen** (`<Button className="bg-red-500">`). → Add the variant to the primitive; do not override per-use.
 - **No stories file.** Agents don't know the variants exist; reinvent. → Mandatory per primitive.

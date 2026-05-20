@@ -19,7 +19,7 @@ How to make an agent productive in your repo on day one and durably good across 
 | System prompts | Per-role prompts (architect, reviewer, fixer) | Reusable role files; injected per task |
 | Verify-first | Before acting, confirm the state is what you think it is | Default `gh issue view`, `git fetch`, `pwd` at session start |
 | Single sub-unit | One discrete shippable change per session | Defined up front; no scope creep |
-| Honest reporting | Faithful state, not optimistic state | "Tests failed: <output>", not "Tests pass after I fix the unrelated thing" |
+| Honest reporting | Faithful state, not optimistic state | "Tests failed: \<output\>", not "Tests pass after I fix the unrelated thing" |
 | Duplication detection | Verify against real exports, not doc names | `npm pack` + read `.d.ts`, never trust naming similarity |
 | Concurrent-merge survival | Multiple agents pushing to main | Stash-verify red, rebase clean, retry; pre-push hook covers structural drift |
 

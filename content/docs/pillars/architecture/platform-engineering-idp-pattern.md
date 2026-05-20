@@ -79,7 +79,7 @@ The catalog answers "who do I ask?" + "what depends on this?" + "is this safe to
 
 ### Templates + scaffolds
 
-A `create-<thing>` CLI / template:
+A `create-\<thing\>` CLI / template:
 
 ```bash
 $ npx create-service my-new-service --type=node-ts-api

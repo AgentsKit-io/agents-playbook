@@ -16,7 +16,7 @@ Automation catches ~30% of a11y bugs. The rest require manual + assistive-tech t
 - Form fields without labels.
 - Insufficient color contrast (mathematical check).
 - Invalid ARIA usage (wrong attribute on wrong element).
-- Missing `lang` on `<html>`.
+- Missing `lang` on `\<html\>`.
 - Duplicate IDs.
 - Some keyboard-trap detection.
 
@@ -87,9 +87,9 @@ Each interactive element must announce:
 
 Page-level:
 
-- `<title>` is meaningful (the user knows where they are).
+- `\<title\>` is meaningful (the user knows where they are).
 - Headings are hierarchical (h1 → h2 → h3, no skip).
-- Landmark roles (`<header>`, `<main>`, `<nav>`, `<aside>`, `<footer>`) let users jump.
+- Landmark roles (`\<header\>`, `\<main\>`, `\<nav\>`, `\<aside\>`, `\<footer\>`) let users jump.
 - Live regions (`aria-live="polite"` or `aria-live="assertive"`) announce dynamic updates without forcing focus.
 
 #### 3. Contrast
@@ -186,7 +186,7 @@ Required: explicit; aria-invalid: state; aria-describedby: link to the message; 
 </dialog>
 ```
 
-Native `<dialog>` is increasingly viable; headless libraries (Radix Dialog) wrap with full a11y.
+Native `\<dialog\>` is increasingly viable; headless libraries (Radix Dialog) wrap with full a11y.
 
 #### Loading states
 
@@ -235,11 +235,11 @@ Quarterly:
 
 | Mistake | Why wrong | Fix |
 |---|---|---|
-| `role="button"` on a `<div>` with no keyboard handler | Reachable; not operable | Use `<Button>` primitive |
+| `role="button"` on a `\<div\>` with no keyboard handler | Reachable; not operable | Use `\<Button\>` primitive |
 | `aria-label` duplicating visible text | Redundant; sometimes contradictory | Either visible label OR aria-label, not both |
 | `aria-hidden="true"` on a focusable element | Hidden semantically; reachable by Tab | Use `inert` instead, or remove from tab order |
 | `role` invalidating native semantics | `<button role="link">` makes screen readers confused | Use the right element |
-| Bare `<div>` for everything | No semantics; screen reader announces nothing | Use semantic HTML; fall back to ARIA |
+| Bare `\<div\>` for everything | No semantics; screen reader announces nothing | Use semantic HTML; fall back to ARIA |
 
 **"No ARIA is better than bad ARIA"** is the rule of thumb.
 
@@ -264,12 +264,12 @@ A11y intersects with intl heavily:
 | Element | Purpose | Common mistake |
 |---|---|---|
 | `<html lang="...">` | Pronunciation, screen-reader voice | Missing or wrong code |
-| `<title>` | Page identification | Same title for every route |
-| `<h1>` | Top-level heading | Multiple h1s, or none |
-| `<main>` | Primary content landmark | Missing |
-| `<nav>` | Navigation landmark | Missing or duplicated without labels |
-| `<aside>` | Tangential content | Used for primary content |
-| `<footer>` | Page footer landmark | Used as a div |
+| `\<title\>` | Page identification | Same title for every route |
+| `\<h1\>` | Top-level heading | Multiple h1s, or none |
+| `\<main\>` | Primary content landmark | Missing |
+| `\<nav\>` | Navigation landmark | Missing or duplicated without labels |
+| `\<aside\>` | Tangential content | Used for primary content |
+| `\<footer\>` | Page footer landmark | Used as a div |
 
 ### Adoption path
 
@@ -285,7 +285,7 @@ A11y intersects with intl heavily:
 - **A11y as a final polish**. Bolted on at release time; rebuilds half the UI. → Build-in from primitives day 1.
 - **Focus invisible**. Outline removed for "design"; nobody can navigate. → Token-based ring on every focusable element.
 - **Live region overuse**. Every change announces; users overwhelmed. → Polite by default; assertive only for blocking.
-- **Custom widgets without keyboard semantics**. Looks like a select; isn't. → Use the headless library; or use the real `<select>`.
+- **Custom widgets without keyboard semantics**. Looks like a select; isn't. → Use the headless library; or use the real `\<select\>`.
 - **Translations break the layout**. German is 30% longer; English-only design overflows. → Test with pseudo-locale; test with long-string fixtures.
 
 ### See also

@@ -85,7 +85,7 @@ Never open phase N+1 while phase N is still in review. The merge order matters.
 
 ### Long-lived parent branches
 
-Some teams use a long-lived `epic/<name>` branch with phase PRs merging into it, then a final mega-merge to main. **Do not do this.** Reasons:
+Some teams use a long-lived `epic/\<name\>` branch with phase PRs merging into it, then a final mega-merge to main. **Do not do this.** Reasons:
 
 - The mega-merge is unreviewable again.
 - The epic branch conflicts with main as main moves.

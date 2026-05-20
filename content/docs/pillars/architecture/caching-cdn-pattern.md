@@ -56,7 +56,7 @@ A key without tenant scope is a data-leak waiting to happen. Lint scans for cach
 
 Key naming:
 
-- `cache:<entity>:<scope>:<id>:<purpose>`.
+- `cache:\<entity\>:\<scope\>:\<id\>:\<purpose\>`.
 - Include version in key (`v3`) to roll-forward without flushes.
 - Hash long composite keys; keep short prefix for debugging.
 

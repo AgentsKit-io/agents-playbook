@@ -24,7 +24,7 @@ Inverted pyramids (mostly E2E) produce flaky, slow suites with poor signal.
 
 **Architecture**
 - [ ] Every contract has a parse test (happy + reject).
-- [ ] Every error code is asserted somewhere in the suite (a separate gate scans for `code: "<CODE>"` assertions).
+- [ ] Every error code is asserted somewhere in the suite (a separate gate scans for `code: "\<CODE\>"` assertions).
 - [ ] Handler return values are parsed by the result schema (catches handler bugs at boundary).
 
 **Security**

@@ -19,7 +19,7 @@ A complete gate suite covers six concerns:
 | named-exports | architecture | No `export default` outside framework-mandated files |
 | raw-error | architecture | No `throw new Error(...)` in boundary files |
 | tokens | ui-ux | No hex/rgb/hsl/oklch literals, no inline color styles |
-| native-html | ui-ux | No bare `<button>`/`<input>`/etc. in shipped surfaces |
+| native-html | ui-ux | No bare `\<button\>`/`\<input\>`/etc. in shipped surfaces |
 | intl | ui-ux | No hardcoded user-visible strings |
 | secrets | security | No high-entropy strings / PEM blocks / key prefixes |
 | completeness | quality | No `TODO`/`FIXME`/`throw new Error('not implemented')`/`disabled:true` in shipped surfaces |
@@ -35,7 +35,7 @@ A single entry: `pnpm check:quality-gates`. It:
 2. Runs them in parallel where possible.
 3. Aggregates failures into one report with per-gate sections.
 4. Exits 0 if all pass; non-zero with summary if any fail.
-5. Has flags: `--gate=<name>` to run just one; `--explain` for fix recipes; `--baseline` to regenerate baselines.
+5. Has flags: `--gate=\<name\>` to run just one; `--explain` for fix recipes; `--baseline` to regenerate baselines.
 
 Reference impl shape: [`../../scripts/README.md`](../../scripts/README.md).
 
@@ -81,7 +81,7 @@ Why one file:
 
 ### Adding a new gate
 
-1. Implement: stand-alone script in `scripts/check-<name>.mjs`. Exits 0/non-zero. Reads its config from `.quality-gates.json`.
+1. Implement: stand-alone script in `scripts/check-\<name\>.mjs`. Exits 0/non-zero. Reads its config from `.quality-gates.json`.
 2. Action message: when it fails, print file:line + rule + fix recipe.
 3. Baseline (if applicable): generate baseline on first run; lock to shrink-only.
 4. Register: add to `.quality-gates.json`.

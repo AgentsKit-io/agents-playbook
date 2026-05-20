@@ -121,7 +121,7 @@ Lint rules:
 2. **No Tailwind arbitrary class values** for color / spacing: `bg-\[`, `text-\[`, `p-\[`, etc.
 3. **No inline color/spacing styles** in JSX: `style={{ color: ..., padding: ... }}`.
 
-Escape hatch: `// allow-color-literal: <reason>`. Counted; growth fails the gate.
+Escape hatch: `// allow-color-literal: \<reason\>`. Counted; growth fails the gate.
 
 The gate runs at pre-commit on changed files; full sweep in CI.
 

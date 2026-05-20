@@ -14,8 +14,8 @@ Run a task repeatedly. Either on a fixed interval or self-paced based on an exit
 
 ## Args
 
-- `<interval>` (optional) — fixed interval (`30s`, `5m`, `1h`). Omit for self-paced.
-- `<task>` — the prompt body or slash command to execute each tick.
+- `\<interval\>` (optional) — fixed interval (`30s`, `5m`, `1h`). Omit for self-paced.
+- `\<task\>` — the prompt body or slash command to execute each tick.
 
 ## Body
 

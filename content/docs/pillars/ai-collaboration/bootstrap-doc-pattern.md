@@ -42,7 +42,7 @@ Template: [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.te
 ### Length discipline
 
 - `CLAUDE.md`: ≤ 200 lines (the agent reads it whole every session).
-- `AGENTS.md`: ≤ 400 lines; if it grows past that, split per-package detail into `docs/for-agents/packages/<pkg>.md` and link.
+- `AGENTS.md`: ≤ 400 lines; if it grows past that, split per-package detail into `docs/for-agents/packages/\<pkg\>.md` and link.
 
 If either file is over budget, agents skim instead of read. Skim defeats the purpose.
 

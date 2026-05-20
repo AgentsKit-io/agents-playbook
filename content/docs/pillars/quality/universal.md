@@ -27,7 +27,7 @@ A failing gate must answer:
 - What the fix looks like.
 - The escape hatch, if one exists.
 
-"Lint failed (147 errors)" is not actionable. "src/api/users.ts:42 — boundary file may not throw raw `Error`; use a typed `AppError` subclass with a stable code. Escape hatch: `// allow-raw-error: <reason>`." is actionable.
+"Lint failed (147 errors)" is not actionable. "src/api/users.ts:42 — boundary file may not throw raw `Error`; use a typed `AppError` subclass with a stable code. Escape hatch: `// allow-raw-error: \<reason\>`." is actionable.
 
 Agents act on actionable signals. Agents disable or bypass non-actionable ones.
 
@@ -71,7 +71,7 @@ expect(err.message).toContain("Auth");    // ✗
 
 Messages get intl-resolved, get reworded for clarity, drift over releases. Codes are stable contracts.
 
-For non-error assertions: prefer asserting structural shape over rendered text where intl is involved. Asserting `<button aria-label="Save">` survives translation; asserting `<button>Save</button>` does not.
+For non-error assertions: prefer asserting structural shape over rendered text where intl is involved. Asserting `<button aria-label="Save">` survives translation; asserting `\<button\>Save\</button\>` does not.
 
 **Failure mode prevented:** tests breaking when copy is improved; agents discouraged from fixing user-facing wording because tests depend on it.
 

@@ -38,10 +38,10 @@ Build is a loop, not a sprint. One sub-unit per session. PR intent declared up f
 
 **UI-UX**
 - [ ] Tokens for all visual values (no hex / rgb / arbitrary class).
-- [ ] Shared primitives only (no native `<button>` / `<input>` / etc.).
+- [ ] Shared primitives only (no native `\<button\>` / `\<input\>` / etc.).
 - [ ] `useT()` for every user-visible string.
-- [ ] `<Skeleton>` for content loading; spinners only for inline actions.
-- [ ] `<EmptyState>` with cause-typed variants.
+- [ ] `\<Skeleton\>` for content loading; spinners only for inline actions.
+- [ ] `\<EmptyState\>` with cause-typed variants.
 - [ ] Keyboard reachable; focus visible; aria labels.
 
 **Quality**
@@ -54,7 +54,7 @@ Build is a loop, not a sprint. One sub-unit per session. PR intent declared up f
 - [ ] PR intent declared; `removes:` justified.
 - [ ] `merge-override:` annotation if conflict resolution dropped a side.
 - [ ] One sub-unit per PR.
-- [ ] Verify-first close: `gh issue view <n>` before "fixing".
+- [ ] Verify-first close: `gh issue view \<n\>` before "fixing".
 
 **AI-collaboration**
 - [ ] One sub-unit per session.
@@ -83,7 +83,7 @@ Bad sub-units (split these):
 
 - "Add user invitations + workspace switching" (two features).
 - "Refactor X and fix Y" (two intents).
-- "Phase 1 + Phase 2 of <epic>" (chain into separate PRs).
+- "Phase 1 + Phase 2 of \<epic\>" (chain into separate PRs).
 
 ### Exit criteria
 

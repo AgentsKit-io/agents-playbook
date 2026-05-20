@@ -12,11 +12,11 @@ Every list / collection / dashboard surface has an empty state. The empty state 
 
 | Cause | Empty state |
 |---|---|
-| No records have ever been created (cold-start) | "No <thing> yet — create your first one" with CTA |
-| Records exist but all filtered out | "No <thing> match your filter" with "Clear filter" |
-| Records exist but user lacks permission to see them | "You don't have access to view <thing>" with permission-request hint |
-| Records would be here but the data source is broken | "Could not load <thing> — try again" with retry CTA |
-| Records exist but in a different scope (workspace, tenant) | "No <thing> in this workspace — switch workspace" |
+| No records have ever been created (cold-start) | "No \<thing\> yet — create your first one" with CTA |
+| Records exist but all filtered out | "No \<thing\> match your filter" with "Clear filter" |
+| Records exist but user lacks permission to see them | "You don't have access to view \<thing\>" with permission-request hint |
+| Records would be here but the data source is broken | "Could not load \<thing\> — try again" with retry CTA |
+| Records exist but in a different scope (workspace, tenant) | "No \<thing\> in this workspace — switch workspace" |
 
 The cause changes the right next step. Generic "No results" forces the user to guess.
 
@@ -97,13 +97,13 @@ A lint / completeness check flags patterns like:
 {rows.length === 0 && <p>No data</p>}
 ```
 
-These bypass the empty-state primitive. Failure message points to the `<EmptyState>` import.
+These bypass the empty-state primitive. Failure message points to the `\<EmptyState\>` import.
 
 ### Per-screen empty inventory
 
 For each screen with collection surfaces, the completeness contract ([`universal.md`](./universal.md) Rule 9) requires an empty-state pass:
 
-- Cold-start cause: ✓ covered with `<EmptyState>`.
+- Cold-start cause: ✓ covered with `\<EmptyState\>`.
 - Filtered cause (if filters exist): ✓ covered separately.
 - Error cause: ✓ covered with retry.
 
@@ -120,5 +120,5 @@ PR template includes this checklist for any UI-touching PR.
 ### See also
 
 - [`universal.md`](./universal.md) — Rule 4 (loading), Rule 5 (empty), Rule 9 (completeness).
-- [`primitives-pattern.md`](./primitives-pattern.md) — `<EmptyState>` is a shared primitive.
+- [`primitives-pattern.md`](./primitives-pattern.md) — `\<EmptyState\>` is a shared primitive.
 - [`intl-pattern.md`](./intl-pattern.md) — empty-state copy is intl-keyed.

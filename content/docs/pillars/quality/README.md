@@ -14,7 +14,7 @@ How to know the code works without manually reviewing every agent-produced diff.
 | Coverage target | >90% per shipped package, measured against statements | Per-package coverage threshold in CI; per-package, not whole-repo |
 | Mutation testing | Beats coverage as a quality signal once unit suite is good | Stryker / mutation tool on stable utilities first |
 | Hermetic tests | Component-level vitest preferred over live-app E2E | Reproduce + lock bugs via in-process tests, not Playwright |
-| Verify-first close | Before reproducing an issue, check if it's already fixed | Default `gh issue view <n>` at session start |
+| Verify-first close | Before reproducing an issue, check if it's already fixed | Default `gh issue view \<n\>` at session start |
 | File-size gate | See [architecture pillar](../architecture/file-size-budget.md) | Baseline shrink-only |
 | Lint gates | No `any`, no `console.log`, no default exports, no nested ternaries, no raw HTML | ESLint rule pack + per-file overrides |
 | Quality-gates script | One `pnpm check:quality-gates` for fast structural checks | Parallel: lint + typecheck + secrets + size + intl + tokens |

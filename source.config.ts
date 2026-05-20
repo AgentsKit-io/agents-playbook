@@ -6,6 +6,10 @@ export const docs = defineDocs({
 
 export default defineConfig({
   mdxOptions: {
-    // Use GFM by default; remark plugins extend below if needed
+    // Allow raw HTML-looking angle brackets in templates (e.g. <issue#>)
+    // by stripping the unhandled raw node before estree conversion.
+    remarkRehypeOptions: {
+      passThrough: ["raw"],
+    },
   },
 });

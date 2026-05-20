@@ -63,7 +63,7 @@ When a doc / plan / ADR / screen / package is retired:
 1. Prepend a tombstone block:
 
    ```markdown
-   > 🪦 **TOMBSTONED <YYYY-MM-DD>** — superseded by [<link>](./...). Kept for trail.
+   > 🪦 **TOMBSTONED \<YYYY-MM-DD\>** — superseded by [\<link\>](./...). Kept for trail.
    ```
 
 2. Keep the body.
@@ -91,7 +91,7 @@ The reviewer must be able to read the PR end-to-end and understand the intent in
 
 Before "closing" an issue:
 
-1. `gh issue view <n> --json state` — is it still open?
+1. `gh issue view \<n\> --json state` — is it still open?
 2. Re-read the issue's DoD. Did your work meet it?
 3. Look at peer-closed PRs referencing the same issue. Did someone close it concurrently?
 
@@ -103,7 +103,7 @@ This was the single highest-yield governance discipline in production multi-agen
 
 Before starting work in a path:
 
-- `gh pr list --search "is:open <path-fragment>"` — are peer PRs touching this?
+- `gh pr list --search "is:open \<path-fragment\>"` — are peer PRs touching this?
 - `git log origin/main..HEAD --name-only` — what has main changed since you forked?
 - Read peer PR descriptions. You may be redundant.
 

@@ -8,7 +8,7 @@ Copy-paste-ready recipes that implement [`universal.md`](./universal.md) on a Ty
 - One `core` package that owns Zod schemas, the error class hierarchy, and the event bus. Hard gzipped budget (calibrate per project; ~25 KB works for a 30-package monorepo).
 - Strict TypeScript everywhere: `"strict": true`, `noUncheckedIndexedAccess: true`, no `any`, named exports only.
 - Zod parses every HTTP / JSON-RPC / IPC / file-IO boundary.
-- `AppError` subclasses with `<NS>_<REASON>` codes; thrown only via `throw new AppError(...)`-style classes; raw `new Error` is lint-banned at boundary files.
+- `AppError` subclasses with `\<NS\>_\<REASON\>` codes; thrown only via `throw new AppError(...)`-style classes; raw `new Error` is lint-banned at boundary files.
 - Sub-path package layout (RFC-driven) so each package can ship multiple entry points without circular imports.
 
 ## For agents
@@ -148,7 +148,7 @@ module.exports = {
 "@typescript-eslint/no-unsafe-return": "error",
 ```
 
-Escape hatch: `// allow-any: <reason>` line comment. Lint allows it; a separate gate counts these and fails if the count grows. See [`../../scripts/`](../../scripts/).
+Escape hatch: `// allow-any: \<reason\>` line comment. Lint allows it; a separate gate counts these and fails if the count grows. See [`../../scripts/`](../../scripts/).
 
 ### Zod at every boundary
 
@@ -272,7 +272,7 @@ Wire into `check:all`.
 4. `src/index.ts` re-exports the public surface only.
 5. `src/__tests__/` next to source, not in a top-level `test/` dir.
 6. Add the package to the `AGENTS.md` routing table.
-7. Add a one-pager doc in `docs/for-agents/packages/<pkg-name>.md` (template in [`../../templates/`](../../templates/)).
+7. Add a one-pager doc in `docs/for-agents/packages/\<pkg-name\>.md` (template in [`../../templates/`](../../templates/)).
 8. If the package owns persistence, register its schema with the storage layer + the contract registry.
 
 ## See also

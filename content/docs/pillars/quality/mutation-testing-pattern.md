@@ -74,7 +74,7 @@ Do not add tests *to kill the mutant for its own sake*. The goal is "the test no
 
 Some mutants are semantically equivalent to the original. Example: `const a = b; return a` → `return b`. They cannot be killed by any test.
 
-The mutation tool may flag many of these. Maintain an allowlist file mapping `<file>:<line>: <reason>` → ignored. Treat allowlist growth as a code smell — sometimes the code itself can be simplified to avoid the equivalence.
+The mutation tool may flag many of these. Maintain an allowlist file mapping `\<file\>:\<line\>: \<reason\>` → ignored. Treat allowlist growth as a code smell — sometimes the code itself can be simplified to avoid the equivalence.
 
 ### Performance discipline
 

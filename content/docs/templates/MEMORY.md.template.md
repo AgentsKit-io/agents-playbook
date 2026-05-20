@@ -53,7 +53,7 @@ No frontmatter. No body content. Just the index.
 3. **Don't save chat-scoped facts.** "We just decided X in this conversation" belongs in the PR, not memory.
 4. **Convert dates to absolute.** "Last week" today is "two weeks ago" next month.
 5. **Link liberally.** Use `[[other-memory-name]]`; an unresolved link marks a future memory worth writing.
-6. **Verify before recommending.** When recalled, memories appear in `<system-reminder>` blocks — they reflect what was true when written. If one names a file/function/flag, confirm it still exists before acting.
+6. **Verify before recommending.** When recalled, memories appear in `\<system-reminder\>` blocks — they reflect what was true when written. If one names a file/function/flag, confirm it still exists before acting.
 
 ## Lifecycle
 

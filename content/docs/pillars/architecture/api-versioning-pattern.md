@@ -64,7 +64,7 @@ A `@deprecated` with no migration path is debt, not deprecation.
 
 ### Migration guides
 
-Per major release, a migration guide doc lives at `docs/migrations/v<X>.md`. Sections:
+Per major release, a migration guide doc lives at `docs/migrations/v\<X\>.md`. Sections:
 
 - **Summary** of breaking changes.
 - **Per-change**: before / after code snippets, automated codemod (if any), test surface to verify.

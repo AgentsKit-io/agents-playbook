@@ -11,14 +11,14 @@ How multiple agents (and humans) coordinate work in one repo without subtracting
 | Concern | Universal principle | Concrete pattern |
 |---|---|---|
 | PR intent manifest | Every PR declares what it adds / removes / changes; reviewers verify against it | `pr-intent.yaml` parsed by a gate; renames + removes require explicit `removes:` entries |
-| Merge rules | Merges sum work, never subtract | Agents may not `git checkout --theirs/--ours` without `merge-override: <reason>` annotation |
+| Merge rules | Merges sum work, never subtract | Agents may not `git checkout --theirs/--ours` without `merge-override: \<reason\>` annotation |
 | Concurrent-agent awareness | Other agents may be editing the same files | Session start: `git fetch`, recheck issue state, look for in-flight PRs touching the same paths |
 | One sub-unit per session | Big phases split into discrete, shippable sub-units | Sub-unit defined before starting; no scope creep mid-session |
 | Phased PR + admin merge | Long initiatives ship as a chain of phase PRs | `gh pr merge --merge --admin`, delete branch, continue off fresh main |
 | Removes-list | Listing removed exports forces intentionality | Gate fails if a PR removes an exported symbol without a `removes:` entry |
 | Tombstones | Retire docs, plans, ADRs without losing trail | Prepend a 🪦 status block; keep the body |
 | Audit trail | Every privileged operation produces a signed ledger entry | See security pillar |
-| Verify-first close | Before fixing an issue, verify it's still open and not solved concurrently | `gh issue view <n> --json state` at session start and again before push |
+| Verify-first close | Before fixing an issue, verify it's still open and not solved concurrently | `gh issue view \<n\> --json state` at session start and again before push |
 
 ## Non-negotiables
 

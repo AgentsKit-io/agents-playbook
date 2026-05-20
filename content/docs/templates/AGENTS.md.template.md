@@ -58,7 +58,7 @@ Per-package deep references live in `docs/for-agents/packages/*.md`. **Start at 
 
 ## Customisation checklist
 
-- [ ] Replace `<PROJECT NAME>`, `<N>`, `<M>`, `<core-package>` placeholders.
+- [ ] Replace `\<PROJECT NAME\>`, `\<N\>`, `\<M\>`, `\<core-package\>` placeholders.
 - [ ] Replace the mental-map table with your real logical groups.
 - [ ] Replace the routing rows with your real packages + apps.
 - [ ] Adjust workflow numbers to match your release process.

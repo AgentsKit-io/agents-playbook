@@ -1,4 +1,4 @@
-# ADR-NNNN — <Short Title>
+# ADR-NNNN — \<Short Title\>
 
 - **Status:** Proposed | Accepted | Superseded by ADR-NNNN | Tombstoned
 - **Date:** YYYY-MM-DD
@@ -12,7 +12,7 @@ What is true today. What triggered this decision. Cite measurements, incident re
 
 ## Decision
 
-We will **<verb> <object>** (imperative voice).
+We will **\<verb\> \<object\>** (imperative voice).
 
 Followed by the specific rules that implement this decision. Be precise — agents will read this as instructions. List paths, names, gates.
 
@@ -32,11 +32,11 @@ What is now forbidden:
 
 ## Alternatives considered
 
-### Alternative A — <name>
+### Alternative A — \<name\>
 
 What it would do. Why we did not pick it (one or two sentences).
 
-### Alternative B — <name>
+### Alternative B — \<name\>
 
 Same.
 

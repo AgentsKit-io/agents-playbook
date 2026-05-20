@@ -77,7 +77,7 @@ Rule: if N tasks share no data dependency, launch all N at once. Sequential laun
 
 Two ways to talk to a sub-agent again:
 
-- **Continue** the existing one (your toolchain has a "send message to agent <id>") — preserves its context.
+- **Continue** the existing one (your toolchain has a "send message to agent \<id\>") — preserves its context.
 - **Spawn a new one** — fresh context, no recall.
 
 Continue when the task is an extension of the prior one. Spawn fresh when the task is unrelated; carrying old context bloats the new task.

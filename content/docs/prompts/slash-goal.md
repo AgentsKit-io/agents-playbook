@@ -10,7 +10,7 @@ Set a session goal with an explicit exit condition. Stops only when condition ho
 
 ## Args
 
-- `<condition>` — the success state. Imperative phrasing. Examples:
+- `\<condition\>` — the success state. Imperative phrasing. Examples:
   - `tests green for package X on a fresh clone`
   - `PR open with intent manifest and gates passing`
   - `ADR-NNNN drafted, reviewed, and accepted`

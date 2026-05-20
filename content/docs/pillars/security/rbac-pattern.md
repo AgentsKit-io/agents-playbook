@@ -38,7 +38,7 @@ Three primary entities:
 
 1. **Principal** — a user, an agent, a service account. Identified by stable id. Has a list of role assignments.
 2. **Role** — a named bundle. Has a list of capabilities. Roles are *not hierarchical* by default (no inheritance) — explicit is safer than implicit.
-3. **Capability** — a fine-grained verb on a resource. `users:read`, `users:write`, `users:invite`, `secrets:read`, `flows:run`. Format: `<resource>:<verb>`.
+3. **Capability** — a fine-grained verb on a resource. `users:read`, `users:write`, `users:invite`, `secrets:read`, `flows:run`. Format: `\<resource\>:\<verb\>`.
 
 Optional fourth:
 
@@ -91,7 +91,7 @@ Mutations go through the audit ledger before they execute (see [`audit-ledger-pa
 
 ### Capability naming
 
-`<resource>:<verb>` keeps the namespace clean.
+`\<resource\>:\<verb\>` keeps the namespace clean.
 
 - `users:read`, `users:write`, `users:delete`.
 - `flows:create`, `flows:edit`, `flows:run`, `flows:delete`.
