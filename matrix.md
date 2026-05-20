@@ -43,12 +43,12 @@ If you adopt left-to-right (by phase), agents can ramp incrementally. If you ado
 
 | Phase | Status |
 |---|---|
-| 01 discover | ◐ |
-| 02 design | ◐ |
-| 03 build | ◐ |
-| 04 test | ◐ |
-| 05 ship | ◐ |
-| 06 operate | ◐ |
+| 01 discover | ✓ |
+| 02 design | ✓ |
+| 03 build | ✓ |
+| 04 test | ✓ |
+| 05 ship | ✓ |
+| 06 operate | ✓ |
 
 | Templates | Status |
 |---|---|
@@ -65,4 +65,4 @@ If you adopt left-to-right (by phase), agents can ramp incrementally. If you ado
 | Other | Status |
 |---|---|
 | Scripts (gate reference impls) | ◐ 6 of 13 shipped (file-size, named-exports, no-any, error-raw, pr-intent, orchestrator) |
-| Phases (deep content) | ◐ scope READMEs only |
+| Phases (deep content) | ✓ |

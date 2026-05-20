@@ -2,28 +2,124 @@
 
 How "tests pass" stops being a feeling and starts being a contract.
 
-## Status
+## TL;DR (human)
 
-◐ Scoped, not yet detailed.
+Five tiers of tests, ordered by cost. Spend most budget on tiers 1–2 (schema parse + unit). Reserve E2E for golden paths. Tests assert on codes / structure, not rendered text. Hermetic over E2E for bug repro. Verify-first before "fixing" a flaky test.
 
-## Layers
+## For agents
 
-1. **Unit / contract tests** — parse / reject schemas; subscriber sees the right error code. Fast (ms).
-2. **Integration tests** — handler + store + adapter wired in-process. Seconds.
-3. **End-to-end** — real app, real sidecar / real server. Minutes; minimal scope.
-4. **Visual regression** — token / primitive drift catches.
-5. **A11y** — axe + manual screen-reader pass on changed screens.
-6. **Mutation** — once unit is good, mutate to score real coverage.
+### Test layers (target distribution)
 
-## Discipline
+| Tier | Type | Runtime | % of suite |
+|---|---|---|---|
+| 1 | Schema parse / contract | <1 ms | ~30% |
+| 2 | Unit (pure functions, single class) | <10 ms | ~40% |
+| 3 | Integration (handler + store + adapter, in-process) | <500 ms | ~25% |
+| 4 | Visual regression / a11y | seconds | ~4% |
+| 5 | E2E (real app, real services) | minutes | ~1% |
 
-- **Hermetic before E2E.** Reproduce + lock bugs in component tests. E2E is for smoke + golden paths only.
-- **Verify-first.** Before "fixing" a flaky test, check if it was fixed concurrently.
-- **Tests assert on codes, not messages.** Messages are intl-resolved and may change.
-- **Coverage per package.** Aggregate hides bad packages behind good ones.
-- **Reproduce the report, not the description.** A bug report says X; the failing test asserts X verbatim, then is improved.
+Inverted pyramids (mostly E2E) produce flaky, slow suites with poor signal.
 
-## See also
+### Per pillar — Test-phase discipline
 
-- [`../../pillars/quality/README.md`](../../pillars/quality/README.md)
-- [`../../pillars/architecture/error-hierarchy.md`](../../pillars/architecture/error-hierarchy.md) — codes-not-messages convention.
+**Architecture**
+- [ ] Every contract has a parse test (happy + reject).
+- [ ] Every error code is asserted somewhere in the suite (a separate gate scans for `code: "<CODE>"` assertions).
+- [ ] Handler return values are parsed by the result schema (catches handler bugs at boundary).
+
+**Security**
+- [ ] Auth tests: missing `principalId` → `AUTH_REQUIRED`.
+- [ ] Tenancy tests: caller cannot access other-workspace data.
+- [ ] Egress tests: blocked host produces `SECURITY_EGRESS_DENIED`.
+- [ ] Audit tests: privileged action writes intent before execute.
+- [ ] Secrets tests: logger redaction works on known patterns.
+
+**UI-UX**
+- [ ] A11y: axe scan on every changed screen (`@axe-core` in CI).
+- [ ] Visual regression: per-primitive snapshot in default + test brand kit.
+- [ ] Intl parity: every key exists in every shipped locale.
+- [ ] Empty-state coverage: every list surface has at least one empty-state test.
+
+**Quality**
+- [ ] Per-package coverage hits its threshold.
+- [ ] Mutation testing on stable utility modules.
+- [ ] Property-based tests for parsers / serializers / math.
+- [ ] No `it("works")` / `it("test 1")` — names read like sentences.
+
+**Governance**
+- [ ] PR-intent gate passes (manifest matches diff).
+- [ ] ADR / RFC integrity gate passes.
+
+**AI-collaboration**
+- [ ] Verify-first before "fixing" a red signal.
+- [ ] Honest test reporting (failed tests quoted, skipped tests stated).
+
+### Triage protocol — when a test fails
+
+1. **Reproduce locally.** Confirm the failure on your machine.
+2. **Stash + verify red on `origin/main`.** If main is red, the failure is pre-existing — file an issue; do not "fix" it in your branch.
+3. **Determine tier.** Could a lower-tier test pin this? If yes, add the lower-tier test, fix the bug, both turn green.
+4. **Fix.** The fix is the smallest diff that flips the test from red to green without changing other behavior.
+5. **Add a regression test if missing.** If the failure was a real bug not previously tested.
+
+### Hermetic over E2E for bug repro
+
+When a bug is reported:
+
+1. Try to reproduce in a unit test against the suspect module. Pin it.
+2. If that's not enough, integration test wiring stores + handlers in-process.
+3. E2E only if cross-process / browser-only behavior.
+
+A 2-second unit test that fails reliably beats a 60-second E2E that flakes.
+
+### Tests assert on codes, not messages
+
+```ts
+// ✗ wrong — breaks on intl / copy change
+expect(err.message).toContain("not authorized");
+
+// ✓ right
+expect(err.code).toBe("AUTH_FORBIDDEN");
+```
+
+```tsx
+// ✗ wrong — breaks on intl / copy change
+expect(screen.getByText("Save")).toBeInTheDocument();
+
+// ✓ right
+expect(screen.getByRole("button", { name: /save/i })).toBeInTheDocument();
+```
+
+### Determinism
+
+- No file system writes outside per-test temp dirs.
+- No network calls (mock the boundary).
+- No clock drift (inject the clock).
+- No global module state.
+
+A test that passes in isolation and fails in parallel has hidden global state. Fix the test, not the order.
+
+### Common failure modes
+
+- **Inverted pyramid.** Mostly E2E. Slow + flaky. → Push to lower tiers.
+- **Flake "fixed" by `setTimeout`.** Hidden flake. → Find the deterministic signal; `expect.poll()` / `waitFor()`.
+- **Coverage 95% but error codes never asserted.** → Separate gate scans for asserted codes.
+- **Tests share fixtures via mutation.** Order-dependent. → Fresh fixtures per test.
+- **Mock at every layer.** End up testing the mocks. → Mock at the trust boundary.
+
+### Exit criteria
+
+Test is continuous, like Build. Each cycle exits when:
+
+1. New behavior has its test in the same PR.
+2. Coverage thresholds hold.
+3. Suite runs deterministically in CI.
+
+Pre-release adds: full mutation pass, full a11y pass, cold-prod walk of the demo script.
+
+### See also
+
+- [`../../pillars/quality/test-pyramid.md`](../../pillars/quality/test-pyramid.md)
+- [`../../pillars/quality/mutation-testing-pattern.md`](../../pillars/quality/mutation-testing-pattern.md)
+- [`../../pillars/architecture/error-hierarchy.md`](../../pillars/architecture/error-hierarchy.md)
+- [`../../pillars/ui-ux/a11y-checklist.md`](../../pillars/ui-ux/a11y-checklist.md)
