@@ -35,7 +35,7 @@ If you adopt left-to-right (by phase), agents can ramp incrementally. If you ado
 | | Universal | TS-concrete |
 |---|---|---|
 | architecture | ✓ | ✓ |
-| security | ◐ | (stub) |
+| security | ✓ | ✓ |
 | ui-ux | ◐ | (stub) |
 | quality | ✓ | ✓ |
 | governance | ✓ | ✓ |
