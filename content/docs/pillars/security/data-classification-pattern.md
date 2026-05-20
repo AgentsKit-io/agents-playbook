@@ -1,3 +1,8 @@
+---
+title: "Data Classification Pattern"
+description: "How to label every field by sensitivity, then make the labels drive redaction, retention, residency, and access."
+---
+
 # Data Classification Pattern
 
 How to label every field by sensitivity, then make the labels drive redaction, retention, residency, and access.

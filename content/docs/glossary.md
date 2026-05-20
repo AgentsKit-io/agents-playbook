@@ -1,3 +1,8 @@
+---
+title: "Glossary"
+description: "Short definitions for the terms used across this playbook."
+---
+
 # Glossary
 
 Short definitions for the terms used across this playbook.

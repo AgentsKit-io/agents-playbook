@@ -1,3 +1,8 @@
+---
+title: "API Gateway Pattern"
+description: "The edge between clients and your services — what belongs there, what doesn't, and how to keep it from becoming a monolith in disguise."
+---
+
 # API Gateway Pattern
 
 The edge between clients and your services — what belongs there, what doesn't, and how to keep it from becoming a monolith in disguise.

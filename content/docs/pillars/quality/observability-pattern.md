@@ -1,3 +1,8 @@
+---
+title: "Observability Pattern"
+description: "How to know what the system is doing in production, beyond 'tests passed'."
+---
+
 # Observability Pattern
 
 How to know what the system is doing in production, beyond "tests passed".

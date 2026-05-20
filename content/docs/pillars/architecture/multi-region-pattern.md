@@ -1,3 +1,8 @@
+---
+title: "Multi-Region Pattern"
+description: "How to operate across geographic regions for latency, availability, and data sovereignty — without losing your mind."
+---
+
 # Multi-Region Pattern
 
 How to operate across geographic regions for latency, availability, and data sovereignty — without losing your mind.

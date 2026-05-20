@@ -1,3 +1,8 @@
+---
+title: "Concurrent Agent Pattern"
+description: "How to survive — and benefit from — multiple agents working in the same repo at the same time."
+---
+
 # Concurrent Agent Pattern
 
 How to survive — and benefit from — multiple agents working in the same repo at the same time.

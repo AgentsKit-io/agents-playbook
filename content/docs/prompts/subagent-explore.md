@@ -1,3 +1,8 @@
+---
+title: "Sub-agent Recipe — Explore"
+description: "Read-only fan-out search agent. Orchestrator delegates 'find me X' tasks here."
+---
+
 # Sub-agent Recipe — Explore
 
 Read-only fan-out search agent. Orchestrator delegates "find me X" tasks here.

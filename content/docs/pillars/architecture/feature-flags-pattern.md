@@ -1,3 +1,8 @@
+---
+title: "Feature Flags Pattern"
+description: "How to ship code separately from shipping behavior, without accumulating a flag graveyard."
+---
+
 # Feature Flags Pattern
 
 How to ship code separately from shipping behavior, without accumulating a flag graveyard.

@@ -1,3 +1,8 @@
+---
+title: "Memory Pattern"
+description: "How to make agents durably learn from prior sessions without polluting context with chat transcripts."
+---
+
 # Memory Pattern
 
 How to make agents durably learn from prior sessions without polluting context with chat transcripts.

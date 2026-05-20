@@ -1,3 +1,8 @@
+---
+title: "Governance — Universal Principles"
+description: "How multiple contributors — agents and humans — coordinate so the whole sums."
+---
+
 # Governance — Universal Principles
 
 How multiple contributors — agents and humans — coordinate so the whole sums.

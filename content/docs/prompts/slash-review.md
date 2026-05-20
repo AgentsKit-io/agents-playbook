@@ -1,3 +1,8 @@
+---
+title: "Slash Command — /review"
+description: "Multi-agent code review pass on a PR (or current branch)."
+---
+
 # Slash Command — /review
 
 Multi-agent code review pass on a PR (or current branch).

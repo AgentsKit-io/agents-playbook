@@ -1,3 +1,8 @@
+---
+title: "Phase 03 — Build"
+description: "Where most of the agent-augmented work happens. Discipline shifts from 'writing code' to 'stating intent, then verifying output against it'."
+---
+
 # Phase 03 — Build
 
 Where most of the agent-augmented work happens. Discipline shifts from "writing code" to "stating intent, then verifying output against it".

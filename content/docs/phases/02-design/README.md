@@ -1,3 +1,8 @@
+---
+title: "Phase 02 — Design"
+description: "Turn the discover brief into ADRs, RFCs, and a contract package skeleton the build phase can compose against."
+---
+
 # Phase 02 — Design
 
 Turn the discover brief into ADRs, RFCs, and a contract package skeleton the build phase can compose against.

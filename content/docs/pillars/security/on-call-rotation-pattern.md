@@ -1,3 +1,8 @@
+---
+title: "On-Call Rotation Pattern"
+description: "How to keep a system reliable 24/7 without burning out the team that maintains it."
+---
+
 # On-Call Rotation Pattern
 
 How to keep a system reliable 24/7 without burning out the team that maintains it.

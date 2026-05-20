@@ -1,3 +1,8 @@
+---
+title: "Architecture — Universal Principles"
+description: "Stack-agnostic. Applies to any language, any framework."
+---
+
 # Architecture — Universal Principles
 
 Stack-agnostic. Applies to any language, any framework.

@@ -1,3 +1,8 @@
+---
+title: "Phase 05 — Ship"
+description: "How to turn a green main into a release without surprising consumers."
+---
+
 # Phase 05 — Ship
 
 How to turn a green main into a release without surprising consumers.

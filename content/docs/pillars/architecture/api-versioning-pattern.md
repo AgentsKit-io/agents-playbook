@@ -1,3 +1,8 @@
+---
+title: "API Versioning + Deprecation Pattern"
+description: "How to evolve public contracts without surprising consumers."
+---
+
 # API Versioning + Deprecation Pattern
 
 How to evolve public contracts without surprising consumers.

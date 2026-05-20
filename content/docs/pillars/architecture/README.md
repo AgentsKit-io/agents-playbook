@@ -1,3 +1,8 @@
+---
+title: "Pillar — Architecture"
+description: "How to keep a codebase **legible and modular under multi-agent development**."
+---
+
 # Pillar — Architecture
 
 How to keep a codebase **legible and modular under multi-agent development**.

@@ -1,3 +1,8 @@
+---
+title: "Pillar — AI Collaboration"
+description: "How to make an agent productive in your repo on day one and durably good across sessions."
+---
+
 # Pillar — AI Collaboration
 
 How to make an agent productive in your repo on day one and durably good across sessions.

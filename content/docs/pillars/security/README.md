@@ -1,3 +1,8 @@
+---
+title: "Pillar — Security"
+description: "How to build security in from day one when the people writing the code are agents, not a hardened security team."
+---
+
 # Pillar — Security
 
 How to build security in from day one when the people writing the code are agents, not a hardened security team.

@@ -1,3 +1,8 @@
+---
+title: "Performance Budgets Pattern"
+description: "How to keep 'it's fast enough' from drifting into 'why is it slow?'"
+---
+
 # Performance Budgets Pattern
 
 How to keep "it's fast enough" from drifting into "why is it slow?"

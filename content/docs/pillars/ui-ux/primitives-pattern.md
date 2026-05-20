@@ -1,3 +1,8 @@
+---
+title: "Primitives Pattern"
+description: "How to ship a one-package primitives catalog so every screen looks like the same product."
+---
+
 # Primitives Pattern
 
 How to ship a one-package primitives catalog so every screen looks like the same product.

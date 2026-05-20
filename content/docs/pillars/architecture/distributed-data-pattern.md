@@ -1,3 +1,8 @@
+---
+title: "Distributed Data Pattern"
+description: "How to design data layout when one database stops being enough — read replicas, sharding, replication lag, CAP trade-offs, eventual consistency."
+---
+
 # Distributed Data Pattern
 
 How to design data layout when one database stops being enough — read replicas, sharding, replication lag, CAP trade-offs, eventual consistency.

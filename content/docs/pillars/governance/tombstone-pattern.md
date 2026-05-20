@@ -1,3 +1,8 @@
+---
+title: "Tombstone Pattern"
+description: "How to retire a doc, plan, ADR, screen, or package without losing the trail."
+---
+
 # Tombstone Pattern
 
 How to retire a doc, plan, ADR, screen, or package without losing the trail.

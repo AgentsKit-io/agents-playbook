@@ -1,3 +1,8 @@
+---
+title: "Pre-push Pattern"
+description: "The safety net between local changes and CI."
+---
+
 # Pre-push Pattern
 
 The safety net between local changes and CI.

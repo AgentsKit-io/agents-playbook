@@ -1,3 +1,8 @@
+---
+title: "Sanity Pattern"
+description: "The cross-cutting audit that catches what individual gates miss."
+---
+
 # Sanity Pattern
 
 The cross-cutting audit that catches what individual gates miss.

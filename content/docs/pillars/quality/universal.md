@@ -1,3 +1,8 @@
+---
+title: "Quality — Universal Principles"
+description: "How to know agent-produced code works without manually reading every diff."
+---
+
 # Quality — Universal Principles
 
 How to know agent-produced code works without manually reading every diff.

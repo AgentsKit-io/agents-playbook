@@ -1,3 +1,8 @@
+---
+title: "ADR-NNNN — \<Short Title\>"
+description: "- **Status:** Proposed | Accepted | Superseded by ADR-NNNN | Tombstoned"
+---
+
 # ADR-NNNN — \<Short Title\>
 
 - **Status:** Proposed | Accepted | Superseded by ADR-NNNN | Tombstoned

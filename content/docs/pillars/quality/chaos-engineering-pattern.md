@@ -1,3 +1,8 @@
+---
+title: "Chaos Engineering Pattern"
+description: "How to find failure modes before customers do — deliberately, in a controlled way."
+---
+
 # Chaos Engineering Pattern
 
 How to find failure modes before customers do — deliberately, in a controlled way.

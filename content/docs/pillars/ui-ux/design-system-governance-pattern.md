@@ -1,3 +1,8 @@
+---
+title: "Design System Governance Pattern"
+description: "How to keep a design system useful as it grows — without bloat, without dictatorial restrictions, without drift."
+---
+
 # Design System Governance Pattern
 
 How to keep a design system useful as it grows — without bloat, without dictatorial restrictions, without drift.

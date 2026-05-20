@@ -1,3 +1,8 @@
+---
+title: "System Prompt — Implementer"
+description: "Inject as system prompt when the task is building a sub-unit against a finalised plan."
+---
+
 # System Prompt — Implementer
 
 Inject as system prompt when the task is building a sub-unit against a finalised plan.

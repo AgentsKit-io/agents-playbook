@@ -1,3 +1,8 @@
+---
+title: "PR Intent Pattern"
+description: "The manifest that makes a PR's claims verifiable."
+---
+
 # PR Intent Pattern
 
 The manifest that makes a PR's claims verifiable.

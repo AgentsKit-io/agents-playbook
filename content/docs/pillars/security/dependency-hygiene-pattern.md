@@ -1,3 +1,8 @@
+---
+title: "Dependency Hygiene Pattern"
+description: "How to keep your dependency tree healthy across thousands of transitive packages without it becoming a full-time job."
+---
+
 # Dependency Hygiene Pattern
 
 How to keep your dependency tree healthy across thousands of transitive packages without it becoming a full-time job.

@@ -1,3 +1,8 @@
+---
+title: "Container + Kubernetes Security Pattern"
+description: "How to ship containers + run them on Kubernetes without making the runtime an attack surface."
+---
+
 # Container + Kubernetes Security Pattern
 
 How to ship containers + run them on Kubernetes without making the runtime an attack surface.

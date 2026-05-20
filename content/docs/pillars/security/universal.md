@@ -1,3 +1,8 @@
+---
+title: "Security — Universal Principles"
+description: "How to bake security into the codebase from PR #1, when agents (not a hardened security team) write most of it."
+---
+
 # Security — Universal Principles
 
 How to bake security into the codebase from PR #1, when agents (not a hardened security team) write most of it.

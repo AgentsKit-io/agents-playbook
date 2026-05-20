@@ -1,3 +1,8 @@
+---
+title: "Caching + CDN Pattern"
+description: "How to layer caches so the system is fast, cheap, and consistent — three properties at tension."
+---
+
 # Caching + CDN Pattern
 
 How to layer caches so the system is fast, cheap, and consistent — three properties at tension.
