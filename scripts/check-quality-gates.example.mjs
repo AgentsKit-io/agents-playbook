@@ -26,8 +26,14 @@ const GATES = [
   { name: "named-exports",  script: "scripts/check-named-exports.example.mjs",  fast: false },
   { name: "no-any",         script: "scripts/check-no-any.example.mjs",         fast: false },
   { name: "error-raw",      script: "scripts/check-error-raw.example.mjs",      fast: true  },
+  { name: "tokens",         script: "scripts/check-tokens.example.mjs",         fast: false },
+  { name: "native-html",    script: "scripts/check-native-html.example.mjs",    fast: false },
+  { name: "intl",           script: "scripts/check-intl.example.mjs",           fast: false },
+  { name: "secrets",        script: "scripts/check-secrets.example.mjs",        fast: true  },
+  { name: "completeness",   script: "scripts/check-completeness.example.mjs",   fast: false },
+  { name: "adr",            script: "scripts/check-adr.example.mjs",            fast: false },
+  { name: "rfc",            script: "scripts/check-rfc.example.mjs",            fast: false },
   { name: "pr-intent",      script: "scripts/check-pr-intent.example.mjs",      fast: false },
-  // Future gates: tokens, native-html, intl, secrets, completeness, adr, rfc.
 ];
 
 async function loadConfig() {

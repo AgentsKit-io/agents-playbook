@@ -4,9 +4,9 @@ Drop-in reference implementations for the quality + structural gates the pillars
 
 ## Status
 
-◐ 6 reference impls shipped (file-size, named-exports, no-any, error-raw, pr-intent, orchestrator). Remaining gates (tokens, native-html, intl, secrets, completeness, adr, rfc) described in this index for spec-based implementation.
+✓ All 12 gate reference impls shipped + orchestrator. Pure Node 22 ESM, zero deps. Adapt the regexes / paths to your codebase.
 
-Shipped scripts are pure Node 22 ESM, zero deps. Adapt the regexes / paths to your codebase.
+Verified: every script `node --check`-clean. Orchestrator smoke-tested, gates exit 0 on a clean codebase (or produce actionable failures on a populated one).
 
 ## Index
 

@@ -64,5 +64,5 @@ If you adopt left-to-right (by phase), agents can ramp incrementally. If you ado
 
 | Other | Status |
 |---|---|
-| Scripts (gate reference impls) | ◐ 6 of 13 shipped (file-size, named-exports, no-any, error-raw, pr-intent, orchestrator) |
+| Scripts (gate reference impls) | ✓ all 12 gates + orchestrator |
 | Phases (deep content) | ✓ |
