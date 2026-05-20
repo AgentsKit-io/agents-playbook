@@ -1,0 +1,47 @@
+# Pillar — Security
+
+How to build security in from day one when the people writing the code are agents, not a hardened security team.
+
+## Status
+
+◐ Scoped, not yet detailed. Universal layer outlined below; concrete recipes ship in a future session.
+
+## Scope
+
+| Concern | Universal principle | Concrete pattern (TS) |
+|---|---|---|
+| Identity | One signed principal per call; never trust caller-supplied `userId` | `resolveAuthContext(req)` middleware; principal comes from verified session/JWT only |
+| RBAC | Roles → capabilities → resources, persisted, audited | RBAC store with SQLite; capability check at handler entry |
+| Vault | Secrets sealed at rest, sealer is rotatable | Key ring with KMS/HSM sealer; envelope-encrypted secrets |
+| Audit ledger | Append-only, signed batches, Merkle-verifiable | Ed25519-signed audit entries; periodic Merkle anchoring |
+| Egress | Allowlist outbound network access per workspace | `firewall.evaluate(url, ctx)` at every fetch; deny by default |
+| Consent vs elevation | Scoped time-boxed user consent ≠ role escalation | `consent.grant` (scoped) and `access.breakGlass` (role-elevation) are separate contracts |
+| PII | Classification → redaction → retention | PII profiles + redaction at log + storage boundaries |
+| Legal hold | Suspend retention on subject of investigation | Legal-hold flag short-circuits retention GC |
+| DSAR | Subject access / deletion request workflow | DSAR proof-of-completion record signed |
+| Key rotation | Connector creds + sealer keys rotatable without downtime | Versioned keys, dual-write window, audit on rotate |
+| Break-glass | Time-boxed admin elevation with signed audit | `access.breakGlass.{request,list,revoke}` writes signed ledger |
+| Threat model | Documented and revisited per release | `docs/security/threat-model.md`, updated on RFC changes |
+
+## Non-negotiables
+
+1. **No raw secrets in code, env files committed, or logs.** Vault refs only; logs redact known PII keys at the logger.
+2. **Auth defaults to required.** Every contract entry is `requireAuth: true` unless an explicit `false` survives PR review.
+3. **Audit before action.** Privileged operations log to the signed ledger before they execute; rollback if they fail.
+4. **Egress is allowlist, not blocklist.** Default deny.
+5. **Tenancy from the session, never the body.** `orgId` / `workspaceId` is resolved from the verified principal; clients cannot spoof it.
+
+## See also
+
+- [`../architecture/error-hierarchy.md`](../architecture/error-hierarchy.md) — `SecurityError` namespace.
+- [`../governance/README.md`](../governance/README.md) — break-glass + consent audit trail.
+- [`../../templates/`](../../templates/) — ADR + RFC skeletons for security changes.
+
+## Roadmap for this pillar
+
+- `universal.md` — full principle list with failure modes.
+- `rbac-pattern.md` — TS-concrete RBAC implementation.
+- `vault-pattern.md` — sealed-vault + KMS recipe.
+- `audit-ledger-pattern.md` — signed append-only ledger recipe.
+- `egress-firewall-pattern.md` — allowlist enforcement.
+- `threat-model-template.md` — template for per-project threat model.
