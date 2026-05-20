@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Dark-first theme tokens. Fumadocs respects CSS variables on :root. */
+:root {
+  /* Backgrounds */
+  --background: oklch(0.13 0.015 280);
+  --surface-1: oklch(0.16 0.018 280);
+  --surface-2: oklch(0.19 0.020 280);
+  --surface-3: oklch(0.23 0.022 280);
+  --surface-elevated: oklch(0.20 0.024 280);
+
+  /* Text */
+  --foreground: oklch(0.96 0.005 280);
+  --muted-foreground: oklch(0.72 0.020 280);
+  --subtle-foreground: oklch(0.55 0.018 280);
+
+  /* Accent */
+  --accent: oklch(0.72 0.18 295);
+  --accent-strong: oklch(0.78 0.18 295);
+  --accent-foreground: oklch(0.98 0.005 280);
+
+  /* Borders */
+  --border: oklch(0.27 0.020 280);
+  --border-strong: oklch(0.34 0.022 280);
+
+  /* Status */
+  --success: oklch(0.72 0.16 150);
+  --warning: oklch(0.78 0.15 70);
+  --danger: oklch(0.66 0.18 25);
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --duration-slow: 320ms;
+  --ease-emphasized: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* fumadocs default light values; we override forcing dark-first */
+.dark, :root {
+  color-scheme: dark;
+}
+
+html, body {
+  background: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: oklch(0.72 0.18 295 / 0.35);
+  color: var(--foreground);
+}
+
+/* Subtle grid noise on landing hero */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, oklch(0.96 0.005 280 / 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, oklch(0.96 0.005 280 / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Accent text gradient */
+.text-accent-gradient {
+  background: linear-gradient(135deg, oklch(0.85 0.18 295), oklch(0.80 0.18 240));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Hover lift used on cards */
+.card-lift {
+  transition: transform var(--duration-normal) var(--ease-emphasized),
+              border-color var(--duration-normal) var(--ease-emphasized),
+              background-color var(--duration-normal) var(--ease-emphasized);
+}
+.card-lift:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong);
+  background-color: var(--surface-2);
+}
+
+/* fumadocs prose tweaks */
+.prose code {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.375rem;
+  font-size: 0.875em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-lift { transition: none !important; }
+}

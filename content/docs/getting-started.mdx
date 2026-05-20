@@ -1,0 +1,41 @@
+---
+title: Getting started
+description: Adopt the playbook in your project in under an hour.
+---
+
+The playbook is designed to be **adopted incrementally** — you can pull one pillar at a time, copy the templates that fit, and wire the gate scripts as you go.
+
+## 60-minute adoption path
+
+1. **Copy `CLAUDE.md`** (and `AGENTS.md` if you don't already have one) from [templates](/docs/templates) into your repo root. Customise the non-negotiables to your stack.
+2. **Add the `MEMORY.md` index** + a `.agent-memory/` directory. Every lesson learned becomes a one-file memory.
+3. **Pick 2-3 gate scripts** from [scripts](/docs/scripts) — start with `check-file-size`, `check-no-any`, `check-named-exports`. Wire them as a `pnpm check:quality-gates` script.
+4. **Stand up `docs/adr/`** with ADR-0001 (Philosophy) using the [ADR template](/docs/templates/ADR.template).
+5. **Adopt the PR-intent manifest** ([template](/docs/templates/PR-intent.template)) on the next PR.
+
+That's it for day one. Everything else flows from these.
+
+## Per-pillar deeper adoption
+
+| Pillar | Most-impactful first move |
+|---|---|
+| [Architecture](/docs/pillars/architecture) | Modular boundary table in `AGENTS.md` |
+| [Security](/docs/pillars/security) | Threat model skeleton + vault stub |
+| [UI / UX](/docs/pillars/ui-ux) | Tokens + 8-10 primitives in `packages/ui` |
+| [Quality](/docs/pillars/quality) | Gate orchestrator + per-package coverage targets |
+| [Governance](/docs/pillars/governance) | PR-intent gate + tombstone convention |
+| [AI-collaboration](/docs/pillars/ai-collaboration) | `CLAUDE.md` + MEMORY pattern |
+
+## For agents working in adopting repos
+
+If you're an agent landing in a repo that has adopted this playbook:
+
+1. Read `CLAUDE.md` first.
+2. Read `AGENTS.md` to find which package to touch.
+3. Pull the relevant doc from this site via raw URL: `https://agents-playbook.dev/raw/<path>.md`.
+4. Follow the per-pillar discipline.
+5. Update memory when a lesson lands.
+
+## Not adopting wholesale?
+
+That's fine. The playbook is modular. Take what fits; leave the rest. Each pattern doc explains the failure mode it prevents — if you don't have that failure mode, you don't need that pattern.

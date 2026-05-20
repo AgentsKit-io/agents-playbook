@@ -4,7 +4,11 @@
 
 Distilled from ~1 year of agent-driven development on a multi-package TypeScript monorepo, this repo captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from agents like Claude, Cursor, and Copilot.
 
-**Status:** v0 — scaffolding + architecture pillar shipped. See [`matrix.md`](./matrix.md) for the full content map.
+**Live site:** https://agents-playbook.dev (deploy via `pnpm install && pnpm dev`).
+
+The repo is a Next.js + Fumadocs app rendering the playbook content under [`content/docs/`](./content/docs/). Each doc serves a raw `.md` at `/raw/<path>.md` and the full bundle at `/llms-full.txt` for agent retrieval.
+
+**Status:** v0 — full content + fumadocs site. See [`content/docs/matrix.md`](./content/docs/matrix.md) for the content map.
 
 ## Who this is for
 

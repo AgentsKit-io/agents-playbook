@@ -1,0 +1,69 @@
+---
+title: Welcome
+description: The gold-standard playbook for shipping production software with AI coding agents.
+---
+
+The **Agents Playbook** captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from AI coding agents like Claude, Cursor, and Copilot — distilled from a year of agent-driven development on a real production codebase.
+
+## How it's organized
+
+A **matrix of 6 pillars × 6 SDLC phases**. See the [matrix](/docs/matrix) for the cross-reference.
+
+```
+pillars/
+  architecture/        # ADR, RFC, modular monorepo, contracts, errors, ...
+  security/            # RBAC, vault, audit, compliance, AI/LLM safety, ...
+  ui-ux/               # tokens, primitives, intl, a11y, whitelabel, ...
+  quality/             # tests, gates, sanity, observability, FinOps, ...
+  governance/          # PR intent, merge rules, tombstones, ...
+  ai-collaboration/    # CLAUDE.md, MEMORY, sub-agents, slash commands, ...
+
+phases/
+  01-discover/   02-design/   03-build/
+  04-test/       05-ship/     06-operate/
+
+templates/    # ADR, RFC, PR-intent, CLAUDE.md, AGENTS.md, MEMORY.md
+prompts/      # system, sub-agent, slash-command bodies
+scripts/      # gate reference implementations (Node, zero deps)
+```
+
+## Dual mode
+
+Every doc has two layers:
+
+- **TL;DR (human)** — one paragraph for the linear reader.
+- **For agents** — structured sections, fixed shape, optimised for RAG retrieval and system-prompt injection.
+
+## Start here
+
+| Goal | Read |
+|---|---|
+| Adopt in a new project | [Getting started](/docs/getting-started) |
+| Set non-negotiables for agents | [CLAUDE.md template](/docs/templates/CLAUDE.md.template) |
+| Design a package boundary | [Architecture · Universal](/docs/pillars/architecture/universal) |
+| Add an ADR or RFC | [ADR template](/docs/templates/ADR.template) · [RFC template](/docs/templates/RFC.template) |
+| Wire quality gates | [Quality gates](/docs/pillars/quality/quality-gates-pattern) |
+| Train an agent on lessons | [MEMORY template](/docs/templates/MEMORY.md.template) |
+| Multi-agent merge | [Governance](/docs/pillars/governance) |
+
+## The eight non-negotiables
+
+The irreducible kernel. If an agent breaks one of these, fail the PR.
+
+1. **Typed boundaries.** Every external input is parsed by a runtime schema. No `any`.
+2. **Named exports only.** Predictable refactors, predictable agent edits.
+3. **Typed error hierarchy with stable codes.** `AppError` subclasses with `<NS>_<CODE>` constants.
+4. **Centralized logger.** `createLogger(tag)`; never `console.log` in shipped code.
+5. **ADR before architecture change. RFC before breaking a public contract.**
+6. **Ship complete or don't ship.** No `TODO`/`FIXME`/`not implemented` in shipped surfaces.
+7. **Merges sum work, never subtract.** PR intent manifest; `removes:` justified.
+8. **Tokens, intl, primitives.** No raw values in user-facing surfaces.
+
+Each is fully spec'd across the pillars and enforced by gate scripts.
+
+## For agents reading this
+
+- The full bundle in one file: [`/llms-full.txt`](/llms-full.txt).
+- Site map: [`/llms.txt`](/llms.txt).
+- Raw markdown for any doc: replace `/docs/<path>` with `/raw/<path>.md`.
+- ZIP of all docs: [`/playbook-bundle.zip`](/playbook-bundle.zip).

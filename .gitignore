@@ -1,5 +1,19 @@
 node_modules/
-.DS_Store
-*.log
+.next/
+.source/
+out/
 dist/
+build/
 .cache/
+.turbo/
+.vercel/
+
+# Generated bundle
+public/playbook-bundle.zip
+
+*.log
+.DS_Store
+
+# IDE
+.idea/
+.vscode/

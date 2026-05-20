@@ -1,0 +1,17 @@
+{
+  "title": "Playbook",
+  "pages": [
+    "index",
+    "getting-started",
+    "matrix",
+    "---Pillars---",
+    "pillars",
+    "---SDLC Phases---",
+    "phases",
+    "---Resources---",
+    "templates",
+    "prompts",
+    "scripts",
+    "glossary"
+  ]
+}

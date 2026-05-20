@@ -1,0 +1,11 @@
+{
+  "title": "SDLC Phases",
+  "pages": [
+    "01-discover",
+    "02-design",
+    "03-build",
+    "04-test",
+    "05-ship",
+    "06-operate"
+  ]
+}
