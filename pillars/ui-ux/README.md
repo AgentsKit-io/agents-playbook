@@ -48,3 +48,4 @@ How to keep a multi-screen product visually coherent, intl-ready, and accessible
 | [`a11y-checklist.md`](./a11y-checklist.md) | Per-PR a11y checklist |
 | [`accessibility-deep-pattern.md`](./accessibility-deep-pattern.md) | WCAG-AA substance; 5 surfaces; ARIA discipline |
 | [`whitelabel-pattern.md`](./whitelabel-pattern.md) | Per-tenant brand kit + plan presets |
+| [`design-system-governance-pattern.md`](./design-system-governance-pattern.md) | Tier model; contribution path; deprecation; visual regression |

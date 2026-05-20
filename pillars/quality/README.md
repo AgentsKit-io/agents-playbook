@@ -52,3 +52,5 @@ How to know the code works without manually reviewing every agent-produced diff.
 | [`ci-cd-pipeline-pattern.md`](./ci-cd-pipeline-pattern.md) | Commit → prod pipeline; caching; deploy patterns; DB migrations |
 | [`alerting-runbooks-pattern.md`](./alerting-runbooks-pattern.md) | SLO burn-rate alerts; runbook 5-section template; tuning loop |
 | [`cost-optimization-pattern.md`](./cost-optimization-pattern.md) | FinOps; per-tenant attribution; right-sizing; commitments + spot |
+| [`contract-testing-pattern.md`](./contract-testing-pattern.md) | Pact + schema-first; consumer-driven contracts; broker; can-i-deploy |
+| [`product-analytics-experimentation-pattern.md`](./product-analytics-experimentation-pattern.md) | Event tracking; funnels + cohorts; A/B experiments; holdouts |

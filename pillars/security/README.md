@@ -53,4 +53,9 @@ How to build security in from day one when the people writing the code are agent
 | [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) | Paging structure, severity ladder, IMOC, post-mortems |
 | [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) | Minute-by-minute response when a secret leaks |
 | [`compliance-framework-pattern.md`](./compliance-framework-pattern.md) | SOC 2 / ISO / GDPR / HIPAA controls mapped to playbook practices |
+| [`secrets-mgmt-deep-pattern.md`](./secrets-mgmt-deep-pattern.md) | Dynamic secrets; OIDC federation; workload identity; secret-zero |
+| [`session-mgmt-pattern.md`](./session-mgmt-pattern.md) | Hybrid JWT + refresh; cookie flags; step-up; SSO + SCIM |
+| [`rate-limiting-ddos-pattern.md`](./rate-limiting-ddos-pattern.md) | Edge + app rate limits; algorithms; login + signup hardening |
+| [`container-k8s-security-pattern.md`](./container-k8s-security-pattern.md) | Image hygiene; SecurityContext; NetworkPolicy; admission control |
+| [`ai-llm-safety-pattern.md`](./ai-llm-safety-pattern.md) | Prompt injection defense; tool authorization; cost + safety caps |
 | [`threat-model-template.md`](./threat-model-template.md) | Per-project threat-model skeleton |

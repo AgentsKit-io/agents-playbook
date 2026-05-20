@@ -21,6 +21,12 @@ The single biggest predictor of agent quality is whether the codebase tells the 
 | [`distributed-data-pattern.md`](./distributed-data-pattern.md) | Universal | Replicas, sharding, CAP, eventual consistency |
 | [`multi-region-pattern.md`](./multi-region-pattern.md) | Universal | Geo failover, sovereignty, RPO/RTO |
 | [`event-streaming-pattern.md`](./event-streaming-pattern.md) | Universal | Queues, pub/sub, streams; idempotency; DLQ; schema evolution |
+| [`caching-cdn-pattern.md`](./caching-cdn-pattern.md) | Universal | 3 cache tiers; TTL discipline; invalidation; key scoping |
+| [`api-gateway-pattern.md`](./api-gateway-pattern.md) | Universal | Edge ingress; what belongs vs not; BFF; GraphQL federation |
+| [`service-mesh-pattern.md`](./service-mesh-pattern.md) | Universal | Sidecar mTLS; retries; observability; when to adopt vs not |
+| [`platform-engineering-idp-pattern.md`](./platform-engineering-idp-pattern.md) | Universal | Internal Developer Platform; golden paths; DORA metrics |
+| [`iac-pattern.md`](./iac-pattern.md) | Universal | Infrastructure as code; modules; state; drift; cost forecast |
+| [`offline-first-sync-pattern.md`](./offline-first-sync-pattern.md) | Universal | Local persistence; sync protocols; conflict resolution; CRDT |
 
 ## The core idea
 
