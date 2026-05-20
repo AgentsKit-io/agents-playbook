@@ -20,6 +20,7 @@ The single biggest predictor of agent quality is whether the codebase tells the 
 | [`api-versioning-pattern.md`](./api-versioning-pattern.md) | Universal | Breaking-change deprecation lifecycle |
 | [`distributed-data-pattern.md`](./distributed-data-pattern.md) | Universal | Replicas, sharding, CAP, eventual consistency |
 | [`multi-region-pattern.md`](./multi-region-pattern.md) | Universal | Geo failover, sovereignty, RPO/RTO |
+| [`event-streaming-pattern.md`](./event-streaming-pattern.md) | Universal | Queues, pub/sub, streams; idempotency; DLQ; schema evolution |
 
 ## The core idea
 

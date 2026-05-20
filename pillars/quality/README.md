@@ -50,3 +50,5 @@ How to know the code works without manually reviewing every agent-produced diff.
 | [`performance-budgets-pattern.md`](./performance-budgets-pattern.md) | Bundle / latency / resource budgets |
 | [`chaos-engineering-pattern.md`](./chaos-engineering-pattern.md) | Controlled fault injection |
 | [`ci-cd-pipeline-pattern.md`](./ci-cd-pipeline-pattern.md) | Commit → prod pipeline; caching; deploy patterns; DB migrations |
+| [`alerting-runbooks-pattern.md`](./alerting-runbooks-pattern.md) | SLO burn-rate alerts; runbook 5-section template; tuning loop |
+| [`cost-optimization-pattern.md`](./cost-optimization-pattern.md) | FinOps; per-tenant attribution; right-sizing; commitments + spot |

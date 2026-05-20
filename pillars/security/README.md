@@ -52,4 +52,5 @@ How to build security in from day one when the people writing the code are agent
 | [`data-classification-pattern.md`](./data-classification-pattern.md) | Per-field tagging drives redaction, retention, residency |
 | [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) | Paging structure, severity ladder, IMOC, post-mortems |
 | [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) | Minute-by-minute response when a secret leaks |
+| [`compliance-framework-pattern.md`](./compliance-framework-pattern.md) | SOC 2 / ISO / GDPR / HIPAA controls mapped to playbook practices |
 | [`threat-model-template.md`](./threat-model-template.md) | Per-project threat-model skeleton |

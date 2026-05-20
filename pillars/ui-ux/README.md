@@ -43,6 +43,7 @@ How to keep a multi-screen product visually coherent, intl-ready, and accessible
 | [`design-tokens-pattern.md`](./design-tokens-pattern.md) | Color / spacing / motion as named variables |
 | [`primitives-pattern.md`](./primitives-pattern.md) | Shared UI catalog; ban native HTML |
 | [`intl-pattern.md`](./intl-pattern.md) | Every visible string keyed |
+| [`i18n-deep-pattern.md`](./i18n-deep-pattern.md) | ICU MessageFormat; plurals/gender; Intl.* APIs; RTL; pseudo-locale |
 | [`empty-states-pattern.md`](./empty-states-pattern.md) | Cause-typed empty states with next-step CTA |
 | [`a11y-checklist.md`](./a11y-checklist.md) | Per-PR a11y checklist |
 | [`accessibility-deep-pattern.md`](./accessibility-deep-pattern.md) | WCAG-AA substance; 5 surfaces; ARIA discipline |
