@@ -84,7 +84,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <RootProvider
           theme={{ defaultTheme: "dark", forcedTheme: "dark" }}
-          search={{ options: { type: "fetch" } }}
+          
         >
           {children}
         </RootProvider>
