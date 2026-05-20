@@ -371,13 +371,13 @@ function AgentFriendly() {
           </div>
           <div className="rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-5 font-mono text-[12.5px] leading-relaxed text-[color:var(--muted-foreground)]">
             <pre>{`# fetch raw markdown from any doc
-curl https://agents-playbook.dev/raw/pillars/architecture/universal.md
+curl https://playbook.agentskit.io/raw/pillars/architecture/universal.md
 
 # one-shot bundle for RAG indexing
-curl https://agents-playbook.dev/llms-full.txt
+curl https://playbook.agentskit.io/llms-full.txt
 
 # zip everything
-curl -O https://agents-playbook.dev/playbook-bundle.zip`}</pre>
+curl -O https://playbook.agentskit.io/playbook-bundle.zip`}</pre>
           </div>
         </div>
       </div>

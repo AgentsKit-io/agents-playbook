@@ -8,7 +8,7 @@ import { existsSync } from "node:fs";
 export const dynamic = "force-static";
 
 const ROOT = join(process.cwd(), "content", "docs");
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://agents-playbook.dev";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 
 async function collect(): Promise<{ path: string; body: string }[]> {
   const out: { path: string; body: string }[] = [];

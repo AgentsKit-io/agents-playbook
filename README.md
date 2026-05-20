@@ -4,7 +4,7 @@
 
 Distilled from ~1 year of agent-driven development on a multi-package TypeScript monorepo, this repo captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from agents like Claude, Cursor, and Copilot.
 
-**Live site:** https://agents-playbook.dev (deploy via `pnpm install && pnpm dev`).
+**Live site:** https://playbook.agentskit.io (deploy via `pnpm install && pnpm dev`).
 
 The repo is a Next.js + Fumadocs app rendering the playbook content under [`content/docs/`](./content/docs/). Each doc serves a raw `.md` at `/raw/<path>.md` and the full bundle at `/llms-full.txt` for agent retrieval.
 
@@ -19,7 +19,7 @@ Two audiences, every doc:
 
 ## How content is organized
 
-Matrix of **6 pillars × 6 SDLC phases**. See [`matrix.md`](./matrix.md) for the cross-reference.
+Matrix of **6 pillars × 6 SDLC phases**. See [`matrix.md`](./content/docs/matrix.md) for the cross-reference.
 
 ```
 pillars/
@@ -52,13 +52,13 @@ Pick the layer that matches your codebase. The universal layer is the contract; 
 
 | Goal | Read |
 |---|---|
-| Adopt this playbook in a new project | [`phases/01-discover/README.md`](./phases/01-discover/README.md) → [`templates/CLAUDE.md.template.md`](./templates/CLAUDE.md.template.md) |
-| Set non-negotiables for agents | [`templates/CLAUDE.md.template.md`](./templates/CLAUDE.md.template.md), [`pillars/governance/README.md`](./pillars/governance/README.md) |
-| Design a package boundary | [`pillars/architecture/universal.md`](./pillars/architecture/universal.md) |
-| Add an ADR or RFC | [`templates/ADR.template.md`](./templates/ADR.template.md), [`templates/RFC.template.md`](./templates/RFC.template.md) |
-| Wire quality gates | [`pillars/quality/README.md`](./pillars/quality/README.md), [`scripts/`](./scripts/) |
-| Train an agent on lessons | [`templates/MEMORY.md.template.md`](./templates/MEMORY.md.template.md), [`prompts/`](./prompts/) |
-| Run a multi-agent merge | [`pillars/governance/README.md`](./pillars/governance/README.md) (Agent Merge Rules) |
+| Adopt this playbook in a new project | [`phases/01-discover/README.md`](./content/docs/phases/01-discover/README.md) → [`templates/CLAUDE.md.template.md`](./content/docs/templates/CLAUDE.md.template.md) |
+| Set non-negotiables for agents | [`templates/CLAUDE.md.template.md`](./content/docs/templates/CLAUDE.md.template.md), [`pillars/governance/README.md`](./content/docs/pillars/governance/README.md) |
+| Design a package boundary | [`pillars/architecture/universal.md`](./content/docs/pillars/architecture/universal.md) |
+| Add an ADR or RFC | [`templates/ADR.template.md`](./content/docs/templates/ADR.template.md), [`templates/RFC.template.md`](./content/docs/templates/RFC.template.md) |
+| Wire quality gates | [`pillars/quality/README.md`](./content/docs/pillars/quality/README.md), [`scripts/`](./content/docs/scripts/) |
+| Train an agent on lessons | [`templates/MEMORY.md.template.md`](./content/docs/templates/MEMORY.md.template.md), [`prompts/`](./content/docs/prompts/) |
+| Run a multi-agent merge | [`pillars/governance/README.md`](./content/docs/pillars/governance/README.md) (Agent Merge Rules) |
 
 ## The eight non-negotiables (gold-standard core)
 
@@ -73,7 +73,7 @@ The full canon lives across the pillars; this is the irreducible kernel. If an a
 7. **Merges sum work, never subtract.** Every PR has an intent manifest; removing another author's exported symbol requires explicit `removes:` justification.
 8. **Tokens, intl, primitives — no raw values in user-facing surfaces.** Design tokens for color/spacing, intl for every visible string, shared primitives instead of bare `<button>`/`<input>`.
 
-Each is fully spec'd in the pillars and enforced by the gate scripts in [`scripts/`](./scripts/).
+Each is fully spec'd in the pillars and enforced by the gate scripts in [`scripts/`](./content/docs/scripts/).
 
 ## How this playbook was earned
 

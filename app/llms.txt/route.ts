@@ -8,7 +8,7 @@ import { existsSync } from "node:fs";
 export const dynamic = "force-static";
 
 const ROOT = join(process.cwd(), "content", "docs");
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://agents-playbook.dev";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 
 type Doc = { url: string; rawUrl: string; title: string; description: string };
 

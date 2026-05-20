@@ -16,7 +16,7 @@ const mono = JetBrains_Mono({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://agents-playbook.dev";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 const TITLE = "Agents Playbook";
 const DESCRIPTION =
   "The gold-standard playbook for shipping production software with AI coding agents — pillars, patterns, prompts, and gates earned from real production.";

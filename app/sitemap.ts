@@ -4,7 +4,7 @@ import { join } from "node:path";
 import { existsSync } from "node:fs";
 
 const ROOT = join(process.cwd(), "content", "docs");
-const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://agents-playbook.dev";
+const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 
 async function collectDocs(): Promise<string[]> {
   const out: string[] = [];
