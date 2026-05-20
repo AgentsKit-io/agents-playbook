@@ -12,10 +12,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "fumadocs-core": "^15.0.0",
-    "fumadocs-mdx": "^11.0.0",
-    "fumadocs-openapi": "^7.0.0",
-    "fumadocs-ui": "^15.0.0",
+    "fumadocs-core": "15.6.5",
+    "fumadocs-mdx": "11.6.4",
+    "fumadocs-ui": "15.6.5",
     "lucide-react": "^0.460.0",
     "next": "^15.1.0",
     "react": "^19.0.0",
