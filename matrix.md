@@ -38,7 +38,7 @@ If you adopt left-to-right (by phase), agents can ramp incrementally. If you ado
 | security | ◐ | (stub) |
 | ui-ux | ◐ | (stub) |
 | quality | ◐ | (stub) |
-| governance | ◐ | (stub) |
+| governance | ✓ | ✓ |
 | ai-collaboration | ✓ | ✓ |
 
 | Phase | Status |
