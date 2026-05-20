@@ -69,10 +69,8 @@ html, body {
   background-image: linear-gradient(135deg, oklch(0.72 0.18 295), oklch(0.68 0.18 240));
 }
 
-@utility hover\:bg-accent-gradient-hover {
-  &:hover {
-    background-image: linear-gradient(135deg, oklch(0.78 0.18 295), oklch(0.74 0.18 240));
-  }
+@utility bg-accent-gradient-hover {
+  background-image: linear-gradient(135deg, oklch(0.78 0.18 295), oklch(0.74 0.18 240));
 }
 
 @utility shadow-glow-purple {
