@@ -15,6 +15,11 @@ The single biggest predictor of agent quality is whether the codebase tells the 
 | [`contracts-zod-pattern.md`](./contracts-zod-pattern.md) | TS-concrete | Designing JSON-RPC / HTTP / IPC boundaries |
 | [`error-hierarchy.md`](./error-hierarchy.md) | Universal + TS | Designing the error model |
 | [`file-size-budget.md`](./file-size-budget.md) | Universal + TS | Enforcing reviewability |
+| [`anti-overengineering.md`](./anti-overengineering.md) | Universal | Resisting agent default-to-abstract |
+| [`feature-flags-pattern.md`](./feature-flags-pattern.md) | Universal + TS | Decoupling deploy from release |
+| [`api-versioning-pattern.md`](./api-versioning-pattern.md) | Universal | Breaking-change deprecation lifecycle |
+| [`distributed-data-pattern.md`](./distributed-data-pattern.md) | Universal | Replicas, sharding, CAP, eventual consistency |
+| [`multi-region-pattern.md`](./multi-region-pattern.md) | Universal | Geo failover, sovereignty, RPO/RTO |
 
 ## The core idea
 

@@ -37,11 +37,16 @@ How to build security in from day one when the people writing the code are agent
 - [`../governance/README.md`](../governance/README.md) — break-glass + consent audit trail.
 - [`../../templates/`](../../templates/) — ADR + RFC skeletons for security changes.
 
-## Roadmap for this pillar
+## Documents in this pillar
 
-- `universal.md` — full principle list with failure modes.
-- `rbac-pattern.md` — TS-concrete RBAC implementation.
-- `vault-pattern.md` — sealed-vault + KMS recipe.
-- `audit-ledger-pattern.md` — signed append-only ledger recipe.
-- `egress-firewall-pattern.md` — allowlist enforcement.
-- `threat-model-template.md` — template for per-project threat model.
+| Doc | Read when |
+|---|---|
+| [`universal.md`](./universal.md) | First read; the 10 non-negotiables |
+| [`rbac-pattern.md`](./rbac-pattern.md) | Designing role / capability / scope model |
+| [`vault-pattern.md`](./vault-pattern.md) | Storing secrets; rotation; sealer |
+| [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) | Append-only signed ledger for privileged actions |
+| [`egress-firewall-pattern.md`](./egress-firewall-pattern.md) | Outbound network allowlist |
+| [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) | SBOM, CVE triage, supply-chain attacks, signed releases |
+| [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md) | Tenant data isolation, noisy-neighbor, cell-based deploy |
+| [`data-classification-pattern.md`](./data-classification-pattern.md) | Per-field tagging drives redaction, retention, residency |
+| [`threat-model-template.md`](./threat-model-template.md) | Per-project threat-model skeleton |

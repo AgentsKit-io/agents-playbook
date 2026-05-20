@@ -36,11 +36,16 @@ How to know the code works without manually reviewing every agent-produced diff.
 - [`../governance/README.md`](../governance/README.md) — PR-intent ties tests to claims.
 - [`../../scripts/`](../../scripts/) — gate reference impls.
 
-## Roadmap
+## Documents in this pillar
 
-- `universal.md`
-- `test-pyramid.md`
-- `quality-gates-pattern.md`
-- `sanity-pattern.md`
-- `mutation-testing-pattern.md`
-- `pre-push-pattern.md`
+| Doc | Read when |
+|---|---|
+| [`universal.md`](./universal.md) | First read; the 9 non-negotiables |
+| [`test-pyramid.md`](./test-pyramid.md) | Test-tier distribution + escalation |
+| [`quality-gates-pattern.md`](./quality-gates-pattern.md) | Structural gate suite + orchestrator |
+| [`pre-push-pattern.md`](./pre-push-pattern.md) | Three-tier hook split |
+| [`sanity-pattern.md`](./sanity-pattern.md) | Cross-cutting audit |
+| [`mutation-testing-pattern.md`](./mutation-testing-pattern.md) | Beyond coverage |
+| [`observability-pattern.md`](./observability-pattern.md) | Metrics / logs / traces / SLOs |
+| [`performance-budgets-pattern.md`](./performance-budgets-pattern.md) | Bundle / latency / resource budgets |
+| [`chaos-engineering-pattern.md`](./chaos-engineering-pattern.md) | Controlled fault injection |
