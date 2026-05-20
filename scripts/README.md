@@ -4,7 +4,9 @@ Drop-in reference implementations for the quality + structural gates the pillars
 
 ## Status
 
-◐ Scoped. Reference impls ship in a future session. Each gate is described enough here that an agent can implement it from spec.
+◐ 6 reference impls shipped (file-size, named-exports, no-any, error-raw, pr-intent, orchestrator). Remaining gates (tokens, native-html, intl, secrets, completeness, adr, rfc) described in this index for spec-based implementation.
+
+Shipped scripts are pure Node 22 ESM, zero deps. Adapt the regexes / paths to your codebase.
 
 ## Index
 
