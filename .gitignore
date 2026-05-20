@@ -17,3 +17,4 @@ public/playbook-bundle.zip
 # IDE
 .idea/
 .vscode/
+.vercel
