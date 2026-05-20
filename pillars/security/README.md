@@ -47,6 +47,9 @@ How to build security in from day one when the people writing the code are agent
 | [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) | Append-only signed ledger for privileged actions |
 | [`egress-firewall-pattern.md`](./egress-firewall-pattern.md) | Outbound network allowlist |
 | [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) | SBOM, CVE triage, supply-chain attacks, signed releases |
+| [`dependency-hygiene-pattern.md`](./dependency-hygiene-pattern.md) | Add / update / remove dependency lifecycle, transitive risk |
 | [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md) | Tenant data isolation, noisy-neighbor, cell-based deploy |
 | [`data-classification-pattern.md`](./data-classification-pattern.md) | Per-field tagging drives redaction, retention, residency |
+| [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) | Paging structure, severity ladder, IMOC, post-mortems |
+| [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) | Minute-by-minute response when a secret leaks |
 | [`threat-model-template.md`](./threat-model-template.md) | Per-project threat-model skeleton |

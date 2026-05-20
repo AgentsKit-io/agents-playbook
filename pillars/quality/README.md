@@ -49,3 +49,4 @@ How to know the code works without manually reviewing every agent-produced diff.
 | [`observability-pattern.md`](./observability-pattern.md) | Metrics / logs / traces / SLOs |
 | [`performance-budgets-pattern.md`](./performance-budgets-pattern.md) | Bundle / latency / resource budgets |
 | [`chaos-engineering-pattern.md`](./chaos-engineering-pattern.md) | Controlled fault injection |
+| [`ci-cd-pipeline-pattern.md`](./ci-cd-pipeline-pattern.md) | Commit → prod pipeline; caching; deploy patterns; DB migrations |
