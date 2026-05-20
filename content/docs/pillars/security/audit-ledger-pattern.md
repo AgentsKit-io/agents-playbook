@@ -1,6 +1,6 @@
 ---
-title: "Audit Ledger Pattern"
-description: "How to prove who did what when, in a way that survives compromise."
+title: 'Audit Ledger Pattern'
+description: 'How to prove who did what when, in a way that survives compromise.'
 ---
 
 # Audit Ledger Pattern

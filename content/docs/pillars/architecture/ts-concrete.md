@@ -1,6 +1,6 @@
 ---
-title: "Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)"
-description: "Copy-paste-ready recipes that implement [`universal.md`](./universal.md) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year."
+title: 'Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)'
+description: 'Copy-paste-ready recipes that implement [`universal.md`](./universal.md) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.'
 ---
 
 # Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)

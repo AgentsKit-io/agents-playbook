@@ -1,6 +1,6 @@
 ---
-title: "Architecture — Universal Principles"
-description: "Stack-agnostic. Applies to any language, any framework."
+title: 'Architecture — Universal Principles'
+description: 'Stack-agnostic. Applies to any language, any framework.'
 ---
 
 # Architecture — Universal Principles

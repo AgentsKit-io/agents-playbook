@@ -1,6 +1,6 @@
 ---
-title: "Secrets-Leak Post-Mortem Playbook"
-description: "When a secret leaks — git history, log, screenshot, public artefact — what to do, in what order, within what timeline."
+title: 'Secrets-Leak Post-Mortem Playbook'
+description: 'When a secret leaks — git history, log, screenshot, public artefact — what to do, in what order, within what timeline.'
 ---
 
 # Secrets-Leak Post-Mortem Playbook

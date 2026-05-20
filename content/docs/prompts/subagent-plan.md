@@ -1,6 +1,6 @@
 ---
-title: "Sub-agent Recipe — Plan"
-description: "Designs a step-by-step implementation plan from a task description and codebase context. Does not implement."
+title: 'Sub-agent Recipe — Plan'
+description: 'Designs a step-by-step implementation plan from a task description and codebase context. Does not implement.'
 ---
 
 # Sub-agent Recipe — Plan

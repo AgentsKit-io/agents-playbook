@@ -1,6 +1,6 @@
 ---
-title: "CI/CD Pipeline Pattern"
-description: "How to wire continuous integration + continuous delivery so the path from commit to production is short, verifiable, reversible, and boring."
+title: 'CI/CD Pipeline Pattern'
+description: 'How to wire continuous integration + continuous delivery so the path from commit to production is short, verifiable, reversible, and boring.'
 ---
 
 # CI/CD Pipeline Pattern

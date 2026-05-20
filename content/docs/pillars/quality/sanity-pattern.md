@@ -1,6 +1,6 @@
 ---
-title: "Sanity Pattern"
-description: "The cross-cutting audit that catches what individual gates miss."
+title: 'Sanity Pattern'
+description: 'The cross-cutting audit that catches what individual gates miss.'
 ---
 
 # Sanity Pattern

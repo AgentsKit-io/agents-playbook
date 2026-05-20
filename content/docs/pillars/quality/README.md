@@ -1,6 +1,6 @@
 ---
-title: "Pillar — Quality"
-description: "How to know the code works without manually reviewing every agent-produced diff."
+title: 'Pillar — Quality'
+description: 'How to know the code works without manually reviewing every agent-produced diff.'
 ---
 
 # Pillar — Quality

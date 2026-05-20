@@ -1,6 +1,6 @@
 ---
-title: "Mutation Testing Pattern"
-description: "How to score whether your unit tests actually catch bugs, beyond what coverage tells you."
+title: 'Mutation Testing Pattern'
+description: 'How to score whether your unit tests actually catch bugs, beyond what coverage tells you.'
 ---
 
 # Mutation Testing Pattern

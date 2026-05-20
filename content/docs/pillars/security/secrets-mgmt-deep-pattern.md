@@ -1,6 +1,6 @@
 ---
-title: "Secrets Management Deep Pattern"
-description: "Beyond `vault-pattern.md` — operational specifics: dynamic secrets, short-lived credentials, secret-zero, secret-less architectures, OIDC federation."
+title: 'Secrets Management Deep Pattern'
+description: 'Beyond `vault-pattern.md` — operational specifics: dynamic secrets, short-lived credentials, secret-zero, secret-less architectures, OIDC federation.'
 ---
 
 # Secrets Management Deep Pattern

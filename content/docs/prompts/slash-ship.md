@@ -1,6 +1,6 @@
 ---
-title: "Slash Command — /ship"
-description: "Run the release-gate checklist. Does not actually release — produces the readiness verdict."
+title: 'Slash Command — /ship'
+description: 'Run the release-gate checklist. Does not actually release — produces the readiness verdict.'
 ---
 
 # Slash Command — /ship

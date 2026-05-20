@@ -1,6 +1,6 @@
 ---
-title: "Product Analytics + Experimentation Pattern"
-description: "How to measure what users do, run experiments cleanly, and let data drive product decisions — without inviting bias or noise."
+title: 'Product Analytics + Experimentation Pattern'
+description: 'How to measure what users do, run experiments cleanly, and let data drive product decisions — without inviting bias or noise.'
 ---
 
 # Product Analytics + Experimentation Pattern

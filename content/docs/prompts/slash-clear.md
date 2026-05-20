@@ -1,6 +1,6 @@
 ---
-title: "Slash Command — /clear"
-description: "Reset session context cleanly without losing persistent memory."
+title: 'Slash Command — /clear'
+description: 'Reset session context cleanly without losing persistent memory.'
 ---
 
 # Slash Command — /clear

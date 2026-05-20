@@ -1,6 +1,6 @@
 ---
-title: "Slash Command — /goal"
-description: "Set a session goal with an explicit exit condition. Stops only when condition holds."
+title: 'Slash Command — /goal'
+description: 'Set a session goal with an explicit exit condition. Stops only when condition holds.'
 ---
 
 # Slash Command — /goal

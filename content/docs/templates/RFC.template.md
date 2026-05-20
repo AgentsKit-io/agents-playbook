@@ -1,6 +1,6 @@
 ---
-title: "RFC-NNNN — \<Short Title\>"
-description: "- **Status:** Draft | Open | Final-Comment-Period | Accepted | Rejected | Withdrawn"
+title: 'RFC-NNNN — <Short Title>'
+description: '- **Status:** Draft | Open | Final-Comment-Period | Accepted | Rejected | Withdrawn'
 ---
 
 # RFC-NNNN — \<Short Title\>

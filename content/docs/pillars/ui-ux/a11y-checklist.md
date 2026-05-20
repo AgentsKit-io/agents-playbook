@@ -1,6 +1,6 @@
 ---
-title: "Accessibility Checklist"
-description: "What every shipped surface passes before merge, and how to prove it."
+title: 'Accessibility Checklist'
+description: 'What every shipped surface passes before merge, and how to prove it.'
 ---
 
 # Accessibility Checklist

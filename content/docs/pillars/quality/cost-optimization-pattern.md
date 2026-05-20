@@ -1,6 +1,6 @@
 ---
-title: "Cost Optimization Pattern (FinOps)"
-description: "How to control cloud spend without micromanaging every commit."
+title: 'Cost Optimization Pattern (FinOps)'
+description: 'How to control cloud spend without micromanaging every commit.'
 ---
 
 # Cost Optimization Pattern (FinOps)

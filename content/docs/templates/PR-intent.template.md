@@ -1,6 +1,6 @@
 ---
-title: "PR Intent Manifest"
-description: "Embed this block in every PR description. A gate parses it and verifies that the diff matches the claims."
+title: 'PR Intent Manifest'
+description: 'Embed this block in every PR description. A gate parses it and verifies that the diff matches the claims.'
 ---
 
 # PR Intent Manifest

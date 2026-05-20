@@ -1,6 +1,6 @@
 ---
-title: "Anti-Overengineering"
-description: "How to keep agents (and engineers) from building three layers of abstraction for what would have been ten lines of code."
+title: 'Anti-Overengineering'
+description: 'How to keep agents (and engineers) from building three layers of abstraction for what would have been ten lines of code.'
 ---
 
 # Anti-Overengineering

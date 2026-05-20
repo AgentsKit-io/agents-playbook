@@ -1,6 +1,6 @@
 ---
-title: "Intl Pattern"
-description: "How to never ship hardcoded user-visible strings, so the next locale is configuration, not a sweep."
+title: 'Intl Pattern'
+description: 'How to never ship hardcoded user-visible strings, so the next locale is configuration, not a sweep.'
 ---
 
 # Intl Pattern

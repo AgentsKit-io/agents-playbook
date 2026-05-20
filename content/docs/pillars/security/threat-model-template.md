@@ -1,6 +1,6 @@
 ---
-title: "Threat Model Template"
-description: "Skeleton for the per-project threat model doc. Lives at `docs/security/threat-model.md`. Revisited every release."
+title: 'Threat Model Template'
+description: 'Skeleton for the per-project threat model doc. Lives at `docs/security/threat-model.md`. Revisited every release.'
 ---
 
 # Threat Model Template

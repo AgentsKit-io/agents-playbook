@@ -1,6 +1,6 @@
 ---
-title: "Infrastructure as Code (IaC) Pattern"
-description: "How to define + version + review + apply infrastructure as code, instead of clicking around cloud consoles."
+title: 'Infrastructure as Code (IaC) Pattern'
+description: 'How to define + version + review + apply infrastructure as code, instead of clicking around cloud consoles.'
 ---
 
 # Infrastructure as Code (IaC) Pattern

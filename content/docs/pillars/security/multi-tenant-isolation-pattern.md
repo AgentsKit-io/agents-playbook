@@ -1,6 +1,6 @@
 ---
-title: "Multi-Tenant Isolation Pattern"
-description: "How to host many customers in one system without one customer leaking, blocking, or paying for another."
+title: 'Multi-Tenant Isolation Pattern'
+description: 'How to host many customers in one system without one customer leaking, blocking, or paying for another.'
 ---
 
 # Multi-Tenant Isolation Pattern

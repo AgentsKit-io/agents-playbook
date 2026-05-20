@@ -1,6 +1,6 @@
 ---
-title: "Accessibility Deep Pattern"
-description: "Beyond the per-PR checklist — the substance of WCAG-AA conformance, the failure modes that matter, the testing discipline that catches what automation cannot."
+title: 'Accessibility Deep Pattern'
+description: 'Beyond the per-PR checklist — the substance of WCAG-AA conformance, the failure modes that matter, the testing discipline that catches what automation cannot.'
 ---
 
 # Accessibility Deep Pattern

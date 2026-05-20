@@ -1,6 +1,6 @@
 ---
-title: "Vault Pattern"
-description: "How to store secrets so a leaked log line, a stolen disk, or a curious agent does not compromise the system."
+title: 'Vault Pattern'
+description: 'How to store secrets so a leaked log line, a stolen disk, or a curious agent does not compromise the system.'
 ---
 
 # Vault Pattern

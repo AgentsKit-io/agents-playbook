@@ -1,6 +1,6 @@
 ---
-title: "Sub-agent Pattern"
-description: "How to delegate scoped tasks to specialist agents so the orchestrator stays focused."
+title: 'Sub-agent Pattern'
+description: 'How to delegate scoped tasks to specialist agents so the orchestrator stays focused.'
 ---
 
 # Sub-agent Pattern

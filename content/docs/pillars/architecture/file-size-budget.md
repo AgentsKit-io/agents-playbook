@@ -1,6 +1,6 @@
 ---
-title: "File-size Budget"
-description: "How to keep files reviewable when agents write most of the code."
+title: 'File-size Budget'
+description: 'How to keep files reviewable when agents write most of the code.'
 ---
 
 # File-size Budget

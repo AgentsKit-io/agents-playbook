@@ -1,6 +1,6 @@
 ---
-title: "MEMORY pattern"
-description: "Persistent agent memory survives between sessions. The pattern: **one fact per file**, plus an index file."
+title: 'MEMORY pattern'
+description: 'Persistent agent memory survives between sessions. The pattern: **one fact per file**, plus an index file.'
 ---
 
 # MEMORY pattern

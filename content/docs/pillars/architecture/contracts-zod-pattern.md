@@ -1,6 +1,6 @@
 ---
-title: "Contracts — Zod Method Registry Pattern"
-description: "TS-concrete recipe for a typed JSON-RPC / HTTP / IPC boundary. Scales to several hundred methods across dozens of namespaces in a real production codebase."
+title: 'Contracts — Zod Method Registry Pattern'
+description: 'TS-concrete recipe for a typed JSON-RPC / HTTP / IPC boundary. Scales to several hundred methods across dozens of namespaces in a real production codebase.'
 ---
 
 # Contracts — Zod Method Registry Pattern

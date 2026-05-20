@@ -1,6 +1,6 @@
 ---
-title: "Phase 04 — Test"
-description: "How 'tests pass' stops being a feeling and starts being a contract."
+title: 'Phase 04 — Test'
+description: 'How ''tests pass'' stops being a feeling and starts being a contract.'
 ---
 
 # Phase 04 — Test

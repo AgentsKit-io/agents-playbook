@@ -1,6 +1,6 @@
 ---
-title: "Rate Limiting + DDoS Protection Pattern"
-description: "How to absorb traffic spikes — both benign (popular feature) and malicious (DDoS / abuse) — without breaking for legitimate users."
+title: 'Rate Limiting + DDoS Protection Pattern'
+description: 'How to absorb traffic spikes — both benign (popular feature) and malicious (DDoS / abuse) — without breaking for legitimate users.'
 ---
 
 # Rate Limiting + DDoS Protection Pattern

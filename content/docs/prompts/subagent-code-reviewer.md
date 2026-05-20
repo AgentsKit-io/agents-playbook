@@ -1,6 +1,6 @@
 ---
-title: "Sub-agent Recipe — Code Reviewer"
-description: "Confidence-filtered review pass on a diff. Returns issues; does not approve / merge."
+title: 'Sub-agent Recipe — Code Reviewer'
+description: 'Confidence-filtered review pass on a diff. Returns issues; does not approve / merge.'
 ---
 
 # Sub-agent Recipe — Code Reviewer

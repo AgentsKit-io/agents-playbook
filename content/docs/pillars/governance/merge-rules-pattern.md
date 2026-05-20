@@ -1,6 +1,6 @@
 ---
-title: "Merge Rules Pattern"
-description: "How to resolve conflicts so the merge sums work instead of subtracting it."
+title: 'Merge Rules Pattern'
+description: 'How to resolve conflicts so the merge sums work instead of subtracting it.'
 ---
 
 # Merge Rules Pattern

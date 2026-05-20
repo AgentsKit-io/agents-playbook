@@ -1,6 +1,6 @@
 ---
-title: "Sub-agent Recipe — Code Explorer"
-description: "Deep-trace agent. Maps execution paths, dependencies, and abstraction layers across a feature so the orchestrator can reason about a change."
+title: 'Sub-agent Recipe — Code Explorer'
+description: 'Deep-trace agent. Maps execution paths, dependencies, and abstraction layers across a feature so the orchestrator can reason about a change.'
 ---
 
 # Sub-agent Recipe — Code Explorer

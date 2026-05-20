@@ -1,6 +1,6 @@
 ---
-title: "Quality Gates Pattern"
-description: "How to bundle structural rules into one fast command an agent runs before every push."
+title: 'Quality Gates Pattern'
+description: 'How to bundle structural rules into one fast command an agent runs before every push.'
 ---
 
 # Quality Gates Pattern

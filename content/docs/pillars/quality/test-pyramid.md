@@ -1,6 +1,6 @@
 ---
-title: "Test Pyramid"
-description: "How to mix test types so the cheap ones catch most bugs and the expensive ones cover what only they can."
+title: 'Test Pyramid'
+description: 'How to mix test types so the cheap ones catch most bugs and the expensive ones cover what only they can.'
 ---
 
 # Test Pyramid

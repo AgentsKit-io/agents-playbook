@@ -1,6 +1,6 @@
 ---
-title: "Phased PR Pattern"
-description: "How to ship initiatives too big for one PR without ending up with a long-lived branch hell."
+title: 'Phased PR Pattern'
+description: 'How to ship initiatives too big for one PR without ending up with a long-lived branch hell.'
 ---
 
 # Phased PR Pattern

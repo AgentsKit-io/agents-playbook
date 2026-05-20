@@ -1,6 +1,6 @@
 ---
-title: "Phase 05 — Ship"
-description: "How to turn a green main into a release without surprising consumers."
+title: 'Phase 05 — Ship'
+description: 'How to turn a green main into a release without surprising consumers.'
 ---
 
 # Phase 05 — Ship

@@ -1,6 +1,6 @@
 ---
-title: "Compliance Framework Pattern"
-description: "How to map SOC 2 / ISO 27001 / GDPR / HIPAA controls onto your codebase + ops, so audits are evidence-driven, not theatre."
+title: 'Compliance Framework Pattern'
+description: 'How to map SOC 2 / ISO 27001 / GDPR / HIPAA controls onto your codebase + ops, so audits are evidence-driven, not theatre.'
 ---
 
 # Compliance Framework Pattern

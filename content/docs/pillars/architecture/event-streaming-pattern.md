@@ -1,6 +1,6 @@
 ---
-title: "Event Streaming Pattern"
-description: "How to design async, decoupled communication via queues, pub/sub, and event streams — without losing events, double-processing, or stalling consumers."
+title: 'Event Streaming Pattern'
+description: 'How to design async, decoupled communication via queues, pub/sub, and event streams — without losing events, double-processing, or stalling consumers.'
 ---
 
 # Event Streaming Pattern

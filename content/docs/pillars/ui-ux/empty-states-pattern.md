@@ -1,6 +1,6 @@
 ---
-title: "Empty States Pattern"
-description: "How to turn empty surfaces from dead ends into next-step launchpads."
+title: 'Empty States Pattern'
+description: 'How to turn empty surfaces from dead ends into next-step launchpads.'
 ---
 
 # Empty States Pattern
