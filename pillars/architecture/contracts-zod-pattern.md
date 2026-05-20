@@ -1,6 +1,6 @@
 # Contracts — Zod Method Registry Pattern
 
-TS-concrete recipe for a typed JSON-RPC / HTTP / IPC boundary. Calibrated on ~269 methods across 57+ namespaces.
+TS-concrete recipe for a typed JSON-RPC / HTTP / IPC boundary. Scales to several hundred methods across dozens of namespaces in a real production codebase.
 
 ## TL;DR (human)
 

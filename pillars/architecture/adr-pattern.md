@@ -22,7 +22,7 @@ If none of the above hold, do not write an ADR. ADRs are not a substitute for co
 
 ### Numbering + filenames
 
-- Zero-padded sequence: `0001-philosophy.md`, `0027-contract-registry.md`, `0055-file-size-budget.md`.
+- Zero-padded sequence: `0001-philosophy.md`, `0014-contract-registry.md`, `0042-file-size-budget.md`.
 - Slug is kebab-case, descriptive in three words or fewer.
 - Numbers are never reused. Tombstoned ADRs keep their number.
 

@@ -2,7 +2,7 @@
 
 **The gold-standard playbook for shipping production software with AI coding agents.**
 
-Distilled from building [AgentsKitOS](https://github.com/AgentsKit-io/agentskit-os) — a 33-package TypeScript monorepo developed primarily by AI agents — this repo captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from agents like Claude, Cursor, and Copilot.
+Distilled from ~1 year of agent-driven development on a multi-package TypeScript monorepo, this repo captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from agents like Claude, Cursor, and Copilot.
 
 **Status:** v0 — scaffolding + architecture pillar shipped. See [`matrix.md`](./matrix.md) for the full content map.
 
@@ -73,7 +73,7 @@ Each is fully spec'd in the pillars and enforced by the gate scripts in [`script
 
 ## How this playbook was earned
 
-AgentsKitOS shipped 30+ ADRs and 20+ RFCs over a year of agent-driven development. Common failure modes hit early:
+Over the source codebase's lifetime, dozens of ADRs and RFCs accumulated to address recurring failure modes of agent-driven development. The most common ones:
 
 - agents reimplementing upstream primitives instead of depending on them,
 - agents nesting ternaries until the file was unreviewable,
@@ -87,7 +87,7 @@ Every rule, gate, and prompt pattern here is a **fix for a specific, reproducibl
 
 ## License
 
-[CC-BY-4.0](./LICENSE). Adapt freely. Attribution: link back to this repo or to AgentsKitOS.
+[CC-BY-4.0](./LICENSE). Adapt freely. Attribution: link back to this repo.
 
 ## Contributing
 

@@ -1,11 +1,11 @@
 # Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)
 
-Copy-paste-ready recipes that implement [`universal.md`](./universal.md) on a TypeScript stack. Calibrated on AgentsKitOS (33 packages, 5 apps, ~1 year of agent-driven dev).
+Copy-paste-ready recipes that implement [`universal.md`](./universal.md) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.
 
 ## TL;DR (human)
 
 - pnpm workspaces + Turbo for the monorepo wiring.
-- One `os-core` package that owns Zod schemas, the error class hierarchy, and the event bus. Hard 25 KB gzipped budget.
+- One `core` package that owns Zod schemas, the error class hierarchy, and the event bus. Hard gzipped budget (calibrate per project; ~25 KB works for a 30-package monorepo).
 - Strict TypeScript everywhere: `"strict": true`, `noUncheckedIndexedAccess: true`, no `any`, named exports only.
 - Zod parses every HTTP / JSON-RPC / IPC / file-IO boundary.
 - `AppError` subclasses with `<NS>_<REASON>` codes; thrown only via `throw new AppError(...)`-style classes; raw `new Error` is lint-banned at boundary files.
