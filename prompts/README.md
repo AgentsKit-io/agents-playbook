@@ -4,24 +4,26 @@ System prompts, sub-agent recipes, and slash-command bodies that consistently pr
 
 ## Status
 
-◐ Scoped. Full prompt bodies ship in a future session.
+✓ v1 — 12 prompt bodies shipped. Adapt the bodies to your toolchain (Claude Code, Cursor, Aider, your CLI).
 
 ## Index
 
 | Prompt | Type | Use when |
 |---|---|---|
-| `system-architect.md` | system | Designing a new package boundary, ADR, or contract |
-| `system-implementer.md` | system | Building a sub-unit against an existing design |
-| `system-reviewer.md` | system | Code review pass with confidence-scored output |
-| `system-security.md` | system | Security review of pending changes |
-| `subagent-explore.md` | sub-agent recipe | Read-only fan-out search across files |
-| `subagent-plan.md` | sub-agent recipe | Step-by-step implementation plan |
-| `subagent-code-explorer.md` | sub-agent recipe | Trace execution paths, map dependencies |
-| `subagent-code-reviewer.md` | sub-agent recipe | Confidence-filtered review |
-| `slash-goal.md` | slash command | Set a session goal + stop hook |
-| `slash-loop.md` | slash command | Schedule recurring or self-paced runs |
-| `slash-review.md` | slash command | Multi-agent PR review |
-| `slash-clear.md` | slash command | Reset session context cleanly |
+| [`system-architect.md`](./system-architect.md) | system | Designing a new package boundary, ADR, or contract |
+| [`system-implementer.md`](./system-implementer.md) | system | Building a sub-unit against an existing design |
+| [`system-reviewer.md`](./system-reviewer.md) | system | Code review pass with confidence-scored output |
+| [`system-security.md`](./system-security.md) | system | Security review of pending changes |
+| [`subagent-explore.md`](./subagent-explore.md) | sub-agent recipe | Read-only fan-out search across files |
+| [`subagent-plan.md`](./subagent-plan.md) | sub-agent recipe | Step-by-step implementation plan |
+| [`subagent-code-explorer.md`](./subagent-code-explorer.md) | sub-agent recipe | Trace execution paths, map dependencies |
+| [`subagent-code-reviewer.md`](./subagent-code-reviewer.md) | sub-agent recipe | Confidence-filtered review |
+| [`slash-goal.md`](./slash-goal.md) | slash command | Set a session goal + stop hook |
+| [`slash-loop.md`](./slash-loop.md) | slash command | Schedule recurring or self-paced runs |
+| [`slash-review.md`](./slash-review.md) | slash command | Multi-agent PR review |
+| [`slash-clear.md`](./slash-clear.md) | slash command | Reset session context cleanly |
+| [`slash-sanity.md`](./slash-sanity.md) | slash command | Run cross-cutting sanity audit |
+| [`slash-ship.md`](./slash-ship.md) | slash command | Run release-gate checklist |
 
 ## Sub-agent strategy
 

@@ -55,3 +55,14 @@ If you adopt left-to-right (by phase), agents can ramp incrementally. If you ado
 | ADR / RFC | ✓ |
 | PR intent | ✓ |
 | CLAUDE.md / AGENTS.md / MEMORY.md | ✓ |
+
+| Prompts | Status |
+|---|---|
+| System (architect, implementer, reviewer, security) | ✓ |
+| Sub-agent recipes (explore, plan, code-explorer, code-reviewer) | ✓ |
+| Slash commands (goal, loop, review, clear, sanity, ship) | ✓ |
+
+| Other | Status |
+|---|---|
+| Scripts (gate reference impls) | ◐ index only |
+| Phases (deep content) | ◐ scope READMEs only |
