@@ -34,10 +34,11 @@ async function collect(): Promise<Doc[]> {
         const stem = next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
         const cleanStem = stem
           .replace(/\/index$/, "")
-          .replace(/\/README$/, "");
+          .replace(/\/README$/, "")
+          .replace(/^(index|README)$/, "");
         docs.push({
-          url: `${SITE}/docs/${cleanStem}`,
-          rawUrl: `${SITE}/raw/${cleanStem}.md`,
+          url: cleanStem ? `${SITE}/docs/${cleanStem}` : `${SITE}/docs`,
+          rawUrl: cleanStem ? `${SITE}/raw/${cleanStem}.md` : `${SITE}/raw/index.md`,
           title,
           description,
         });

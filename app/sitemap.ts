@@ -15,7 +15,12 @@ async function collectDocs(): Promise<string[]> {
       if (e.isDirectory()) await walk(join(dir, e.name), next);
       else if (e.name.endsWith(".md") || e.name.endsWith(".mdx")) {
         const stem = next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
-        out.push(stem.replace(/\/index$/, "").replace(/\/README$/, ""));
+        out.push(
+          stem
+            .replace(/\/index$/, "")
+            .replace(/\/README$/, "")
+            .replace(/^(index|README)$/, ""),
+        );
       }
     }
   }
@@ -31,9 +36,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE}/llms.txt`, lastModified: now },
     { url: `${SITE}/llms-full.txt`, lastModified: now },
     ...docs.map((d) => ({
-      url: `${SITE}/docs/${d}`,
+      url: d ? `${SITE}/docs/${d}` : `${SITE}/docs`,
       lastModified: now,
-      priority: 0.7,
+      priority: d ? 0.7 : 0.8,
     })),
   ];
 }
