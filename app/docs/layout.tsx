@@ -35,7 +35,7 @@ export default function Layout({ children }: { children: ReactNode }) {
           external: true,
         },
       ]}
-      githubUrl="https://github.com/"
+      githubUrl="https://github.com/AgentsKit-io/agents-playbook"
       sidebar={{
         defaultOpenLevel: 1,
         collapsible: true,
