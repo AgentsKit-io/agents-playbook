@@ -27,6 +27,12 @@ How to make an agent productive in your repo on day one and durably good across 
 | Honest reporting | Faithful state, not optimistic state | "Tests failed: \<output\>", not "Tests pass after I fix the unrelated thing" |
 | Duplication detection | Verify against real exports, not doc names | `npm pack` + read `.d.ts`, never trust naming similarity |
 | Concurrent-merge survival | Multiple agents pushing to main | Stash-verify red, rebase clean, retry; pre-push hook covers structural drift |
+| Tool & capability design | Tools are the model's API; design for a non-human user | Intent-altitude tools, constrained schemas, skills/artifacts as the product↔model abstraction |
+| Prompt as versioned asset | Prompts are behavior, not config | Prompt registry; version + hash + eval delta; A/B on traffic; flag-flip rollback |
+| Context management | The context window is the program the model runs | Budgeted window, top-k retrieval, edge-positioning, compaction, external memory |
+| Hallucination reduction | Confident wrongness destroys trust | Ground + cite, constrain, verify (faithfulness judge), first-class abstention |
+| Human-in-the-loop | Earn autonomy; humans gate by blast radius | Approve/edit/escalate ladder; corrections captured as eval + prompt signal |
+| Agent evaluation | A correct generation can't be a lucky one | See quality pillar — deterministic + LLM-as-judge + production monitoring |
 
 ## Non-negotiables
 
@@ -51,3 +57,9 @@ How to make an agent productive in your repo on day one and durably good across 
 - `sub-agent-pattern.md`
 - `slash-commands-pattern.md`
 - `concurrent-agent-pattern.md`
+- `self-describe-pattern.md`
+- `tool-design-pattern.md`
+- `prompt-versioning-pattern.md`
+- `context-management-pattern.md`
+- `hallucination-reduction-pattern.md`
+- `human-in-the-loop-pattern.md`

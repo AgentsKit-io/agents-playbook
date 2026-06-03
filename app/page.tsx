@@ -142,7 +142,15 @@ function SiteHeader() {
           llms.txt
         </Link>
         <a
-          href="https://github.com/"
+          href="https://www.agentskit.io/"
+          target="_blank"
+          rel="noreferrer"
+          className="hidden sm:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+        >
+          AgentsKit ↗
+        </a>
+        <a
+          href="https://github.com/AgentsKit-io/agents-playbook"
           target="_blank"
           rel="noreferrer"
           className="inline-flex items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1.5 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
@@ -174,6 +182,18 @@ function Hero() {
             development on a real production codebase. Drop-in templates,
             ready-to-run gate scripts, and a structure built for both humans and
             agents.
+          </p>
+          <p className="mt-4 text-sm text-[color:var(--muted-foreground)]">
+            Distilled from building{" "}
+            <a
+              href="https://www.agentskit.io/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current"
+            >
+              AgentsKit
+            </a>{" "}
+            — the agent-native platform this playbook comes from.
           </p>
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
@@ -413,6 +433,17 @@ function CTASection() {
               See the matrix
             </Link>
           </div>
+          <p className="mx-auto mt-8 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
+            Want the platform these practices run on?{" "}
+            <a
+              href="https://www.agentskit.io/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-semibold text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current"
+            >
+              Explore AgentsKit ↗
+            </a>
+          </p>
         </div>
       </div>
     </section>
@@ -435,13 +466,26 @@ function SiteFooter() {
         <div>
           <div className="font-semibold text-[color:var(--foreground)]">Agents Playbook</div>
           <div className="mt-1">CC-BY-4.0 · Adapt freely · Attribution appreciated.</div>
+          <div className="mt-1">
+            Built by{" "}
+            <a
+              href="https://www.agentskit.io/"
+              target="_blank"
+              rel="noreferrer"
+              className="font-medium text-[color:var(--foreground)] hover:underline"
+            >
+              AgentsKit
+            </a>{" "}
+            — the agent-native platform.
+          </div>
         </div>
         <div className="flex flex-wrap gap-5">
           <Link href="/docs" className="hover:text-[color:var(--foreground)]">Docs</Link>
           <Link href="/docs/glossary" className="hover:text-[color:var(--foreground)]">Glossary</Link>
           <Link href="/docs/matrix" className="hover:text-[color:var(--foreground)]">Matrix</Link>
           <Link href="/llms.txt" className="hover:text-[color:var(--foreground)]">llms.txt</Link>
-          <a href="https://github.com/" target="_blank" rel="noreferrer" className="hover:text-[color:var(--foreground)]">GitHub</a>
+          <a href="https://www.agentskit.io/" target="_blank" rel="noreferrer" className="hover:text-[color:var(--foreground)]">AgentsKit ↗</a>
+          <a href="https://github.com/AgentsKit-io/agents-playbook" target="_blank" rel="noreferrer" className="hover:text-[color:var(--foreground)]">GitHub</a>
         </div>
       </div>
     </footer>

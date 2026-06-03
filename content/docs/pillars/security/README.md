@@ -63,4 +63,5 @@ How to build security in from day one when the people writing the code are agent
 | [`rate-limiting-ddos-pattern.md`](./rate-limiting-ddos-pattern.md) | Edge + app rate limits; algorithms; login + signup hardening |
 | [`container-k8s-security-pattern.md`](./container-k8s-security-pattern.md) | Image hygiene; SecurityContext; NetworkPolicy; admission control |
 | [`ai-llm-safety-pattern.md`](./ai-llm-safety-pattern.md) | Prompt injection defense; tool authorization; cost + safety caps |
+| [`governance-posture-pattern.md`](./governance-posture-pattern.md) | Expose enforced controls (air-gap, egress, redaction, sandbox, RBAC, audit) as a read-only, low-privilege signal |
 | [`threat-model-template.md`](./threat-model-template.md) | Per-project threat-model skeleton |

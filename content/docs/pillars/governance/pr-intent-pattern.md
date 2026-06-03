@@ -94,6 +94,17 @@ The reviewer:
 
 If the diff does something the manifest does not claim, the diff is wrong **or** the manifest is wrong. Either way, the PR is not yet ready.
 
+### Put the removes-ack in the commit message, not a shared file (hard-won)
+
+When the manifest lives in a tracked `pr-intent.yaml` at repo root, **every** concurrent PR edits the same file — so the manifest becomes the single most conflict-prone path in the repo, and rebases churn it constantly. A more robust placement for the removal acknowledgement is the **commit message**: have the deletion gate read `git log` for the ack block instead of a shared file. Each branch then carries its own ack with zero cross-PR contention.
+
+Two gotchas once the gate reads the commit message:
+
+- **Exact token placement.** A line-oriented gate typically wants the `removes:` keyword **alone on its own line**, with the removed items as `- ` bullets on the lines below. Inlining `removes: foo, bar` on one line defeats a substring/per-line match. Keep the format the gate parses, byte-for-byte.
+- **It fires on bulk line-deletion, not only exported symbols.** A deletion gate often triggers on any change that removes more than a threshold of lines (e.g. ~50 LOC) — relocating or consolidating code trips it even when no public symbol changed. Add the ack whenever you cross the threshold, and state *behavior-neutral* explicitly if the move changes no behavior.
+
+For the base-ref gotcha in worktrees (`BASE_REF=origin/main`), see [`../ai-collaboration/concurrent-agent-pattern.md`](../ai-collaboration/concurrent-agent-pattern.md).
+
 ### Common failure modes
 
 - **`removes:` empty when diff deletes peer-authored symbols.** Silent revert. → Gate detects exported-symbol removals against `git blame`; requires manifest entry.

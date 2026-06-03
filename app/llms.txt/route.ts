@@ -56,8 +56,10 @@ export async function GET() {
 
 > The gold-standard playbook for shipping production software with AI coding agents.
 > Pillars, patterns, prompts, and gates earned from real production.
+> Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
 
 - Site: ${SITE}
+- Built by: https://www.agentskit.io
 - Full bundle (single file, LLM-friendly): ${SITE}/llms-full.txt
 - ZIP bundle: ${SITE}/playbook-bundle.zip
 - License: CC-BY-4.0
