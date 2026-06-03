@@ -1,9 +1,22 @@
 ---
-title: 'RFC-NNNN — <Short Title>'
-description: '- **Status:** Draft | Open | Final-Comment-Period | Accepted | Rejected | Withdrawn'
+title: 'RFC Template'
+description: 'Skeleton for a Request for Comments. Copy the block below into docs/rfc/NNNN-<slug>.md and fill the bracketed parts.'
 ---
 
-# RFC-NNNN — \<Short Title\>
+# RFC Template
+
+Skeleton for a Request for Comments — the proposal you open *before* breaking a public contract, so affected consumers can weigh in and the migration is concrete before any code moves.
+
+## TL;DR (human)
+
+Write an RFC before a breaking-contract change. Lead with a one-paragraph Summary, ground it in real Motivation, show before→after for every breaking call site, and make the Migration plan concrete enough that any agent could execute it. On acceptance it promotes to an ADR.
+
+## Template body
+
+Copy the below into `docs/rfc/NNNN-<slug>.md` and fill the bracketed parts.
+
+```markdown
+# RFC-NNNN — <Short Title>
 
 - **Status:** Draft | Open | Final-Comment-Period | Accepted | Rejected | Withdrawn
 - **Author(s):** @name
@@ -37,7 +50,7 @@ Migration path:
 
 - For internal callers: …
 - For external plugin authors: …
-- Deprecation window: \<N versions / months\>.
+- Deprecation window: <N versions / months>.
 
 ## Migration plan (for this codebase)
 
@@ -54,11 +67,11 @@ What is worse after this lands?
 
 ## Alternatives
 
-### Alternative A — \<name\>
+### Alternative A — <name>
 
 …
 
-### Alternative B — \<name\>
+### Alternative B — <name>
 
 …
 
@@ -81,3 +94,9 @@ This RFC is Accepted when:
 
 - ADR-NNNN
 - Issue / PR refs
+```
+
+## See also
+
+- [`ADR.template.md`](/docs/templates/ADR.template) — the decision record this RFC promotes to on acceptance.
+- [`rfc-pattern`](/docs/pillars/architecture/rfc-pattern) — status lifecycle, review window, when an RFC is required.
