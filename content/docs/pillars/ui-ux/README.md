@@ -36,21 +36,21 @@ How to keep a multi-screen product visually coherent, intl-ready, and accessible
 
 ## See also
 
-- [`../architecture/file-size-budget.md`](../architecture/file-size-budget.md) — `.tsx` budget forces sub-component extraction.
-- [`../governance/README.md`](../governance/README.md) — PR-intent flags UI rule violations.
-- [`../../scripts/`](../../scripts/) — color-literals, native-html, intl gates.
+- [`../architecture/file-size-budget.md`](/docs/pillars/architecture/file-size-budget) — `.tsx` budget forces sub-component extraction.
+- [`../governance/README.md`](/docs/pillars/governance) — PR-intent flags UI rule violations.
+- [`../../scripts/`](/docs/scripts) — color-literals, native-html, intl gates.
 
 ## Roadmap for this pillar
 
 | Doc | Read when |
 |---|---|
-| [`universal.md`](./universal.md) | First read; the 10 non-negotiables |
-| [`design-tokens-pattern.md`](./design-tokens-pattern.md) | Color / spacing / motion as named variables |
-| [`primitives-pattern.md`](./primitives-pattern.md) | Shared UI catalog; ban native HTML |
-| [`intl-pattern.md`](./intl-pattern.md) | Every visible string keyed |
-| [`i18n-deep-pattern.md`](./i18n-deep-pattern.md) | ICU MessageFormat; plurals/gender; Intl.* APIs; RTL; pseudo-locale |
-| [`empty-states-pattern.md`](./empty-states-pattern.md) | Cause-typed empty states with next-step CTA |
-| [`a11y-checklist.md`](./a11y-checklist.md) | Per-PR a11y checklist |
-| [`accessibility-deep-pattern.md`](./accessibility-deep-pattern.md) | WCAG-AA substance; 5 surfaces; ARIA discipline |
-| [`whitelabel-pattern.md`](./whitelabel-pattern.md) | Per-tenant brand kit + plan presets |
-| [`design-system-governance-pattern.md`](./design-system-governance-pattern.md) | Tier model; contribution path; deprecation; visual regression |
+| [`universal.md`](/docs/pillars/ui-ux/universal) | First read; the 10 non-negotiables |
+| [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern) | Color / spacing / motion as named variables |
+| [`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern) | Shared UI catalog; ban native HTML |
+| [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern) | Every visible string keyed |
+| [`i18n-deep-pattern.md`](/docs/pillars/ui-ux/i18n-deep-pattern) | ICU MessageFormat; plurals/gender; Intl.* APIs; RTL; pseudo-locale |
+| [`empty-states-pattern.md`](/docs/pillars/ui-ux/empty-states-pattern) | Cause-typed empty states with next-step CTA |
+| [`a11y-checklist.md`](/docs/pillars/ui-ux/a11y-checklist) | Per-PR a11y checklist |
+| [`accessibility-deep-pattern.md`](/docs/pillars/ui-ux/accessibility-deep-pattern) | WCAG-AA substance; 5 surfaces; ARIA discipline |
+| [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern) | Per-tenant brand kit + plan presets |
+| [`design-system-governance-pattern.md`](/docs/pillars/ui-ux/design-system-governance-pattern) | Tier model; contribution path; deprecation; visual regression |

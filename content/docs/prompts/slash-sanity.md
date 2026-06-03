@@ -76,6 +76,6 @@ Process:
 
 ## See also
 
-- [`../pillars/quality/sanity-pattern.md`](../pillars/quality/sanity-pattern.md)
-- [`../pillars/quality/quality-gates-pattern.md`](../pillars/quality/quality-gates-pattern.md)
-- [`slash-ship.md`](./slash-ship.md) — release-gate flow.
+- [`../pillars/quality/sanity-pattern.md`](/docs/pillars/quality/sanity-pattern)
+- [`../pillars/quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern)
+- [`slash-ship.md`](/docs/prompts/slash-ship) — release-gate flow.

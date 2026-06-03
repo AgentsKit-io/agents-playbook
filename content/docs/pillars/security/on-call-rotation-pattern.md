@@ -189,8 +189,8 @@ Adopting too fast (full 24/7 rotation before product is stable) burns the team. 
 
 ### See also
 
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — SLOs + alerts feed paging.
-- [`../quality/chaos-engineering-pattern.md`](../quality/chaos-engineering-pattern.md) — drills test the rotation.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — security incidents flow through on-call.
-- [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) — specific runbook example.
-- [`../../phases/06-operate/README.md`](../../phases/06-operate/README.md) — on-call sits inside Operate.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — SLOs + alerts feed paging.
+- [`../quality/chaos-engineering-pattern.md`](/docs/pillars/quality/chaos-engineering-pattern) — drills test the rotation.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — security incidents flow through on-call.
+- [`secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook) — specific runbook example.
+- [`../../phases/06-operate/README.md`](/docs/phases/06-operate) — on-call sits inside Operate.

@@ -93,6 +93,6 @@ Rules:
 
 ## See also
 
-- [`../pillars/ai-collaboration/sub-agent-pattern.md`](../pillars/ai-collaboration/sub-agent-pattern.md)
-- [`subagent-explore.md`](./subagent-explore.md) — feed plan with context.
-- [`system-implementer.md`](./system-implementer.md) — executes the plan.
+- [`../pillars/ai-collaboration/sub-agent-pattern.md`](/docs/pillars/ai-collaboration/sub-agent-pattern)
+- [`subagent-explore.md`](/docs/prompts/subagent-explore) — feed plan with context.
+- [`system-implementer.md`](/docs/prompts/system-implementer) — executes the plan.

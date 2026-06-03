@@ -147,7 +147,7 @@ Server-side sessions (Redis is common):
 Scaling:
 
 - Redis Cluster.
-- Per-region for multi-region (per [`../architecture/multi-region-pattern.md`](../architecture/multi-region-pattern.md)).
+- Per-region for multi-region (per [`../architecture/multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern)).
 - TTL handles cleanup; no separate sweep.
 
 ### CSRF protection
@@ -184,8 +184,8 @@ Modern frameworks (Next.js, SvelteKit) ship CSRF middleware. Don't hand-roll.
 
 ### See also
 
-- [`vault-pattern.md`](./vault-pattern.md) — session-signing key rotation.
-- [`rbac-pattern.md`](./rbac-pattern.md) — capability at session-issue time.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — session events logged.
-- [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) — session signing-key rotation.
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — session metrics.
+- [`vault-pattern.md`](/docs/pillars/security/vault-pattern) — session-signing key rotation.
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — capability at session-issue time.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — session events logged.
+- [`secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook) — session signing-key rotation.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — session metrics.

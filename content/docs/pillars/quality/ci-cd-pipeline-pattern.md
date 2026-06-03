@@ -71,7 +71,7 @@ The recommended model:
 
 - Main is always shippable.
 - Feature branches are short-lived (hours to days).
-- Large changes go behind feature flags (per [`../architecture/feature-flags-pattern.md`](../architecture/feature-flags-pattern.md)) instead of long-lived branches.
+- Large changes go behind feature flags (per [`../architecture/feature-flags-pattern.md`](/docs/pillars/architecture/feature-flags-pattern)) instead of long-lived branches.
 - No `develop` / `staging` / `qa` branches that diverge.
 
 Why: long-lived branches accumulate conflicts; short-lived branches keep concurrent-agent coordination tractable.
@@ -173,12 +173,12 @@ Discipline:
 
 - Secrets per environment (staging vs prod).
 - Per-job scope (job that doesn't need a secret can't read it).
-- Rotation per [`../security/vault-pattern.md`](../security/vault-pattern.md).
+- Rotation per [`../security/vault-pattern.md`](/docs/pillars/security/vault-pattern).
 - Audit-log secret access.
 
 ### Build provenance
 
-Per [`../security/vulnerability-mgmt-pattern.md`](../security/vulnerability-mgmt-pattern.md):
+Per [`../security/vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern):
 
 - Sign build artifacts (cosign).
 - Attest the build process (SLSA framework).
@@ -227,9 +227,9 @@ Provenance attaches CI → commit → artifact, traceably.
 
 ### See also
 
-- [`pre-push-pattern.md`](./pre-push-pattern.md) — the local-side counterpart.
-- [`quality-gates-pattern.md`](./quality-gates-pattern.md) — gates that the pipeline runs.
-- [`../architecture/feature-flags-pattern.md`](../architecture/feature-flags-pattern.md) — flags decouple deploy from release.
-- [`../architecture/api-versioning-pattern.md`](../architecture/api-versioning-pattern.md) — DB migration backwards-compat.
-- [`../security/vulnerability-mgmt-pattern.md`](../security/vulnerability-mgmt-pattern.md) — SBOM + provenance.
-- [`../phases/05-ship/README.md`](../../phases/05-ship/README.md) — release-gate checklist.
+- [`pre-push-pattern.md`](/docs/pillars/quality/pre-push-pattern) — the local-side counterpart.
+- [`quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) — gates that the pipeline runs.
+- [`../architecture/feature-flags-pattern.md`](/docs/pillars/architecture/feature-flags-pattern) — flags decouple deploy from release.
+- [`../architecture/api-versioning-pattern.md`](/docs/pillars/architecture/api-versioning-pattern) — DB migration backwards-compat.
+- [`../security/vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) — SBOM + provenance.
+- [`../phases/05-ship/README.md`](/docs/phases/05-ship) — release-gate checklist.

@@ -37,7 +37,7 @@ An API gateway is the single ingress point: TLS termination, auth verification, 
 
 ### What does NOT belong
 
-- **Business validation**: each service validates its own inputs (per [`contracts-zod-pattern.md`](./contracts-zod-pattern.md)).
+- **Business validation**: each service validates its own inputs (per [`contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern)).
 - **Service-specific transforms**: that's the service's job; gateway should be generic.
 - **Cross-service orchestration**: separate orchestration service; not gateway.
 - **Data fetching**: gateway passes through; services own data.
@@ -98,7 +98,7 @@ Federation (Apollo Federation, Hot Chocolate Federation): subgraphs declare thei
 
 The gateway verifies tokens (cheap path): signature check, expiry, basic shape.
 
-Deeper auth (per-resource access, capability checks) happens at the service layer (per [`../security/rbac-pattern.md`](../security/rbac-pattern.md)). Gateway sends the verified principal-id; service makes finer decisions.
+Deeper auth (per-resource access, capability checks) happens at the service layer (per [`../security/rbac-pattern.md`](/docs/pillars/security/rbac-pattern)). Gateway sends the verified principal-id; service makes finer decisions.
 
 Why split:
 
@@ -114,7 +114,7 @@ Gateway:
 - Creates the root trace span.
 - Logs the request with id.
 
-Services propagate. Observability correlates (per [`../quality/observability-pattern.md`](../quality/observability-pattern.md)).
+Services propagate. Observability correlates (per [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern)).
 
 ### Versioning at the gateway
 
@@ -149,7 +149,7 @@ A slow gateway impacts every endpoint. Profile + tune.
 
 When the gateway can't be skipped, it's a single point of failure. Mitigations:
 
-- **Multi-region**: per-region gateway (per [`multi-region-pattern.md`](./multi-region-pattern.md)).
+- **Multi-region**: per-region gateway (per [`multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern)).
 - **Multi-AZ within region**.
 - **Health checks + auto-replacement**.
 - **Direct service access for internal callers**: services call each other directly when feasible, bypassing gateway.
@@ -159,7 +159,7 @@ When the gateway can't be skipped, it's a single point of failure. Mitigations:
 Inside the cluster, services often call each other directly (mesh) rather than through the gateway:
 
 - Gateway is for external traffic.
-- Internal: service-mesh (per [`service-mesh-pattern.md`](./service-mesh-pattern.md)) handles cross-cutting (mTLS, observability, retries).
+- Internal: service-mesh (per [`service-mesh-pattern.md`](/docs/pillars/architecture/service-mesh-pattern)) handles cross-cutting (mTLS, observability, retries).
 
 Don't route internal traffic through the external gateway. Adds latency; couples internal architecture to external entry.
 
@@ -169,7 +169,7 @@ Gateway deploys block every service. Mitigations:
 
 - Canary deploys.
 - Blue-green for the gateway specifically.
-- Roll-forward only (per [`../quality/ci-cd-pipeline-pattern.md`](../quality/ci-cd-pipeline-pattern.md)).
+- Roll-forward only (per [`../quality/ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern)).
 - Practice gateway rollback (drill).
 
 ### Common failure modes
@@ -201,8 +201,8 @@ Gateway deploys block every service. Mitigations:
 
 ### See also
 
-- [`../security/rate-limiting-ddos-pattern.md`](../security/rate-limiting-ddos-pattern.md) — gateway-side rate limiting.
-- [`../security/session-mgmt-pattern.md`](../security/session-mgmt-pattern.md) — token verification at gateway.
-- [`service-mesh-pattern.md`](./service-mesh-pattern.md) — internal traffic.
-- [`caching-cdn-pattern.md`](./caching-cdn-pattern.md) — CDN sits in front of gateway.
-- [`anti-overengineering.md`](./anti-overengineering.md) — premature gateway = the canonical trap.
+- [`../security/rate-limiting-ddos-pattern.md`](/docs/pillars/security/rate-limiting-ddos-pattern) — gateway-side rate limiting.
+- [`../security/session-mgmt-pattern.md`](/docs/pillars/security/session-mgmt-pattern) — token verification at gateway.
+- [`service-mesh-pattern.md`](/docs/pillars/architecture/service-mesh-pattern) — internal traffic.
+- [`caching-cdn-pattern.md`](/docs/pillars/architecture/caching-cdn-pattern) — CDN sits in front of gateway.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — premature gateway = the canonical trap.

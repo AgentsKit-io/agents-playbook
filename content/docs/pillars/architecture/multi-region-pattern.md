@@ -144,8 +144,8 @@ Rollback = consolidate to one region; tear down the rest in a careful migration.
 
 ### See also
 
-- [`distributed-data-pattern.md`](./distributed-data-pattern.md) — sharding + replication primitives.
-- [`anti-overengineering.md`](./anti-overengineering.md) — multi-region is the canonical premature-flexibility trap.
-- [`../security/multi-tenant-isolation-pattern.md`](../security/multi-tenant-isolation-pattern.md) — tenant-aware region pinning.
-- [`../security/vulnerability-mgmt-pattern.md`](../security/vulnerability-mgmt-pattern.md) — patch cadence across regions.
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — per-region SLOs.
+- [`distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) — sharding + replication primitives.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — multi-region is the canonical premature-flexibility trap.
+- [`../security/multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) — tenant-aware region pinning.
+- [`../security/vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) — patch cadence across regions.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — per-region SLOs.

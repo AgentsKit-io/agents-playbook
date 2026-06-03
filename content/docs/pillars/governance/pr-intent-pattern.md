@@ -35,7 +35,7 @@ Pick one. Mixing is worse than either.
 
 ### Manifest schema
 
-Full template: [`../../templates/PR-intent.template.md`](../../templates/PR-intent.template.md). Required fields:
+Full template: [`../../templates/PR-intent.template.md`](/docs/templates/PR-intent.template). Required fields:
 
 ```yaml
 intent:
@@ -71,7 +71,7 @@ gates:
 
 ### Gate checks
 
-Reference impl: [`../../scripts/check-pr-intent.example.mjs`](../../scripts/check-pr-intent.example.mjs).
+Reference impl: [`../../scripts/check-pr-intent.example.mjs`](/docs/scripts).
 
 The gate enforces:
 
@@ -103,7 +103,7 @@ Two gotchas once the gate reads the commit message:
 - **Exact token placement.** A line-oriented gate typically wants the `removes:` keyword **alone on its own line**, with the removed items as `- ` bullets on the lines below. Inlining `removes: foo, bar` on one line defeats a substring/per-line match. Keep the format the gate parses, byte-for-byte.
 - **It fires on bulk line-deletion, not only exported symbols.** A deletion gate often triggers on any change that removes more than a threshold of lines (e.g. ~50 LOC) — relocating or consolidating code trips it even when no public symbol changed. Add the ack whenever you cross the threshold, and state *behavior-neutral* explicitly if the move changes no behavior.
 
-For the base-ref gotcha in worktrees (`BASE_REF=origin/main`), see [`../ai-collaboration/concurrent-agent-pattern.md`](../ai-collaboration/concurrent-agent-pattern.md).
+For the base-ref gotcha in worktrees (`BASE_REF=origin/main`), see [`../ai-collaboration/concurrent-agent-pattern.md`](/docs/pillars/ai-collaboration/concurrent-agent-pattern).
 
 ### Common failure modes
 
@@ -127,7 +127,7 @@ Graduated adoption prevents the gate from becoming a blocker before the team has
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 1.
-- [`merge-rules-pattern.md`](./merge-rules-pattern.md) — `merge-override:` annotation.
-- [`../../templates/PR-intent.template.md`](../../templates/PR-intent.template.md).
-- [`../../scripts/README.md`](../../scripts/README.md) — gate reference impl.
+- [`universal.md`](/docs/pillars/governance/universal) — Rule 1.
+- [`merge-rules-pattern.md`](/docs/pillars/governance/merge-rules-pattern) — `merge-override:` annotation.
+- [`../../templates/PR-intent.template.md`](/docs/templates/PR-intent.template).
+- [`../../scripts/README.md`](/docs/scripts) — gate reference impl.

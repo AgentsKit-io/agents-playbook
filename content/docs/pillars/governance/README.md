@@ -35,9 +35,9 @@ How multiple agents (and humans) coordinate work in one repo without subtracting
 
 ## See also
 
-- [`../architecture/adr-pattern.md`](../architecture/adr-pattern.md), [`../architecture/rfc-pattern.md`](../architecture/rfc-pattern.md)
-- [`../ai-collaboration/README.md`](../ai-collaboration/README.md) — agent-side discipline for these rules.
-- [`../../templates/PR-intent.template.md`](../../templates/PR-intent.template.md) — the manifest skeleton.
+- [`../architecture/adr-pattern.md`](/docs/pillars/architecture/adr-pattern), [`../architecture/rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern)
+- [`../ai-collaboration/README.md`](/docs/pillars/ai-collaboration) — agent-side discipline for these rules.
+- [`../../templates/PR-intent.template.md`](/docs/templates/PR-intent.template) — the manifest skeleton.
 
 ## Roadmap
 

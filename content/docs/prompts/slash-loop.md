@@ -82,5 +82,5 @@ Rules:
 
 ## See also
 
-- [`../pillars/ai-collaboration/slash-commands-pattern.md`](../pillars/ai-collaboration/slash-commands-pattern.md) — Loop discipline.
-- [`slash-goal.md`](./slash-goal.md) — `/goal` + `/loop` together can model "work until condition holds, but tick on a cadence".
+- [`../pillars/ai-collaboration/slash-commands-pattern.md`](/docs/pillars/ai-collaboration/slash-commands-pattern) — Loop discipline.
+- [`slash-goal.md`](/docs/prompts/slash-goal) — `/goal` + `/loop` together can model "work until condition holds, but tick on a cadence".

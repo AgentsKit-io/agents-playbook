@@ -107,6 +107,6 @@ Phases merge directly to main. Each phase carries its own gate signal.
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 8.
-- [`../ai-collaboration/universal.md`](../ai-collaboration/universal.md) — Rule 5 (one sub-unit per session).
-- [`merge-rules-pattern.md`](./merge-rules-pattern.md) — for the rebase-each-phase step.
+- [`universal.md`](/docs/pillars/governance/universal) — Rule 8.
+- [`../ai-collaboration/universal.md`](/docs/pillars/ai-collaboration/universal) — Rule 5 (one sub-unit per session).
+- [`merge-rules-pattern.md`](/docs/pillars/governance/merge-rules-pattern) — for the rebase-each-phase step.

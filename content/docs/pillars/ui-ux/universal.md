@@ -38,7 +38,7 @@ All color, spacing, radius, typography, motion duration: from named tokens. Neve
 
 Tokens resolve through a runtime layer that supports whitelabel swap (Rule 10). The token names are stable; the values rotate per brand kit.
 
-Gate: lint scan for hex / rgb / hsl / oklch literals + arbitrary class values + inline color styles. See [`../../scripts/README.md`](../../scripts/README.md).
+Gate: lint scan for hex / rgb / hsl / oklch literals + arbitrary class values + inline color styles. See [`../../scripts/README.md`](/docs/scripts).
 
 **Failure mode prevented:** brand drift; screens that look like different products; whitelabel reskin requires touching every screen.
 
@@ -176,7 +176,7 @@ Every screen that ships passes the completeness contract:
 
 If a feature is not built, it does not ship in nav. Behind a feature flag, fine. Built but disabled, never.
 
-Gate: a `check-completeness` script scans the shipped tree. See [`../../scripts/README.md`](../../scripts/README.md).
+Gate: a `check-completeness` script scans the shipped tree. See [`../../scripts/README.md`](/docs/scripts).
 
 Per-screen completeness contracts live in `docs/completion/\<screen\>.md` (or equivalent): what "done" means for that screen, what tabs / sub-views are in scope.
 
@@ -200,6 +200,6 @@ Gate: a small "whitelabel readiness" check ensures `productName` token usage in 
 
 ## See also
 
-- [`design-tokens-pattern.md`](./design-tokens-pattern.md), [`primitives-pattern.md`](./primitives-pattern.md), [`intl-pattern.md`](./intl-pattern.md), [`empty-states-pattern.md`](./empty-states-pattern.md), [`a11y-checklist.md`](./a11y-checklist.md), [`whitelabel-pattern.md`](./whitelabel-pattern.md)
-- [`../architecture/file-size-budget.md`](../architecture/file-size-budget.md) — `.tsx` budget forces sub-component extraction.
-- [`../quality/quality-gates-pattern.md`](../quality/quality-gates-pattern.md) — token / native-html / intl / completeness gates.
+- [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern), [`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern), [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern), [`empty-states-pattern.md`](/docs/pillars/ui-ux/empty-states-pattern), [`a11y-checklist.md`](/docs/pillars/ui-ux/a11y-checklist), [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern)
+- [`../architecture/file-size-budget.md`](/docs/pillars/architecture/file-size-budget) — `.tsx` budget forces sub-component extraction.
+- [`../quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) — token / native-html / intl / completeness gates.

@@ -77,7 +77,7 @@ A token catalog over 200 entries is suspect. 50-150 is typical for a healthy sys
 
 When a component is superseded:
 
-1. Mark `@deprecated` with migration path (per [`../architecture/api-versioning-pattern.md`](../architecture/api-versioning-pattern.md)).
+1. Mark `@deprecated` with migration path (per [`../architecture/api-versioning-pattern.md`](/docs/pillars/architecture/api-versioning-pattern)).
 2. Console-warn in dev when used.
 3. Storybook flagged.
 4. Migration codemod where possible.
@@ -96,7 +96,7 @@ Avoid: pixel-perfect identical (impossible across email constraints) or wildly i
 
 ### Branding interplay
 
-Per [`whitelabel-pattern.md`](./whitelabel-pattern.md): tokens layer brand-specific values on the same semantic shape. Governance reviews brand kits the same way:
+Per [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern): tokens layer brand-specific values on the same semantic shape. Governance reviews brand kits the same way:
 
 - New brand kit must pass test-brand-kit checks.
 - Brand-specific tokens stay narrow (product name, palette, logo).
@@ -133,7 +133,7 @@ Small (2-5 people):
 
 Cadence: weekly review of in-flight contributions; monthly token audit; quarterly retro.
 
-Decisions documented as ADRs (per [`../architecture/adr-pattern.md`](../architecture/adr-pattern.md)).
+Decisions documented as ADRs (per [`../architecture/adr-pattern.md`](/docs/pillars/architecture/adr-pattern)).
 
 ### Common failure modes
 
@@ -155,8 +155,8 @@ Decisions documented as ADRs (per [`../architecture/adr-pattern.md`](../architec
 
 ### See also
 
-- [`primitives-pattern.md`](./primitives-pattern.md) — the basic primitives catalog.
-- [`design-tokens-pattern.md`](./design-tokens-pattern.md) — the token system.
-- [`whitelabel-pattern.md`](./whitelabel-pattern.md) — brand kit governance.
-- [`../architecture/anti-overengineering.md`](../architecture/anti-overengineering.md) — primitive proliferation as overengineering.
-- [`../architecture/api-versioning-pattern.md`](../architecture/api-versioning-pattern.md) — deprecation discipline.
+- [`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern) — the basic primitives catalog.
+- [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern) — the token system.
+- [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern) — brand kit governance.
+- [`../architecture/anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — primitive proliferation as overengineering.
+- [`../architecture/api-versioning-pattern.md`](/docs/pillars/architecture/api-versioning-pattern) — deprecation discipline.

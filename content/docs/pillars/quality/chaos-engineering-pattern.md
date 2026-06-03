@@ -17,7 +17,7 @@ Chaos engineering injects controlled faults (network blip, dependency timeout, r
 
 Before injecting any chaos:
 
-1. **Observability** mature enough to see what failed and where ([`observability-pattern.md`](./observability-pattern.md)).
+1. **Observability** mature enough to see what failed and where ([`observability-pattern.md`](/docs/pillars/quality/observability-pattern)).
 2. **SLOs** defined; error budget tracked.
 3. **Rollback path** for any injection (turn it off immediately).
 4. **Blast-radius limit**: per-injection scope is bounded (one service, one cell, one tenant — not the whole system).
@@ -152,7 +152,7 @@ Each finding produces an ADR / RFC / fix.
 
 ### See also
 
-- [`observability-pattern.md`](./observability-pattern.md) — chaos without observation is malice.
-- [`performance-budgets-pattern.md`](./performance-budgets-pattern.md) — chaos tests budget compliance under fault.
-- [`../architecture/multi-region-pattern.md`](../architecture/multi-region-pattern.md) — failover drills are chaos.
-- [`../security/audit-ledger-pattern.md`](../security/audit-ledger-pattern.md) — chaos events themselves are audit-worthy.
+- [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) — chaos without observation is malice.
+- [`performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern) — chaos tests budget compliance under fault.
+- [`../architecture/multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern) — failover drills are chaos.
+- [`../security/audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — chaos events themselves are audit-worthy.

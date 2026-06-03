@@ -113,7 +113,7 @@ Cheaper than Pact if you have the schema discipline. Pact wins when consumer-sid
 
 - Single-service systems (no cross-service contracts).
 - Public APIs with thousands of unknown consumers (you can't get pacts; use schema versioning + telemetry).
-- Internal-only RPC where the contract package itself is the source of truth (per [`../architecture/contracts-zod-pattern.md`](../architecture/contracts-zod-pattern.md)) — Zod schemas + dispatcher tests do most of the same work.
+- Internal-only RPC where the contract package itself is the source of truth (per [`../architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern)) — Zod schemas + dispatcher tests do most of the same work.
 
 ### What contract tests catch that unit tests don't
 
@@ -173,7 +173,7 @@ Don't adopt Pact for a monolith. Wait for genuine consumer-provider distance.
 
 ### See also
 
-- [`../architecture/contracts-zod-pattern.md`](../architecture/contracts-zod-pattern.md) — single-repo contract discipline.
-- [`../architecture/api-versioning-pattern.md`](../architecture/api-versioning-pattern.md) — schema evolution rules.
-- [`test-pyramid.md`](./test-pyramid.md) — where contract tests fit.
-- [`ci-cd-pipeline-pattern.md`](./ci-cd-pipeline-pattern.md) — can-i-deploy gate in pipeline.
+- [`../architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — single-repo contract discipline.
+- [`../architecture/api-versioning-pattern.md`](/docs/pillars/architecture/api-versioning-pattern) — schema evolution rules.
+- [`test-pyramid.md`](/docs/pillars/quality/test-pyramid) — where contract tests fit.
+- [`ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern) — can-i-deploy gate in pipeline.

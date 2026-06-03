@@ -120,6 +120,6 @@ You can tag a release when:
 
 ### See also
 
-- [`../../pillars/quality/sanity-pattern.md`](../../pillars/quality/sanity-pattern.md)
-- [`../../pillars/governance/tombstone-pattern.md`](../../pillars/governance/tombstone-pattern.md)
-- [`../../prompts/slash-ship.md`](../../prompts/slash-ship.md) — orchestrator slash command for this checklist.
+- [`../../pillars/quality/sanity-pattern.md`](/docs/pillars/quality/sanity-pattern)
+- [`../../pillars/governance/tombstone-pattern.md`](/docs/pillars/governance/tombstone-pattern)
+- [`../../prompts/slash-ship.md`](/docs/prompts/slash-ship) — orchestrator slash command for this checklist.

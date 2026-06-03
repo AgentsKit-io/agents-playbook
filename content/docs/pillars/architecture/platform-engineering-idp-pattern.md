@@ -97,7 +97,7 @@ $ npx create-service my-new-service --type=node-ts-api
 # - README + ADR template
 ```
 
-Templates encode conventions (per [`universal.md`](./universal.md), [`ts-concrete.md`](./ts-concrete.md)) so new services start compliant.
+Templates encode conventions (per [`universal.md`](/docs/pillars/architecture/universal), [`ts-concrete.md`](/docs/pillars/architecture/ts-concrete)) so new services start compliant.
 
 Templates evolve; old services migrate via a separate "update-service" tool.
 
@@ -118,7 +118,7 @@ Self-service is dangerous without guardrails:
 
 - Per-team budget caps.
 - Auto-tear-down of idle resources.
-- Required tags (per [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md)).
+- Required tags (per [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern)).
 - New service request → reviewed if cost > threshold.
 
 ### Documentation as a platform feature
@@ -197,7 +197,7 @@ Don't form a platform team too early; you have nothing to platform yet.
 
 ### See also
 
-- [`anti-overengineering.md`](./anti-overengineering.md) — premature platform = canonical overengineering.
-- [`../quality/ci-cd-pipeline-pattern.md`](../quality/ci-cd-pipeline-pattern.md) — platform owns the pipeline.
-- [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md) — platform owns cost attribution.
-- [`../governance/universal.md`](../governance/universal.md) — platform changes go through ADR / RFC.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — premature platform = canonical overengineering.
+- [`../quality/ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern) — platform owns the pipeline.
+- [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern) — platform owns cost attribution.
+- [`../governance/universal.md`](/docs/pillars/governance/universal) — platform changes go through ADR / RFC.

@@ -33,7 +33,7 @@ If none of the above hold, do not write an ADR. ADRs are not a substitute for co
 
 ### Sections
 
-Use [`../../templates/ADR.template.md`](../../templates/ADR.template.md). Required sections:
+Use [`../../templates/ADR.template.md`](/docs/templates/ADR.template). Required sections:
 
 1. **Status** — Proposed / Accepted / Superseded by ADR-NNNN / Tombstoned.
 2. **Context** — what is true today; what triggered the decision.
@@ -67,7 +67,7 @@ Two automated checks pay off:
 1. **Sequence integrity** — no gaps, no duplicates, no missing numbers.
 2. **Status hygiene** — every ADR has a recognised Status value; "Superseded by ADR-NNNN" references a real file.
 
-Reference impl: [`../../scripts/check-adr.example.mjs`](../../scripts/check-adr.example.mjs).
+Reference impl: [`../../scripts/check-adr.example.mjs`](/docs/scripts).
 
 ### Common failure modes (sourced from production)
 
@@ -78,6 +78,6 @@ Reference impl: [`../../scripts/check-adr.example.mjs`](../../scripts/check-adr.
 
 ### See also
 
-- [`rfc-pattern.md`](./rfc-pattern.md) — when an ADR is not enough.
-- [`../governance/README.md`](../governance/README.md) — PR-intent manifests that reference ADRs.
-- [`../../templates/ADR.template.md`](../../templates/ADR.template.md) — copy-paste skeleton.
+- [`rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern) — when an ADR is not enough.
+- [`../governance/README.md`](/docs/pillars/governance) — PR-intent manifests that reference ADRs.
+- [`../../templates/ADR.template.md`](/docs/templates/ADR.template) — copy-paste skeleton.

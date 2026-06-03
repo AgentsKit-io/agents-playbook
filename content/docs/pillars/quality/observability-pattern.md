@@ -213,7 +213,7 @@ OpenTelemetry as the **instrumentation standard** lets you swap backends.
 
 ### See also
 
-- [`universal.md`](./universal.md) — gates produce actionable signals; observability extends the principle to runtime.
-- [`performance-budgets-pattern.md`](./performance-budgets-pattern.md) — perf budgets are derived from observability data.
-- [`chaos-engineering-pattern.md`](./chaos-engineering-pattern.md) — observability is a precondition.
-- [`../security/audit-ledger-pattern.md`](../security/audit-ledger-pattern.md) — distinct from observability (compliance vs operations).
+- [`universal.md`](/docs/pillars/quality/universal) — gates produce actionable signals; observability extends the principle to runtime.
+- [`performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern) — perf budgets are derived from observability data.
+- [`chaos-engineering-pattern.md`](/docs/pillars/quality/chaos-engineering-pattern) — observability is a precondition.
+- [`../security/audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — distinct from observability (compliance vs operations).

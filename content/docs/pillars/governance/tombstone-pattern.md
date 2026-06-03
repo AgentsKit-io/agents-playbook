@@ -101,5 +101,5 @@ This is **not deletion**. It is *demotion in discoverability*, with the trail in
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 4.
-- [`../architecture/adr-pattern.md`](./../architecture/adr-pattern.md) — Status: Superseded is the ADR-specific tombstone.
+- [`universal.md`](/docs/pillars/governance/universal) — Rule 4.
+- [`../architecture/adr-pattern.md`](/docs/pillars/architecture/adr-pattern) — Status: Superseded is the ADR-specific tombstone.

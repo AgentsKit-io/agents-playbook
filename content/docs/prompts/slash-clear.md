@@ -56,5 +56,5 @@ Rules:
 
 ## See also
 
-- [`../pillars/ai-collaboration/memory-pattern.md`](../pillars/ai-collaboration/memory-pattern.md) — memory survives.
-- [`../pillars/ai-collaboration/bootstrap-doc-pattern.md`](../pillars/ai-collaboration/bootstrap-doc-pattern.md) — bootstrap reload on next session.
+- [`../pillars/ai-collaboration/memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern) — memory survives.
+- [`../pillars/ai-collaboration/bootstrap-doc-pattern.md`](/docs/pillars/ai-collaboration/bootstrap-doc-pattern) — bootstrap reload on next session.

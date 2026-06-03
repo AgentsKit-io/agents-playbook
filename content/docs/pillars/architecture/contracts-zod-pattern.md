@@ -166,7 +166,7 @@ export const UsersListParams = z.object({
 });
 ```
 
-Rename / remove fields — breaking → requires an RFC (see [`rfc-pattern.md`](./rfc-pattern.md)).
+Rename / remove fields — breaking → requires an RFC (see [`rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern)).
 
 Method-level renames — also breaking → RFC. Keep the old name registered as a deprecated alias for one major version.
 
@@ -179,7 +179,7 @@ Recommended automated checks:
 3. **Schema-change detector** — diff the compiled `.d.ts` of the contract package vs the previous release; flag any method whose params/result signature changed without an RFC reference.
 4. **Handler binding completeness** — every method in the registry has a handler bound in the runtime.
 
-Reference impls in [`../../scripts/`](../../scripts/).
+Reference impls in [`../../scripts/`](/docs/scripts).
 
 ### Common failure modes (sourced from production)
 
@@ -190,6 +190,6 @@ Reference impls in [`../../scripts/`](../../scripts/).
 
 ### See also
 
-- [`error-hierarchy.md`](./error-hierarchy.md) — error model the dispatcher uses.
-- [`../security/README.md`](../security/README.md) — auth + consent semantics behind the flags.
-- [`../quality/README.md`](../quality/README.md) — gates that enforce the registry shape.
+- [`error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) — error model the dispatcher uses.
+- [`../security/README.md`](/docs/pillars/security) — auth + consent semantics behind the flags.
+- [`../quality/README.md`](/docs/pillars/quality) — gates that enforce the registry shape.

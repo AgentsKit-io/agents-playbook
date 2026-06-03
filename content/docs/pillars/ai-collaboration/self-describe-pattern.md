@@ -80,7 +80,7 @@ Each capability should advertise the permission/scope it requires — by **name*
 
 ### See also
 
-- [`bootstrap-doc-pattern.md`](./bootstrap-doc-pattern.md) — the *internal* equivalent (CLAUDE.md / AGENTS.md) for agents working *inside* the repo.
-- [`../security/governance-posture-pattern.md`](../security/governance-posture-pattern.md) — expose the system's *security posture* the same machine-readable way.
-- [`../architecture/contracts-zod-pattern.md`](../architecture/contracts-zod-pattern.md) — the contracts the manifest references.
-- [`../quality/quality-gates-pattern.md`](../quality/quality-gates-pattern.md) — the freshness gate is one of these.
+- [`bootstrap-doc-pattern.md`](/docs/pillars/ai-collaboration/bootstrap-doc-pattern) — the *internal* equivalent (CLAUDE.md / AGENTS.md) for agents working *inside* the repo.
+- [`../security/governance-posture-pattern.md`](/docs/pillars/security/governance-posture-pattern) — expose the system's *security posture* the same machine-readable way.
+- [`../architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — the contracts the manifest references.
+- [`../quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) — the freshness gate is one of these.

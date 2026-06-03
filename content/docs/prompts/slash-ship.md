@@ -90,6 +90,6 @@ Process:
 
 ## See also
 
-- [`../phases/05-ship/README.md`](../phases/05-ship/README.md)
-- [`../pillars/quality/sanity-pattern.md`](../pillars/quality/sanity-pattern.md)
-- [`slash-sanity.md`](./slash-sanity.md)
+- [`../phases/05-ship/README.md`](/docs/phases/05-ship)
+- [`../pillars/quality/sanity-pattern.md`](/docs/pillars/quality/sanity-pattern)
+- [`slash-sanity.md`](/docs/prompts/slash-sanity)

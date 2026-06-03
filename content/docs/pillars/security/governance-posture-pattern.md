@@ -61,12 +61,12 @@ Same discipline as the self-describe manifest: posture reports *that* a control 
 - **Returning raw config.** Allowlist contents, hostnames, secret refs leak through the "harmless" status endpoint. → Return derived status + counts only.
 - **Side effects in the reader.** A "status" call that lazily initializes or mutates state. → Pure `state → posture`; read at the edge.
 - **Growing a monolith to host it.** Adding posture to an already-maxed composition root. → Register alongside existing read handlers; keep it a view.
-- **Blank empty states.** "Firewall: —" with no explanation. → Honest label + CTA (see [`../ui-ux/empty-states-pattern.md`](../ui-ux/empty-states-pattern.md)).
+- **Blank empty states.** "Firewall: —" with no explanation. → Honest label + CTA (see [`../ui-ux/empty-states-pattern.md`](/docs/pillars/ui-ux/empty-states-pattern)).
 
 ### See also
 
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — posture is the *current* control state; the ledger is the *history* of privileged actions.
-- [`rbac-pattern.md`](./rbac-pattern.md) — the RBAC mode posture reports; required-permission names belong in contracts.
-- [`egress-firewall-pattern.md`](./egress-firewall-pattern.md) — the allowlist whose *size* (not contents) posture reports.
-- [`../ai-collaboration/self-describe-pattern.md`](../ai-collaboration/self-describe-pattern.md) — same machine-readable discipline for capabilities.
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — posture as an operability signal.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — posture is the *current* control state; the ledger is the *history* of privileged actions.
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — the RBAC mode posture reports; required-permission names belong in contracts.
+- [`egress-firewall-pattern.md`](/docs/pillars/security/egress-firewall-pattern) — the allowlist whose *size* (not contents) posture reports.
+- [`../ai-collaboration/self-describe-pattern.md`](/docs/pillars/ai-collaboration/self-describe-pattern) — same machine-readable discipline for capabilities.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — posture as an operability signal.

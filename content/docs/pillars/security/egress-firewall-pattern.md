@@ -135,6 +135,6 @@ Code-execution sandboxes (agent-run shell, agent-run code) have their own networ
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 3 (egress allowlist).
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — denial / override events log here.
-- [`rbac-pattern.md`](./rbac-pattern.md) — `firewall:override` is a sensitive capability.
+- [`universal.md`](/docs/pillars/security/universal) — Rule 3 (egress allowlist).
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — denial / override events log here.
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — `firewall:override` is a sensitive capability.

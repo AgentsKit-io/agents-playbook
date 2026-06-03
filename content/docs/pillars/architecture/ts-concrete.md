@@ -1,11 +1,11 @@
 ---
 title: 'Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)'
-description: 'Copy-paste-ready recipes that implement [`universal.md`](./universal.md) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.'
+description: 'Copy-paste-ready recipes that implement [`universal.md`](/docs/pillars/architecture/universal) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.'
 ---
 
 # Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)
 
-Copy-paste-ready recipes that implement [`universal.md`](./universal.md) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.
+Copy-paste-ready recipes that implement [`universal.md`](/docs/pillars/architecture/universal) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.
 
 ## TL;DR (human)
 
@@ -153,7 +153,7 @@ module.exports = {
 "@typescript-eslint/no-unsafe-return": "error",
 ```
 
-Escape hatch: `// allow-any: \<reason\>` line comment. Lint allows it; a separate gate counts these and fails if the count grows. See [`../../scripts/`](../../scripts/).
+Escape hatch: `// allow-any: \<reason\>` line comment. Lint allows it; a separate gate counts these and fails if the count grows. See [`../../scripts/`](/docs/scripts).
 
 ### Zod at every boundary
 
@@ -255,7 +255,7 @@ Lint bans `console.log` / `console.warn` / `console.error` repo-wide except in `
 
 ### Size budgets (gate)
 
-Reference impl in [`../../scripts/check-file-size.example.mjs`](../../scripts/check-file-size.example.mjs).
+Reference impl in [`../../scripts/check-file-size.example.mjs`](/docs/scripts).
 
 Mode: **shrink-only baseline**. A JSON baseline lists every file currently over budget. New files must be under budget; baselined files must not grow.
 
@@ -277,12 +277,12 @@ Wire into `check:all`.
 4. `src/index.ts` re-exports the public surface only.
 5. `src/__tests__/` next to source, not in a top-level `test/` dir.
 6. Add the package to the `AGENTS.md` routing table.
-7. Add a one-pager doc in `docs/for-agents/packages/\<pkg-name\>.md` (template in [`../../templates/`](../../templates/)).
+7. Add a one-pager doc in `docs/for-agents/packages/\<pkg-name\>.md` (template in [`../../templates/`](/docs/templates)).
 8. If the package owns persistence, register its schema with the storage layer + the contract registry.
 
 ## See also
 
-- [`contracts-zod-pattern.md`](./contracts-zod-pattern.md) — JSON-RPC + Zod registry deep dive.
-- [`error-hierarchy.md`](./error-hierarchy.md) — full error model + serializer.
-- [`file-size-budget.md`](./file-size-budget.md) — baseline gate calibration.
-- [`../quality/README.md`](../quality/README.md) — wiring the gates into CI.
+- [`contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — JSON-RPC + Zod registry deep dive.
+- [`error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) — full error model + serializer.
+- [`file-size-budget.md`](/docs/pillars/architecture/file-size-budget) — baseline gate calibration.
+- [`../quality/README.md`](/docs/pillars/quality) — wiring the gates into CI.

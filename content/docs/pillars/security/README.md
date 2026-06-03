@@ -38,30 +38,30 @@ How to build security in from day one when the people writing the code are agent
 
 ## See also
 
-- [`../architecture/error-hierarchy.md`](../architecture/error-hierarchy.md) — `SecurityError` namespace.
-- [`../governance/README.md`](../governance/README.md) — break-glass + consent audit trail.
-- [`../../templates/`](../../templates/) — ADR + RFC skeletons for security changes.
+- [`../architecture/error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) — `SecurityError` namespace.
+- [`../governance/README.md`](/docs/pillars/governance) — break-glass + consent audit trail.
+- [`../../templates/`](/docs/templates) — ADR + RFC skeletons for security changes.
 
 ## Documents in this pillar
 
 | Doc | Read when |
 |---|---|
-| [`universal.md`](./universal.md) | First read; the 10 non-negotiables |
-| [`rbac-pattern.md`](./rbac-pattern.md) | Designing role / capability / scope model |
-| [`vault-pattern.md`](./vault-pattern.md) | Storing secrets; rotation; sealer |
-| [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) | Append-only signed ledger for privileged actions |
-| [`egress-firewall-pattern.md`](./egress-firewall-pattern.md) | Outbound network allowlist |
-| [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) | SBOM, CVE triage, supply-chain attacks, signed releases |
-| [`dependency-hygiene-pattern.md`](./dependency-hygiene-pattern.md) | Add / update / remove dependency lifecycle, transitive risk |
-| [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md) | Tenant data isolation, noisy-neighbor, cell-based deploy |
-| [`data-classification-pattern.md`](./data-classification-pattern.md) | Per-field tagging drives redaction, retention, residency |
-| [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) | Paging structure, severity ladder, IMOC, post-mortems |
-| [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) | Minute-by-minute response when a secret leaks |
-| [`compliance-framework-pattern.md`](./compliance-framework-pattern.md) | SOC 2 / ISO / GDPR / HIPAA controls mapped to playbook practices |
-| [`secrets-mgmt-deep-pattern.md`](./secrets-mgmt-deep-pattern.md) | Dynamic secrets; OIDC federation; workload identity; secret-zero |
-| [`session-mgmt-pattern.md`](./session-mgmt-pattern.md) | Hybrid JWT + refresh; cookie flags; step-up; SSO + SCIM |
-| [`rate-limiting-ddos-pattern.md`](./rate-limiting-ddos-pattern.md) | Edge + app rate limits; algorithms; login + signup hardening |
-| [`container-k8s-security-pattern.md`](./container-k8s-security-pattern.md) | Image hygiene; SecurityContext; NetworkPolicy; admission control |
-| [`ai-llm-safety-pattern.md`](./ai-llm-safety-pattern.md) | Prompt injection defense; tool authorization; cost + safety caps |
-| [`governance-posture-pattern.md`](./governance-posture-pattern.md) | Expose enforced controls (air-gap, egress, redaction, sandbox, RBAC, audit) as a read-only, low-privilege signal |
-| [`threat-model-template.md`](./threat-model-template.md) | Per-project threat-model skeleton |
+| [`universal.md`](/docs/pillars/security/universal) | First read; the 10 non-negotiables |
+| [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) | Designing role / capability / scope model |
+| [`vault-pattern.md`](/docs/pillars/security/vault-pattern) | Storing secrets; rotation; sealer |
+| [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) | Append-only signed ledger for privileged actions |
+| [`egress-firewall-pattern.md`](/docs/pillars/security/egress-firewall-pattern) | Outbound network allowlist |
+| [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) | SBOM, CVE triage, supply-chain attacks, signed releases |
+| [`dependency-hygiene-pattern.md`](/docs/pillars/security/dependency-hygiene-pattern) | Add / update / remove dependency lifecycle, transitive risk |
+| [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) | Tenant data isolation, noisy-neighbor, cell-based deploy |
+| [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern) | Per-field tagging drives redaction, retention, residency |
+| [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern) | Paging structure, severity ladder, IMOC, post-mortems |
+| [`secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook) | Minute-by-minute response when a secret leaks |
+| [`compliance-framework-pattern.md`](/docs/pillars/security/compliance-framework-pattern) | SOC 2 / ISO / GDPR / HIPAA controls mapped to playbook practices |
+| [`secrets-mgmt-deep-pattern.md`](/docs/pillars/security/secrets-mgmt-deep-pattern) | Dynamic secrets; OIDC federation; workload identity; secret-zero |
+| [`session-mgmt-pattern.md`](/docs/pillars/security/session-mgmt-pattern) | Hybrid JWT + refresh; cookie flags; step-up; SSO + SCIM |
+| [`rate-limiting-ddos-pattern.md`](/docs/pillars/security/rate-limiting-ddos-pattern) | Edge + app rate limits; algorithms; login + signup hardening |
+| [`container-k8s-security-pattern.md`](/docs/pillars/security/container-k8s-security-pattern) | Image hygiene; SecurityContext; NetworkPolicy; admission control |
+| [`ai-llm-safety-pattern.md`](/docs/pillars/security/ai-llm-safety-pattern) | Prompt injection defense; tool authorization; cost + safety caps |
+| [`governance-posture-pattern.md`](/docs/pillars/security/governance-posture-pattern) | Expose enforced controls (air-gap, egress, redaction, sandbox, RBAC, audit) as a read-only, low-privilege signal |
+| [`threat-model-template.md`](/docs/pillars/security/threat-model-template) | Per-project threat-model skeleton |

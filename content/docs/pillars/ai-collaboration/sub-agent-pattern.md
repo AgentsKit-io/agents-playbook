@@ -97,6 +97,6 @@ Continue when the task is an extension of the prior one. Spawn fresh when the ta
 
 ### See also
 
-- [`../../prompts/README.md`](../../prompts/README.md) — recipe index (bodies in a future session).
-- [`slash-commands-pattern.md`](./slash-commands-pattern.md) — slash commands often wrap a sub-agent.
-- [`universal.md`](./universal.md) — Rule 8.
+- [`../../prompts/README.md`](/docs/prompts) — recipe index (bodies in a future session).
+- [`slash-commands-pattern.md`](/docs/pillars/ai-collaboration/slash-commands-pattern) — slash commands often wrap a sub-agent.
+- [`universal.md`](/docs/pillars/ai-collaboration/universal) — Rule 8.

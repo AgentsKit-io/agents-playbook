@@ -93,7 +93,7 @@ production monitoring (online)  ──drift──▶ alert → new eval cases �
 
 - **No eval, no merge.** A prompt change without an eval result is unreviewable — it is a claim with no evidence. Treat the eval result like a test result: it is part of the PR.
 - **Regression budget.** Define acceptable trade-offs up front ("may lose ≤1% on tone to gain ≥5% on faithfulness"), so a mixed result is a decision, not a debate.
-- **Ship behind a version flag** so a regression caught online is a flag flip, not a redeploy (see [`../ai-collaboration/prompt-versioning-pattern.md`](../ai-collaboration/prompt-versioning-pattern.md)).
+- **Ship behind a version flag** so a regression caught online is a flag flip, not a redeploy (see [`../ai-collaboration/prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern)).
 
 ### Cost & latency are eval dimensions too
 
@@ -112,10 +112,10 @@ Quality at 10× the cost or 5× the latency may be a regression. Track tokens, d
 
 ### See also
 
-- [`../ai-collaboration/prompt-versioning-pattern.md`](../ai-collaboration/prompt-versioning-pattern.md) — what you A/B and roll back; evals are how you decide.
-- [`../ai-collaboration/hallucination-reduction-pattern.md`](../ai-collaboration/hallucination-reduction-pattern.md) — faithfulness is the eval dimension that catches hallucination.
-- [`../ai-collaboration/human-in-the-loop-pattern.md`](../ai-collaboration/human-in-the-loop-pattern.md) — escalation + edit signals feed the eval set.
-- [`observability-pattern.md`](./observability-pattern.md) — per-output traces are the substrate for online evals.
-- [`product-analytics-experimentation-pattern.md`](./product-analytics-experimentation-pattern.md) — product A/B vs. prompt A/B; same statistics, different unit.
-- [`mutation-testing-pattern.md`](./mutation-testing-pattern.md) — the eval-suite-quality analogue: does your suite catch injected regressions?
-- [`../security/ai-llm-safety-pattern.md`](../security/ai-llm-safety-pattern.md) — safety evals are a slice of this suite.
+- [`../ai-collaboration/prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern) — what you A/B and roll back; evals are how you decide.
+- [`../ai-collaboration/hallucination-reduction-pattern.md`](/docs/pillars/ai-collaboration/hallucination-reduction-pattern) — faithfulness is the eval dimension that catches hallucination.
+- [`../ai-collaboration/human-in-the-loop-pattern.md`](/docs/pillars/ai-collaboration/human-in-the-loop-pattern) — escalation + edit signals feed the eval set.
+- [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) — per-output traces are the substrate for online evals.
+- [`product-analytics-experimentation-pattern.md`](/docs/pillars/quality/product-analytics-experimentation-pattern) — product A/B vs. prompt A/B; same statistics, different unit.
+- [`mutation-testing-pattern.md`](/docs/pillars/quality/mutation-testing-pattern) — the eval-suite-quality analogue: does your suite catch injected regressions?
+- [`../security/ai-llm-safety-pattern.md`](/docs/pillars/security/ai-llm-safety-pattern) — safety evals are a slice of this suite.

@@ -116,6 +116,6 @@ If pre-push fails on something you cannot fix in 5 minutes:
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 5 (three-tier split).
-- [`quality-gates-pattern.md`](./quality-gates-pattern.md) — what `check:quality-gates --fast` does.
-- [`../ai-collaboration/concurrent-agent-pattern.md`](../ai-collaboration/concurrent-agent-pattern.md) — stash-verify-red protocol.
+- [`universal.md`](/docs/pillars/quality/universal) — Rule 5 (three-tier split).
+- [`quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) — what `check:quality-gates --fast` does.
+- [`../ai-collaboration/concurrent-agent-pattern.md`](/docs/pillars/ai-collaboration/concurrent-agent-pattern) — stash-verify-red protocol.

@@ -31,7 +31,7 @@ These are a **ladder**. A new capability starts near the top (gated); as its eva
 
 ### Gate the irreversible
 
-The hard rule: **the blast radius of the action sets the gate, not the model's confidence.** Sending an email, charging a card, deleting data, publishing externally, mutating production, spending real money, anything privileged — gate it, even if the agent is "sure." Reversible, sandboxed, low-cost actions can run free. This mirrors the security posture: privileged operations require explicit, audited authorization (see [`../security/governance-posture-pattern.md`](../security/governance-posture-pattern.md), [`../security/audit-ledger-pattern.md`](../security/audit-ledger-pattern.md)).
+The hard rule: **the blast radius of the action sets the gate, not the model's confidence.** Sending an email, charging a card, deleting data, publishing externally, mutating production, spending real money, anything privileged — gate it, even if the agent is "sure." Reversible, sandboxed, low-cost actions can run free. This mirrors the security posture: privileged operations require explicit, audited authorization (see [`../security/governance-posture-pattern.md`](/docs/pillars/security/governance-posture-pattern), [`../security/audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern)).
 
 Approvals must be **legible**: show the human *what* will happen and *why* (the agent's reasoning + the action's effect), not a yes/no with no context. A rubber-stamp gate is theater.
 
@@ -56,7 +56,7 @@ This is the part teams leave on the floor. Each human touch is labeled data:
 | Rejected | negative + reason | frozen eval case; failure-mode taxonomy |
 | Escalated & resolved | a hard case + its answer | new eval case; was the threshold right? |
 
-Capture them **structured**, not as ad-hoc edits lost in a doc. The edit-distance and the rejection reason feed straight into [`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md) and the next [`prompt-versioning-pattern.md`](./prompt-versioning-pattern.md) iteration. A HITL system that doesn't record its corrections is paying for human review and discarding the receipt.
+Capture them **structured**, not as ad-hoc edits lost in a doc. The edit-distance and the rejection reason feed straight into [`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern) and the next [`prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern) iteration. A HITL system that doesn't record its corrections is paying for human review and discarding the receipt.
 
 ### Earn autonomy with measurement
 
@@ -89,9 +89,9 @@ HITL fails when it ignores the human's cognitive budget:
 
 ### See also
 
-- [`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md) — confidence signals that trigger escalation; edits/rejections become eval cases.
-- [`hallucination-reduction-pattern.md`](./hallucination-reduction-pattern.md) — low-support output escalates instead of shipping.
-- [`prompt-versioning-pattern.md`](./prompt-versioning-pattern.md) — corrections drive the next prompt iteration.
-- [`../security/governance-posture-pattern.md`](../security/governance-posture-pattern.md) — privileged actions require gated authorization.
-- [`../security/audit-ledger-pattern.md`](../security/audit-ledger-pattern.md) — every approval is a signed ledger entry.
-- [`../governance/phased-pr-pattern.md`](../governance/phased-pr-pattern.md) — human approval gates in the shipping flow.
+- [`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern) — confidence signals that trigger escalation; edits/rejections become eval cases.
+- [`hallucination-reduction-pattern.md`](/docs/pillars/ai-collaboration/hallucination-reduction-pattern) — low-support output escalates instead of shipping.
+- [`prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern) — corrections drive the next prompt iteration.
+- [`../security/governance-posture-pattern.md`](/docs/pillars/security/governance-posture-pattern) — privileged actions require gated authorization.
+- [`../security/audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — every approval is a signed ledger entry.
+- [`../governance/phased-pr-pattern.md`](/docs/pillars/governance/phased-pr-pattern) — human approval gates in the shipping flow.

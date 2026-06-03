@@ -41,7 +41,7 @@ The cause changes the right next step. Generic "No results" forces the user to g
 />
 ```
 
-The primitive is part of the shared catalog ([`primitives-pattern.md`](./primitives-pattern.md)). It enshrines layout, typography, spacing — never reinvent per screen.
+The primitive is part of the shared catalog ([`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern)). It enshrines layout, typography, spacing — never reinvent per screen.
 
 ### Three useful variants
 
@@ -72,7 +72,7 @@ Knowing whether underlying data exists may require a second query (a cheap `coun
 
 Loading and empty are different states:
 
-- **Loading**: show a skeleton (per [`universal.md`](./universal.md) Rule 4).
+- **Loading**: show a skeleton (per [`universal.md`](/docs/pillars/ui-ux/universal) Rule 4).
 - **Loaded + zero rows**: show empty state.
 
 Anti-pattern: empty state flashes during loading (because `rows.length === 0` is briefly true before the fetch resolves). Avoid: distinguish "haven't fetched yet" from "fetched and got nothing". Only show empty when the fetch has resolved with zero rows.
@@ -106,7 +106,7 @@ These bypass the empty-state primitive. Failure message points to the `\<EmptySt
 
 ### Per-screen empty inventory
 
-For each screen with collection surfaces, the completeness contract ([`universal.md`](./universal.md) Rule 9) requires an empty-state pass:
+For each screen with collection surfaces, the completeness contract ([`universal.md`](/docs/pillars/ui-ux/universal) Rule 9) requires an empty-state pass:
 
 - Cold-start cause: ✓ covered with `\<EmptyState\>`.
 - Filtered cause (if filters exist): ✓ covered separately.
@@ -124,6 +124,6 @@ PR template includes this checklist for any UI-touching PR.
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 4 (loading), Rule 5 (empty), Rule 9 (completeness).
-- [`primitives-pattern.md`](./primitives-pattern.md) — `\<EmptyState\>` is a shared primitive.
-- [`intl-pattern.md`](./intl-pattern.md) — empty-state copy is intl-keyed.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 4 (loading), Rule 5 (empty), Rule 9 (completeness).
+- [`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern) — `\<EmptyState\>` is a shared primitive.
+- [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern) — empty-state copy is intl-keyed.

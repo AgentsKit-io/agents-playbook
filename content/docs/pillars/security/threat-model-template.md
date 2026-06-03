@@ -86,11 +86,11 @@ One table row per (asset, actor, surface) combination worth modeling. Not exhaus
 
 Reference the pillars / patterns that implement the mitigations cited above.
 
-- [Egress firewall](../security/egress-firewall-pattern.md) — Rule 3.
-- [Vault](../security/vault-pattern.md) — Rule 4.
-- [Audit ledger](../security/audit-ledger-pattern.md) — Rule 5.
-- [RBAC](../security/rbac-pattern.md) — Rule 1, Rule 7.
-- [Error hierarchy](../architecture/error-hierarchy.md) — Rule 6.
+- [Egress firewall](/docs/pillars/security/egress-firewall-pattern) — Rule 3.
+- [Vault](/docs/pillars/security/vault-pattern) — Rule 4.
+- [Audit ledger](/docs/pillars/security/audit-ledger-pattern) — Rule 5.
+- [RBAC](/docs/pillars/security/rbac-pattern) — Rule 1, Rule 7.
+- [Error hierarchy](/docs/pillars/architecture/error-hierarchy) — Rule 6.
 
 ## Residual risks
 
@@ -133,5 +133,5 @@ An incomplete threat model is dramatically better than no threat model.
 
 ## See also
 
-- [`universal.md`](./universal.md) — Rule 10 (threat model is a doc).
-- [`README.md`](./README.md) — pillar map.
+- [`universal.md`](/docs/pillars/security/universal) — Rule 10 (threat model is a doc).
+- [`README.md`](/docs/pillars/security) — pillar map.

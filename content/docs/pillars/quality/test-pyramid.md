@@ -95,7 +95,7 @@ One property test can replace fifty unit tests. Reserve for high-value boundarie
 
 ### Mutation as a coverage backstop
 
-After unit suite stabilises, mutation testing scores its real catch rate. See [`mutation-testing-pattern.md`](./mutation-testing-pattern.md).
+After unit suite stabilises, mutation testing scores its real catch rate. See [`mutation-testing-pattern.md`](/docs/pillars/quality/mutation-testing-pattern).
 
 ### Common failure modes
 
@@ -107,6 +107,6 @@ After unit suite stabilises, mutation testing scores its real catch rate. See [`
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 3 (hermetic before E2E), Rule 4 (assert on codes).
-- [`mutation-testing-pattern.md`](./mutation-testing-pattern.md)
-- [`../architecture/contracts-zod-pattern.md`](../architecture/contracts-zod-pattern.md) — tier 1 lives here.
+- [`universal.md`](/docs/pillars/quality/universal) — Rule 3 (hermetic before E2E), Rule 4 (assert on codes).
+- [`mutation-testing-pattern.md`](/docs/pillars/quality/mutation-testing-pattern)
+- [`../architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — tier 1 lives here.

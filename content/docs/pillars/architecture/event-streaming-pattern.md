@@ -65,7 +65,7 @@ async function handler(msg: Message) {
 
 The idempotency record + the side-effect commit in **one transaction**. Half-states get the producer to retry safely.
 
-Where transactions cross stores (e.g. external API + local DB), apply the outbox pattern (see [`distributed-data-pattern.md`](./distributed-data-pattern.md)).
+Where transactions cross stores (e.g. external API + local DB), apply the outbox pattern (see [`distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern)).
 
 ### Ordering guarantees
 
@@ -116,7 +116,7 @@ Producers + consumers deploy independently. Their schemas must coexist across ve
 Rules:
 
 - **Add fields**: new fields are optional with defaults. Old consumers ignore.
-- **Rename fields**: requires deprecation cycle (per [`api-versioning-pattern.md`](./api-versioning-pattern.md)) — keep both names during transition.
+- **Rename fields**: requires deprecation cycle (per [`api-versioning-pattern.md`](/docs/pillars/architecture/api-versioning-pattern)) — keep both names during transition.
 - **Remove fields**: requires guarantee no consumer reads them. Audit; deprecate; remove.
 - **Type changes**: breaking; new event name preferred.
 
@@ -198,7 +198,7 @@ Tuning:
 - Batch publishes where latency allows.
 - Compress payloads (Snappy, gzip).
 - Tune retention to actual replay window.
-- Per-tenant tagging for attribution (per [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md)).
+- Per-tenant tagging for attribution (per [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern)).
 
 ### Anti-patterns
 
@@ -233,9 +233,9 @@ Tuning:
 
 ### See also
 
-- [`distributed-data-pattern.md`](./distributed-data-pattern.md) — outbox pattern feeds event streams.
-- [`api-versioning-pattern.md`](./api-versioning-pattern.md) — schema evolution rules.
-- [`anti-overengineering.md`](./anti-overengineering.md) — event sourcing is the canonical premature complexity.
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — queue depth, lag, DLQ size are key metrics.
-- [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md) — event-stream cost.
-- [`../security/audit-ledger-pattern.md`](../security/audit-ledger-pattern.md) — append-only ledger is a specialized event stream.
+- [`distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) — outbox pattern feeds event streams.
+- [`api-versioning-pattern.md`](/docs/pillars/architecture/api-versioning-pattern) — schema evolution rules.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — event sourcing is the canonical premature complexity.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — queue depth, lag, DLQ size are key metrics.
+- [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern) — event-stream cost.
+- [`../security/audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — append-only ledger is a specialized event stream.

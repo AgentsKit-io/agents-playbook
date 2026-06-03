@@ -60,7 +60,7 @@ merge-override: <reason>   # OPTIONAL. Required if you used `git checkout --thei
 
 ## Gate
 
-Reference impl: [`../scripts/check-pr-intent.example.mjs`](../scripts/check-pr-intent.example.mjs).
+Reference impl: [`../scripts/check-pr-intent.example.mjs`](/docs/scripts).
 
 The gate:
 

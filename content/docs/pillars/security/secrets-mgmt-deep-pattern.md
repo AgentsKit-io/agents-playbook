@@ -117,7 +117,7 @@ Every vault read / write logs:
 - Source (IP, host).
 - Outcome (granted / denied).
 
-Per [`audit-ledger-pattern.md`](./audit-ledger-pattern.md): the audit log itself goes into the same signed ledger.
+Per [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern): the audit log itself goes into the same signed ledger.
 
 Anomaly detection: a service that reads secret X 1×/hour suddenly reads 100×/hour = either expected pattern change or compromise. Surface; investigate.
 
@@ -126,7 +126,7 @@ Anomaly detection: a service that reads secret X 1×/hour suddenly reads 100×/h
 Humans accessing prod secrets:
 
 - Step-up auth (2FA / hardware key).
-- Time-boxed grant (per [`rbac-pattern.md`](./rbac-pattern.md) break-glass).
+- Time-boxed grant (per [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) break-glass).
 - Audit-logged with reason.
 - Notification to security team.
 - Auto-revoke after window.
@@ -183,8 +183,8 @@ For most cases, **secrets don't live in git**. The above are for unavoidable Git
 
 ### See also
 
-- [`vault-pattern.md`](./vault-pattern.md) — vault basics.
-- [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) — when a leak happens.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — access audit trail.
-- [`../quality/ci-cd-pipeline-pattern.md`](../quality/ci-cd-pipeline-pattern.md) — OIDC federation in CI.
-- [`rbac-pattern.md`](./rbac-pattern.md) — break-glass for operator access.
+- [`vault-pattern.md`](/docs/pillars/security/vault-pattern) — vault basics.
+- [`secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook) — when a leak happens.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — access audit trail.
+- [`../quality/ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern) — OIDC federation in CI.
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — break-glass for operator access.

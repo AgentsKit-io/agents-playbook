@@ -52,7 +52,7 @@ Schema discipline:
 
 ### Consent + privacy
 
-Per [`../security/data-classification-pattern.md`](../security/data-classification-pattern.md):
+Per [`../security/data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern):
 
 - Tracking pixels / analytics SDK loaded only after consent (EU) or with opt-out availability (CA).
 - PII never in event properties (no emails, names, raw IPs).
@@ -140,7 +140,7 @@ Beyond per-experiment, maintain holdout cohorts:
 
 ### Experiment retirement
 
-Like feature flags (per [`../architecture/feature-flags-pattern.md`](../architecture/feature-flags-pattern.md)):
+Like feature flags (per [`../architecture/feature-flags-pattern.md`](/docs/pillars/architecture/feature-flags-pattern)):
 
 - Mandatory `retireAt`.
 - Decision recorded + variant cleaned up.
@@ -197,7 +197,7 @@ Sub-metrics ladder up. Engineering OKRs tie to north-star.
 
 ### See also
 
-- [`observability-pattern.md`](./observability-pattern.md) — observability, distinct from analytics.
-- [`../architecture/feature-flags-pattern.md`](../architecture/feature-flags-pattern.md) — experiments as flags.
-- [`../security/data-classification-pattern.md`](../security/data-classification-pattern.md) — privacy classifications.
-- [`../security/compliance-framework-pattern.md`](../security/compliance-framework-pattern.md) — GDPR / CCPA implications.
+- [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) — observability, distinct from analytics.
+- [`../architecture/feature-flags-pattern.md`](/docs/pillars/architecture/feature-flags-pattern) — experiments as flags.
+- [`../security/data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern) — privacy classifications.
+- [`../security/compliance-framework-pattern.md`](/docs/pillars/security/compliance-framework-pattern) — GDPR / CCPA implications.

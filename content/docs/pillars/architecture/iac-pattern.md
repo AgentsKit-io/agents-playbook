@@ -71,7 +71,7 @@ A module:
 - Has tests (Terratest, Pulumi unit tests).
 - Has minimal blast radius (a "VPC module" doesn't reach into compute).
 
-Cross-cutting modules (security groups, IAM roles, observability defaults) capture conventions per [`anti-overengineering.md`](./anti-overengineering.md): write once, reuse N+ times.
+Cross-cutting modules (security groups, IAM roles, observability defaults) capture conventions per [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering): write once, reuse N+ times.
 
 ### State management
 
@@ -218,9 +218,9 @@ GitOps for k8s; IaC for cloud resources. Often combined: IaC creates the cluster
 
 ### See also
 
-- [`platform-engineering-idp-pattern.md`](./platform-engineering-idp-pattern.md) — platform team owns shared modules.
-- [`multi-region-pattern.md`](./multi-region-pattern.md) — IaC enables region duplication.
-- [`../security/container-k8s-security-pattern.md`](../security/container-k8s-security-pattern.md) — k8s defined via IaC.
-- [`../security/secrets-mgmt-deep-pattern.md`](../security/secrets-mgmt-deep-pattern.md) — secrets not in IaC.
-- [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md) — IaC enforces tagging.
-- [`../quality/ci-cd-pipeline-pattern.md`](../quality/ci-cd-pipeline-pattern.md) — IaC pipeline.
+- [`platform-engineering-idp-pattern.md`](/docs/pillars/architecture/platform-engineering-idp-pattern) — platform team owns shared modules.
+- [`multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern) — IaC enables region duplication.
+- [`../security/container-k8s-security-pattern.md`](/docs/pillars/security/container-k8s-security-pattern) — k8s defined via IaC.
+- [`../security/secrets-mgmt-deep-pattern.md`](/docs/pillars/security/secrets-mgmt-deep-pattern) — secrets not in IaC.
+- [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern) — IaC enforces tagging.
+- [`../quality/ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern) — IaC pipeline.

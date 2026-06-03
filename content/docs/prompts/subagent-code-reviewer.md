@@ -93,5 +93,5 @@ Rules:
 
 ## See also
 
-- [`../pillars/ai-collaboration/sub-agent-pattern.md`](../pillars/ai-collaboration/sub-agent-pattern.md)
-- [`system-reviewer.md`](./system-reviewer.md) — full reviewer prompt; this sub-agent is a focused variant.
+- [`../pillars/ai-collaboration/sub-agent-pattern.md`](/docs/pillars/ai-collaboration/sub-agent-pattern)
+- [`system-reviewer.md`](/docs/prompts/system-reviewer) — full reviewer prompt; this sub-agent is a focused variant.

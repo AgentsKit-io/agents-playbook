@@ -43,7 +43,7 @@ Sync protocol is the contract between client + server. Three styles:
 - Server returns changes since.
 - Client applies; updates last-sync.
 
-Requires server-side change log (per [`event-streaming-pattern.md`](./event-streaming-pattern.md)) or efficient timestamp queries.
+Requires server-side change log (per [`event-streaming-pattern.md`](/docs/pillars/architecture/event-streaming-pattern)) or efficient timestamp queries.
 
 **Operational transform / CRDT replication**: each side captures operations or CRDT updates; merge convergent regardless of order.
 
@@ -120,7 +120,7 @@ Tricky:
 - Refresh fails offline; access token may expire mid-offline session.
 - Permission changes on server don't reach client until online.
 
-Pattern: cached permissions; long-lived offline access token; re-auth when online if expired during offline window. Step-up operations (per [`../security/session-mgmt-pattern.md`](../security/session-mgmt-pattern.md)) require online.
+Pattern: cached permissions; long-lived offline access token; re-auth when online if expired during offline window. Step-up operations (per [`../security/session-mgmt-pattern.md`](/docs/pillars/security/session-mgmt-pattern)) require online.
 
 ### Service workers (web)
 
@@ -191,8 +191,8 @@ Offline-first is a significant architecture commitment. Adopt when network unrel
 
 ### See also
 
-- [`distributed-data-pattern.md`](./distributed-data-pattern.md) — eventual consistency.
-- [`event-streaming-pattern.md`](./event-streaming-pattern.md) — operation log + replay.
-- [`../security/session-mgmt-pattern.md`](../security/session-mgmt-pattern.md) — offline auth concerns.
-- [`../ui-ux/empty-states-pattern.md`](../ui-ux/empty-states-pattern.md) — offline as an empty/error state.
-- [`anti-overengineering.md`](./anti-overengineering.md) — adopt offline-first only with real need.
+- [`distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) — eventual consistency.
+- [`event-streaming-pattern.md`](/docs/pillars/architecture/event-streaming-pattern) — operation log + replay.
+- [`../security/session-mgmt-pattern.md`](/docs/pillars/security/session-mgmt-pattern) — offline auth concerns.
+- [`../ui-ux/empty-states-pattern.md`](/docs/pillars/ui-ux/empty-states-pattern) — offline as an empty/error state.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — adopt offline-first only with real need.

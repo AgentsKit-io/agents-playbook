@@ -12,7 +12,7 @@ Drop at repo root. The routing table that answers "which package owns X?" before
 
 You're working inside <PROJECT NAME>, a monorepo of <N> packages and <M> apps. Read this file first when making changes — it answers "which package owns X?" so you don't reinvent existing utilities.
 
-Per-package deep references live in `docs/for-agents/packages/*.md`. **Start at [`docs/for-agents/INDEX.md`](./docs/for-agents/INDEX.md)** — it's the one-page jump table to every package, screen, and flow recipe. When AGENTS.md routes you to a package, open its for-agents doc before editing.
+Per-package deep references live in `docs/for-agents/packages/*.md`. **Start at `docs/for-agents/INDEX.md`** — it's the one-page jump table to every package, screen, and flow recipe. When AGENTS.md routes you to a package, open its for-agents doc before editing.
 
 ## TL;DR philosophy
 

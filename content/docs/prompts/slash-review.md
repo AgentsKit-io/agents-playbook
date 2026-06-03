@@ -85,7 +85,7 @@ Honesty:
 
 ## See also
 
-- [`subagent-code-reviewer.md`](./subagent-code-reviewer.md)
-- [`system-reviewer.md`](./system-reviewer.md)
-- [`system-security.md`](./system-security.md)
-- [`../pillars/governance/pr-intent-pattern.md`](../pillars/governance/pr-intent-pattern.md)
+- [`subagent-code-reviewer.md`](/docs/prompts/subagent-code-reviewer)
+- [`system-reviewer.md`](/docs/prompts/system-reviewer)
+- [`system-security.md`](/docs/prompts/system-security)
+- [`../pillars/governance/pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern)

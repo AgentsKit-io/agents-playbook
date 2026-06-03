@@ -51,7 +51,7 @@ The discover phase produces the artefacts agents need to be productive from PR #
 - [ ] Decide branching model (trunk-based + short-lived feature branches recommended).
 
 **AI-collaboration**
-- [ ] Write `CLAUDE.md` (template in [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.template.md)).
+- [ ] Write `CLAUDE.md` (template in [`../../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template)).
 - [ ] Write `AGENTS.md` skeleton.
 - [ ] Decide agent toolchain (Claude Code / Cursor / Aider / your CLI).
 - [ ] Bootstrap memory directory + index.
@@ -74,7 +74,7 @@ You can leave Discover when:
 
 ### See also
 
-- [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.template.md)
-- [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.template.md)
-- [`../../pillars/architecture/universal.md`](../../pillars/architecture/universal.md)
-- [`../../pillars/security/threat-model-template.md`](../../pillars/security/threat-model-template.md)
+- [`../../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template)
+- [`../../templates/AGENTS.md.template.md`](/docs/templates/AGENTS.md.template)
+- [`../../pillars/architecture/universal.md`](/docs/pillars/architecture/universal)
+- [`../../pillars/security/threat-model-template.md`](/docs/pillars/security/threat-model-template)

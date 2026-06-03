@@ -196,11 +196,11 @@ Not worth it for: everyday utilities.
 
 ### Per-pillar interaction
 
-**Security**: dependency hygiene IS supply-chain security. See [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) for SBOM + CVE pipeline.
+**Security**: dependency hygiene IS supply-chain security. See [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) for SBOM + CVE pipeline.
 
-**Quality**: bundle-size impact of new deps. See [`../quality/performance-budgets-pattern.md`](../quality/performance-budgets-pattern.md).
+**Quality**: bundle-size impact of new deps. See [`../quality/performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern).
 
-**Architecture**: every dep is a coupling. See [`../architecture/anti-overengineering.md`](../architecture/anti-overengineering.md) for "could I inline this?"
+**Architecture**: every dep is a coupling. See [`../architecture/anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) for "could I inline this?"
 
 **Governance**: dep updates ship via PR with intent manifest like any other code.
 
@@ -228,7 +228,7 @@ Not worth it for: everyday utilities.
 
 ### See also
 
-- [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) — CVE triage pipeline this feeds into.
-- [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md) — supply-chain compromise scenario.
-- [`../architecture/anti-overengineering.md`](../architecture/anti-overengineering.md) — fewer deps is fewer abstractions.
-- [`../quality/ci-cd-pipeline-pattern.md`](../quality/ci-cd-pipeline-pattern.md) — where the gates run.
+- [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) — CVE triage pipeline this feeds into.
+- [`secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook) — supply-chain compromise scenario.
+- [`../architecture/anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — fewer deps is fewer abstractions.
+- [`../quality/ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern) — where the gates run.

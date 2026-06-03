@@ -75,5 +75,5 @@ Hard rules:
 
 ## See also
 
-- [`../pillars/ai-collaboration/universal.md`](../pillars/ai-collaboration/universal.md) — Rule 7 (explicit goal + exit).
-- [`slash-loop.md`](./slash-loop.md) — for self-paced or recurring runs.
+- [`../pillars/ai-collaboration/universal.md`](/docs/pillars/ai-collaboration/universal) — Rule 7 (explicit goal + exit).
+- [`slash-loop.md`](/docs/prompts/slash-loop) — for self-paced or recurring runs.

@@ -71,7 +71,7 @@ logger.info("user-created", User.parse(rawUser));
 
 - PII writes to user's region only.
 - Cross-region replication for non-PII; pinned for PII.
-- See [`../architecture/multi-region-pattern.md`](../architecture/multi-region-pattern.md).
+- See [`../architecture/multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern).
 
 **Access control**:
 
@@ -167,8 +167,8 @@ Tagging incrementally beats trying to classify everything at once.
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 8 (PII).
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — sensitive accesses logged.
-- [`vault-pattern.md`](./vault-pattern.md) — Restricted lives in vault.
-- [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md) — tenant + class scope.
-- [`../architecture/multi-region-pattern.md`](../architecture/multi-region-pattern.md) — region pinning for PII.
+- [`universal.md`](/docs/pillars/security/universal) — Rule 8 (PII).
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — sensitive accesses logged.
+- [`vault-pattern.md`](/docs/pillars/security/vault-pattern) — Restricted lives in vault.
+- [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) — tenant + class scope.
+- [`../architecture/multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern) — region pinning for PII.

@@ -31,12 +31,12 @@ Higher altitude = fewer turns, less state for the model to drop, fewer places to
 
 - **Names are semantic.** `searchCustomers` not `query2`. The name alone should imply when to call it.
 - **Descriptions state when to use, when *not* to, and what comes back.** Include the failure shape. Disambiguate from sibling tools ("use this for X; for Y use `otherTool`").
-- **Schema constrains the input space.** Enums over free strings, required fields explicit, value ranges encoded. A constrained schema makes a class of wrong calls *impossible* rather than merely discouraged — the strongest form of guidance (see [`../architecture/contracts-zod-pattern.md`](../architecture/contracts-zod-pattern.md)).
-- **Validate at the boundary and return a usable error.** Errors are part of the model's loop: a good error says what was wrong and how to fix the call, so the model self-corrects instead of looping. A raw stack trace is a dead end (see [`../architecture/error-hierarchy.md`](../architecture/error-hierarchy.md)).
+- **Schema constrains the input space.** Enums over free strings, required fields explicit, value ranges encoded. A constrained schema makes a class of wrong calls *impossible* rather than merely discouraged — the strongest form of guidance (see [`../architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern)).
+- **Validate at the boundary and return a usable error.** Errors are part of the model's loop: a good error says what was wrong and how to fix the call, so the model self-corrects instead of looping. A raw stack trace is a dead end (see [`../architecture/error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy)).
 
 ### Return results the model can use
 
-- **Shape output for consumption, not for humans.** Structured, concise, relevant. A tool that dumps 10k tokens of raw JSON blows the context budget and buries the signal (see [`context-management-pattern.md`](./context-management-pattern.md)).
+- **Shape output for consumption, not for humans.** Structured, concise, relevant. A tool that dumps 10k tokens of raw JSON blows the context budget and buries the signal (see [`context-management-pattern.md`](/docs/pillars/ai-collaboration/context-management-pattern)).
 - **Reference large payloads by handle.** Write big artifacts to a file/store and return a reference; let the model pull what it needs. Don't pour a 50-page document into the window.
 - **Be honest about partial success.** "Created 3 of 5, these 2 failed because…" beats a flat success/error the model can't reason about.
 
@@ -46,7 +46,7 @@ Every tool definition spends context tokens and adds a choice the model can get 
 
 - **Expose only the tools relevant to the current task/state.** Gate the set; reveal capabilities as the workflow reaches them.
 - **Prune overlap.** Two tools that do almost the same thing guarantee the model sometimes picks the wrong one.
-- **Authorize at call time regardless.** The toolset is ergonomics; permission is enforcement — the model offering a tool is never authorization to run it (see [`../security/ai-llm-safety-pattern.md`](../security/ai-llm-safety-pattern.md)).
+- **Authorize at call time regardless.** The toolset is ergonomics; permission is enforcement — the model offering a tool is never authorization to run it (see [`../security/ai-llm-safety-pattern.md`](/docs/pillars/security/ai-llm-safety-pattern)).
 
 ### File systems, artifacts & skills as first-class abstractions
 
@@ -56,11 +56,11 @@ The richest agent products give the model more than function calls — they give
 - **Skills** package a reusable capability — instructions + tools + context for a task class — that the model invokes as a unit. A skill turns "here are 12 primitives, figure it out each time" into "do this known thing well," which is the difference between brittle and reliable on complex workflows.
 - **Design these as the abstraction layer between product and model:** the product exposes capabilities (files, artifacts, skills); the model composes them. Get this layer right and complex multi-step work *feels natural to the model and reliable to users* — get it wrong and the model improvises plumbing and drops state.
 
-This abstraction layer is also exactly what you publish as a machine-readable surface so other agents can discover and drive it — see [`self-describe-pattern.md`](./self-describe-pattern.md).
+This abstraction layer is also exactly what you publish as a machine-readable surface so other agents can discover and drive it — see [`self-describe-pattern.md`](/docs/pillars/ai-collaboration/self-describe-pattern).
 
 ### Tools are versioned, tested, evaluated
 
-A tool's description and schema are behavior — when you change them, re-run the evals (the model may now call it differently). Version tool definitions alongside prompts ([`prompt-versioning-pattern.md`](./prompt-versioning-pattern.md)), and add tool-call assertions to the deterministic eval tier ([`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md)): given input X, the right tool is called with the right args, and destructive tools are *not* called unbidden.
+A tool's description and schema are behavior — when you change them, re-run the evals (the model may now call it differently). Version tool definitions alongside prompts ([`prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern)), and add tool-call assertions to the deterministic eval tier ([`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern)): given input X, the right tool is called with the right args, and destructive tools are *not* called unbidden.
 
 ### Common failure modes
 
@@ -75,10 +75,10 @@ A tool's description and schema are behavior — when you change them, re-run th
 
 ### See also
 
-- [`self-describe-pattern.md`](./self-describe-pattern.md) — publish the capability surface for external agents.
-- [`prompt-versioning-pattern.md`](./prompt-versioning-pattern.md) — tool defs are versioned behavior.
-- [`context-management-pattern.md`](./context-management-pattern.md) — toolset size + result shape are context costs.
-- [`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md) — tool-call assertions as deterministic evals.
-- [`../architecture/contracts-zod-pattern.md`](../architecture/contracts-zod-pattern.md) — schemas that constrain tool input.
-- [`../architecture/error-hierarchy.md`](../architecture/error-hierarchy.md) — error shapes the model can act on.
-- [`../security/ai-llm-safety-pattern.md`](../security/ai-llm-safety-pattern.md) — tool authorization + injection defense.
+- [`self-describe-pattern.md`](/docs/pillars/ai-collaboration/self-describe-pattern) — publish the capability surface for external agents.
+- [`prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern) — tool defs are versioned behavior.
+- [`context-management-pattern.md`](/docs/pillars/ai-collaboration/context-management-pattern) — toolset size + result shape are context costs.
+- [`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern) — tool-call assertions as deterministic evals.
+- [`../architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — schemas that constrain tool input.
+- [`../architecture/error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) — error shapes the model can act on.
+- [`../security/ai-llm-safety-pattern.md`](/docs/pillars/security/ai-llm-safety-pattern) — tool authorization + injection defense.

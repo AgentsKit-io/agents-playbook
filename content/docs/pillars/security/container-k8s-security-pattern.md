@@ -21,7 +21,7 @@ Smaller, signed, scanned:
 - **Multi-stage builds**: build deps in stage 1; final image only ships runtime.
 - **No shells / dev tools** in production images (no `bash`, `curl`, package manager).
 - **Pin base image by digest** (`FROM image@sha256:...`), not by tag.
-- **Sign + verify** (cosign + sigstore — per [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md)).
+- **Sign + verify** (cosign + sigstore — per [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern)).
 - **Scan on build** (Trivy / Grype / Snyk) and on registry-pull.
 
 Image size: aim < 100MB for typical Node / Go / Java apps. Cuts attack surface + speeds deploys.
@@ -104,7 +104,7 @@ Preferred:
 
 K8s Secrets (the native object) are **base64, not encrypted** by default. Enable encryption at rest at the etcd layer (KMS provider).
 
-See [`secrets-mgmt-deep-pattern.md`](./secrets-mgmt-deep-pattern.md).
+See [`secrets-mgmt-deep-pattern.md`](/docs/pillars/security/secrets-mgmt-deep-pattern).
 
 ### Workload identity
 
@@ -196,7 +196,7 @@ A `kubectl exec` to a production pod is a privileged action — audited; rare; a
 3. **At deploy**: gate on scan results.
 4. **In production**: image catalog tracks which clusters run which versions; CVE alerts route to teams.
 
-Per [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md): patch SLA per severity.
+Per [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern): patch SLA per severity.
 
 ### Common failure modes
 
@@ -224,9 +224,9 @@ Per [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md): patch SL
 
 ### See also
 
-- [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) — SBOM + CVE pipeline.
-- [`secrets-mgmt-deep-pattern.md`](./secrets-mgmt-deep-pattern.md) — secret injection patterns.
-- [`vault-pattern.md`](./vault-pattern.md) — secret storage.
-- [`../architecture/service-mesh-pattern.md`](../architecture/service-mesh-pattern.md) — mTLS in mesh.
-- [`compliance-framework-pattern.md`](./compliance-framework-pattern.md) — container security is a SOC 2 / ISO control.
-- [`../architecture/iac-pattern.md`](../architecture/iac-pattern.md) — cluster + namespaces defined as code.
+- [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) — SBOM + CVE pipeline.
+- [`secrets-mgmt-deep-pattern.md`](/docs/pillars/security/secrets-mgmt-deep-pattern) — secret injection patterns.
+- [`vault-pattern.md`](/docs/pillars/security/vault-pattern) — secret storage.
+- [`../architecture/service-mesh-pattern.md`](/docs/pillars/architecture/service-mesh-pattern) — mTLS in mesh.
+- [`compliance-framework-pattern.md`](/docs/pillars/security/compliance-framework-pattern) — container security is a SOC 2 / ISO control.
+- [`../architecture/iac-pattern.md`](/docs/pillars/architecture/iac-pattern) — cluster + namespaces defined as code.

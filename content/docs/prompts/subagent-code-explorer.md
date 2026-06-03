@@ -94,5 +94,5 @@ Rules:
 
 ## See also
 
-- [`../pillars/ai-collaboration/sub-agent-pattern.md`](../pillars/ai-collaboration/sub-agent-pattern.md)
-- [`subagent-plan.md`](./subagent-plan.md) — turn the map into a plan.
+- [`../pillars/ai-collaboration/sub-agent-pattern.md`](/docs/pillars/ai-collaboration/sub-agent-pattern)
+- [`subagent-plan.md`](/docs/prompts/subagent-plan) — turn the map into a plan.

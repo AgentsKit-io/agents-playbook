@@ -43,7 +43,7 @@ Link other memories with [[their-name]].>
 One line per memory. No frontmatter. No body content. Format:
 
 ```markdown
-- [Title](file.md) — one-line hook
+- `Title` — one-line hook
 ```
 
 Why the index is separate: the agent reads the index whole every session and decides which memory files to expand. If the index itself is the storage, every recall pays the cost of every memory's full body — context dies fast.
@@ -134,6 +134,6 @@ There is no automatic gate for memory — it is private to each agent's working 
 
 ### See also
 
-- [`bootstrap-doc-pattern.md`](./bootstrap-doc-pattern.md) — `MEMORY.md` loads alongside the bootstrap doc.
-- [`../../templates/MEMORY.md.template.md`](../../templates/MEMORY.md.template.md) — copy-paste skeleton.
-- [`universal.md`](./universal.md) — Rule 10 (lessons land the moment they happen).
+- [`bootstrap-doc-pattern.md`](/docs/pillars/ai-collaboration/bootstrap-doc-pattern) — `MEMORY.md` loads alongside the bootstrap doc.
+- [`../../templates/MEMORY.md.template.md`](/docs/templates/MEMORY.md.template) — copy-paste skeleton.
+- [`universal.md`](/docs/pillars/ai-collaboration/universal) — Rule 10 (lessons land the moment they happen).

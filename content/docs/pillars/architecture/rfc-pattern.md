@@ -27,7 +27,7 @@ Internal-only refactors → ADR is enough. Anything a consumer can observe → R
 
 ### Sections
 
-Use [`../../templates/RFC.template.md`](../../templates/RFC.template.md). Required:
+Use [`../../templates/RFC.template.md`](/docs/templates/RFC.template). Required:
 
 1. **Summary** — one paragraph; what changes.
 2. **Motivation** — what is the problem; what use cases motivate this.
@@ -70,7 +70,7 @@ Recommended automated checks:
 2. **Promotion linkage** — every accepted RFC has a matching ADR with the back-pointer.
 3. **No orphan breakers** — no PR is allowed to change a method's params/result schema without referencing an accepted RFC (or an explicit `removes:` justification if the method is being deleted).
 
-Reference impl: [`../../scripts/check-rfc.example.mjs`](../../scripts/check-rfc.example.mjs).
+Reference impl: [`../../scripts/check-rfc.example.mjs`](/docs/scripts).
 
 ### Common failure modes (sourced from production)
 
@@ -81,6 +81,6 @@ Reference impl: [`../../scripts/check-rfc.example.mjs`](../../scripts/check-rfc.
 
 ### See also
 
-- [`adr-pattern.md`](./adr-pattern.md) — the destination format.
-- [`../governance/README.md`](../governance/README.md) — merge rules for breaking changes.
-- [`../../templates/RFC.template.md`](../../templates/RFC.template.md) — copy-paste skeleton.
+- [`adr-pattern.md`](/docs/pillars/architecture/adr-pattern) — the destination format.
+- [`../governance/README.md`](/docs/pillars/governance) — merge rules for breaking changes.
+- [`../../templates/RFC.template.md`](/docs/templates/RFC.template) — copy-paste skeleton.

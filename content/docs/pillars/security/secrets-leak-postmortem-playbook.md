@@ -37,7 +37,7 @@ When in doubt: **treat as leaked**. The cost of rotation is small; the cost of d
 | **SEV-3** | Non-prod secret (staging, dev) leaked | ≤ 24 h |
 | **SEV-4** | Suspected-leak with low confidence | Investigate first; rotate if confirmed |
 
-Use the on-call paging path (per [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md)) for SEV-1/2.
+Use the on-call paging path (per [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern)) for SEV-1/2.
 
 ### The minute-by-minute response (SEV-1)
 
@@ -77,7 +77,7 @@ This is the highest-leverage 5 minutes. Everything else can wait; this cannot.
 
 **Day 1–7: Post-mortem + close the gap**
 
-1. Write the post-mortem (per [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) discipline).
+1. Write the post-mortem (per [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern) discipline).
 2. Identify root cause: how did the secret end up where it leaked?
 3. Action items to prevent recurrence (see "Closing the gap" below).
 4. Verify rotation is complete (no consumers still using old secret).
@@ -122,7 +122,7 @@ This is the hardest case. Steps:
 **Vault sealer key (KEK)**:
 
 1. Generate new KEK in KMS / HSM.
-2. Re-wrap every DEK with the new KEK (per [`vault-pattern.md`](./vault-pattern.md)).
+2. Re-wrap every DEK with the new KEK (per [`vault-pattern.md`](/docs/pillars/security/vault-pattern)).
 3. Switch operational KEK to new.
 4. After dual-read window, retire old KEK.
 5. Audit-log.
@@ -187,9 +187,9 @@ After rotation, address the leak vector:
 
 | Vector | Mitigation |
 |---|---|
-| Secret in source code | Gate: `check-secrets` (see [`../../scripts/check-secrets.example.mjs`](../../scripts/check-secrets.example.mjs)) |
+| Secret in source code | Gate: `check-secrets` (see [`../../scripts/check-secrets.example.mjs`](/docs/scripts)) |
 | Secret in `.env` committed | Pre-commit hook; `.gitignore` enforcement; secret-scan in CI |
-| Secret in log line | Logger redaction (see [`vault-pattern.md`](./vault-pattern.md)) |
+| Secret in log line | Logger redaction (see [`vault-pattern.md`](/docs/pillars/security/vault-pattern)) |
 | Secret in screenshot | Awareness training; mask sensitive UI in dev tools |
 | Secret in CI log | Mask in CI runner; verify before adding to env |
 | Secret in chat / ticket | Team training; auto-DLP scanning of chat |
@@ -221,8 +221,8 @@ A drilled rotation is fast. An undrilled rotation panics.
 
 ### See also
 
-- [`vault-pattern.md`](./vault-pattern.md) — sealed-vault + rotation primitives.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — the leak event itself audit-logged.
-- [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) — paging path; post-mortem discipline.
-- [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) — adjacent: dependency-side leaks.
-- [`../../scripts/check-secrets.example.mjs`](../../scripts/check-secrets.example.mjs) — the gate that should catch source-code leaks.
+- [`vault-pattern.md`](/docs/pillars/security/vault-pattern) — sealed-vault + rotation primitives.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — the leak event itself audit-logged.
+- [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern) — paging path; post-mortem discipline.
+- [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) — adjacent: dependency-side leaks.
+- [`../../scripts/check-secrets.example.mjs`](/docs/scripts) — the gate that should catch source-code leaks.

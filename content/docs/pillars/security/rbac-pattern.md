@@ -92,7 +92,7 @@ Why at the boundary: business logic gets dozens of agent-authored edits; capabil
 | Revoke a role from a principal | `roles.revoke` | ✓ |
 | List active assignments | `roles.list` | (read; logged if sensitive) |
 
-Mutations go through the audit ledger before they execute (see [`audit-ledger-pattern.md`](./audit-ledger-pattern.md)).
+Mutations go through the audit ledger before they execute (see [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern)).
 
 ### Capability naming
 
@@ -113,8 +113,8 @@ Avoid:
 Some capabilities require additional protection:
 
 - **Step-up auth**: re-prompt for password / 2FA before granting.
-- **Time-boxed elevation**: granted only via break-glass (see Rule 7 in [`universal.md`](./universal.md)).
-- **Consent-gated**: require subject consent in addition to caller capability (see [Rule 7](./universal.md)).
+- **Time-boxed elevation**: granted only via break-glass (see Rule 7 in [`universal.md`](/docs/pillars/security/universal)).
+- **Consent-gated**: require subject consent in addition to caller capability (see [Rule 7](/docs/pillars/security/universal)).
 
 The capability definition itself carries metadata flagging it sensitive; the dispatcher / handler honors the metadata.
 
@@ -136,6 +136,6 @@ First principal of a fresh install: who creates it? Pattern:
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 7 (consent vs elevation), Rule 5 (audit before).
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md)
-- [`vault-pattern.md`](./vault-pattern.md) — capability check gates vault reads.
+- [`universal.md`](/docs/pillars/security/universal) — Rule 7 (consent vs elevation), Rule 5 (audit before).
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern)
+- [`vault-pattern.md`](/docs/pillars/security/vault-pattern) — capability check gates vault reads.

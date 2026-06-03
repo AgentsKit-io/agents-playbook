@@ -107,7 +107,7 @@ WCAG AA thresholds:
 
 Tooling: axe DevTools, the Stark plugin, Lighthouse. Build-time CI check too.
 
-Token discipline (per [`design-tokens-pattern.md`](./design-tokens-pattern.md)): semantic tokens (`text-primary`, `surface-1`) carry an implicit contrast contract. Changing the palette must respect the contract or fail CI.
+Token discipline (per [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern)): semantic tokens (`text-primary`, `surface-1`) carry an implicit contrast contract. Changing the palette must respect the contract or fail CI.
 
 Color alone is not enough:
 
@@ -127,7 +127,7 @@ Respect `prefers-reduced-motion: reduce`:
 
 No flash: nothing flashes > 3 times / second (seizure risk).
 
-Animations are communicative, not decorative — see [`universal.md`](./universal.md) Rule 6.
+Animations are communicative, not decorative — see [`universal.md`](/docs/pillars/ui-ux/universal) Rule 6.
 
 #### 5. Cognitive load + clarity
 
@@ -295,8 +295,8 @@ A11y intersects with intl heavily:
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 6 (motion), Rule 7 (keyboard + SR).
-- [`a11y-checklist.md`](./a11y-checklist.md) — per-PR checklist; this doc is the substance behind it.
-- [`primitives-pattern.md`](./primitives-pattern.md) — primitives enshrine a11y.
-- [`design-tokens-pattern.md`](./design-tokens-pattern.md) — contrast as a token contract.
-- [`intl-pattern.md`](./intl-pattern.md) — language + direction.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 6 (motion), Rule 7 (keyboard + SR).
+- [`a11y-checklist.md`](/docs/pillars/ui-ux/a11y-checklist) — per-PR checklist; this doc is the substance behind it.
+- [`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern) — primitives enshrine a11y.
+- [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern) — contrast as a token contract.
+- [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern) — language + direction.
