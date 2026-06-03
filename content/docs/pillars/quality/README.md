@@ -59,3 +59,4 @@ How to know the code works without manually reviewing every agent-produced diff.
 | [`cost-optimization-pattern.md`](./cost-optimization-pattern.md) | FinOps; per-tenant attribution; right-sizing; commitments + spot |
 | [`contract-testing-pattern.md`](./contract-testing-pattern.md) | Pact + schema-first; consumer-driven contracts; broker; can-i-deploy |
 | [`product-analytics-experimentation-pattern.md`](./product-analytics-experimentation-pattern.md) | Event tracking; funnels + cohorts; A/B experiments; holdouts |
+| [`agent-eval-framework-pattern.md`](./agent-eval-framework-pattern.md) | Measuring AI agent quality: deterministic graders + LLM-as-judge + production monitoring; eval set as a versioned asset |
