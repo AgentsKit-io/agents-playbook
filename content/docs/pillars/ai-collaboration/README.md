@@ -51,3 +51,4 @@ How to make an agent productive in your repo on day one and durably good across 
 - `sub-agent-pattern.md`
 - `slash-commands-pattern.md`
 - `concurrent-agent-pattern.md`
+- `self-describe-pattern.md`

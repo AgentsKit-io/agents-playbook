@@ -40,6 +40,8 @@ export async function GET() {
 Single-file dump of every doc. Documents are separated by lines starting with "==== ".
 Each section begins with the canonical URL at ${SITE}.
 
+Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
+
 Generated automatically; treat as the canonical reference snapshot.
 
 `;

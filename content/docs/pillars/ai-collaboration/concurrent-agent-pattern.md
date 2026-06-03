@@ -99,6 +99,32 @@ When concurrent work surprises you, write a memory:
 
 See [`memory-pattern.md`](./memory-pattern.md).
 
+### Rebase hazards on a fast-moving main (hard-won)
+
+These four bite specifically when `main` advances several times during one session — the high-parallelism case. They are subtle because each leaves a *clean-looking* tree.
+
+1. **Rebase silently reverts a peer's files into your commit.** Repeated rebases against a fast-moving main can fold peer changes into your diff as *anti-changes* — your branch now "removes" work you never touched. A per-file review of your own paths will not catch it, because the contaminated files are not yours.
+   → Before every push, diff the **full** changed-file set against the merge base, not just your paths:
+   ```bash
+   git diff --name-only origin/main...HEAD     # every file your branch touches
+   ```
+   For any file you did not intend to change, restore it: `git checkout origin/main -- <file>`.
+
+2. **`git push | tail` (or any pipe) masks the push exit code.** A pipeline's exit status is the *last* command's, so a rejected push reads as success.
+   → Check the push result explicitly (`git push …; echo "exit=$?"`), or read the unpiped output. Never trust a piped push.
+
+3. **A rebase that pulls in new packages leaves your installed deps stale.** New workspace packages on main are not in your `node_modules`; builds and type-checks then fail with "cannot find module @scope/new-pkg" — a phantom error that is really a stale install.
+   → After any rebase that touches the dependency graph, reinstall before building: `<pm> install`, then build the dependency *closure* of the package you are working in, not just the package itself.
+
+4. **A contaminated shared checkout poisons every push.** If the working checkout has accumulated foreign WIP, pushing from it risks shipping anti-changes (hazard 1).
+   → Push from an **isolated worktree off a fresh base**: `git worktree add --detach ../clean origin/main`, re-apply your sub-unit, install, gate, push `HEAD:refs/heads/<branch>`. Worktrees also need `BASE_REF=origin/main` for any deletion/intent gate that diffs against the base (see [`../governance/pr-intent-pattern.md`](../governance/pr-intent-pattern.md)).
+
+> Do not bypass a failing gate to escape these (`--no-verify`, skip flags). The gate is catching real contamination. Fix the contamination, or escape to a clean worktree if the shared checkout is the problem.
+
+### Concurrency vs. machine memory
+
+Parallel agents (and parallel gates) share one machine's RAM. Cap the **number of concurrent workers** against total RAM — never cap per-process memory on RAM-hungry tools (type-checkers, bundlers); a per-process cap there produces phantom out-of-memory failures that look like real errors. Budget against total RAM; scale worker count down to stay inside it. Freezing the machine is never acceptable.
+
 ### Common failure modes
 
 - **Agent picks high-contention issue from a popular epic.** Maximises duplicate-work probability. → Prefer low-parallelism issues; avoid hot epics unless explicitly assigned.
