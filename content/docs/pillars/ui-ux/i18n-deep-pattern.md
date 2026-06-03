@@ -15,7 +15,7 @@ Real intl is harder than key extraction. Each language has plural rules; some ha
 
 ### Beyond key extraction
 
-The [`intl-pattern.md`](./intl-pattern.md) sibling doc covers the basic discipline: every string keyed, `useT()` everywhere. This doc covers what comes after.
+The [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern) sibling doc covers the basic discipline: every string keyed, `useT()` everywhere. This doc covers what comes after.
 
 ### ICU MessageFormat
 
@@ -227,7 +227,7 @@ Avoid mixing the user's locale with the *product's* currency (a Japanese user vi
 
 Things that are NOT translated:
 
-- Brand product name (per [`whitelabel-pattern.md`](./whitelabel-pattern.md) brand-token allowlist).
+- Brand product name (per [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern) brand-token allowlist).
 - Code identifiers, file paths, URLs.
 - Author / contributor names.
 - Third-party brand names (Slack, GitHub).
@@ -275,7 +275,7 @@ Things that ARE translated:
 
 ### See also
 
-- [`intl-pattern.md`](./intl-pattern.md) — the basic discipline.
-- [`whitelabel-pattern.md`](./whitelabel-pattern.md) — product name as a brand token.
-- [`accessibility-deep-pattern.md`](./accessibility-deep-pattern.md) — `lang` attribute; reading order; bidi.
-- [`universal.md`](./universal.md) — Rule 3 (intl every string), Rule 8 (human verbs).
+- [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern) — the basic discipline.
+- [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern) — product name as a brand token.
+- [`accessibility-deep-pattern.md`](/docs/pillars/ui-ux/accessibility-deep-pattern) — `lang` attribute; reading order; bidi.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 3 (intl every string), Rule 8 (human verbs).

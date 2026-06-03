@@ -141,7 +141,7 @@ Permission flags differ from feature flags in semantics:
 - Visible in the product (the user can see "you don't have this on your plan").
 - Linked to billing.
 
-Implement these via plan presets in the whitelabel runtime (see [`../ui-ux/whitelabel-pattern.md`](../ui-ux/whitelabel-pattern.md)), not via the feature-flag system. Mixing the two is confusing.
+Implement these via plan presets in the whitelabel runtime (see [`../ui-ux/whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern)), not via the feature-flag system. Mixing the two is confusing.
 
 ### Common failure modes
 
@@ -154,7 +154,7 @@ Implement these via plan presets in the whitelabel runtime (see [`../ui-ux/white
 
 ### See also
 
-- [`anti-overengineering.md`](./anti-overengineering.md) — flags should not be the default; YAGNI applies.
-- [`../security/universal.md`](../security/universal.md) — flag flips audit-logged.
-- [`../ui-ux/whitelabel-pattern.md`](../ui-ux/whitelabel-pattern.md) — permission flags via plan presets.
-- [`../quality/quality-gates-pattern.md`](../quality/quality-gates-pattern.md) — retirement gate.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — flags should not be the default; YAGNI applies.
+- [`../security/universal.md`](/docs/pillars/security/universal) — flag flips audit-logged.
+- [`../ui-ux/whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern) — permission flags via plan presets.
+- [`../quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) — retirement gate.

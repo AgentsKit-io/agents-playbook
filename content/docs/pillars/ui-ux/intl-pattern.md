@@ -88,7 +88,7 @@ User-visible:
 - `title`, `placeholder`, `alt`.
 - Error messages displayed to users (server returns `code` → client resolves to localized message).
 - Toast / notification strings.
-- Status labels (per [`universal.md`](./universal.md) Rule 8).
+- Status labels (per [`universal.md`](/docs/pillars/ui-ux/universal) Rule 8).
 
 Not intl'd:
 
@@ -113,7 +113,7 @@ Exemptions:
 - Strings inside `\<code\>`, `\<pre\>`, `\<kbd\>` JSX elements.
 - Comments.
 
-Lint script ships at [`../../scripts/check-intl.example.mjs`](../../scripts/check-intl.example.mjs).
+Lint script ships at [`../../scripts/check-intl.example.mjs`](/docs/scripts).
 
 ### Interpolation discipline
 
@@ -177,6 +177,6 @@ CI screenshots the app in pseudo locale; reviewer scans for hardcoded English.
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 3.
-- [`whitelabel-pattern.md`](./whitelabel-pattern.md) — brand-token resolution.
-- [`a11y-checklist.md`](./a11y-checklist.md) — aria labels are intl'd too.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 3.
+- [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern) — brand-token resolution.
+- [`a11y-checklist.md`](/docs/pillars/ui-ux/a11y-checklist) — aria labels are intl'd too.

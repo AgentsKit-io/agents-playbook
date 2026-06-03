@@ -181,8 +181,8 @@ For new adopters: Linkerd if minimal; Istio if mature ops team; Cilium for k8s-n
 
 ### See also
 
-- [`api-gateway-pattern.md`](./api-gateway-pattern.md) — gateway for external; mesh for internal.
-- [`multi-region-pattern.md`](./multi-region-pattern.md) — mesh in multi-region.
-- [`anti-overengineering.md`](./anti-overengineering.md) — mesh is the canonical premature complexity.
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — mesh contributes signals.
-- [`../security/rbac-pattern.md`](../security/rbac-pattern.md) — service-to-service auth interplay.
+- [`api-gateway-pattern.md`](/docs/pillars/architecture/api-gateway-pattern) — gateway for external; mesh for internal.
+- [`multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern) — mesh in multi-region.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — mesh is the canonical premature complexity.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — mesh contributes signals.
+- [`../security/rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — service-to-service auth interplay.

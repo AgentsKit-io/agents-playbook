@@ -85,6 +85,6 @@ Rules:
 
 ## See also
 
-- [`../pillars/security/universal.md`](../pillars/security/universal.md)
-- [`../pillars/security/threat-model-template.md`](../pillars/security/threat-model-template.md)
-- [`system-reviewer.md`](./system-reviewer.md) — general review (this prompt is a specialization).
+- [`../pillars/security/universal.md`](/docs/pillars/security/universal)
+- [`../pillars/security/threat-model-template.md`](/docs/pillars/security/threat-model-template)
+- [`system-reviewer.md`](/docs/prompts/system-reviewer) — general review (this prompt is a specialization).

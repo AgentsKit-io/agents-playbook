@@ -143,7 +143,7 @@ Escape hatch: `// allow-raw-error: \<reason\>` on the line above; a gate counts 
 
 ### Tests
 
-Each method's contract test (per [`contracts-zod-pattern.md`](./contracts-zod-pattern.md)) covers:
+Each method's contract test (per [`contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern)) covers:
 
 - Happy path: valid params, valid result.
 - Reject path: invalid params produce a `ValidationError` with code `VALIDATION_ERROR`.
@@ -161,6 +161,6 @@ Plus, every error code is exercised somewhere in the test suite — a separate g
 
 ### See also
 
-- [`contracts-zod-pattern.md`](./contracts-zod-pattern.md) — the dispatcher serializes these.
-- [`../security/README.md`](../security/README.md) — audit-ledger entries reference these codes.
-- [`../../templates/ADR.template.md`](../../templates/ADR.template.md) — error-namespace renames go through an ADR.
+- [`contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — the dispatcher serializes these.
+- [`../security/README.md`](/docs/pillars/security) — audit-ledger entries reference these codes.
+- [`../../templates/ADR.template.md`](/docs/templates/ADR.template) — error-namespace renames go through an ADR.

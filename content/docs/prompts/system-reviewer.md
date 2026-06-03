@@ -87,6 +87,6 @@ Rules:
 
 ## See also
 
-- [`system-implementer.md`](./system-implementer.md) — the agent producing the diff under review.
-- [`system-security.md`](./system-security.md) — for security-only review passes.
-- [`../pillars/quality/universal.md`](../pillars/quality/universal.md) — Rule 1 (actionable signals).
+- [`system-implementer.md`](/docs/prompts/system-implementer) — the agent producing the diff under review.
+- [`system-security.md`](/docs/prompts/system-security) — for security-only review passes.
+- [`../pillars/quality/universal.md`](/docs/pillars/quality/universal) — Rule 1 (actionable signals).

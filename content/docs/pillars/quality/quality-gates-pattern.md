@@ -42,7 +42,7 @@ A single entry: `pnpm check:quality-gates`. It:
 4. Exits 0 if all pass; non-zero with summary if any fail.
 5. Has flags: `--gate=\<name\>` to run just one; `--explain` for fix recipes; `--baseline` to regenerate baselines.
 
-Reference impl shape: [`../../scripts/README.md`](../../scripts/README.md).
+Reference impl shape: [`../../scripts/README.md`](/docs/scripts).
 
 ### Parallelism
 
@@ -91,7 +91,7 @@ Why one file:
 3. Baseline (if applicable): generate baseline on first run; lock to shrink-only.
 4. Register: add to `.quality-gates.json`.
 5. Pre-commit: add to the hook if runtime < 1s.
-6. Document: one row in [`../../scripts/README.md`](../../scripts/README.md).
+6. Document: one row in [`../../scripts/README.md`](/docs/scripts).
 
 ### Disabling a gate
 
@@ -130,6 +130,6 @@ Agents tolerate fast gates and skip slow ones. Keep them fast.
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 1 (actionable), Rule 8 (one gate one rule).
-- [`pre-push-pattern.md`](./pre-push-pattern.md) — where heavier gates run.
-- [`../../scripts/README.md`](../../scripts/README.md) — gate reference impls.
+- [`universal.md`](/docs/pillars/quality/universal) — Rule 1 (actionable), Rule 8 (one gate one rule).
+- [`pre-push-pattern.md`](/docs/pillars/quality/pre-push-pattern) — where heavier gates run.
+- [`../../scripts/README.md`](/docs/scripts) — gate reference impls.

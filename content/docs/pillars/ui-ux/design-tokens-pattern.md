@@ -109,7 +109,7 @@ applyBrandKit({
 });
 ```
 
-`applyBrandKit` writes the values to `:root` style or generates a new CSS file at build time. See [`whitelabel-pattern.md`](./whitelabel-pattern.md).
+`applyBrandKit` writes the values to `:root` style or generates a new CSS file at build time. See [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern).
 
 ### Naming discipline
 
@@ -150,6 +150,6 @@ Brownfield adoption:
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 1.
-- [`primitives-pattern.md`](./primitives-pattern.md) — primitives consume tokens.
-- [`whitelabel-pattern.md`](./whitelabel-pattern.md) — runtime swap.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 1.
+- [`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern) — primitives consume tokens.
+- [`whitelabel-pattern.md`](/docs/pillars/ui-ux/whitelabel-pattern) — runtime swap.

@@ -20,7 +20,7 @@ Multi-layer defense: edge (CDN / WAF) absorbs L3/L4 + bulk L7; per-route rate li
 | **L3/L4 (network)** | Volumetric attacks (SYN flood, UDP flood) | Cloud provider's DDoS service (CloudFront, Cloudflare, AWS Shield) |
 | **L7 (HTTP) — bulk** | High-volume HTTP floods | WAF + CDN rate limit (Cloudflare, Akamai) |
 | **Per-route rate limit** | Per-user / per-IP abuse | Application middleware (Redis-backed) |
-| **Per-tenant quota** | Noisy neighbor | Application logic (per [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md)) |
+| **Per-tenant quota** | Noisy neighbor | Application logic (per [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern)) |
 | **Backend circuit breakers** | Cascading failure | Library (Polly, resilience4j) |
 
 Edge absorbs volume cheaply. Application layer handles per-identity logic. Both required.
@@ -181,7 +181,7 @@ Beyond limits, detect:
 - One tenant generating > Nx the median request rate.
 - One tenant's error rate suddenly spikes (broken integration).
 - One tenant accessing many distinct resources rapidly (scraping signal).
-- Unusual times / patterns (per [`../quality/observability-pattern.md`](../quality/observability-pattern.md)).
+- Unusual times / patterns (per [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern)).
 
 Each surfaces in a dashboard; on-call has a runbook for "noisy tenant".
 
@@ -220,8 +220,8 @@ For most products, the managed-CDN's default DDoS protection is enough. Advanced
 
 ### See also
 
-- [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md) — per-tenant quotas.
-- [`session-mgmt-pattern.md`](./session-mgmt-pattern.md) — login-specific limits.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — rate-limit fires logged.
-- [`../architecture/caching-cdn-pattern.md`](../architecture/caching-cdn-pattern.md) — CDN is the absorption layer.
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — rate-limit metrics.
+- [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) — per-tenant quotas.
+- [`session-mgmt-pattern.md`](/docs/pillars/security/session-mgmt-pattern) — login-specific limits.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — rate-limit fires logged.
+- [`../architecture/caching-cdn-pattern.md`](/docs/pillars/architecture/caching-cdn-pattern) — CDN is the absorption layer.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — rate-limit metrics.

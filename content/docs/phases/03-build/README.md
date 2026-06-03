@@ -18,7 +18,7 @@ Build is a loop, not a sprint. One sub-unit per session. PR intent declared up f
 1. **Pick a sub-unit.** One discrete, shippable change. Defined up front.
 2. **State intent.** PR-intent manifest in the PR description (or `pr-intent.yaml`). `adds:`, `changes:`, `removes:`, `tests:`, `docs:`, `gates:`.
 3. **Verify state.** `git fetch`; recheck issue state; look for in-flight peer PRs on the same paths.
-4. **Plan.** If the change is non-trivial, delegate to a `subagent-plan` (see [`../../prompts/subagent-plan.md`](../../prompts/subagent-plan.md)).
+4. **Plan.** If the change is non-trivial, delegate to a `subagent-plan` (see [`../../prompts/subagent-plan.md`](/docs/prompts/subagent-plan)).
 5. **Implement.** Tests in the same PR. Hermetic over E2E. Tests assert on codes.
 6. **Self-review.** Run `pnpm check:quality-gates`. Read your own diff as a reviewer.
 7. **Open PR.** Manifest in description. Link issue, ADR/RFC, related PRs.
@@ -101,7 +101,7 @@ Build is a loop, not a phase that exits. The codebase is "in Build" for most of 
 
 ### See also
 
-- [`../../pillars/governance/pr-intent-pattern.md`](../../pillars/governance/pr-intent-pattern.md)
-- [`../../pillars/ai-collaboration/universal.md`](../../pillars/ai-collaboration/universal.md)
-- [`../../prompts/system-implementer.md`](../../prompts/system-implementer.md)
-- [`../../templates/PR-intent.template.md`](../../templates/PR-intent.template.md)
+- [`../../pillars/governance/pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern)
+- [`../../pillars/ai-collaboration/universal.md`](/docs/pillars/ai-collaboration/universal)
+- [`../../prompts/system-implementer.md`](/docs/prompts/system-implementer)
+- [`../../templates/PR-intent.template.md`](/docs/templates/PR-intent.template)

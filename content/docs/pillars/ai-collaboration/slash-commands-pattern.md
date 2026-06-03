@@ -98,6 +98,6 @@ Slash command bodies are part of the repo (commit them; do not rely on per-user 
 
 ### See also
 
-- [`sub-agent-pattern.md`](./sub-agent-pattern.md) — many slash commands delegate to a sub-agent.
-- [`../../prompts/README.md`](../../prompts/README.md) — command bodies live here.
-- [`universal.md`](./universal.md) — Rule 7 (explicit goal, explicit exit).
+- [`sub-agent-pattern.md`](/docs/pillars/ai-collaboration/sub-agent-pattern) — many slash commands delegate to a sub-agent.
+- [`../../prompts/README.md`](/docs/prompts) — command bodies live here.
+- [`universal.md`](/docs/pillars/ai-collaboration/universal) — Rule 7 (explicit goal, explicit exit).

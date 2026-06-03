@@ -146,9 +146,9 @@ The sanity audit complements gates; it does not replace them.
 
 ## See also
 
-- [`test-pyramid.md`](./test-pyramid.md)
-- [`quality-gates-pattern.md`](./quality-gates-pattern.md)
-- [`sanity-pattern.md`](./sanity-pattern.md)
-- [`pre-push-pattern.md`](./pre-push-pattern.md)
-- [`mutation-testing-pattern.md`](./mutation-testing-pattern.md)
-- [`../../scripts/README.md`](../../scripts/README.md)
+- [`test-pyramid.md`](/docs/pillars/quality/test-pyramid)
+- [`quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern)
+- [`sanity-pattern.md`](/docs/pillars/quality/sanity-pattern)
+- [`pre-push-pattern.md`](/docs/pillars/quality/pre-push-pattern)
+- [`mutation-testing-pattern.md`](/docs/pillars/quality/mutation-testing-pattern)
+- [`../../scripts/README.md`](/docs/scripts)

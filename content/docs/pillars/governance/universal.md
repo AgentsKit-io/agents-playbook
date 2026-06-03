@@ -36,7 +36,7 @@ Each PR has a manifest in the description (or a `pr-intent.yaml` file in the dif
 
 A gate parses the manifest and verifies it against the diff. Mismatch fails the PR.
 
-Template: [`../../templates/PR-intent.template.md`](../../templates/PR-intent.template.md).
+Template: [`../../templates/PR-intent.template.md`](/docs/templates/PR-intent.template).
 
 **Failure mode prevented:** PRs whose description does not match the diff; reviewers approving claims that the diff contradicts; agents quietly expanding scope mid-session.
 
@@ -57,7 +57,7 @@ Architecture changes → ADR. Breaking-contract changes → RFC.
 
 The doc IS the change. The code implements the doc. A PR that ships architecture without a referenced ADR is incomplete.
 
-Cross-cutting reference: [`../architecture/adr-pattern.md`](../architecture/adr-pattern.md), [`../architecture/rfc-pattern.md`](../architecture/rfc-pattern.md).
+Cross-cutting reference: [`../architecture/adr-pattern.md`](/docs/pillars/architecture/adr-pattern), [`../architecture/rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern).
 
 **Failure mode prevented:** rules that "everyone knows" but no one can cite; future agents reverting decisions because they cannot find the rationale.
 
@@ -114,7 +114,7 @@ Before starting work in a path:
 
 This is **search, not coordination**. The agents do not have to talk; the repo records who is doing what.
 
-See [`../ai-collaboration/concurrent-agent-pattern.md`](../ai-collaboration/concurrent-agent-pattern.md) for the full defensive checklist.
+See [`../ai-collaboration/concurrent-agent-pattern.md`](/docs/pillars/ai-collaboration/concurrent-agent-pattern) for the full defensive checklist.
 
 **Failure mode prevented:** two agents producing two PRs for the same fix; conflict storms at merge time; agents reverting each other's work in successive PRs.
 
@@ -133,7 +133,7 @@ Why merge before opening the next phase: keeping a chain of N open PRs causes ca
 
 ## See also
 
-- [`../../templates/PR-intent.template.md`](../../templates/PR-intent.template.md)
-- [`pr-intent-pattern.md`](./pr-intent-pattern.md), [`merge-rules-pattern.md`](./merge-rules-pattern.md), [`tombstone-pattern.md`](./tombstone-pattern.md), [`phased-pr-pattern.md`](./phased-pr-pattern.md)
-- [`../ai-collaboration/concurrent-agent-pattern.md`](../ai-collaboration/concurrent-agent-pattern.md)
-- [`../architecture/adr-pattern.md`](../architecture/adr-pattern.md), [`../architecture/rfc-pattern.md`](../architecture/rfc-pattern.md)
+- [`../../templates/PR-intent.template.md`](/docs/templates/PR-intent.template)
+- [`pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern), [`merge-rules-pattern.md`](/docs/pillars/governance/merge-rules-pattern), [`tombstone-pattern.md`](/docs/pillars/governance/tombstone-pattern), [`phased-pr-pattern.md`](/docs/pillars/governance/phased-pr-pattern)
+- [`../ai-collaboration/concurrent-agent-pattern.md`](/docs/pillars/ai-collaboration/concurrent-agent-pattern)
+- [`../architecture/adr-pattern.md`](/docs/pillars/architecture/adr-pattern), [`../architecture/rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern)

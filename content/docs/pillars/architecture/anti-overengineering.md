@@ -138,6 +138,6 @@ This pillar fights against agent default reach. Reinforce by:
 
 ### See also
 
-- [`file-size-budget.md`](./file-size-budget.md) — size budget complements complexity budget.
-- [`universal.md`](./universal.md) — Rule 1 names every boundary; named boundaries do not need wrappers.
-- [`../quality/test-pyramid.md`](../quality/test-pyramid.md) — over-abstracted code is harder to test.
+- [`file-size-budget.md`](/docs/pillars/architecture/file-size-budget) — size budget complements complexity budget.
+- [`universal.md`](/docs/pillars/architecture/universal) — Rule 1 names every boundary; named boundaries do not need wrappers.
+- [`../quality/test-pyramid.md`](/docs/pillars/quality/test-pyramid) — over-abstracted code is harder to test.

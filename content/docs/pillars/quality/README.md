@@ -20,7 +20,7 @@ How to know the code works without manually reviewing every agent-produced diff.
 | Mutation testing | Beats coverage as a quality signal once unit suite is good | Stryker / mutation tool on stable utilities first |
 | Hermetic tests | Component-level vitest preferred over live-app E2E | Reproduce + lock bugs via in-process tests, not Playwright |
 | Verify-first close | Before reproducing an issue, check if it's already fixed | Default `gh issue view \<n\>` at session start |
-| File-size gate | See [architecture pillar](../architecture/file-size-budget.md) | Baseline shrink-only |
+| File-size gate | See [architecture pillar](/docs/pillars/architecture/file-size-budget) | Baseline shrink-only |
 | Lint gates | No `any`, no `console.log`, no default exports, no nested ternaries, no raw HTML | ESLint rule pack + per-file overrides |
 | Quality-gates script | One `pnpm check:quality-gates` for fast structural checks | Parallel: lint + typecheck + secrets + size + intl + tokens |
 | Sanity script | One `pnpm sanity` for cross-cutting rule audit | Generates `docs/audit/sanity-report.md`; CI fails on regressions |
@@ -37,26 +37,26 @@ How to know the code works without manually reviewing every agent-produced diff.
 
 ## See also
 
-- [`../architecture/file-size-budget.md`](../architecture/file-size-budget.md)
-- [`../governance/README.md`](../governance/README.md) — PR-intent ties tests to claims.
-- [`../../scripts/`](../../scripts/) — gate reference impls.
+- [`../architecture/file-size-budget.md`](/docs/pillars/architecture/file-size-budget)
+- [`../governance/README.md`](/docs/pillars/governance) — PR-intent ties tests to claims.
+- [`../../scripts/`](/docs/scripts) — gate reference impls.
 
 ## Documents in this pillar
 
 | Doc | Read when |
 |---|---|
-| [`universal.md`](./universal.md) | First read; the 9 non-negotiables |
-| [`test-pyramid.md`](./test-pyramid.md) | Test-tier distribution + escalation |
-| [`quality-gates-pattern.md`](./quality-gates-pattern.md) | Structural gate suite + orchestrator |
-| [`pre-push-pattern.md`](./pre-push-pattern.md) | Three-tier hook split |
-| [`sanity-pattern.md`](./sanity-pattern.md) | Cross-cutting audit |
-| [`mutation-testing-pattern.md`](./mutation-testing-pattern.md) | Beyond coverage |
-| [`observability-pattern.md`](./observability-pattern.md) | Metrics / logs / traces / SLOs |
-| [`performance-budgets-pattern.md`](./performance-budgets-pattern.md) | Bundle / latency / resource budgets |
-| [`chaos-engineering-pattern.md`](./chaos-engineering-pattern.md) | Controlled fault injection |
-| [`ci-cd-pipeline-pattern.md`](./ci-cd-pipeline-pattern.md) | Commit → prod pipeline; caching; deploy patterns; DB migrations |
-| [`alerting-runbooks-pattern.md`](./alerting-runbooks-pattern.md) | SLO burn-rate alerts; runbook 5-section template; tuning loop |
-| [`cost-optimization-pattern.md`](./cost-optimization-pattern.md) | FinOps; per-tenant attribution; right-sizing; commitments + spot |
-| [`contract-testing-pattern.md`](./contract-testing-pattern.md) | Pact + schema-first; consumer-driven contracts; broker; can-i-deploy |
-| [`product-analytics-experimentation-pattern.md`](./product-analytics-experimentation-pattern.md) | Event tracking; funnels + cohorts; A/B experiments; holdouts |
-| [`agent-eval-framework-pattern.md`](./agent-eval-framework-pattern.md) | Measuring AI agent quality: deterministic graders + LLM-as-judge + production monitoring; eval set as a versioned asset |
+| [`universal.md`](/docs/pillars/quality/universal) | First read; the 9 non-negotiables |
+| [`test-pyramid.md`](/docs/pillars/quality/test-pyramid) | Test-tier distribution + escalation |
+| [`quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) | Structural gate suite + orchestrator |
+| [`pre-push-pattern.md`](/docs/pillars/quality/pre-push-pattern) | Three-tier hook split |
+| [`sanity-pattern.md`](/docs/pillars/quality/sanity-pattern) | Cross-cutting audit |
+| [`mutation-testing-pattern.md`](/docs/pillars/quality/mutation-testing-pattern) | Beyond coverage |
+| [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) | Metrics / logs / traces / SLOs |
+| [`performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern) | Bundle / latency / resource budgets |
+| [`chaos-engineering-pattern.md`](/docs/pillars/quality/chaos-engineering-pattern) | Controlled fault injection |
+| [`ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern) | Commit → prod pipeline; caching; deploy patterns; DB migrations |
+| [`alerting-runbooks-pattern.md`](/docs/pillars/quality/alerting-runbooks-pattern) | SLO burn-rate alerts; runbook 5-section template; tuning loop |
+| [`cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern) | FinOps; per-tenant attribution; right-sizing; commitments + spot |
+| [`contract-testing-pattern.md`](/docs/pillars/quality/contract-testing-pattern) | Pact + schema-first; consumer-driven contracts; broker; can-i-deploy |
+| [`product-analytics-experimentation-pattern.md`](/docs/pillars/quality/product-analytics-experimentation-pattern) | Event tracking; funnels + cohorts; A/B experiments; holdouts |
+| [`agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern) | Measuring AI agent quality: deterministic graders + LLM-as-judge + production monitoring; eval set as a versioned asset |

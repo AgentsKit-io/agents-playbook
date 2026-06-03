@@ -61,7 +61,7 @@ Interpret:
 - **High score (≥ 80%)**: tests catch most bugs in this code. Good.
 - **Low score (< 60%)**: tests run the code but do not assert on its behavior. Add assertions.
 - **Survivors clustered in one function**: that function is undertested. Add targeted tests.
-- **Survivors at error paths**: the error-path tests don't assert on the error code. See [`universal.md`](./universal.md) Rule 4.
+- **Survivors at error paths**: the error-path tests don't assert on the error code. See [`universal.md`](/docs/pillars/quality/universal) Rule 4.
 - **Equivalent mutants** (mutants that produce identical observable behavior): cannot be killed by definition. Mark and move on.
 
 ### Killing survivors
@@ -108,6 +108,6 @@ The mutation tool may flag many of these. Maintain an allowlist file mapping `\<
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 2 (per-package coverage), Rule 4 (codes not messages).
-- [`test-pyramid.md`](./test-pyramid.md) — coverage as a precondition.
-- [`sanity-pattern.md`](./sanity-pattern.md) — mutation score is a sanity metric.
+- [`universal.md`](/docs/pillars/quality/universal) — Rule 2 (per-package coverage), Rule 4 (codes not messages).
+- [`test-pyramid.md`](/docs/pillars/quality/test-pyramid) — coverage as a precondition.
+- [`sanity-pattern.md`](/docs/pillars/quality/sanity-pattern) — mutation score is a sanity metric.

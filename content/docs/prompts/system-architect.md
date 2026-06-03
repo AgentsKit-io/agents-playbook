@@ -77,7 +77,7 @@ Honest reporting: if you cannot map the change to a clean boundary, say so. If t
 
 ## See also
 
-- [`../pillars/architecture/universal.md`](../pillars/architecture/universal.md)
-- [`../templates/ADR.template.md`](../templates/ADR.template.md)
-- [`../templates/RFC.template.md`](../templates/RFC.template.md)
-- [`system-implementer.md`](./system-implementer.md) — the agent that picks up where this one stops.
+- [`../pillars/architecture/universal.md`](/docs/pillars/architecture/universal)
+- [`../templates/ADR.template.md`](/docs/templates/ADR.template)
+- [`../templates/RFC.template.md`](/docs/templates/RFC.template)
+- [`system-implementer.md`](/docs/prompts/system-implementer) — the agent that picks up where this one stops.

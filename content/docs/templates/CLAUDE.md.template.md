@@ -12,7 +12,7 @@ Drop this at the repo root as `CLAUDE.md` (or `AGENTS.md` for tool-neutral). Cus
 
 Convention-named entry point for Claude Code, Cursor, Copilot, and any agent that resolves project guidance by filename. Mirrors the non-negotiables so an agent can act safely before fetching anything else.
 
-The canonical orientation doc is [`AGENTS.md`](./AGENTS.md) — read it first when you don't know which package to touch.
+The canonical orientation doc is `AGENTS.md` — read it first when you don't know which package to touch.
 
 ## Repo at a glance
 
@@ -51,11 +51,11 @@ pnpm check:all              # full pre-release sweep
 
 | You want to… | Read |
 |---|---|
-| Map a change to a package | [`AGENTS.md`](./AGENTS.md) routing table |
-| Understand philosophy | [`MANIFESTO.md`](./MANIFESTO.md) (if you have one), `docs/adr/0001-*.md` |
-| Contribute a PR | [`CONTRIBUTING.md`](./CONTRIBUTING.md) |
+| Map a change to a package | `AGENTS.md` routing table |
+| Understand philosophy | `MANIFESTO.md` (if you have one), `docs/adr/0001-*.md` |
+| Contribute a PR | `CONTRIBUTING.md` |
 | Find an ADR / RFC | `docs/adr/`, `docs/rfc/` |
-| Report a vulnerability | [`SECURITY.md`](./SECURITY.md) — never a public issue |
+| Report a vulnerability | `SECURITY.md` — never a public issue |
 
 ## When a doc contradicts the code
 
@@ -73,6 +73,6 @@ When you adopt this template, fill in:
 
 ## See also
 
-- [`AGENTS.md.template.md`](./AGENTS.md.template.md) — routing table to ship alongside this.
-- [`MEMORY.md.template.md`](./MEMORY.md.template.md) — persistent memory pattern.
-- [`../pillars/ai-collaboration/README.md`](../pillars/ai-collaboration/README.md) — full pillar rationale.
+- [`AGENTS.md.template.md`](/docs/templates/AGENTS.md.template) — routing table to ship alongside this.
+- [`MEMORY.md.template.md`](/docs/templates/MEMORY.md.template) — persistent memory pattern.
+- [`../pillars/ai-collaboration/README.md`](/docs/pillars/ai-collaboration) — full pillar rationale.

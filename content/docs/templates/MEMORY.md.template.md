@@ -39,7 +39,7 @@ Link related memories with [[their-name]].>
 `MEMORY.md` is the only file loaded into context every session. One line per memory:
 
 ```markdown
-- [Short title](file.md) — one-line hook
+- `Short title` — one-line hook
 ```
 
 No frontmatter. No body content. Just the index.
@@ -90,10 +90,10 @@ See also [[file-size-budget]] — long ternaries also bust the line budget.
 `MEMORY.md` index entry:
 
 ```markdown
-- [No nested ternaries](feedback_no_nested_ternary.md) — never nest `?:`; use if/else or lookup
+- `No nested ternaries` — never nest `?:`; use if/else or lookup
 ```
 
 ## See also
 
-- [`../pillars/ai-collaboration/README.md`](../pillars/ai-collaboration/README.md)
-- [`CLAUDE.md.template.md`](./CLAUDE.md.template.md) — the bootstrap doc loads MEMORY.md every session.
+- [`../pillars/ai-collaboration/README.md`](/docs/pillars/ai-collaboration)
+- [`CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template) — the bootstrap doc loads MEMORY.md every session.

@@ -192,7 +192,7 @@ Per release, walk the doc. Add new threats from new surfaces; close threats whos
 
 ## See also
 
-- [`../architecture/error-hierarchy.md`](../architecture/error-hierarchy.md) — error class hierarchy underpins Rule 6.
-- [`../governance/universal.md`](../governance/universal.md) — audit trail discipline.
-- [`rbac-pattern.md`](./rbac-pattern.md), [`vault-pattern.md`](./vault-pattern.md), [`audit-ledger-pattern.md`](./audit-ledger-pattern.md), [`egress-firewall-pattern.md`](./egress-firewall-pattern.md)
-- [`threat-model-template.md`](./threat-model-template.md)
+- [`../architecture/error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) — error class hierarchy underpins Rule 6.
+- [`../governance/universal.md`](/docs/pillars/governance/universal) — audit trail discipline.
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern), [`vault-pattern.md`](/docs/pillars/security/vault-pattern), [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern), [`egress-firewall-pattern.md`](/docs/pillars/security/egress-firewall-pattern)
+- [`threat-model-template.md`](/docs/pillars/security/threat-model-template)

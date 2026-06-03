@@ -15,20 +15,20 @@ System prompts, sub-agent recipes, and slash-command bodies that consistently pr
 
 | Prompt | Type | Use when |
 |---|---|---|
-| [`system-architect.md`](./system-architect.md) | system | Designing a new package boundary, ADR, or contract |
-| [`system-implementer.md`](./system-implementer.md) | system | Building a sub-unit against an existing design |
-| [`system-reviewer.md`](./system-reviewer.md) | system | Code review pass with confidence-scored output |
-| [`system-security.md`](./system-security.md) | system | Security review of pending changes |
-| [`subagent-explore.md`](./subagent-explore.md) | sub-agent recipe | Read-only fan-out search across files |
-| [`subagent-plan.md`](./subagent-plan.md) | sub-agent recipe | Step-by-step implementation plan |
-| [`subagent-code-explorer.md`](./subagent-code-explorer.md) | sub-agent recipe | Trace execution paths, map dependencies |
-| [`subagent-code-reviewer.md`](./subagent-code-reviewer.md) | sub-agent recipe | Confidence-filtered review |
-| [`slash-goal.md`](./slash-goal.md) | slash command | Set a session goal + stop hook |
-| [`slash-loop.md`](./slash-loop.md) | slash command | Schedule recurring or self-paced runs |
-| [`slash-review.md`](./slash-review.md) | slash command | Multi-agent PR review |
-| [`slash-clear.md`](./slash-clear.md) | slash command | Reset session context cleanly |
-| [`slash-sanity.md`](./slash-sanity.md) | slash command | Run cross-cutting sanity audit |
-| [`slash-ship.md`](./slash-ship.md) | slash command | Run release-gate checklist |
+| [`system-architect.md`](/docs/prompts/system-architect) | system | Designing a new package boundary, ADR, or contract |
+| [`system-implementer.md`](/docs/prompts/system-implementer) | system | Building a sub-unit against an existing design |
+| [`system-reviewer.md`](/docs/prompts/system-reviewer) | system | Code review pass with confidence-scored output |
+| [`system-security.md`](/docs/prompts/system-security) | system | Security review of pending changes |
+| [`subagent-explore.md`](/docs/prompts/subagent-explore) | sub-agent recipe | Read-only fan-out search across files |
+| [`subagent-plan.md`](/docs/prompts/subagent-plan) | sub-agent recipe | Step-by-step implementation plan |
+| [`subagent-code-explorer.md`](/docs/prompts/subagent-code-explorer) | sub-agent recipe | Trace execution paths, map dependencies |
+| [`subagent-code-reviewer.md`](/docs/prompts/subagent-code-reviewer) | sub-agent recipe | Confidence-filtered review |
+| [`slash-goal.md`](/docs/prompts/slash-goal) | slash command | Set a session goal + stop hook |
+| [`slash-loop.md`](/docs/prompts/slash-loop) | slash command | Schedule recurring or self-paced runs |
+| [`slash-review.md`](/docs/prompts/slash-review) | slash command | Multi-agent PR review |
+| [`slash-clear.md`](/docs/prompts/slash-clear) | slash command | Reset session context cleanly |
+| [`slash-sanity.md`](/docs/prompts/slash-sanity) | slash command | Run cross-cutting sanity audit |
+| [`slash-ship.md`](/docs/prompts/slash-ship) | slash command | Run release-gate checklist |
 
 ## Sub-agent strategy
 
@@ -50,5 +50,5 @@ Tier by task complexity. Reserve opus for what truly needs it; haiku for trivial
 
 ## See also
 
-- [`../pillars/ai-collaboration/README.md`](../pillars/ai-collaboration/README.md)
-- [`../templates/CLAUDE.md.template.md`](../templates/CLAUDE.md.template.md) — bootstrap doc references these.
+- [`../pillars/ai-collaboration/README.md`](/docs/pillars/ai-collaboration)
+- [`../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template) — bootstrap doc references these.

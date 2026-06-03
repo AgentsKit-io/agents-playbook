@@ -55,21 +55,21 @@ The trick: most of the controls are things this playbook already prescribes. Exa
 
 | Control area | Already covered by |
 |---|---|
-| Access control | [`rbac-pattern.md`](./rbac-pattern.md), [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) |
-| Audit logging | [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) |
-| Encryption at rest / in transit | [`vault-pattern.md`](./vault-pattern.md), TLS in transit (table-stakes) |
-| Vulnerability management | [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md) |
-| Vendor management | [`dependency-hygiene-pattern.md`](./dependency-hygiene-pattern.md) for software; separate process for SaaS vendors |
-| Backup + recovery | [`../../phases/06-operate/README.md`](../../phases/06-operate/README.md) |
-| Change management | [`../architecture/adr-pattern.md`](../architecture/adr-pattern.md), [`../architecture/rfc-pattern.md`](../architecture/rfc-pattern.md), [`../governance/pr-intent-pattern.md`](../governance/pr-intent-pattern.md) |
-| Incident response | [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md) |
-| Risk assessment | [`threat-model-template.md`](./threat-model-template.md) |
+| Access control | [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern), [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern) |
+| Audit logging | [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) |
+| Encryption at rest / in transit | [`vault-pattern.md`](/docs/pillars/security/vault-pattern), TLS in transit (table-stakes) |
+| Vulnerability management | [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern) |
+| Vendor management | [`dependency-hygiene-pattern.md`](/docs/pillars/security/dependency-hygiene-pattern) for software; separate process for SaaS vendors |
+| Backup + recovery | [`../../phases/06-operate/README.md`](/docs/phases/06-operate) |
+| Change management | [`../architecture/adr-pattern.md`](/docs/pillars/architecture/adr-pattern), [`../architecture/rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern), [`../governance/pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern) |
+| Incident response | [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern) |
+| Risk assessment | [`threat-model-template.md`](/docs/pillars/security/threat-model-template) |
 | Asset management | Repo + IaC inventory |
 | Personnel security | HR-side; background checks; offboarding |
 | Physical security | Cloud provider's certification covers data center |
-| Data classification | [`data-classification-pattern.md`](./data-classification-pattern.md) |
-| Tenant isolation | [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md) |
-| Privacy / DSAR | [`data-classification-pattern.md`](./data-classification-pattern.md) |
+| Data classification | [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern) |
+| Tenant isolation | [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) |
+| Privacy / DSAR | [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern) |
 | Secure SDLC | This playbook in its entirety |
 
 When you build the system per the playbook, you implement most controls naturally. Compliance becomes documentation, not engineering.
@@ -78,11 +78,11 @@ When you build the system per the playbook, you implement most controls naturall
 
 Auditors ask for evidence of controls. Examples of what they accept:
 
-- **Code review evidence**: PR with manifest + reviewer approval (per [`../governance/pr-intent-pattern.md`](../governance/pr-intent-pattern.md)).
+- **Code review evidence**: PR with manifest + reviewer approval (per [`../governance/pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern)).
 - **Access review evidence**: quarterly RBAC review record + signed audit-ledger entries.
 - **Vulnerability triage**: Snyk / Dependabot / triage tickets + closure timestamps.
 - **Backup verification**: quarterly restore-drill report.
-- **Incident response**: post-mortem documents (per [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md)).
+- **Incident response**: post-mortem documents (per [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern)).
 - **Change management**: ADR / RFC + PR-intent for every meaningful change.
 - **Encryption**: KMS configuration + vault audit-log of key rotations.
 - **Monitoring**: dashboard screenshots + on-call response records.
@@ -125,12 +125,12 @@ Common requirements:
 
 | Right | How |
 |---|---|
-| **Right to access** (data subject sees what's stored) | DSAR export tooling per [`data-classification-pattern.md`](./data-classification-pattern.md) |
+| **Right to access** (data subject sees what's stored) | DSAR export tooling per [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern) |
 | **Right to erasure** ("forget me") | DSAR delete; signed proof of completion |
 | **Right to rectification** | Editable per-field via product UI |
 | **Right to data portability** | Export in a structured, machine-readable format |
 | **Right to object** | Consent management; opt-out flows |
-| **Breach notification** | 72h timer (GDPR); incident response includes legal notification (per [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md)) |
+| **Breach notification** | 72h timer (GDPR); incident response includes legal notification (per [`secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook)) |
 | **DPO appointment** | Required for some scopes; document the role |
 | **Privacy policy** | User-facing; matches actual practice |
 | **DPA (Data Processing Agreement)** | Contract template; signed with B2B customers |
@@ -186,7 +186,7 @@ Conventions that help:
 - **Evidence theater**. Generating documents at audit time that no one ever uses. → Evidence as natural artifacts.
 - **No quarterly access review**. Auditor asks; you scramble. → Schedule + tool.
 - **Privacy policy ≠ actual practice**. The policy says one thing; the code does another. → Policy reflects code; both reviewed together.
-- **GDPR DSAR runs as an ad-hoc script**. Slow + error-prone. → Tooling per [`data-classification-pattern.md`](./data-classification-pattern.md).
+- **GDPR DSAR runs as an ad-hoc script**. Slow + error-prone. → Tooling per [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern).
 - **PCI / HIPAA scope creep**. One feature drags rest of product into scope. → Boundary deliberately.
 - **Vendor SOC 2 expired**. Audit fail. → Annual review with calendar reminders.
 
@@ -212,9 +212,9 @@ Conventions that help:
 
 ### See also
 
-- [`rbac-pattern.md`](./rbac-pattern.md), [`vault-pattern.md`](./vault-pattern.md), [`audit-ledger-pattern.md`](./audit-ledger-pattern.md)
-- [`vulnerability-mgmt-pattern.md`](./vulnerability-mgmt-pattern.md), [`dependency-hygiene-pattern.md`](./dependency-hygiene-pattern.md)
-- [`data-classification-pattern.md`](./data-classification-pattern.md), [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md)
-- [`on-call-rotation-pattern.md`](./on-call-rotation-pattern.md), [`secrets-leak-postmortem-playbook.md`](./secrets-leak-postmortem-playbook.md)
-- [`threat-model-template.md`](./threat-model-template.md)
-- [`../../phases/06-operate/README.md`](../../phases/06-operate/README.md) — operate phase covers most compliance rituals.
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern), [`vault-pattern.md`](/docs/pillars/security/vault-pattern), [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern)
+- [`vulnerability-mgmt-pattern.md`](/docs/pillars/security/vulnerability-mgmt-pattern), [`dependency-hygiene-pattern.md`](/docs/pillars/security/dependency-hygiene-pattern)
+- [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern), [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern)
+- [`on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern), [`secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook)
+- [`threat-model-template.md`](/docs/pillars/security/threat-model-template)
+- [`../../phases/06-operate/README.md`](/docs/phases/06-operate) — operate phase covers most compliance rituals.

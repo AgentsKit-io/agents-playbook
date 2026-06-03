@@ -50,7 +50,7 @@ In multi-tenant SaaS, per-tenant cost drives:
 - **Capacity planning**: who would grow + how much.
 - **Quota tuning**: where to put limits.
 
-Computed from observability tags (per [`observability-pattern.md`](./observability-pattern.md)). Roll up nightly into a per-tenant cost table.
+Computed from observability tags (per [`observability-pattern.md`](/docs/pillars/quality/observability-pattern)). Roll up nightly into a per-tenant cost table.
 
 ### Right-sizing
 
@@ -94,7 +94,7 @@ Commitments are a forecasting bet. Under-commit and miss the discount; over-comm
 
 In data-heavy systems, database cost often dominates compute.
 
-Per-endpoint discipline (extends [`performance-budgets-pattern.md`](./performance-budgets-pattern.md)):
+Per-endpoint discipline (extends [`performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern)):
 
 - **Query count budget** per request (N+1 detection: > 20 = probable bug).
 - **Bytes scanned budget** per request (avoid full-table scans).
@@ -106,7 +106,7 @@ Per-tenant query budgets prevent noisy-neighbor cost spikes:
 
 - Max query CPU-time per tenant per minute.
 - Max bytes scanned per tenant per hour.
-- Circuit-break at limit; surface as `QUOTA_EXCEEDED` (see [`../security/multi-tenant-isolation-pattern.md`](../security/multi-tenant-isolation-pattern.md)).
+- Circuit-break at limit; surface as `QUOTA_EXCEEDED` (see [`../security/multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern)).
 
 ### Egress + data transfer
 
@@ -146,13 +146,13 @@ A cache pays for itself when:
 
 Measure cache hit rate per cache; track over time. Hit rate drops are signals (key churn, app pattern change, eviction pressure).
 
-See [`../architecture/distributed-data-pattern.md`](../architecture/distributed-data-pattern.md) for cache tiers.
+See [`../architecture/distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) for cache tiers.
 
 ### Dev / CI cost
 
 Often overlooked:
 
-- **CI minutes**: cache aggressively (per [`ci-cd-pipeline-pattern.md`](./ci-cd-pipeline-pattern.md)).
+- **CI minutes**: cache aggressively (per [`ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern)).
 - **Per-PR ephemeral environments**: convenient but expensive; lifecycle them (auto-tear-down after N days).
 - **Dev databases**: long-running instances; sleep / terminate on no-activity.
 - **Build artefact storage**: tier old artefacts to cold; expire after N versions.
@@ -168,7 +168,7 @@ Beyond budgets, per-PR cost signals:
 - **New paid service dependency** → PR comment with monthly estimate.
 - **Performance regression** → potentially higher per-request cost.
 
-These extend the gate suite (see [`quality-gates-pattern.md`](./quality-gates-pattern.md)).
+These extend the gate suite (see [`quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern)).
 
 ### FinOps rituals
 
@@ -250,8 +250,8 @@ Adopt multi-cloud for sovereignty / vendor risk / specific service needs — not
 
 ### See also
 
-- [`performance-budgets-pattern.md`](./performance-budgets-pattern.md) — performance and cost overlap heavily.
-- [`observability-pattern.md`](./observability-pattern.md) — tags drive cost attribution.
-- [`../security/multi-tenant-isolation-pattern.md`](../security/multi-tenant-isolation-pattern.md) — per-tenant quotas.
-- [`../architecture/distributed-data-pattern.md`](../architecture/distributed-data-pattern.md) — cache + replica costs.
-- [`ci-cd-pipeline-pattern.md`](./ci-cd-pipeline-pattern.md) — CI cost.
+- [`performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern) — performance and cost overlap heavily.
+- [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) — tags drive cost attribution.
+- [`../security/multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) — per-tenant quotas.
+- [`../architecture/distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) — cache + replica costs.
+- [`ci-cd-pipeline-pattern.md`](/docs/pillars/quality/ci-cd-pipeline-pattern) — CI cost.

@@ -137,7 +137,7 @@ Track. Alert if hit rate drops; signals key churn, app pattern change, or capaci
 
 ### See also
 
-- [`distributed-data-pattern.md`](./distributed-data-pattern.md) — read-replica + cache interplay.
-- [`../security/multi-tenant-isolation-pattern.md`](../security/multi-tenant-isolation-pattern.md) — cache scope.
-- [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md) — cache hit rate as cost metric.
-- [`../quality/performance-budgets-pattern.md`](../quality/performance-budgets-pattern.md) — cache pays the budget.
+- [`distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) — read-replica + cache interplay.
+- [`../security/multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) — cache scope.
+- [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern) — cache hit rate as cost metric.
+- [`../quality/performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern) — cache pays the budget.

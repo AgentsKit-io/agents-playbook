@@ -51,7 +51,7 @@ Tick all before requesting review:
 **Motion**
 
 - [ ] `prefers-reduced-motion: reduce` short-circuits translates and rotations.
-- [ ] Opacity / instant transitions remain (per [`universal.md`](./universal.md) Rule 6).
+- [ ] Opacity / instant transitions remain (per [`universal.md`](/docs/pillars/ui-ux/universal) Rule 6).
 - [ ] No autoplaying video / audio with sound.
 
 **Images**
@@ -142,6 +142,6 @@ Using `byRole` + accessible name forces the test to verify the a11y attribute ex
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 6 (motion), Rule 7 (keyboard).
-- [`primitives-pattern.md`](./primitives-pattern.md) — primitives enshrine a11y.
-- [`intl-pattern.md`](./intl-pattern.md) — aria labels are intl-resolved.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 6 (motion), Rule 7 (keyboard).
+- [`primitives-pattern.md`](/docs/pillars/ui-ux/primitives-pattern) — primitives enshrine a11y.
+- [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern) — aria labels are intl-resolved.

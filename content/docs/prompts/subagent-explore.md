@@ -82,5 +82,5 @@ Rules:
 
 ## See also
 
-- [`../pillars/ai-collaboration/sub-agent-pattern.md`](../pillars/ai-collaboration/sub-agent-pattern.md)
-- [`subagent-plan.md`](./subagent-plan.md) — explore → plan handoff.
+- [`../pillars/ai-collaboration/sub-agent-pattern.md`](/docs/pillars/ai-collaboration/sub-agent-pattern)
+- [`subagent-plan.md`](/docs/prompts/subagent-plan) — explore → plan handoff.

@@ -23,7 +23,7 @@ Treat the window as a fixed allocation, not a free pool. A typical split:
 
 | Region | Holds | Discipline |
 |---|---|---|
-| System / instructions | Role, rules, output contract | Stable, versioned (see [`prompt-versioning-pattern.md`](./prompt-versioning-pattern.md)); keep tight |
+| System / instructions | Role, rules, output contract | Stable, versioned (see [`prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern)); keep tight |
 | Tool definitions | Only the tools relevant to this task | Gate the toolset; 50 tool specs is noise and a latency tax |
 | Retrieved knowledge | Top-k most relevant chunks | Few and on-target beats many and vague |
 | Conversation history | Recent turns + compacted older summary | Compact, don't accumulate |
@@ -38,7 +38,7 @@ Stuffing "everything that might help" actively degrades quality: it dilutes atte
 - **Retrieve, rank, then trim to top-k.** Fewer, higher-precision chunks beat exhaustive recall.
 - **Compress chunks** to the spans that matter; drop boilerplate.
 - **Deduplicate.** Three paraphrases of the same fact waste budget and over-weight it.
-- **Cite what you injected** so the output (and your faithfulness eval) can be traced to sources, not to the model's parametric guesses (see [`hallucination-reduction-pattern.md`](./hallucination-reduction-pattern.md)).
+- **Cite what you injected** so the output (and your faithfulness eval) can be traced to sources, not to the model's parametric guesses (see [`hallucination-reduction-pattern.md`](/docs/pillars/ai-collaboration/hallucination-reduction-pattern)).
 
 ### Position matters — the lost-in-the-middle effect
 
@@ -66,7 +66,7 @@ Anything that must persist across sessions does not belong in the rolling contex
 - A bootstrap doc (`CLAUDE.md`/`AGENTS.md`) is the always-loaded slice; everything else is fetched when relevant.
 - This is the difference between an agent that re-learns the project every turn and one that *remembers*.
 
-See [`memory-pattern.md`](./memory-pattern.md) and [`bootstrap-doc-pattern.md`](./bootstrap-doc-pattern.md).
+See [`memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern) and [`bootstrap-doc-pattern.md`](/docs/pillars/ai-collaboration/bootstrap-doc-pattern).
 
 ### Caching the stable prefix
 
@@ -74,7 +74,7 @@ If your stack supports prompt caching, **order context stable-first**: system + 
 
 ### Context retention as an eval dimension
 
-"Did the agent remember the constraint from 20 turns ago?" is measurable. Add retention cases to the eval suite: long inputs with a load-bearing fact early, then a question that needs it. Track the score per context-length slice — this is exactly where aggregate metrics hide regressions (see [`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md)).
+"Did the agent remember the constraint from 20 turns ago?" is measurable. Add retention cases to the eval suite: long inputs with a load-bearing fact early, then a question that needs it. Track the score per context-length slice — this is exactly where aggregate metrics hide regressions (see [`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern)).
 
 ### Common failure modes
 
@@ -88,9 +88,9 @@ If your stack supports prompt caching, **order context stable-first**: system + 
 
 ### See also
 
-- [`memory-pattern.md`](./memory-pattern.md) — durable external memory the window pulls from.
-- [`bootstrap-doc-pattern.md`](./bootstrap-doc-pattern.md) — the always-loaded context slice.
-- [`prompt-versioning-pattern.md`](./prompt-versioning-pattern.md) — the system region is a versioned asset.
-- [`hallucination-reduction-pattern.md`](./hallucination-reduction-pattern.md) — grounding the model in injected context, not parametric memory.
-- [`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md) — retention + per-length-slice scoring.
-- [`../../prompts/slash-clear.md`](../../prompts/slash-clear.md) — resetting context deliberately between tasks.
+- [`memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern) — durable external memory the window pulls from.
+- [`bootstrap-doc-pattern.md`](/docs/pillars/ai-collaboration/bootstrap-doc-pattern) — the always-loaded context slice.
+- [`prompt-versioning-pattern.md`](/docs/pillars/ai-collaboration/prompt-versioning-pattern) — the system region is a versioned asset.
+- [`hallucination-reduction-pattern.md`](/docs/pillars/ai-collaboration/hallucination-reduction-pattern) — grounding the model in injected context, not parametric memory.
+- [`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern) — retention + per-length-slice scoring.
+- [`../../prompts/slash-clear.md`](/docs/prompts/slash-clear) — resetting context deliberately between tasks.

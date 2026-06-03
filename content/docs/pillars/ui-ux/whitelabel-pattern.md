@@ -158,7 +158,7 @@ Fallback discipline: if `productName` is missing (e.g. brand kit failed to load)
 A "whitelabel readiness" check ensures:
 
 1. **No hardcoded product name** outside the allowlist. Grep for the production product name in source; fail if found.
-2. **No hardcoded brand colors** outside the design-token system. Covered by [`design-tokens-pattern.md`](./design-tokens-pattern.md).
+2. **No hardcoded brand colors** outside the design-token system. Covered by [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern).
 3. **Default brand kit loads** in CI; a test brand kit also loads, both render the app, no errors.
 
 ### Default brand kit + test brand kit
@@ -188,6 +188,6 @@ Cost of building whitelabel-ready from day one: small. Cost of retrofitting late
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 10.
-- [`design-tokens-pattern.md`](./design-tokens-pattern.md) — palette flows through tokens.
-- [`intl-pattern.md`](./intl-pattern.md) — product name composes with intl.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 10.
+- [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern) — palette flows through tokens.
+- [`intl-pattern.md`](/docs/pillars/ui-ux/intl-pattern) — product name composes with intl.

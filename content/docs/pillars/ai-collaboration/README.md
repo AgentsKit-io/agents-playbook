@@ -44,10 +44,10 @@ How to make an agent productive in your repo on day one and durably good across 
 
 ## See also
 
-- [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.template.md) — bootstrap doc skeleton.
-- [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.template.md) — routing table skeleton.
-- [`../../templates/MEMORY.md.template.md`](../../templates/MEMORY.md.template.md) — persistent memory skeleton.
-- [`../../prompts/`](../../prompts/) — system prompts + sub-agent recipes.
+- [`../../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template) — bootstrap doc skeleton.
+- [`../../templates/AGENTS.md.template.md`](/docs/templates/AGENTS.md.template) — routing table skeleton.
+- [`../../templates/MEMORY.md.template.md`](/docs/templates/MEMORY.md.template) — persistent memory skeleton.
+- [`../../prompts/`](/docs/prompts) — system prompts + sub-agent recipes.
 
 ## Roadmap
 

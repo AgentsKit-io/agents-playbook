@@ -235,7 +235,7 @@ Mitigations:
 When an alert fires, what's the radius?
 
 - One service → service team paged.
-- Multi-service → cross-team incident; escalate to IMOC (see [`../security/on-call-rotation-pattern.md`](../security/on-call-rotation-pattern.md)).
+- Multi-service → cross-team incident; escalate to IMOC (see [`../security/on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern)).
 - Whole system → SEV-1; full incident response.
 
 Routing logic accounts for radius:
@@ -278,7 +278,7 @@ The split avoids both fatigue (everything pages) and silent drift (nothing surfa
 
 ### See also
 
-- [`observability-pattern.md`](./observability-pattern.md) — the data; alerts read from it.
-- [`../security/on-call-rotation-pattern.md`](../security/on-call-rotation-pattern.md) — rotation that responds to pages.
-- [`chaos-engineering-pattern.md`](./chaos-engineering-pattern.md) — drills test runbooks.
-- [`../security/secrets-leak-postmortem-playbook.md`](../security/secrets-leak-postmortem-playbook.md) — runbook example.
+- [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) — the data; alerts read from it.
+- [`../security/on-call-rotation-pattern.md`](/docs/pillars/security/on-call-rotation-pattern) — rotation that responds to pages.
+- [`chaos-engineering-pattern.md`](/docs/pillars/quality/chaos-engineering-pattern) — drills test runbooks.
+- [`../security/secrets-leak-postmortem-playbook.md`](/docs/pillars/security/secrets-leak-postmortem-playbook) — runbook example.

@@ -24,7 +24,7 @@ Six rules. They scale from a one-package project to a 30+ package monorepo. They
 
 Every directory that an agent might write code into must answer: "what is this for, and what is it not for?" in one sentence.
 
-- Maintain a top-level routing table mapping intent ("I want to change X") to location ("edit package Y"). Template: [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.template.md).
+- Maintain a top-level routing table mapping intent ("I want to change X") to location ("edit package Y"). Template: [`../../templates/AGENTS.md.template.md`](/docs/templates/AGENTS.md.template).
 - If two packages could plausibly own the same change, the boundary is wrong. Fix the boundary or merge the packages.
 - Group packages into 4–7 **logical groups** (e.g. "contracts + foundation", "runtime + flow", "security + collaboration"). Agents triage faster by group than by alphabetical name.
 
@@ -49,8 +49,8 @@ Constraints:
 
 Two artifacts:
 
-- **ADR** (Architecture Decision Record) — for choices that affect the codebase's shape. Numbered. Append-only. Status: Proposed / Accepted / Superseded / Tombstoned. Template: [`../../templates/ADR.template.md`](../../templates/ADR.template.md).
-- **RFC** (Request for Comment) — for choices that affect external contracts (public API, wire format, plugin protocol). Has a review window. Promotes to ADR when accepted. Template: [`../../templates/RFC.template.md`](../../templates/RFC.template.md).
+- **ADR** (Architecture Decision Record) — for choices that affect the codebase's shape. Numbered. Append-only. Status: Proposed / Accepted / Superseded / Tombstoned. Template: [`../../templates/ADR.template.md`](/docs/templates/ADR.template).
+- **RFC** (Request for Comment) — for choices that affect external contracts (public API, wire format, plugin protocol). Has a review window. Promotes to ADR when accepted. Template: [`../../templates/RFC.template.md`](/docs/templates/RFC.template).
 
 Rules:
 
@@ -106,8 +106,8 @@ Rules:
 
 ## See also
 
-- [`adr-pattern.md`](./adr-pattern.md) — how to write an ADR.
-- [`rfc-pattern.md`](./rfc-pattern.md) — when an ADR is not enough.
-- [`error-hierarchy.md`](./error-hierarchy.md) — the error model in detail.
-- [`file-size-budget.md`](./file-size-budget.md) — budget calibration + gate impl.
-- [`../governance/README.md`](../governance/README.md) — merge rules that protect these boundaries.
+- [`adr-pattern.md`](/docs/pillars/architecture/adr-pattern) — how to write an ADR.
+- [`rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern) — when an ADR is not enough.
+- [`error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) — the error model in detail.
+- [`file-size-budget.md`](/docs/pillars/architecture/file-size-budget) — budget calibration + gate impl.
+- [`../governance/README.md`](/docs/pillars/governance) — merge rules that protect these boundaries.

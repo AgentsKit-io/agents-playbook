@@ -62,7 +62,7 @@ Design phase makes the implicit explicit. Every recurring decision becomes an AD
 
 **AI-collaboration**
 - [ ] CLAUDE.md non-negotiables locked.
-- [ ] Sub-agent recipes selected from [`../../prompts/`](../../prompts/) — adapted to your toolchain.
+- [ ] Sub-agent recipes selected from [`../../prompts/`](/docs/prompts) — adapted to your toolchain.
 - [ ] Slash commands (`/goal`, `/review`, `/sanity`) wired.
 - [ ] Memory directory + `MEMORY.md` index established.
 
@@ -84,8 +84,8 @@ You can leave Design when:
 
 ### See also
 
-- [`../../pillars/architecture/adr-pattern.md`](../../pillars/architecture/adr-pattern.md), [`../../pillars/architecture/rfc-pattern.md`](../../pillars/architecture/rfc-pattern.md)
-- [`../../pillars/architecture/contracts-zod-pattern.md`](../../pillars/architecture/contracts-zod-pattern.md)
-- [`../../templates/ADR.template.md`](../../templates/ADR.template.md), [`../../templates/RFC.template.md`](../../templates/RFC.template.md)
-- [`../../pillars/ui-ux/design-tokens-pattern.md`](../../pillars/ui-ux/design-tokens-pattern.md)
-- [`../../scripts/README.md`](../../scripts/README.md)
+- [`../../pillars/architecture/adr-pattern.md`](/docs/pillars/architecture/adr-pattern), [`../../pillars/architecture/rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern)
+- [`../../pillars/architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern)
+- [`../../templates/ADR.template.md`](/docs/templates/ADR.template), [`../../templates/RFC.template.md`](/docs/templates/RFC.template)
+- [`../../pillars/ui-ux/design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern)
+- [`../../scripts/README.md`](/docs/scripts)

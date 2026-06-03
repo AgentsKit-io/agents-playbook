@@ -28,14 +28,14 @@ Ten rules. They are stack-agnostic, model-agnostic (Claude / GPT / Gemini / open
 
 A file named `CLAUDE.md`, `AGENTS.md`, or `.cursorrules` (per your toolchain) must exist at the repo root. It is the first thing the agent loads. It contains:
 
-- the non-negotiables (the irreducible rules — see [`../../README.md`](../../README.md) for the eight-rule kernel),
+- the non-negotiables (the irreducible rules — see [`../../README.md`](/docs) for the eight-rule kernel),
 - a one-paragraph "repo at a glance",
 - a pointer to the routing table,
 - the build / test / gate commands.
 
 Keep it under 200 lines. Agents read the whole thing every session; long files dilute attention.
 
-Template: [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.template.md).
+Template: [`../../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template).
 
 **Failure mode prevented:** agents reinventing rules each session because the rules were "in the chat" of a previous session, which the agent does not see.
 
@@ -45,7 +45,7 @@ A second file (`AGENTS.md` — separate from the non-negotiables doc) is a routi
 
 If two rows could plausibly apply to the same change, the boundary is wrong. Fix the boundary or merge the rows.
 
-Template: [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.template.md).
+Template: [`../../templates/AGENTS.md.template.md`](/docs/templates/AGENTS.md.template).
 
 **Failure mode prevented:** agents creating sibling packages because they did not know where the right one was; agents piling code into the largest file because no rule said where it went.
 
@@ -61,7 +61,7 @@ Memory is what survives between sessions. It is not chat history; it is curated.
 
 When a non-obvious lesson lands, write a memory **immediately** — not at session end. Session-end is too late; you have already forgotten the precise context.
 
-Template: [`../../templates/MEMORY.md.template.md`](../../templates/MEMORY.md.template.md).
+Template: [`../../templates/MEMORY.md.template.md`](/docs/templates/MEMORY.md.template).
 
 **Failure mode prevented:** agents repeating the same fixed mistake across sessions because the lesson lived only in the prior conversation.
 
@@ -171,6 +171,6 @@ The memory is a fact + how to apply it + why. Three lines minimum. If you cannot
 
 ## See also
 
-- [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.template.md), [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.template.md), [`../../templates/MEMORY.md.template.md`](../../templates/MEMORY.md.template.md).
-- [`../governance/README.md`](../governance/README.md) — PR-intent + merge rules that operationalize rules 5, 6, 9.
-- [`../../prompts/README.md`](../../prompts/README.md) — system prompts + sub-agent recipes for rule 8.
+- [`../../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template), [`../../templates/AGENTS.md.template.md`](/docs/templates/AGENTS.md.template), [`../../templates/MEMORY.md.template.md`](/docs/templates/MEMORY.md.template).
+- [`../governance/README.md`](/docs/pillars/governance) — PR-intent + merge rules that operationalize rules 5, 6, 9.
+- [`../../prompts/README.md`](/docs/prompts) — system prompts + sub-agent recipes for rule 8.

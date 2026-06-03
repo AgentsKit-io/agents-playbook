@@ -153,6 +153,6 @@ Brownfield: large existing app, lots of native elements.
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 2.
-- [`design-tokens-pattern.md`](./design-tokens-pattern.md) — what primitives style with.
-- [`a11y-checklist.md`](./a11y-checklist.md) — primitive a11y contract.
+- [`universal.md`](/docs/pillars/ui-ux/universal) — Rule 2.
+- [`design-tokens-pattern.md`](/docs/pillars/ui-ux/design-tokens-pattern) — what primitives style with.
+- [`a11y-checklist.md`](/docs/pillars/ui-ux/a11y-checklist) — primitive a11y contract.

@@ -86,6 +86,6 @@ Pattern that recurs in production: agent A renames a symbol; agent B edits the o
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 2.
-- [`pr-intent-pattern.md`](./pr-intent-pattern.md) — `merge-override:` field.
-- [`../ai-collaboration/concurrent-agent-pattern.md`](../ai-collaboration/concurrent-agent-pattern.md) — defensive checklists.
+- [`universal.md`](/docs/pillars/governance/universal) — Rule 2.
+- [`pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern) — `merge-override:` field.
+- [`../ai-collaboration/concurrent-agent-pattern.md`](/docs/pillars/ai-collaboration/concurrent-agent-pattern) — defensive checklists.

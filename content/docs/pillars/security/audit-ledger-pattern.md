@@ -142,6 +142,6 @@ When a DSAR (data deletion) request lands, the ledger is **not** automatically p
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 5 (audit before execute), Rule 9 (rotation).
-- [`vault-pattern.md`](./vault-pattern.md) — every vault access logs.
-- [`rbac-pattern.md`](./rbac-pattern.md) — every RBAC mutation logs.
+- [`universal.md`](/docs/pillars/security/universal) — Rule 5 (audit before execute), Rule 9 (rotation).
+- [`vault-pattern.md`](/docs/pillars/security/vault-pattern) — every vault access logs.
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — every RBAC mutation logs.

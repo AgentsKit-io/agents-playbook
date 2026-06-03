@@ -18,7 +18,7 @@ Performance is a budget, not an afterthought. Three classes of budget: **bundle*
 | Class | Examples | Where measured |
 |---|---|---|
 | **Bundle size** | JS bundle per route, total page weight, image weight | Build time |
-| **Latency** | p50 / p95 / p99 for HTTP, RPC, DB queries | Production (per [`observability-pattern.md`](./observability-pattern.md)) |
+| **Latency** | p50 / p95 / p99 for HTTP, RPC, DB queries | Production (per [`observability-pattern.md`](/docs/pillars/quality/observability-pattern)) |
 | **Resource** | Queries per request, allocations per request, cache hit rate | Production + load tests |
 
 Each has a target. Each has a regression detector.
@@ -144,7 +144,7 @@ RUM data feeds SLO calculation. Synthetic load tests catch what RUM will reveal;
 Communicating performance to users:
 
 - Optimistic UI: render the new state immediately; reconcile after.
-- Skeleton loading: shows structure within 100ms (per [`../ui-ux/universal.md`](../ui-ux/universal.md) Rule 4).
+- Skeleton loading: shows structure within 100ms (per [`../ui-ux/universal.md`](/docs/pillars/ui-ux/universal) Rule 4).
 - Streaming results: don't wait for the full payload to render.
 - Background work + progress: tell the user it is happening; estimate completion.
 
@@ -173,7 +173,7 @@ Perceived performance > measured performance. A 2-second operation that feels in
 
 ### See also
 
-- [`observability-pattern.md`](./observability-pattern.md) — measurement infrastructure.
-- [`../architecture/anti-overengineering.md`](../architecture/anti-overengineering.md) — premature optimisation reminder.
-- [`../architecture/distributed-data-pattern.md`](../architecture/distributed-data-pattern.md) — caching tiers; replica routing.
-- [`chaos-engineering-pattern.md`](./chaos-engineering-pattern.md) — load tests + fault injection.
+- [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) — measurement infrastructure.
+- [`../architecture/anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — premature optimisation reminder.
+- [`../architecture/distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) — caching tiers; replica routing.
+- [`chaos-engineering-pattern.md`](/docs/pillars/quality/chaos-engineering-pattern) — load tests + fault injection.

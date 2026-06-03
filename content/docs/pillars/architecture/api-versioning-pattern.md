@@ -32,7 +32,7 @@ Public APIs follow semver per package. Non-breaking changes (add field, add meth
 
 A breaking change to a public surface follows:
 
-1. **RFC.** Proposed change + migration plan. Review window per [`rfc-pattern.md`](./rfc-pattern.md).
+1. **RFC.** Proposed change + migration plan. Review window per [`rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern).
 2. **Implement the new shape alongside the old.** Both work. Both have tests.
 3. **Mark the old as deprecated.** `@deprecated` JSDoc; `Deprecation` HTTP header; explicit log warning per use. Document migration in the deprecation message.
 4. **Deprecation window**: at least one major version, or the documented period (commonly 90 / 180 / 365 days).
@@ -151,7 +151,7 @@ Error codes are part of the public contract. The same rules apply:
 - New codes are minor.
 - Removed codes are major (clients pattern-match).
 
-See [`error-hierarchy.md`](./error-hierarchy.md) for the error model.
+See [`error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) for the error model.
 
 ### Common failure modes
 
@@ -159,11 +159,11 @@ See [`error-hierarchy.md`](./error-hierarchy.md) for the error model.
 - **Deprecation without migration path.** `@deprecated` says "use the new method" without examples. → Migration code required in the comment.
 - **Removing on next release.** Same release deprecates AND removes. → Honor the window.
 - **Two versions live forever.** v1 + v2 + v3 all maintained; engineering velocity craters. → Sunset old majors on a calendar.
-- **Forgot to bump major.** Patch release breaks consumers. → Schema-diff gate (see [`contracts-zod-pattern.md`](./contracts-zod-pattern.md)) catches.
+- **Forgot to bump major.** Patch release breaks consumers. → Schema-diff gate (see [`contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern)) catches.
 
 ### See also
 
-- [`rfc-pattern.md`](./rfc-pattern.md) — breaking changes require RFC.
-- [`contracts-zod-pattern.md`](./contracts-zod-pattern.md) — schema gate detects breaking diffs.
-- [`error-hierarchy.md`](./error-hierarchy.md) — error codes are contract.
-- [`feature-flags-pattern.md`](./feature-flags-pattern.md) — flags ramp new behavior without breaking old.
+- [`rfc-pattern.md`](/docs/pillars/architecture/rfc-pattern) — breaking changes require RFC.
+- [`contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — schema gate detects breaking diffs.
+- [`error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy) — error codes are contract.
+- [`feature-flags-pattern.md`](/docs/pillars/architecture/feature-flags-pattern) — flags ramp new behavior without breaking old.

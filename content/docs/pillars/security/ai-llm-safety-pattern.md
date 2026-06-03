@@ -27,7 +27,7 @@ LLM features introduce new threats:
 | **Output spoofing** | LLM output looks authoritative but is wrong |
 | **Model poisoning** | Adversarial training data (mostly applies to fine-tuning) |
 
-Add these to the threat model (per [`threat-model-template.md`](./threat-model-template.md)).
+Add these to the threat model (per [`threat-model-template.md`](/docs/pillars/security/threat-model-template)).
 
 ### Defense layers
 
@@ -110,14 +110,14 @@ Anti-pattern: an agent autonomously sends emails based on LLM proposal. One inje
 
 LLM responses can include:
 
-- Other users' data (if context was cross-tenant — see [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md)).
+- Other users' data (if context was cross-tenant — see [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern)).
 - Secrets in retrieved docs (vault refs leak).
 - PII from training (less for foundation models with RLHF; more for fine-tuned).
 
 Mitigations:
 
 - **RAG retrieval is tenant-scoped**: never retrieve documents outside the requester's scope.
-- **Output redaction**: scan for known PII patterns / secret prefixes before emitting (per [`data-classification-pattern.md`](./data-classification-pattern.md)).
+- **Output redaction**: scan for known PII patterns / secret prefixes before emitting (per [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern)).
 - **Provenance logging**: every LLM call logs the principal + tenant + retrieved docs (audit-able).
 - **Sensitive doc exclusion**: documents tagged restricted never enter RAG context.
 
@@ -126,8 +126,8 @@ Mitigations:
 LLM costs scale fast:
 
 - **Per-conversation token cap**: kill the session at N tokens.
-- **Per-user token cap per period**: rate limit (per [`rate-limiting-ddos-pattern.md`](./rate-limiting-ddos-pattern.md)).
-- **Per-tenant token cap**: budget (per [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md)).
+- **Per-user token cap per period**: rate limit (per [`rate-limiting-ddos-pattern.md`](/docs/pillars/security/rate-limiting-ddos-pattern)).
+- **Per-tenant token cap**: budget (per [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern)).
 - **Tool-call cap per conversation**: prevents infinite loops.
 - **Model fallback**: route to cheaper model when usage spikes.
 
@@ -204,7 +204,7 @@ LLM features:
 - **EU AI Act** (high-risk systems): classification + obligations.
 - **Industry-specific**: HIPAA (PHI in prompts), financial-services (recommendation regulations).
 
-Document AI scope per [`compliance-framework-pattern.md`](./compliance-framework-pattern.md).
+Document AI scope per [`compliance-framework-pattern.md`](/docs/pillars/security/compliance-framework-pattern).
 
 ### Common failure modes
 
@@ -239,10 +239,10 @@ Document AI scope per [`compliance-framework-pattern.md`](./compliance-framework
 
 ### See also
 
-- [`threat-model-template.md`](./threat-model-template.md) — add LLM threats.
-- [`multi-tenant-isolation-pattern.md`](./multi-tenant-isolation-pattern.md) — RAG isolation.
-- [`data-classification-pattern.md`](./data-classification-pattern.md) — output redaction.
-- [`rate-limiting-ddos-pattern.md`](./rate-limiting-ddos-pattern.md) — token / cost limits.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — LLM call logging.
-- [`compliance-framework-pattern.md`](./compliance-framework-pattern.md) — AI Act / GDPR.
-- [`../quality/cost-optimization-pattern.md`](../quality/cost-optimization-pattern.md) — inference cost.
+- [`threat-model-template.md`](/docs/pillars/security/threat-model-template) — add LLM threats.
+- [`multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) — RAG isolation.
+- [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern) — output redaction.
+- [`rate-limiting-ddos-pattern.md`](/docs/pillars/security/rate-limiting-ddos-pattern) — token / cost limits.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — LLM call logging.
+- [`compliance-framework-pattern.md`](/docs/pillars/security/compliance-framework-pattern) — AI Act / GDPR.
+- [`../quality/cost-optimization-pattern.md`](/docs/pillars/quality/cost-optimization-pattern) — inference cost.

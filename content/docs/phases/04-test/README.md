@@ -124,7 +124,7 @@ Pre-release adds: full mutation pass, full a11y pass, cold-prod walk of the demo
 
 ### See also
 
-- [`../../pillars/quality/test-pyramid.md`](../../pillars/quality/test-pyramid.md)
-- [`../../pillars/quality/mutation-testing-pattern.md`](../../pillars/quality/mutation-testing-pattern.md)
-- [`../../pillars/architecture/error-hierarchy.md`](../../pillars/architecture/error-hierarchy.md)
-- [`../../pillars/ui-ux/a11y-checklist.md`](../../pillars/ui-ux/a11y-checklist.md)
+- [`../../pillars/quality/test-pyramid.md`](/docs/pillars/quality/test-pyramid)
+- [`../../pillars/quality/mutation-testing-pattern.md`](/docs/pillars/quality/mutation-testing-pattern)
+- [`../../pillars/architecture/error-hierarchy.md`](/docs/pillars/architecture/error-hierarchy)
+- [`../../pillars/ui-ux/a11y-checklist.md`](/docs/pillars/ui-ux/a11y-checklist)

@@ -160,7 +160,7 @@ Versioned keys are surprisingly powerful; consider them before event-based inval
 
 ### See also
 
-- [`anti-overengineering.md`](./anti-overengineering.md) — distributed data is the canonical over-engineering trap.
-- [`multi-region-pattern.md`](./multi-region-pattern.md) — operational concerns at region scope.
-- [`../security/multi-tenant-isolation-pattern.md`](../security/multi-tenant-isolation-pattern.md) — tenancy + sharding interplay.
-- [`../quality/observability-pattern.md`](../quality/observability-pattern.md) — measure replication lag, cache hit rate, query distribution.
+- [`anti-overengineering.md`](/docs/pillars/architecture/anti-overengineering) — distributed data is the canonical over-engineering trap.
+- [`multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern) — operational concerns at region scope.
+- [`../security/multi-tenant-isolation-pattern.md`](/docs/pillars/security/multi-tenant-isolation-pattern) — tenancy + sharding interplay.
+- [`../quality/observability-pattern.md`](/docs/pillars/quality/observability-pattern) — measure replication lag, cache hit rate, query distribution.

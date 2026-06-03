@@ -37,7 +37,7 @@ Mode: **shrink-only baseline**.
 
 Why shrink-only: prevents adoption from blocking the whole repo on day one; prevents drift from making it worse.
 
-Reference impl: [`../../scripts/check-file-size.example.mjs`](../../scripts/check-file-size.example.mjs). The baseline file lives at `.file-size-baseline.json` in the repo root.
+Reference impl: [`../../scripts/check-file-size.example.mjs`](/docs/scripts). The baseline file lives at `.file-size-baseline.json` in the repo root.
 
 ### Extraction patterns
 
@@ -105,6 +105,6 @@ If the budget is too tight, agents waste cycles. If too loose, files get unrevie
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 6 (file-size budget).
-- [`../quality/README.md`](../quality/README.md) — gate wiring.
-- [`../../scripts/check-file-size.example.mjs`](../../scripts/check-file-size.example.mjs) — reference impl.
+- [`universal.md`](/docs/pillars/architecture/universal) — Rule 6 (file-size budget).
+- [`../quality/README.md`](/docs/pillars/quality) — gate wiring.
+- [`../../scripts/check-file-size.example.mjs`](/docs/scripts) — reference impl.

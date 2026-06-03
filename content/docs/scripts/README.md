@@ -64,6 +64,6 @@ A `pre-push` hook that runs:
 
 ## See also
 
-- [`../pillars/quality/README.md`](../pillars/quality/README.md)
-- [`../pillars/governance/README.md`](../pillars/governance/README.md)
-- [`../templates/PR-intent.template.md`](../templates/PR-intent.template.md)
+- [`../pillars/quality/README.md`](/docs/pillars/quality)
+- [`../pillars/governance/README.md`](/docs/pillars/governance)
+- [`../templates/PR-intent.template.md`](/docs/templates/PR-intent.template)

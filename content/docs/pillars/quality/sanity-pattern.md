@@ -102,6 +102,6 @@ The report is markdown. It is committed to the repo (or posted as a CI artefact)
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 9 (sanity cross-cuts).
-- [`quality-gates-pattern.md`](./quality-gates-pattern.md) — per-PR enforcement.
-- [`../../scripts/README.md`](../../scripts/README.md) — gate + sanity reference impls.
+- [`universal.md`](/docs/pillars/quality/universal) — Rule 9 (sanity cross-cuts).
+- [`quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) — per-PR enforcement.
+- [`../../scripts/README.md`](/docs/scripts) — gate + sanity reference impls.

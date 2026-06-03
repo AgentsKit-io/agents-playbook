@@ -24,14 +24,14 @@ Lift every prompt into a registry — one source of truth the runtime reads from
 - **Named + namespaced.** `content.draft.system`, `review.judge.faithfulness` — stable IDs, not anonymous strings.
 - **Versioned.** Each meaningful change is a new version (semver or monotonic), not an in-place mutation. Old versions stay resolvable.
 - **Content-hashed.** A hash of the rendered prompt detects "did this actually change?" and ties an eval result to the exact bytes that produced it.
-- **Templated explicitly.** Variable slots (`{context}`, `{tools}`) are declared, so you can lint that a render fills them all and injects nothing unescaped (see [`../security/ai-llm-safety-pattern.md`](../security/ai-llm-safety-pattern.md) — prompt injection).
+- **Templated explicitly.** Variable slots (`{context}`, `{tools}`) are declared, so you can lint that a render fills them all and injects nothing unescaped (see [`../security/ai-llm-safety-pattern.md`](/docs/pillars/security/ai-llm-safety-pattern) — prompt injection).
 - **Metadata.** Author, date, linked eval run, the model(s) it was tuned for, and a one-line "why this version."
 
 A prompt change is now a diff a reviewer can read, a gate can check, and an experiment can target.
 
 ### Every prompt change carries an eval result
 
-This is the non-negotiable link to [`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md): a new prompt version is unreviewable without its eval delta. The PR shows "v4 → v5: faithfulness +6%, verbosity −3%, 0 format regressions, cost +2%." Reviewers approve a *measured* change, not a hopeful one.
+This is the non-negotiable link to [`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern): a new prompt version is unreviewable without its eval delta. The PR shows "v4 → v5: faithfulness +6%, verbosity −3%, 0 format regressions, cost +2%." Reviewers approve a *measured* change, not a hopeful one.
 
 ### Experimentation: A/B prompts on real traffic
 
@@ -47,7 +47,7 @@ Offline evals approximate; the population decides. Run candidate prompt versions
 
 - **Additive by default.** Adding a version is safe; clients/flags pin a version. Never silently mutate a deployed version's bytes — that invalidates every eval and trace tied to its hash.
 - **Pin model + prompt together.** A prompt tuned for one model can regress on another. The version's metadata records the model family it was validated against; re-eval before repointing.
-- **Deprecate, don't delete.** Traces and incidents reference old versions. Keep them resolvable; mark retired ones (see [`../governance/tombstone-pattern.md`](../governance/tombstone-pattern.md)).
+- **Deprecate, don't delete.** Traces and incidents reference old versions. Keep them resolvable; mark retired ones (see [`../governance/tombstone-pattern.md`](/docs/pillars/governance/tombstone-pattern)).
 
 ### Instant rollback
 
@@ -88,9 +88,9 @@ Each turn of this loop is a measured, reversible, reviewed behavior change. That
 
 ### See also
 
-- [`../quality/agent-eval-framework-pattern.md`](../quality/agent-eval-framework-pattern.md) — how you decide which version wins.
-- [`../architecture/feature-flags-pattern.md`](../architecture/feature-flags-pattern.md) — the flag mechanism prompt-selection rides on.
-- [`../quality/product-analytics-experimentation-pattern.md`](../quality/product-analytics-experimentation-pattern.md) — A/B statistics; prompts are just a different experimental unit.
-- [`context-management-pattern.md`](./context-management-pattern.md) — what fills the template slots.
-- [`../security/ai-llm-safety-pattern.md`](../security/ai-llm-safety-pattern.md) — template injection + safety on the prompt surface.
-- [`../../prompts/README.md`](../../prompts/README.md) — the system/sub-agent prompts this pattern versions.
+- [`../quality/agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern) — how you decide which version wins.
+- [`../architecture/feature-flags-pattern.md`](/docs/pillars/architecture/feature-flags-pattern) — the flag mechanism prompt-selection rides on.
+- [`../quality/product-analytics-experimentation-pattern.md`](/docs/pillars/quality/product-analytics-experimentation-pattern) — A/B statistics; prompts are just a different experimental unit.
+- [`context-management-pattern.md`](/docs/pillars/ai-collaboration/context-management-pattern) — what fills the template slots.
+- [`../security/ai-llm-safety-pattern.md`](/docs/pillars/security/ai-llm-safety-pattern) — template injection + safety on the prompt surface.
+- [`../../prompts/README.md`](/docs/prompts) — the system/sub-agent prompts this pattern versions.

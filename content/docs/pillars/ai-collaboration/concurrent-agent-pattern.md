@@ -97,7 +97,7 @@ When concurrent work surprises you, write a memory:
 - The issue you found closed (so next session you do not pick it up).
 - The conflict resolution pattern that worked (so next session you reuse it).
 
-See [`memory-pattern.md`](./memory-pattern.md).
+See [`memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern).
 
 ### Rebase hazards on a fast-moving main (hard-won)
 
@@ -117,7 +117,7 @@ These four bite specifically when `main` advances several times during one sessi
    → After any rebase that touches the dependency graph, reinstall before building: `<pm> install`, then build the dependency *closure* of the package you are working in, not just the package itself.
 
 4. **A contaminated shared checkout poisons every push.** If the working checkout has accumulated foreign WIP, pushing from it risks shipping anti-changes (hazard 1).
-   → Push from an **isolated worktree off a fresh base**: `git worktree add --detach ../clean origin/main`, re-apply your sub-unit, install, gate, push `HEAD:refs/heads/<branch>`. Worktrees also need `BASE_REF=origin/main` for any deletion/intent gate that diffs against the base (see [`../governance/pr-intent-pattern.md`](../governance/pr-intent-pattern.md)).
+   → Push from an **isolated worktree off a fresh base**: `git worktree add --detach ../clean origin/main`, re-apply your sub-unit, install, gate, push `HEAD:refs/heads/<branch>`. Worktrees also need `BASE_REF=origin/main` for any deletion/intent gate that diffs against the base (see [`../governance/pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern)).
 
 > Do not bypass a failing gate to escape these (`--no-verify`, skip flags). The gate is catching real contamination. Fix the contamination, or escape to a clean worktree if the shared checkout is the problem.
 
@@ -134,6 +134,6 @@ Parallel agents (and parallel gates) share one machine's RAM. Cap the **number o
 
 ### See also
 
-- [`../governance/README.md`](../governance/README.md) — merge rules + PR-intent removes-list.
-- [`universal.md`](./universal.md) — Rule 9.
-- [`memory-pattern.md`](./memory-pattern.md) — log what surprised you.
+- [`../governance/README.md`](/docs/pillars/governance) — merge rules + PR-intent removes-list.
+- [`universal.md`](/docs/pillars/ai-collaboration/universal) — Rule 9.
+- [`memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern) — log what surprised you.

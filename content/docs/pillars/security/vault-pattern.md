@@ -101,7 +101,7 @@ Even with vault refs in code, secrets can leak via logged objects (e.g. a reques
 
 Redaction is at the logger boundary, not at the call site. Call sites cannot forget.
 
-A **secrets scan gate** (see [`../quality/quality-gates-pattern.md`](../quality/quality-gates-pattern.md)) runs on every commit to catch raw secrets that escaped the logger redactor.
+A **secrets scan gate** (see [`../quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern)) runs on every commit to catch raw secrets that escaped the logger redactor.
 
 ### Per-environment vaults
 
@@ -134,6 +134,6 @@ Refresh flow: a scheduler reads rows with `expires_at < now + grace`, runs provi
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 4 (vault refs), Rule 9 (rotation).
-- [`rbac-pattern.md`](./rbac-pattern.md) — capability check gates vault reads.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — every vault access logged.
+- [`universal.md`](/docs/pillars/security/universal) — Rule 4 (vault refs), Rule 9 (rotation).
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — capability check gates vault reads.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — every vault access logged.

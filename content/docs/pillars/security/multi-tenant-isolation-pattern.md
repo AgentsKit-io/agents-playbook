@@ -141,7 +141,7 @@ Quotas often map to plan tiers. Free vs Pro vs Enterprise have different limits.
 - **Tier signaling in errors**: when a quota fires, tell the user "this is a Pro feature" with an upgrade path.
 - **Audit changes to quotas**: an admin raising a tenant's quota is logged.
 
-Mix plan tier with feature flags — but as separate concepts (see [`../architecture/feature-flags-pattern.md`](../architecture/feature-flags-pattern.md)).
+Mix plan tier with feature flags — but as separate concepts (see [`../architecture/feature-flags-pattern.md`](/docs/pillars/architecture/feature-flags-pattern)).
 
 ### Cross-tenant queries (rare, audited)
 
@@ -163,7 +163,7 @@ Sovereignty rules (GDPR, LGPD, data-in-country) mandate that some tenants' data 
 - The tenant-id-from-session middleware also resolves the region.
 - Cross-region access blocked at the network layer (not just app).
 
-See [`../architecture/multi-region-pattern.md`](../architecture/multi-region-pattern.md).
+See [`../architecture/multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern).
 
 ### Common failure modes
 
@@ -185,9 +185,9 @@ Skipping ahead (cell-based without RLS) is overhead without benefit. Sequence ma
 
 ### See also
 
-- [`universal.md`](./universal.md) — Rule 2 (tenancy from session).
-- [`rbac-pattern.md`](./rbac-pattern.md) — capability scope can include tenant.
-- [`audit-ledger-pattern.md`](./audit-ledger-pattern.md) — cross-tenant reads audited.
-- [`../architecture/distributed-data-pattern.md`](../architecture/distributed-data-pattern.md) — sharding by tenant id.
-- [`../architecture/multi-region-pattern.md`](../architecture/multi-region-pattern.md) — region-aware tenancy.
-- [`data-classification-pattern.md`](./data-classification-pattern.md) — what data needs which isolation tier.
+- [`universal.md`](/docs/pillars/security/universal) — Rule 2 (tenancy from session).
+- [`rbac-pattern.md`](/docs/pillars/security/rbac-pattern) — capability scope can include tenant.
+- [`audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern) — cross-tenant reads audited.
+- [`../architecture/distributed-data-pattern.md`](/docs/pillars/architecture/distributed-data-pattern) — sharding by tenant id.
+- [`../architecture/multi-region-pattern.md`](/docs/pillars/architecture/multi-region-pattern) — region-aware tenancy.
+- [`data-classification-pattern.md`](/docs/pillars/security/data-classification-pattern) — what data needs which isolation tier.

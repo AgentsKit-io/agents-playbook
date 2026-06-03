@@ -83,7 +83,7 @@ Memory:
 
 ## See also
 
-- [`system-architect.md`](./system-architect.md) — the agent that produces the plan.
-- [`system-reviewer.md`](./system-reviewer.md) — the agent that reviews the result.
-- [`../pillars/governance/pr-intent-pattern.md`](../pillars/governance/pr-intent-pattern.md)
-- [`../pillars/ai-collaboration/universal.md`](../pillars/ai-collaboration/universal.md)
+- [`system-architect.md`](/docs/prompts/system-architect) — the agent that produces the plan.
+- [`system-reviewer.md`](/docs/prompts/system-reviewer) — the agent that reviews the result.
+- [`../pillars/governance/pr-intent-pattern.md`](/docs/pillars/governance/pr-intent-pattern)
+- [`../pillars/ai-collaboration/universal.md`](/docs/pillars/ai-collaboration/universal)

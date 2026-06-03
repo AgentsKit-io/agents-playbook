@@ -15,7 +15,7 @@ The file an agent reads first, every session. Two files together: one for non-ne
 
 ### Why two files
 
-`CLAUDE.md`: non-negotiables. Stable. Mirror of the rules in [`../../README.md`](../../README.md). Updated rarely.
+`CLAUDE.md`: non-negotiables. Stable. Mirror of the rules in [`../../README.md`](/docs). Updated rarely.
 
 `AGENTS.md` (or equivalent): routing. Volatile. Updated when packages get added, renamed, merged. Lists every package + which surface it owns.
 
@@ -27,12 +27,12 @@ Six sections, in order:
 
 1. **Title + one-paragraph repo at a glance.** Stack, package count, app count, top-level layout.
 2. **Pointer to the canonical doc.** "`AGENTS.md` is the routing table — read it first when you don't know which package to touch."
-3. **Non-negotiables.** The eight-rule kernel (see [`../../README.md`](../../README.md)) trimmed to what applies to this codebase, numbered.
+3. **Non-negotiables.** The eight-rule kernel (see [`../../README.md`](/docs)) trimmed to what applies to this codebase, numbered.
 4. **Before you ship.** The exact commands (lint, test, gate). Per-package versus whole-repo distinction.
 5. **Where to look next.** Five-row table mapping intent to doc path.
 6. **When a doc contradicts the code.** "The code wins. Update or remove the doc."
 
-Template: [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.template.md).
+Template: [`../../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template).
 
 ### `AGENTS.md` shape
 
@@ -42,7 +42,7 @@ Template: [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.te
 4. **Workflow** — verify-first; one sub-unit; intent manifest; self-review.
 5. **When something is unclear** — escalation path (read for-agents doc → ADR → code → open `discuss:` issue).
 
-Template: [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.template.md).
+Template: [`../../templates/AGENTS.md.template.md`](/docs/templates/AGENTS.md.template).
 
 ### Length discipline
 
@@ -65,7 +65,7 @@ Recommended automated checks:
 2. **Size budget** — `CLAUDE.md` ≤ 200 lines.
 3. **Routing currency** — every package in the workspace appears at least once in `AGENTS.md`'s mental map or routing table. Stale entries (referring to deleted packages) fail.
 
-Reference impl: a `check-agent-docs.example.mjs` in [`../../scripts/`](../../scripts/) (ship in a future session).
+Reference impl: a `check-agent-docs.example.mjs` in [`../../scripts/`](/docs/scripts) (ship in a future session).
 
 ### Common failure modes
 
@@ -76,6 +76,6 @@ Reference impl: a `check-agent-docs.example.mjs` in [`../../scripts/`](../../scr
 
 ### See also
 
-- [`memory-pattern.md`](./memory-pattern.md) — `MEMORY.md` index loads alongside `CLAUDE.md`.
-- [`../architecture/universal.md`](../architecture/universal.md) — the non-negotiables come from here.
-- [`../../templates/CLAUDE.md.template.md`](../../templates/CLAUDE.md.template.md), [`../../templates/AGENTS.md.template.md`](../../templates/AGENTS.md.template.md).
+- [`memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern) — `MEMORY.md` index loads alongside `CLAUDE.md`.
+- [`../architecture/universal.md`](/docs/pillars/architecture/universal) — the non-negotiables come from here.
+- [`../../templates/CLAUDE.md.template.md`](/docs/templates/CLAUDE.md.template), [`../../templates/AGENTS.md.template.md`](/docs/templates/AGENTS.md.template).

@@ -143,8 +143,8 @@ Operate has no exit; the project is in Operate for its entire lifetime. Each cyc
 
 ### See also
 
-- [`../../pillars/security/audit-ledger-pattern.md`](../../pillars/security/audit-ledger-pattern.md)
-- [`../../pillars/security/vault-pattern.md`](../../pillars/security/vault-pattern.md) — rotation.
-- [`../../pillars/quality/sanity-pattern.md`](../../pillars/quality/sanity-pattern.md)
-- [`../../pillars/governance/tombstone-pattern.md`](../../pillars/governance/tombstone-pattern.md)
-- [`../../pillars/ai-collaboration/memory-pattern.md`](../../pillars/ai-collaboration/memory-pattern.md) — grooming.
+- [`../../pillars/security/audit-ledger-pattern.md`](/docs/pillars/security/audit-ledger-pattern)
+- [`../../pillars/security/vault-pattern.md`](/docs/pillars/security/vault-pattern) — rotation.
+- [`../../pillars/quality/sanity-pattern.md`](/docs/pillars/quality/sanity-pattern)
+- [`../../pillars/governance/tombstone-pattern.md`](/docs/pillars/governance/tombstone-pattern)
+- [`../../pillars/ai-collaboration/memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern) — grooming.
