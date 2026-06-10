@@ -7,6 +7,8 @@ description: 'How to ship LLM-powered features without prompt injection, jailbre
 
 How to ship LLM-powered features without prompt injection, jailbreaks, data leakage, hallucinated tools, or runaway costs.
 
+> **Reference implementation:** [`@agentskit/sandbox`](https://www.agentskit.io/docs/production/security) (allow/deny/require policy + egress control), `createPIIRedactor`, injection detection, and per-conversation token caps — the boundary layers this pattern prescribes.
+
 ## TL;DR (human)
 
 LLMs are untrusted code interpreters. Anything in the prompt — including the user's input, retrieved documents, tool results — can manipulate the model. Five surfaces: **prompt injection defense**, **output validation**, **tool authorization**, **data leakage prevention**, **cost + safety limits**. Treat LLM output the same way you treat user input.

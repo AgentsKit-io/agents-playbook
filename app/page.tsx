@@ -14,6 +14,10 @@ import {
   Github,
   Download,
 } from "lucide-react";
+import stats from "./stats.snapshot.json";
+
+// Counts are derived from content by scripts/compute-stats.mjs (single source).
+const C = stats.counts;
 
 const PILLARS = [
   {
@@ -80,7 +84,7 @@ const FEATURES = [
   {
     icon: Lock,
     title: "Gates included",
-    body: "13 reference gate scripts (Node 22, zero deps) you can drop into any repo. Pure copy-paste.",
+    body: `${C.gateScripts} reference gate scripts (Node 22, zero deps) you can drop into any repo. Pure copy-paste.`,
   },
   {
     icon: Zap,
@@ -90,10 +94,10 @@ const FEATURES = [
 ];
 
 const STATS = [
-  { label: "Pillars", value: "6" },
-  { label: "Patterns", value: "70+" },
-  { label: "Gate scripts", value: "13" },
-  { label: "SDLC phases", value: "6" },
+  { label: "Pillars", value: String(C.pillars) },
+  { label: "Patterns", value: String(C.patterns) },
+  { label: "Gate scripts", value: String(C.gateScripts) },
+  { label: "SDLC phases", value: String(C.phases) },
 ];
 
 export default function HomePage() {

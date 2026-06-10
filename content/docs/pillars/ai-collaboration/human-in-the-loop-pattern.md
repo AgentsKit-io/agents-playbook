@@ -7,6 +7,8 @@ description: 'Design where humans review, approve, correct, and take over from a
 
 Design where humans review, approve, correct, and take over from agents — so autonomy scales with confidence and every correction becomes training signal.
 
+> **Reference implementation:** [`createApprovalGate` in `@agentskit/core`](https://www.agentskit.io/docs/agents/hitl) — the pending/approved/rejected lifecycle this pattern describes, ready to wire. Or [install an HITL-gated agent](https://registry.agentskit.io) from the Registry.
+
 ## TL;DR (human)
 
 Full autonomy and full manual are both wrong defaults. Place humans at the points where the cost of an error exceeds the cost of a review: gate **irreversible or high-stakes actions** behind explicit approval, **escalate low-confidence** outputs instead of emitting them, and let humans **edit** before shipping. Then capture every approval, rejection, and edit as structured signal — the edit-diff and the rejection reason are the highest-value training data you own. The goal is to *earn* autonomy: start supervised, measure agreement, and widen the agent's unsupervised envelope as the evals prove it. The human is not a fallback; the human is the loop that makes the agent get better.

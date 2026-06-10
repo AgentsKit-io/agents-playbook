@@ -7,6 +7,8 @@ description: 'How to measure whether an AI agent is actually good — determinis
 
 How to measure whether an AI agent is actually good — deterministic checks, LLM-as-judge, and production monitoring — so quality scales with the system instead of breaking as it grows.
 
+> **Reference implementation:** [`@agentskit/eval`](https://www.agentskit.io/docs/production/evals) — deterministic runner, snapshot/golden, replay cassettes, and CI reporters map one-to-one onto the tiers below.
+
 ## TL;DR (human)
 
 A correct generation cannot be a lucky one. Build a three-tier eval stack: **deterministic graders** (cheap, exact, in CI — schema/format/regex/tool-call assertions), **LLM-as-judge** (rubric-scored, for the subjective majority — relevance, faithfulness, tone), and **production monitoring** (online signals — thumbs, edits, regenerations, escalations). Every prompt or model change runs the offline suite *before* merge and is watched online *after* ship. The eval set is a versioned asset, graded against a rubric you wrote down, with the judge itself calibrated against human labels. No eval, no merge.

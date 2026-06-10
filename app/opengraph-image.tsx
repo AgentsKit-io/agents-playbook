@@ -1,4 +1,7 @@
 import { ImageResponse } from "next/og";
+import stats from "./stats.snapshot.json";
+
+const C = stats.counts;
 
 export const runtime = "edge";
 export const alt = "Agents Playbook";
@@ -78,11 +81,11 @@ export default async function OGImage() {
             color: "rgba(255,255,255,0.55)",
           }}
         >
-          <span>6 pillars</span>
+          <span>{C.pillars} pillars</span>
           <span>·</span>
-          <span>70+ patterns</span>
+          <span>{C.patterns}+ patterns</span>
           <span>·</span>
-          <span>13 gate scripts</span>
+          <span>{C.gateScripts} gate scripts</span>
         </div>
       </div>
     ),

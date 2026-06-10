@@ -3,7 +3,7 @@
 
 import { readdir, readFile, stat } from "node:fs/promises";
 import { join } from "node:path";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 export const dynamic = "force-static";
 
@@ -49,6 +49,23 @@ async function collect(): Promise<Doc[]> {
   return docs;
 }
 
+/** Sibling-property discovery block, generated from the canonical ecosystem.json. */
+function ecosystemBlock(): string {
+  try {
+    const raw = readFileSync(join(process.cwd(), "ecosystem.json"), "utf8");
+    const eco = JSON.parse(raw) as {
+      properties: { id: string; name: string; tagline: string; url: string; llms: string }[];
+    };
+    const lines = eco.properties
+      .filter((p) => p.id !== "playbook")
+      .map((p) => `- [${p.name}](${p.url}) — ${p.tagline} llms.txt: ${p.llms}`)
+      .join("\n");
+    return `## The AgentsKit ecosystem\n\n${lines}\n\n`;
+  } catch {
+    return "";
+  }
+}
+
 export async function GET() {
   const docs = await collect();
   docs.sort((a, b) => a.url.localeCompare(b.url));
@@ -65,7 +82,7 @@ export async function GET() {
 - ZIP bundle: ${SITE}/playbook-bundle.zip
 - License: CC-BY-4.0
 
-## Docs index
+${ecosystemBlock()}## Docs index
 
 `;
 
