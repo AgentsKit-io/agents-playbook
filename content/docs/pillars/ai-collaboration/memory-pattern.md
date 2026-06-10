@@ -7,6 +7,8 @@ description: 'How to make agents durably learn from prior sessions without pollu
 
 How to make agents durably learn from prior sessions without polluting context with chat transcripts.
 
+> **Reference implementation:** [`@agentskit/memory`](https://www.agentskit.io/docs/data/memory) — chat + vector + hierarchical + encrypted stores with redaction, plus `createVirtualizedMemory` in `@agentskit/core` for context-budget-aware history.
+
 ## TL;DR (human)
 
 One fact per file. Frontmatter typed (`user`, `feedback`, `project`, `reference`). Index file (`MEMORY.md`) loads every session — short, one-line-per-memory. Memories link to each other with `[[name]]`. Lessons land the moment they happen, not at session end.

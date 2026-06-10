@@ -7,6 +7,8 @@ description: 'How to design an error model that survives multi-agent development
 
 How to design an error model that survives multi-agent development and client-side pattern matching.
 
+> **Reference implementation:** [`@agentskit/core`](https://www.agentskit.io/docs/reference/packages/core) ships this exact pattern — `AgentsKitError` with typed `code`, `hint`, and `docsUrl`, and never throws a bare `Error` at a boundary.
+
 ## TL;DR (human)
 
 One base class. One file of codes. Subclasses per namespace. Codes are append-only. Never throw raw `Error` at a boundary. The dispatcher is the only thing allowed to turn unknown thrown values into a generic opaque error.
