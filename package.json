@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbo",
+    "prebuild": "node scripts/gen-stats-snapshot.mjs",
+    "gen:stats": "node scripts/gen-stats-snapshot.mjs",
     "build": "node scripts/build-bundle.mjs && next build",
     "start": "next start",
     "postinstall": "fumadocs-mdx",

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "property": "playbook",
+  "counts": {
+    "pillars": 6,
+    "patterns": 80,
+    "gateScripts": 13,
+    "phases": 6,
+    "templates": 6
+  }
+}
