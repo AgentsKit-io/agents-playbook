@@ -72,6 +72,12 @@ export default async function Page(props: {
     <DocsPage
       toc={page.data.toc}
       full={page.data.full}
+      editOnGithub={{
+        owner: "AgentsKit-io",
+        repo: "agents-playbook",
+        sha: "main",
+        path: `content/docs/${page.file?.path ?? ""}`,
+      }}
       tableOfContent={{
         style: "clerk",
       }}
