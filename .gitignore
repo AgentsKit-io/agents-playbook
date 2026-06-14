@@ -14,6 +14,14 @@ public/playbook-bundle.zip
 *.log
 .DS_Store
 
+# Local env (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# TS build artifact
+*.tsbuildinfo
+
 # IDE
 .idea/
 .vscode/

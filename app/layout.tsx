@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import type { Metadata } from "next";
 import { RootProvider } from "fumadocs-ui/provider";
 import Script from "next/script";
+import { PostHogProvider } from "@/components/posthog-provider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -61,6 +62,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: TITLE,
     description: DESCRIPTION,
+    creator: "@agentskit",
   },
   alternates: {
     canonical: SITE_URL,
@@ -84,12 +86,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         {/* Shared ecosystem bar — single source on www.agentskit.io, embedded across all properties. */}
         <Script src="https://www.agentskit.io/ecosystem-bar.js" strategy="afterInteractive" data-current="playbook" />
-        <RootProvider
-          theme={{ defaultTheme: "dark", forcedTheme: "dark" }}
-          
-        >
-          {children}
-        </RootProvider>
+        <PostHogProvider>
+          <RootProvider
+            theme={{ defaultTheme: "dark", forcedTheme: "dark" }}
+          >
+            {children}
+          </RootProvider>
+        </PostHogProvider>
       </body>
     </html>
   );

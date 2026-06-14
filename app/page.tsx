@@ -12,9 +12,21 @@ import {
   Palette,
   Bot,
   Github,
-  Download,
+  Boxes,
+  AlertTriangle,
+  GitMerge,
+  GitBranch,
+  FileWarning,
+  Repeat,
+  Package,
+  Blocks,
+  Cpu,
 } from "lucide-react";
 import stats from "./stats.snapshot.json";
+import ecosystem from "@/ecosystem.json";
+import { EcosystemLink } from "@/components/ecosystem-link";
+import { EcosystemStars } from "@/components/ecosystem-stars";
+import { EcosystemCrossRef } from "@/components/ecosystem-cross-ref";
 
 // Counts are derived from content by scripts/compute-stats.mjs (single source).
 const C = stats.counts;
@@ -93,6 +105,51 @@ const FEATURES = [
   },
 ];
 
+const FAILURE_MODES = [
+  {
+    icon: Boxes,
+    title: "Reinvented primitives",
+    body: "Agent rewrites a helper that already exists upstream — instead of depending on it.",
+    fix: "Architecture",
+    href: "/docs/pillars/architecture/universal",
+  },
+  {
+    icon: AlertTriangle,
+    title: "Unreviewable diffs",
+    body: "Ternaries nested until no human can read the file, and the PR rubber-stamps through.",
+    fix: "Quality",
+    href: "/docs/pillars/quality",
+  },
+  {
+    icon: GitMerge,
+    title: "Deleted peer work",
+    body: "A merge resolved with checkout --theirs silently wipes another author's code.",
+    fix: "Governance",
+    href: "/docs/pillars/governance",
+  },
+  {
+    icon: FileWarning,
+    title: "Fake “done”",
+    body: "Screen marked shipped while half its tabs still throw not implemented.",
+    fix: "Quality",
+    href: "/docs/pillars/quality",
+  },
+  {
+    icon: Repeat,
+    title: "Session amnesia",
+    body: "Agent repeats a mistake you already fixed last week — context lost between runs.",
+    fix: "AI Collaboration",
+    href: "/docs/pillars/ai-collaboration",
+  },
+  {
+    icon: GitBranch,
+    title: "Stale-branch grind",
+    body: "Agent keeps building on a branch while main has already gone red.",
+    fix: "Governance",
+    href: "/docs/pillars/governance",
+  },
+];
+
 const STATS = [
   { label: "Pillars", value: String(C.pillars) },
   { label: "Patterns", value: String(C.patterns) },
@@ -111,6 +168,8 @@ export default function HomePage() {
 
       <Hero />
 
+      <FailureModes />
+
       <Stats />
 
       <Features />
@@ -118,6 +177,8 @@ export default function HomePage() {
       <PillarShowcase />
 
       <AgentFriendly />
+
+      <EcosystemSection />
 
       <CTASection />
 
@@ -145,23 +206,23 @@ function SiteHeader() {
         >
           llms.txt
         </Link>
-        <a
+        <EcosystemLink
           href="https://www.agentskit.io/"
-          target="_blank"
-          rel="noreferrer"
+          placement="header"
           className="hidden sm:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
         >
           AgentsKit ↗
-        </a>
-        <a
+        </EcosystemLink>
+        <EcosystemStars repos={ecosystem.properties.map((p) => p.repo)} />
+        <EcosystemLink
           href="https://github.com/AgentsKit-io/agents-playbook"
-          target="_blank"
-          rel="noreferrer"
-          className="inline-flex items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1.5 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
+          placement="header"
+          event="community_clicked"
+          className="hidden sm:inline-flex items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1.5 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
         >
           <Github className="h-3.5 w-3.5" aria-hidden />
           GitHub
-        </a>
+        </EcosystemLink>
       </nav>
     </header>
   );
@@ -177,28 +238,21 @@ function Hero() {
             v0.1 · CC-BY-4.0
           </div>
           <h1 className="text-balance text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
-            The gold-standard playbook for shipping production software with
-            {" "}
-            <span className="text-accent-gradient">AI coding agents</span>.
+            Make AI agents ship code you&rsquo;d{" "}
+            <span className="text-accent-gradient">actually merge</span>.
           </h1>
-          <p className="mt-6 max-w-2xl text-pretty text-lg text-[color:var(--muted-foreground)]">
-            Pillars, patterns, prompts, and gates earned from a year of agent-driven
-            development on a real production codebase. Drop-in templates,
-            ready-to-run gate scripts, and a structure built for both humans and
-            agents.
+          <p className="mt-6 max-w-xl text-pretty text-lg text-[color:var(--muted-foreground)]">
+            They reimplement primitives, nest ternaries past readability, and mark
+            screens &ldquo;done&rdquo; with half the tabs throwing{" "}
+            <span className="font-mono text-[0.95em] text-[color:var(--foreground)]">not implemented</span>.
+            This is the rules, gates, and prompts — earned over a year of
+            agent-driven production — that stop it.
           </p>
-          <p className="mt-4 text-sm text-[color:var(--muted-foreground)]">
-            Distilled from building{" "}
-            <a
-              href="https://www.agentskit.io/"
-              target="_blank"
-              rel="noreferrer"
-              className="font-medium text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current"
-            >
-              AgentsKit
-            </a>{" "}
-            — the agent-native platform this playbook comes from.
-          </p>
+          <EcosystemCrossRef
+            current="playbook"
+            placement="hero"
+            className="mt-4 max-w-xl text-sm text-[color:var(--muted-foreground)]"
+          />
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
               href="/docs"
@@ -213,13 +267,6 @@ function Hero() {
             >
               Start from CLAUDE.md
             </Link>
-            <a
-              href="/playbook-bundle.zip"
-              className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-2.5 text-sm font-semibold text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
-            >
-              <Download className="h-4 w-4" aria-hidden />
-              Bundle (.zip)
-            </a>
           </div>
         </div>
 
@@ -270,6 +317,170 @@ pnpm check:all
         </pre>
       </div>
     </div>
+  );
+}
+
+// Cohesive ecosystem narrative — one role sentence per property, in workflow
+// order. Accent + tagline data come from ecosystem.json (synced from the
+// canonical registry); this layer adds the "where it fits" framing.
+const ECOSYSTEM_ROLE: Record<
+  string,
+  { kind: string; icon: typeof Package; role: string; cta: string; target: string }
+> = {
+  agentskit: {
+    kind: "The libraries",
+    icon: Package,
+    role: "Build the agent, skip the plumbing. Chat UI, runtime, tools, memory, and RAG in one JavaScript toolkit.",
+    cta: "Build an agent",
+    target: "agentskit",
+  },
+  registry: {
+    kind: "The registry",
+    icon: Blocks,
+    role: "The shadcn for agents. Copy production-ready agents straight into your project — no boilerplate.",
+    cta: "Browse agents",
+    target: "registry",
+  },
+  playbook: {
+    kind: "The standards",
+    icon: BookOpenCheck,
+    role: "You're here. The engineering discipline that keeps agent-built code reviewable, safe, and shippable.",
+    cta: "Read the playbook",
+    target: "playbook",
+  },
+  akos: {
+    kind: "The OS",
+    icon: Cpu,
+    role: "Orchestrate and govern agents in production — identity, audit, permissions, and cost control.",
+    cta: "Explore AKOS",
+    target: "akos",
+  },
+};
+const ECOSYSTEM_ORDER = ["agentskit", "registry", "playbook", "akos"] as const;
+
+function EcosystemSection() {
+  const props = Object.fromEntries(
+    ecosystem.properties.map((p) => [p.id, p]),
+  );
+  return (
+    <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
+      <SectionLabel>The ecosystem</SectionLabel>
+      <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+        One workflow. Four parts that fit together.
+      </h2>
+      <p className="mt-4 max-w-3xl text-pretty text-[color:var(--muted-foreground)]">
+        <span className="font-medium text-[color:var(--foreground)]">AgentsKit</span>{" "}
+        builds it, the{" "}
+        <span className="font-medium text-[color:var(--foreground)]">Registry</span>{" "}
+        gives you a head start, this{" "}
+        <span className="font-medium text-[color:var(--foreground)]">Playbook</span>{" "}
+        keeps it shippable, and{" "}
+        <span className="font-medium text-[color:var(--foreground)]">AKOS</span>{" "}
+        runs it in production. Same standards end to end.
+      </p>
+
+      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {ECOSYSTEM_ORDER.map((id) => {
+          const p = props[id];
+          const meta = ECOSYSTEM_ROLE[id];
+          const Icon = meta.icon;
+          const current = id === "playbook";
+          const inner = (
+            <>
+              <div className="flex items-center justify-between">
+                <span
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-md"
+                  style={{
+                    backgroundColor: `${p.accent}1a`,
+                    color: p.accent,
+                  }}
+                >
+                  <Icon className="h-4 w-4" aria-hidden />
+                </span>
+                {current ? (
+                  <span className="rounded-full border border-[color:var(--accent-strong)] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[color:var(--accent-strong)]">
+                    You are here
+                  </span>
+                ) : (
+                  <span className="text-[11px] uppercase tracking-wider text-[color:var(--subtle-foreground)]">
+                    {meta.kind}
+                  </span>
+                )}
+              </div>
+              <h3 className="mt-4 text-base font-semibold">{p.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+                {meta.role}
+              </p>
+              <div
+                className="mt-5 inline-flex items-center gap-1 text-sm font-medium"
+                style={{ color: current ? "var(--accent-strong)" : p.accent }}
+              >
+                {meta.cta}
+                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden />
+              </div>
+            </>
+          );
+          const cardClass = `card-lift group rounded-xl border p-6 ${
+            current
+              ? "border-[color:var(--accent-strong)] bg-[color:var(--surface-2)]"
+              : "border-[color:var(--border)] bg-[color:var(--surface-1)]"
+          }`;
+          return current ? (
+            <Link key={id} href="/docs" className={cardClass}>
+              {inner}
+            </Link>
+          ) : (
+            <EcosystemLink
+              key={id}
+              href={p.url}
+              placement="ecosystem_grid"
+              target={meta.target}
+              className={cardClass}
+            >
+              {inner}
+            </EcosystemLink>
+          );
+        })}
+      </div>
+    </section>
+  );
+}
+
+function FailureModes() {
+  return (
+    <section className="relative z-10 mx-auto max-w-6xl px-6 pt-4 pb-12">
+      <SectionLabel>The problem</SectionLabel>
+      <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+        You&rsquo;ve shipped — or caught — every one of these.
+      </h2>
+      <p className="mt-4 max-w-2xl text-pretty text-[color:var(--muted-foreground)]">
+        Each rule in the playbook is the fix for a specific, reproducible way
+        agents break production code. Not theory — failure modes paid for in real
+        repos.
+      </p>
+
+      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {FAILURE_MODES.map((m) => (
+          <Link
+            key={m.title}
+            href={m.href}
+            className="card-lift group rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-1)] p-6"
+          >
+            <div className="inline-flex h-9 w-9 items-center justify-center rounded-md bg-[color:var(--surface-2)] text-[color:var(--danger)]">
+              <m.icon className="h-4 w-4" aria-hidden />
+            </div>
+            <h3 className="mt-4 text-base font-semibold">{m.title}</h3>
+            <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
+              {m.body}
+            </p>
+            <div className="mt-5 inline-flex items-center gap-1 text-sm font-medium text-[color:var(--accent-strong)]">
+              Fixed in {m.fix}
+              <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden />
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
   );
 }
 
@@ -393,8 +604,8 @@ function AgentFriendly() {
               </li>
             </ul>
           </div>
-          <div className="rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-5 font-mono text-[12.5px] leading-relaxed text-[color:var(--muted-foreground)]">
-            <pre>{`# fetch raw markdown from any doc
+          <div className="min-w-0 overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-5 font-mono text-[12.5px] leading-relaxed text-[color:var(--muted-foreground)]">
+            <pre className="overflow-x-auto">{`# fetch raw markdown from any doc
 curl https://playbook.agentskit.io/raw/pillars/architecture/universal.md
 
 # one-shot bundle for RAG indexing
@@ -439,14 +650,13 @@ function CTASection() {
           </div>
           <p className="mx-auto mt-8 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
             Want the platform these practices run on?{" "}
-            <a
+            <EcosystemLink
               href="https://www.agentskit.io/"
-              target="_blank"
-              rel="noreferrer"
+              placement="cta"
               className="font-semibold text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current"
             >
               Explore AgentsKit ↗
-            </a>
+            </EcosystemLink>
           </p>
         </div>
       </div>
@@ -472,14 +682,13 @@ function SiteFooter() {
           <div className="mt-1">CC-BY-4.0 · Adapt freely · Attribution appreciated.</div>
           <div className="mt-1">
             Built by{" "}
-            <a
+            <EcosystemLink
               href="https://www.agentskit.io/"
-              target="_blank"
-              rel="noreferrer"
+              placement="footer"
               className="font-medium text-[color:var(--foreground)] hover:underline"
             >
               AgentsKit
-            </a>{" "}
+            </EcosystemLink>{" "}
             — the agent-native platform.
           </div>
         </div>
@@ -488,8 +697,8 @@ function SiteFooter() {
           <Link href="/docs/glossary" className="hover:text-[color:var(--foreground)]">Glossary</Link>
           <Link href="/docs/matrix" className="hover:text-[color:var(--foreground)]">Matrix</Link>
           <Link href="/llms.txt" className="hover:text-[color:var(--foreground)]">llms.txt</Link>
-          <a href="https://www.agentskit.io/" target="_blank" rel="noreferrer" className="hover:text-[color:var(--foreground)]">AgentsKit ↗</a>
-          <a href="https://github.com/AgentsKit-io/agents-playbook" target="_blank" rel="noreferrer" className="hover:text-[color:var(--foreground)]">GitHub</a>
+          <EcosystemLink href="https://www.agentskit.io/" placement="footer" className="hover:text-[color:var(--foreground)]">AgentsKit ↗</EcosystemLink>
+          <EcosystemLink href="https://github.com/AgentsKit-io/agents-playbook" placement="footer" event="community_clicked" className="hover:text-[color:var(--foreground)]">GitHub</EcosystemLink>
         </div>
       </div>
     </footer>

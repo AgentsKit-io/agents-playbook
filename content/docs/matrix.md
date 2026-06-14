@@ -1,6 +1,6 @@
 ---
 title: 'The matrix — pillars × phases'
-description: 'This is the master content map. Each cell points to the practices that apply when **pillar** meets **SDLC phase**.'
+description: 'This is the master content map. Each cell points to the practices that apply when pillar meets SDLC phase.'
 ---
 
 # The matrix — pillars × phases
