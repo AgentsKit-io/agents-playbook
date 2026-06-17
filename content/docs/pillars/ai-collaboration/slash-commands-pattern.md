@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Slash Commands Pattern'
 description: 'How to turn repeated workflows into palette-invoked commands so they run identically every time.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Platform Engineering + Internal Developer Platform Pattern'
 description: 'How to build the layer between cloud / infra and product engineers, so product teams ship fast without re-learning infra each time.'
 ---

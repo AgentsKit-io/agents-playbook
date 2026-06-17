@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Property-Based & Fuzz Testing Pattern'
 description: 'How to test the laws your code must obey, instead of guessing individual inputs — and how this catches crypto and parser bugs example tests never will.'
 ---

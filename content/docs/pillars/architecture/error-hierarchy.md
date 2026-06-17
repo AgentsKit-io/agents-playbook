@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Error Hierarchy'
 description: 'How to design an error model that survives multi-agent development and client-side pattern matching.'
 ---

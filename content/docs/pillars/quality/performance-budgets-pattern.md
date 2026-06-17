@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Performance Budgets Pattern'
 description: 'How to keep ''it''s fast enough'' from drifting into ''why is it slow?'''
 ---

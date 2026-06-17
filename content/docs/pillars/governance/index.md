@@ -1,4 +1,5 @@
 ---
+type: Pillar
 title: 'Pillar — Governance'
 description: 'How multiple agents (and humans) coordinate work in one repo without subtracting each other''s progress.'
 ---

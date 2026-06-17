@@ -1,4 +1,5 @@
 ---
+type: Index
 title: 'Reference gate scripts'
 description: 'Drop-in reference implementations for the quality + structural gates the pillars rely on. Adapt to your stack; the contract each gate enforces is more important than the specific code.'
 ---

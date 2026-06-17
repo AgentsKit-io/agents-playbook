@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Design Tokens Pattern'
 description: 'How to define visual values once and let them flow through every screen, theme, and brand.'
 ---

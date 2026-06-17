@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Sub-agent Pattern'
 description: 'How to delegate scoped tasks to specialist agents so the orchestrator stays focused.'
 ---

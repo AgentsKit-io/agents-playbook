@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Architecture — Universal Principles'
 description: 'Stack-agnostic. Applies to any language, any framework.'
 ---

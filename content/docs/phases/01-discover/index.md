@@ -1,4 +1,5 @@
 ---
+type: SDLC Phase
 title: 'Phase 01 — Discover'
 description: 'Define what you are building, who consumes it, and what success looks like — before agents touch the codebase.'
 ---

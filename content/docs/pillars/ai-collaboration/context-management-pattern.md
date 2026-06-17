@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Context Management Pattern'
 description: 'Engineer what goes into the context window — selection, ordering, compaction, retention — because the context is the program the model runs.'
 ---

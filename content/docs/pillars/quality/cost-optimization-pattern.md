@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Cost Optimization Pattern (FinOps)'
 description: 'How to control cloud spend without micromanaging every commit.'
 ---

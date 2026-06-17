@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Tool & Capability Design Pattern'
 description: 'Design the abstraction layer between a model and your product — tools, file systems, artifacts, skills — so complex multi-step work feels natural to the model and stays reliable for users.'
 ---

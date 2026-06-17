@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'ADR Pattern'
 description: 'How to record architecture decisions so future agents (and humans) can find them, trust them, and supersede them cleanly.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Session Management Pattern'
 description: 'How to model + protect user sessions — login state, refresh, revocation, idle expiry, device binding.'
 ---

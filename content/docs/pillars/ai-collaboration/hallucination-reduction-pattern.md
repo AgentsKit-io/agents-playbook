@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Hallucination Reduction Pattern'
 description: 'Make model output you can put your name on — grounding, constrained generation, verification, and abstention — so the system says "I don''t know" instead of confidently inventing.'
 ---

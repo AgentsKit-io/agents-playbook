@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Contract Testing Pattern'
 description: 'How to verify that consumer + provider agree on a contract, without expensive end-to-end tests.'
 ---

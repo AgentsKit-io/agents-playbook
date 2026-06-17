@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Egress Firewall Pattern'
 description: 'Default-deny outbound network access, configurable per workspace, evaluable at every call site.'
 ---

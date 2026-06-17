@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Adversarial Bug-Hunt Pattern'
 description: 'How to find real logic bugs with a find → refute → reproduce loop, instead of trusting a single agent that says "looks fine".'
 ---

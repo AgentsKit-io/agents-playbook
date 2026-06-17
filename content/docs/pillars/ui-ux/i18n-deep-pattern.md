@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Internationalisation Deep Pattern'
 description: 'Beyond ''wrap every string in `t()`'' — the substance of locale-correct UI: plural rules, gender, ICU formatting, RTL, dates, numbers, currency, sorting, search.'
 ---

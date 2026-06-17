@@ -1,4 +1,5 @@
 ---
+type: Reference
 title: 'Glossary'
 description: 'Short definitions for the terms used across this playbook.'
 ---
@@ -44,6 +45,7 @@ Short definitions for the terms used across this playbook.
 | **Legal hold** | Flag that suspends retention for a subject under investigation. |
 | **Whitelabel / OEM** | Per-tenant brand kit + plan presets that swap product name, logo, palette at build / runtime. |
 | **MEMORY pattern** | One-fact-per-file persistent agent memory with an index file (`MEMORY.md`). |
+| **OKF (Open Knowledge Format)** | Open standard (Google Cloud, v0.1) for agent-readable knowledge: a directory of markdown files + YAML frontmatter, `type` the only required field, `index.md` + markdown-link graph. Vendor-neutral, no SDK. |
 | **Sub-agent** | Scoped specialist agent delegated for a fan-out task. |
 | **Slash command** | Palette-invoked workflow body. |
 | **Goal mode** | Stop hook with a condition; agent works until the condition holds. |

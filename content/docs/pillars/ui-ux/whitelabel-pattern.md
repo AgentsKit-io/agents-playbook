@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Whitelabel Pattern'
 description: 'How to make every product surface reskinnable per tenant — even if you do not sell whitelabel today.'
 ---

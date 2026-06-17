@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Pre-push Pattern'
 description: 'The safety net between local changes and CI.'
 ---

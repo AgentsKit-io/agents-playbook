@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Human-in-the-Loop Pattern'
 description: 'Design where humans review, approve, correct, and take over from agents — so autonomy scales with confidence and every correction becomes training signal.'
 ---

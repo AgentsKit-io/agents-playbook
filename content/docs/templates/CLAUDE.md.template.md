@@ -1,4 +1,5 @@
 ---
+type: Template
 title: 'CLAUDE.md template'
 description: 'Drop this at the repo root as `CLAUDE.md` (or `AGENTS.md` for tool-neutral). Customise the marked sections. Keep it under 200 lines; agents read the whole thing every session.'
 ---

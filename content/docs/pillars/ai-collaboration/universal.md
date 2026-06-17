@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'AI Collaboration — Universal Principles'
 description: 'How to get production-grade work out of an AI coding agent, durably, across sessions and across multiple agents working in parallel.'
 ---

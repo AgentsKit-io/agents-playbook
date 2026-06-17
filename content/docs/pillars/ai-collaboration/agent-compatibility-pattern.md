@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Agent Compatibility Pattern'
 description: 'One playbook, every agent — how to map the bootstrap-doc convention onto Claude Code, Cursor, Windsurf, Copilot, Codex, and the rest.'
 ---

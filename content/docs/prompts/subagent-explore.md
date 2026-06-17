@@ -1,4 +1,5 @@
 ---
+type: Sub-agent Recipe
 title: 'Sub-agent Recipe — Explore'
 description: 'Read-only fan-out search agent. Orchestrator delegates ''find me X'' tasks here.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Slash Command
 title: 'Slash Command — /loop'
 description: 'Run a task repeatedly. Either on a fixed interval or self-paced based on an exit condition.'
 ---

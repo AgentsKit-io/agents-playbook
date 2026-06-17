@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Bootstrap Doc Pattern'
 description: 'The file an agent reads first, every session. Two files together: one for non-negotiables, one for routing.'
 ---

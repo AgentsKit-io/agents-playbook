@@ -1,4 +1,5 @@
 ---
+type: Slash Command
 title: 'Slash Command — /sanity'
 description: 'Run the cross-cutting sanity audit, surface drift.'
 ---

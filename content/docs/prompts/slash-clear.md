@@ -1,4 +1,5 @@
 ---
+type: Slash Command
 title: 'Slash Command — /clear'
 description: 'Reset session context cleanly without losing persistent memory.'
 ---

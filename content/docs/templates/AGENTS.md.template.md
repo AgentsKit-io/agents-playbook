@@ -1,4 +1,5 @@
 ---
+type: Template
 title: 'AGENTS.md template'
 description: 'Drop at repo root. The routing table that answers ''which package owns X?'' before an agent makes the wrong edit.'
 ---

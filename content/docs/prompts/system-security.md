@@ -1,4 +1,5 @@
 ---
+type: System Prompt
 title: 'System Prompt — Security Reviewer'
 description: 'Inject as system prompt for security-focused review passes. Narrower than the general reviewer; deeper on the threat model.'
 ---

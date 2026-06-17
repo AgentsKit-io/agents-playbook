@@ -1,4 +1,5 @@
 ---
+type: SDLC Phase
 title: 'Phase 05 — Ship'
 description: 'How to turn a green main into a release without surprising consumers.'
 ---

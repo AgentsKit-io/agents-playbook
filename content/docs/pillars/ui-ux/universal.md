@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'UI / UX — Universal Principles'
 description: 'How to keep a multi-screen product visually coherent, intl-ready, accessible, and honest when agents author screens in parallel.'
 ---

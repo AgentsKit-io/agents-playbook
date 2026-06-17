@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)'
 description: 'Copy-paste-ready recipes that implement [`universal.md`](/docs/pillars/architecture/universal) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.'
 ---

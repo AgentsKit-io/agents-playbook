@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'AI / LLM Safety Pattern'
 description: 'How to ship LLM-powered features without prompt injection, jailbreaks, data leakage, hallucinated tools, or runaway costs.'
 ---

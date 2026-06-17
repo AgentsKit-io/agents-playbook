@@ -1,4 +1,5 @@
 ---
+type: Slash Command
 title: 'Slash Command — /review'
 description: 'Multi-agent code review pass on a PR (or current branch).'
 ---

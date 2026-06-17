@@ -1,4 +1,5 @@
 ---
+type: Index
 title: 'Reusable prompts'
 description: 'System prompts, sub-agent recipes, and slash-command bodies that consistently produce gold-standard output.'
 ---

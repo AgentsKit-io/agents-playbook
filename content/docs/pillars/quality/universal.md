@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Quality — Universal Principles'
 description: 'How to know agent-produced code works without manually reading every diff.'
 ---

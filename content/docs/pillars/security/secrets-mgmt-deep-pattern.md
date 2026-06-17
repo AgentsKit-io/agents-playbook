@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Secrets Management Deep Pattern'
 description: 'Beyond `vault-pattern.md` — operational specifics: dynamic secrets, short-lived credentials, secret-zero, secret-less architectures, OIDC federation.'
 ---
