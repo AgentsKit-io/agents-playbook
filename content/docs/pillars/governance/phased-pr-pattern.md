@@ -104,6 +104,7 @@ Phases merge directly to main. Each phase carries its own gate signal.
 - **No feature flag on a half-built UI surface.** Users see broken state in prod. → Flag mid-build; flip in the final phase.
 - **Parent issue not updated.** Reviewers can't tell which phase is current. → Update parent issue at every phase start + end.
 - **Phases not independently testable.** Phase 1 has no behavior without phase 3; can't write a meaningful test. → Phase contract is "the system still compiles + existing tests still pass". Adding tests for the new behavior happens in the phase that adds the behavior.
+- **Stacked PR merged into a dead branch.** If you do stack a phase on the previous phase's branch (against the advice above), merging the base PR does **not** always retarget the stacked one — the platform may leave it pointing at the now-merged intermediate branch, so it lands nowhere useful. → Forking each phase from fresh main avoids this entirely. If you must stack, **verify the stacked PR's base auto-retargeted to main after the base merged** before merging it; retarget it by hand if not.
 
 ### See also
 

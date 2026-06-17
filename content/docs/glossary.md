@@ -25,6 +25,13 @@ Short definitions for the terms used across this playbook.
 | **Tombstone** | Status block prepended to a retired doc indicating it is no longer active. Body kept for trail. |
 | **Completeness contract** | Per-screen rule that no `TODO`/disabled tab/empty body ships. |
 | **Hermetic test** | In-process test that reproduces a bug without external services. Preferred over E2E for repro/lock. |
+| **Property-based test** | A test that asserts a law over generated inputs (round-trip, idempotence, injectivity…) and shrinks failures to a minimal counterexample. |
+| **Fuzzing** | Throwing hostile / malformed bytes at a parser or crypto boundary; the bar is a typed error, never a crash or silent accept. |
+| **Adversarial bug-hunt** | Find → refute → reproduce loop: orthogonal lens finders, independent skeptics that try to refute each candidate, a failing repro to confirm. |
+| **Intent test** | A test that codifies current behavior as deliberate. Its presence means a "bug" is actually intended — check for one before "fixing". |
+| **Fail-loud default** | A mandatory dependency whose unwired default throws instead of silently no-op'ing, so missing production wiring fails fast rather than shipping green. |
+| **Verification ledger** | A done-report that separates automated-verified (a check ran + passed) from claimed (believed, not run) and lists known-not-done. |
+| **Merkle malleability** | Tree builds where duplicating a lone node lets two different input sets share one root (CVE-2012-2459). Fixed by domain separation (RFC 6962) + promoting lone nodes. |
 | **Quality gates** | Fast structural checks (file size, no `any`, named exports, intl, tokens). Run pre-commit + CI. |
 | **Sanity** | Cross-cutting periodic audit. Generates a report; CI fails on regressions. |
 | **Shrink-only baseline** | Gate config: existing offenders are baselined, new violations fail. Baseline can only shrink. |

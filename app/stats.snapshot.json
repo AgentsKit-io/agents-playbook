@@ -3,7 +3,7 @@
   "property": "playbook",
   "counts": {
     "pillars": 6,
-    "patterns": 80,
+    "patterns": 85,
     "gateScripts": 13,
     "phases": 6,
     "templates": 6

@@ -35,8 +35,10 @@ Each mutant is then evaluated: does the test suite catch it? If yes, **killed**.
 Not on day one. Mutation is expensive (runtime: minutes to hours) and produces noise on a young codebase. Introduce when:
 
 - Unit suite is stable (passes consistently, no flakes).
-- Coverage is already high (≥ 80% per package).
+- Coverage is already high (≥ 80% per package) **and honestly measured** — see the caveat below.
 - The code under test is *production-critical* — security, billing, audit, contracts.
+
+> **Coverage-measurement caveat.** Many coverage tools (e.g. V8-based runners) only count files the tests *import*. A source file that no test imports is simply absent from the denominator, so the percentage looks high while untested code is invisible. Set an explicit include glob (`coverage.include: ['src/**']` or your tool's equivalent) so every source file counts whether a test reaches it or not. Without it, "85% coverage" can hide entire untested modules — and a mutation score on top of an inflated number is built on sand. Make the include glob a gate: every package with a coverage threshold must also declare what's included.
 
 ### Scope, not whole-repo
 
