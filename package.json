@@ -7,6 +7,8 @@
     "dev": "next dev --turbo",
     "prebuild": "node scripts/gen-stats-snapshot.mjs",
     "gen:stats": "node scripts/gen-stats-snapshot.mjs",
+    "gen:okf-type": "node scripts/add-okf-type.mjs",
+    "check:okf-type": "node scripts/add-okf-type.mjs --check",
     "build": "node scripts/build-bundle.mjs && next build",
     "start": "next start",
     "postinstall": "fumadocs-mdx",

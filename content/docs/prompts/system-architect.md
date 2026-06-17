@@ -1,4 +1,5 @@
 ---
+type: System Prompt
 title: 'System Prompt — Architect'
 description: 'Inject as system prompt when the task is designing a new package boundary, new contract, new ADR, or evaluating a structural change.'
 ---

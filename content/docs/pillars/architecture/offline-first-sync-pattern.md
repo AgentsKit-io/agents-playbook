@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Offline-First + Sync Pattern'
 description: 'How to design apps that work without network connectivity and reconcile state when connectivity returns.'
 ---

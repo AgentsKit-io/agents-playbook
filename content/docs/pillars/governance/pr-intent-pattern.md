@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'PR Intent Pattern'
 description: 'The manifest that makes a PR''s claims verifiable.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: SDLC Phase
 title: 'Phase 06 — Operate'
 description: 'What ''running it'' looks like after agents have shipped the first release.'
 ---

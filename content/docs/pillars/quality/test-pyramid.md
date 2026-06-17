@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Test Pyramid'
 description: 'How to mix test types so the cheap ones catch most bugs and the expensive ones cover what only they can.'
 ---

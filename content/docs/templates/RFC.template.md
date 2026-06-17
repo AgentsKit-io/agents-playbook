@@ -1,4 +1,5 @@
 ---
+type: Template
 title: 'RFC Template'
 description: 'Skeleton for a Request for Comments. Copy the block below into docs/rfc/NNNN-<slug>.md and fill the bracketed parts.'
 ---

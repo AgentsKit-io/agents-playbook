@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Prompt Versioning Pattern'
 description: 'Treat prompts as versioned, tested, experimentable production assets — not strings buried in code — so you can A/B them, measure impact, and roll back instantly.'
 ---

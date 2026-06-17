@@ -1,5 +1,11 @@
 import { defineDocs, defineConfig } from "fumadocs-mdx/config";
 
+// Open Knowledge Format (OKF) alignment: every doc carries an OKF `type` (and
+// optional tags/timestamp/resource) in its YAML frontmatter — see
+// docs/pillars/ai-collaboration/open-knowledge-format-pattern and the
+// `check:okf-type` gate. fumadocs' default frontmatter schema tolerates these
+// extra keys (they're ignored for rendering) and they are served verbatim in
+// the raw markdown at /raw/<path>.md, which is what OKF consumers read.
 export const docs = defineDocs({
   dir: "content/docs",
 });

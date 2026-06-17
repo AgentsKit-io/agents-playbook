@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Honest Confidence Pattern'
 description: 'How to report done-ness so a human can trust it — separating what was automatically verified from what was merely claimed.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Quality Gates Pattern'
 description: 'How to bundle structural rules into one fast command an agent runs before every push.'
 ---

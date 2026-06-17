@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Empty States Pattern'
 description: 'How to turn empty surfaces from dead ends into next-step launchpads.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Self-Describe Pattern'
 description: 'Ship a machine-readable manifest of what your system can do, so external agents can discover and call it without reading your source.'
 ---

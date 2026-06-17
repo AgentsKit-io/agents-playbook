@@ -1,4 +1,5 @@
 ---
+type: Index
 title: 'Templates'
 description: 'Copy-paste skeletons for the documents the playbook relies on — bootstrap docs, decision records, and the PR-intent manifest.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'RFC Pattern'
 description: 'When the decision is bigger than your team. Used for changes to public contracts, wire formats, plugin protocols, and any breaking change a consumer outside this repo would notice.'
 ---

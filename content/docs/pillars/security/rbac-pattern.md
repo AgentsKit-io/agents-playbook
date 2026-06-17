@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'RBAC Pattern'
 description: 'How to model ''who can do what'' so the checks survive multi-agent edits.'
 ---

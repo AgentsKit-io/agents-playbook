@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'API Versioning + Deprecation Pattern'
 description: 'How to evolve public contracts without surprising consumers.'
 ---

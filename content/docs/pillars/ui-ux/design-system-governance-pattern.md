@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Design System Governance Pattern'
 description: 'How to keep a design system useful as it grows — without bloat, without dictatorial restrictions, without drift.'
 ---

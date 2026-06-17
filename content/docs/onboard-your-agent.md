@@ -1,4 +1,5 @@
 ---
+type: Guide
 title: 'Onboard Your Agent'
 description: 'One paste that feeds any coding agent the whole playbook and has it audit your repo — Claude Code, Cursor, Windsurf, Codex, Copilot, and more.'
 ---

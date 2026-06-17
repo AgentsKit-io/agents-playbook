@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Fail-Loud Defaults Pattern'
 description: 'Why a silent no-op default plus a test harness that overrides it lets broken production wiring pass CI green.'
 ---

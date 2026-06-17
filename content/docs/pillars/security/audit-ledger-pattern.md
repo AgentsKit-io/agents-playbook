@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Audit Ledger Pattern'
 description: 'How to prove who did what when, in a way that survives compromise.'
 ---

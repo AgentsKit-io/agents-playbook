@@ -1,4 +1,5 @@
 ---
+type: Pillar
 title: 'Pillar — UI / UX'
 description: 'How to keep a multi-screen product visually coherent, intl-ready, and accessible when agents are writing screens in parallel.'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Governance Posture Pattern'
 description: 'Expose the system''s live security and governance posture as a read-only, machine-readable signal — so agents, dashboards, and auditors can see what is enforced without admin rights.'
 ---

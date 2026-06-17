@@ -1,4 +1,5 @@
 ---
+type: Template
 title: 'ADR Template'
 description: 'Skeleton for an Architecture Decision Record. Copy the block below into docs/adr/NNNN-<slug>.md and fill the bracketed parts.'
 ---

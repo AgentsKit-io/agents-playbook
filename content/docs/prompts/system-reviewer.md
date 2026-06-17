@@ -1,4 +1,5 @@
 ---
+type: System Prompt
 title: 'System Prompt — Reviewer'
 description: 'Inject as system prompt for code review passes. Produces confidence-scored issue lists, not pile-on critique.'
 ---

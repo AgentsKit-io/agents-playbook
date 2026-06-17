@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Agent Eval Framework Pattern'
 description: 'How to measure whether an AI agent is actually good — deterministic checks, LLM-as-judge, and production monitoring — so quality scales with the system instead of breaking as it grows.'
 ---

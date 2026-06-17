@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'File-size Budget'
 description: 'How to keep files reviewable when agents write most of the code.'
 ---

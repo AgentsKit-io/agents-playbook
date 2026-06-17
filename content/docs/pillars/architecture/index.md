@@ -1,4 +1,5 @@
 ---
+type: Pillar
 title: 'Pillar — Architecture'
 description: 'How to keep a codebase legible and modular under multi-agent development.'
 ---

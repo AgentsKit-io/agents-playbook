@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Verify-First Pattern'
 description: 'Why an agent must trust live code over docs, plans, and its own memory — and how to verify before claiming or "fixing".'
 ---

@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Alerting + Runbooks Pattern'
 description: 'How to turn observability data into a healthy alerting setup — pages that matter, runbooks that work, alert hygiene that prevents pager fatigue.'
 ---

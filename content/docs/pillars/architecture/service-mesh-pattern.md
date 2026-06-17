@@ -1,4 +1,5 @@
 ---
+type: Playbook Pattern
 title: 'Service Mesh Pattern'
 description: 'How to handle cross-service communication concerns (mTLS, retries, observability, routing) without coding them in every service.'
 ---

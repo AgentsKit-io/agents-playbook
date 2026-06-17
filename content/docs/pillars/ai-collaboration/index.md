@@ -1,4 +1,5 @@
 ---
+type: Pillar
 title: 'Pillar — AI Collaboration'
 description: 'How to make an agent productive in your repo on day one and durably good across sessions.'
 ---
@@ -19,6 +20,7 @@ How to make an agent productive in your repo on day one and durably good across 
 | Agent compatibility | One playbook, every agent — the bootstrap doc is universal, only the filename differs | Canonical `AGENTS.md` + thin per-tool pointers (`.cursor/rules`, `.windsurfrules`, `copilot-instructions.md`) |
 | Routing table | Map "I want to change X" → "edit path Y" | `AGENTS.md` table; agents triage faster by group than by file |
 | Persistent memory | Lessons survive session ends | `MEMORY.md` (index) + `memory/*.md` (one fact per file) pattern |
+| Open Knowledge Format | Share curated knowledge as a bundle any agent can read | OKF: directory of markdown + YAML frontmatter (`type` required), `index.md`, markdown-link graph |
 | Goal mode | Agent works toward a condition, not a turn count | Stop hook with goal condition; clears when the condition holds |
 | Sub-agents | Long fan-outs delegate to scoped specialist agents | Sub-agent recipes per task class (search, plan, review, implement) |
 | Slash commands | Repeated workflows become palette entries | `/goal`, `/loop`, `/review`, `/clear`, plus project-specific |
@@ -60,6 +62,7 @@ How to make an agent productive in your repo on day one and durably good across 
 - `slash-commands-pattern.md`
 - `concurrent-agent-pattern.md`
 - `self-describe-pattern.md`
+- `open-knowledge-format-pattern.md`
 - `tool-design-pattern.md`
 - `prompt-versioning-pattern.md`
 - `context-management-pattern.md`
