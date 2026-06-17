@@ -18,6 +18,9 @@ How to know the code works without manually reviewing every agent-produced diff.
 | Test pyramid | Unit > integration > E2E; cover the boundary contracts heavily | Vitest unit + Playwright E2E + contract-level params/result parse tests |
 | Coverage target | >90% per shipped package, measured against statements | Per-package coverage threshold in CI; per-package, not whole-repo |
 | Mutation testing | Beats coverage as a quality signal once unit suite is good | Stryker / mutation tool on stable utilities first |
+| Property / fuzz | Test the laws code must obey; attack parsers + crypto with hostile bytes | Generated inputs + shrinking; fuzz at the trust boundary |
+| Adversarial bug-hunt | One agent says "looks fine"; a refute-then-reproduce loop finds real logic bugs | Orthogonal lenses → skeptic refute → failing repro; loop until dry |
+| Fail-loud defaults | A no-op default the test harness always overrides hides missing prod wiring | Fail loud when unwired, or assert the real binding in an integration test |
 | Hermetic tests | Component-level vitest preferred over live-app E2E | Reproduce + lock bugs via in-process tests, not Playwright |
 | Verify-first close | Before reproducing an issue, check if it's already fixed | Default `gh issue view \<n\>` at session start |
 | File-size gate | See [architecture pillar](/docs/pillars/architecture/file-size-budget) | Baseline shrink-only |
@@ -51,6 +54,9 @@ How to know the code works without manually reviewing every agent-produced diff.
 | [`pre-push-pattern.md`](/docs/pillars/quality/pre-push-pattern) | Three-tier hook split |
 | [`sanity-pattern.md`](/docs/pillars/quality/sanity-pattern) | Cross-cutting audit |
 | [`mutation-testing-pattern.md`](/docs/pillars/quality/mutation-testing-pattern) | Beyond coverage |
+| [`property-fuzz-testing-pattern.md`](/docs/pillars/quality/property-fuzz-testing-pattern) | Test the laws, not the examples; fuzz the trust boundary |
+| [`adversarial-bug-hunt-pattern.md`](/docs/pillars/quality/adversarial-bug-hunt-pattern) | Find real logic bugs: find → refute → reproduce |
+| [`fail-loud-defaults-pattern.md`](/docs/pillars/quality/fail-loud-defaults-pattern) | No-op defaults + over-wired test harness = green CI, broken prod |
 | [`observability-pattern.md`](/docs/pillars/quality/observability-pattern) | Metrics / logs / traces / SLOs |
 | [`performance-budgets-pattern.md`](/docs/pillars/quality/performance-budgets-pattern) | Bundle / latency / resource budgets |
 | [`chaos-engineering-pattern.md`](/docs/pillars/quality/chaos-engineering-pattern) | Controlled fault injection |

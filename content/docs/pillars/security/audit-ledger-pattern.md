@@ -88,6 +88,17 @@ Verifying integrity:
 
 Signing keys rotate per the vault rotation rules. Old signatures remain verifiable via retained public keys.
 
+### Merkle malleability — bind the tree, not just the root
+
+The signature binds the entries *only through the Merkle root*. If two different entry sets can produce the same root, an attacker can swap one for the other and the signature still verifies. The classic flaw: when a tree level has an odd number of nodes, naive implementations **duplicate the last node** to pair it. That makes `[a, b, c]` and `[a, b, c, c]` hash to the same root — a second-preimage attack catalogued as **CVE-2012-2459**. Tamper becomes undetectable precisely where you claimed it was provable.
+
+Two fixes, apply both:
+
+1. **Domain separation** (RFC 6962). Hash leaves and internal nodes with different prefix bytes: `H(0x00 ‖ leaf)` for leaves, `H(0x01 ‖ left ‖ right)` for internal nodes. A leaf can then never be confused with an internal node.
+2. **Promote, don't duplicate.** When a level has a lone node, carry it up to the next level unchanged instead of pairing it with a copy of itself.
+
+This is a textbook target for [`../quality/property-fuzz-testing-pattern.md`](/docs/pillars/quality/property-fuzz-testing-pattern): assert *distinct entry sets ⟹ distinct roots* and let a generator hunt the collision. Changing the tree construction changes the root format — for an append-only ledger, version the anchoring scheme or re-anchor from a known-good tip.
+
 ### Merkle anchoring (optional)
 
 For higher assurance:
@@ -138,6 +149,8 @@ When a DSAR (data deletion) request lands, the ledger is **not** automatically p
 - **Audit log includes raw secret values.** Defeats the vault. → Metadata is sanitised; never includes secret bodies.
 - **Mutable audit log.** Someone can edit a past entry. → Append-only at the storage layer; sign batches.
 - **Audit log without rotation of signing key.** Compromised signing key compromises all past entries' integrity. → Rotation cadence + key id per signature.
+- **Merkle root that doesn't uniquely bind its entries.** Last-node duplication (CVE-2012-2459) lets a different entry set forge the same root. → Domain-separate leaves vs nodes (RFC 6962); promote lone nodes; property-test distinct-inputs-distinct-roots.
+- **Verification trusts a key embedded in the data it's verifying.** An attacker who rewrites the ledger also rewrites the embedded key and re-signs. → Pin verification to a *separately trusted* key (key id match against a trusted set), fail-closed on mismatch.
 - **Audit log nobody verifies.** Tamper is undetectable until external audit. → Periodic verification job; alerts on mismatch.
 
 ### See also

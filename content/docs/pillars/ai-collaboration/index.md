@@ -63,3 +63,5 @@ How to make an agent productive in your repo on day one and durably good across 
 - `context-management-pattern.md`
 - `hallucination-reduction-pattern.md`
 - `human-in-the-loop-pattern.md`
+- `verify-first-pattern.md`
+- `honest-confidence-pattern.md`

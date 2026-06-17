@@ -37,6 +37,10 @@ Mode: **shrink-only baseline**.
 
 Why shrink-only: prevents adoption from blocking the whole repo on day one; prevents drift from making it worse.
 
+**Split new violations — never baseline them.** The baseline exists for code that predates the gate. A file *you* push over budget must be extracted, not added to the baseline. Baselining your own new violation is the technical-debt equivalent of `// eslint-disable` — it silences the gate without solving anything, and the next reader inherits the unreviewable file.
+
+**An over-budget file on the shared branch blocks everyone.** Because the gate fails on any non-baselined file over budget, a single oversized file merged into the main branch fails *every other contributor's* push until it's split — not just the author's. This makes "split, don't baseline" a courtesy to the whole team, and makes catching it in pre-push (below) worth the cost. If CI is ever bypassed and an over-budget file lands, the fix is to split it promptly, not to widen the budget or baseline it.
+
 Reference impl: [`../../scripts/check-file-size.example.mjs`](/docs/scripts). The baseline file lives at `.file-size-baseline.json` in the repo root.
 
 ### Extraction patterns
