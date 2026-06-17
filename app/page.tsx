@@ -21,6 +21,7 @@ import {
   Package,
   Blocks,
   Cpu,
+  Star,
 } from "lucide-react";
 import stats from "./stats.snapshot.json";
 import ecosystem from "@/ecosystem.json";
@@ -28,23 +29,10 @@ import { EcosystemLink } from "@/components/ecosystem-link";
 import { EcosystemStars } from "@/components/ecosystem-stars";
 import { EcosystemCrossRef } from "@/components/ecosystem-cross-ref";
 import { CopyPrompt } from "@/components/copy-prompt";
+import { AgentConvergence } from "@/components/agent-convergence";
 
 // Counts are derived from content by scripts/compute-stats.mjs (single source).
 const C = stats.counts;
-
-// The playbook is agent-agnostic — it lands as a bootstrap doc for whatever
-// agent you run. Listed in rough order of adoption; not an endorsement.
-const AGENTS = [
-  "Claude Code",
-  "Cursor",
-  "Windsurf",
-  "GitHub Copilot",
-  "OpenAI Codex",
-  "Gemini CLI",
-  "Aider",
-  "Cline",
-  "Zed",
-];
 
 // Ready-to-paste onboarding prompt — feeds any agent the whole playbook and
 // asks it to map the practices onto the user's actual repo. Kept tool-neutral.
@@ -60,6 +48,22 @@ const ONBOARDING_PROMPT = `You are onboarding to a shared engineering playbook f
 4. Draft (or update) the repo's bootstrap doc — CLAUDE.md, AGENTS.md, .cursor/rules, .windsurfrules, or .github/copilot-instructions.md as appropriate for the agent in use — using the playbook's template as the starting point.
 
 Do not change code yet. Output the audit and the plan first, then wait for my go-ahead.`;
+
+// Machine-readable endpoints — each rendered with its own copy button.
+const CURLS = [
+  {
+    note: "fetch raw markdown from any doc",
+    cmd: "curl playbook.agentskit.io/raw/pillars/security/rbac-pattern.md",
+  },
+  {
+    note: "one-shot bundle for RAG indexing",
+    cmd: "curl playbook.agentskit.io/llms-full.txt",
+  },
+  {
+    note: "zip everything for local indexing",
+    cmd: "curl -O playbook.agentskit.io/playbook-bundle.zip",
+  },
+];
 
 const PILLARS = [
   {
@@ -180,13 +184,6 @@ const FAILURE_MODES = [
   },
 ];
 
-const STATS = [
-  { label: "Pillars", value: String(C.pillars) },
-  { label: "Patterns", value: String(C.patterns) },
-  { label: "Gate scripts", value: String(C.gateScripts) },
-  { label: "SDLC phases", value: String(C.phases) },
-];
-
 export default function HomePage() {
   return (
     <main className="relative min-h-screen overflow-hidden">
@@ -201,8 +198,6 @@ export default function HomePage() {
       <WorksWith />
 
       <FailureModes />
-
-      <Stats />
 
       <Features />
 
@@ -533,25 +528,6 @@ function FailureModes() {
   );
 }
 
-function Stats() {
-  return (
-    <section className="relative z-10 mx-auto max-w-6xl border-t border-[color:var(--border)] px-6 py-12">
-      <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-        {STATS.map((s) => (
-          <div key={s.label} className="text-center">
-            <div className="text-4xl font-semibold tracking-tight text-accent-gradient">
-              {s.value}
-            </div>
-            <div className="mt-1 text-sm uppercase tracking-wider text-[color:var(--muted-foreground)]">
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Features() {
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
@@ -653,15 +629,23 @@ function AgentFriendly() {
               </li>
             </ul>
           </div>
-          <div className="min-w-0 overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-5 font-mono text-[12.5px] leading-relaxed text-[color:var(--muted-foreground)]">
-            <pre className="overflow-x-auto">{`# fetch raw markdown from any doc
-curl https://playbook.agentskit.io/raw/pillars/architecture/universal.md
-
-# one-shot bundle for RAG indexing
-curl https://playbook.agentskit.io/llms-full.txt
-
-# zip everything
-curl -O https://playbook.agentskit.io/playbook-bundle.zip`}</pre>
+          <div className="flex min-w-0 flex-col gap-3">
+            {CURLS.map((c) => (
+              <div
+                key={c.cmd}
+                className="min-w-0 rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-3.5"
+              >
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <span className="font-mono text-[11px] text-[color:var(--subtle-foreground)]">
+                    # {c.note}
+                  </span>
+                  <CopyPrompt text={c.cmd} label="Copy" className="shrink-0" />
+                </div>
+                <code className="block whitespace-pre-wrap [overflow-wrap:anywhere] font-mono text-[12.5px] leading-relaxed text-[color:var(--muted-foreground)]">
+                  {c.cmd}
+                </code>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -690,6 +674,15 @@ function CTASection() {
               Read the playbook
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
+            <EcosystemLink
+              href="https://github.com/AgentsKit-io/agents-playbook"
+              placement="cta"
+              event="community_clicked"
+              className="group inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
+            >
+              <Star className="h-4 w-4 text-[color:var(--warning)] transition group-hover:scale-110" aria-hidden />
+              Star on GitHub
+            </EcosystemLink>
             <Link
               href="/docs/matrix"
               className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
@@ -697,6 +690,18 @@ function CTASection() {
               See the matrix
             </Link>
           </div>
+          <p className="mx-auto mt-5 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
+            Free and open (CC-BY-4.0). If the playbook saved you a code review,{" "}
+            <EcosystemLink
+              href="https://github.com/AgentsKit-io/agents-playbook"
+              placement="cta"
+              event="community_clicked"
+              className="font-semibold text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current"
+            >
+              drop a star ↗
+            </EcosystemLink>{" "}
+            — it helps other teams find it.
+          </p>
           <p className="mx-auto mt-8 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
             Want the platform these practices run on?{" "}
             <EcosystemLink
@@ -724,24 +729,19 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 
 function WorksWith() {
   return (
-    <section className="relative z-10 mx-auto max-w-6xl px-6 pb-2 pt-2">
-      <div className="rounded-2xl border border-[color:var(--border)] glass px-6 py-5">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-[color:var(--muted-foreground)]">
-            <span className="font-medium text-[color:var(--foreground)]">Agent-agnostic.</span>{" "}
-            Drops in as the bootstrap doc for whatever agent you run.
-          </p>
-          <ul className="flex flex-wrap gap-2">
-            {AGENTS.map((a) => (
-              <li
-                key={a}
-                className="rounded-full border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1 text-xs text-[color:var(--muted-foreground)]"
-              >
-                {a}
-              </li>
-            ))}
-          </ul>
-        </div>
+    <section className="relative z-10 mx-auto max-w-6xl px-6 pb-10 pt-6">
+      <div className="text-center">
+        <SectionLabel>Agent-agnostic</SectionLabel>
+        <h2 className="mx-auto mt-3 max-w-2xl text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+          Whatever agent you run, it ships through the same playbook.
+        </h2>
+        <p className="mx-auto mt-3 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
+          Drops in as the bootstrap doc for any coding agent — rules, gates, and
+          prompts in, reviewable and shippable code out.
+        </p>
+      </div>
+      <div className="mt-10">
+        <AgentConvergence />
       </div>
     </section>
   );

@@ -127,6 +127,27 @@ html, body {
   border: 1px solid color-mix(in oklch, var(--foreground) 8%, transparent);
 }
 
+/* Flowing packets along the convergence arcs (agents → playbook → outcomes). */
+.ak-flow {
+  stroke-dasharray: 4 170;
+  animation: ak-flow 2.6s linear infinite;
+}
+.ak-flow-out {
+  stroke-dasharray: 4 150;
+  animation: ak-flow-out 2.4s linear infinite;
+}
+@keyframes ak-flow {
+  from { stroke-dashoffset: 174; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes ak-flow-out {
+  from { stroke-dashoffset: 154; }
+  to { stroke-dashoffset: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ak-flow, .ak-flow-out { animation: none; stroke-dasharray: none; }
+}
+
 /* ─── Docs readability: syntax highlight + inline code + emphasis ─────────
  * The site is permanently dark (forcedTheme), so pin shiki to its dark
  * tokens and give code/marks/links real contrast. */
