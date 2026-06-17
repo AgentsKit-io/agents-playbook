@@ -21,15 +21,49 @@ import {
   Package,
   Blocks,
   Cpu,
+  Star,
 } from "lucide-react";
 import stats from "./stats.snapshot.json";
 import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
 import { EcosystemStars } from "@/components/ecosystem-stars";
 import { EcosystemCrossRef } from "@/components/ecosystem-cross-ref";
+import { CopyPrompt } from "@/components/copy-prompt";
+import { AgentConvergence } from "@/components/agent-convergence";
 
 // Counts are derived from content by scripts/compute-stats.mjs (single source).
 const C = stats.counts;
+
+// Ready-to-paste onboarding prompt — feeds any agent the whole playbook and
+// asks it to map the practices onto the user's actual repo. Kept tool-neutral.
+const ONBOARDING_PROMPT = `You are onboarding to a shared engineering playbook for shipping production software with AI coding agents.
+
+1. Fetch and read the full playbook bundle: https://playbook.agentskit.io/llms-full.txt
+   (Site map: https://playbook.agentskit.io/llms.txt — fetch individual docs from the /raw/ paths if you can't load the bundle at once.)
+2. Then audit THIS repository against it:
+   - Which playbook practices already hold here?
+   - Which are missing or violated, ranked by risk (security > correctness > quality > governance > DX)?
+   - Which are not applicable to this stack, and why?
+3. Propose a short, prioritized adoption plan: the 5 highest-leverage changes for this repo, each with the playbook doc it comes from and a concrete first step.
+4. Draft (or update) the repo's bootstrap doc — CLAUDE.md, AGENTS.md, .cursor/rules, .windsurfrules, or .github/copilot-instructions.md as appropriate for the agent in use — using the playbook's template as the starting point.
+
+Do not change code yet. Output the audit and the plan first, then wait for my go-ahead.`;
+
+// Machine-readable endpoints — each rendered with its own copy button.
+const CURLS = [
+  {
+    note: "fetch raw markdown from any doc",
+    cmd: "curl playbook.agentskit.io/raw/pillars/security/rbac-pattern.md",
+  },
+  {
+    note: "one-shot bundle for RAG indexing",
+    cmd: "curl playbook.agentskit.io/llms-full.txt",
+  },
+  {
+    note: "zip everything for local indexing",
+    cmd: "curl -O playbook.agentskit.io/playbook-bundle.zip",
+  },
+];
 
 const PILLARS = [
   {
@@ -150,13 +184,6 @@ const FAILURE_MODES = [
   },
 ];
 
-const STATS = [
-  { label: "Pillars", value: String(C.pillars) },
-  { label: "Patterns", value: String(C.patterns) },
-  { label: "Gate scripts", value: String(C.gateScripts) },
-  { label: "SDLC phases", value: String(C.phases) },
-];
-
 export default function HomePage() {
   return (
     <main className="relative min-h-screen overflow-hidden">
@@ -168,15 +195,17 @@ export default function HomePage() {
 
       <Hero />
 
-      <FailureModes />
+      <WorksWith />
 
-      <Stats />
+      <FailureModes />
 
       <Features />
 
       <PillarShowcase />
 
       <AgentFriendly />
+
+      <TrainYourAgent />
 
       <EcosystemSection />
 
@@ -187,13 +216,27 @@ export default function HomePage() {
   );
 }
 
+function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 72 64" fill="none" className={className} aria-hidden>
+      <g stroke="#2997ff" strokeWidth="3" strokeLinecap="round">
+        <line x1="12" y1="52" x2="36" y2="12" />
+        <line x1="36" y1="12" x2="60" y2="52" />
+        <line x1="12" y1="52" x2="60" y2="52" />
+      </g>
+      <circle cx="36" cy="12" r="6" fill="#2997ff" />
+      <circle cx="12" cy="52" r="6" fill="#2997ff" />
+      <circle cx="60" cy="52" r="6" fill="#2997ff" />
+    </svg>
+  );
+}
+
 function SiteHeader() {
   return (
-    <header className="relative z-10 mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
+    <header className="sticky top-0 z-30 border-b border-[color:var(--border)] glass">
+      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3.5">
       <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-        <span className="inline-flex h-7 w-7 items-center justify-center rounded-md bg-accent-gradient text-white shadow-glow-purple">
-          <Sparkles className="h-4 w-4" aria-hidden />
-        </span>
+        <BrandMark className="h-6 w-6" />
         <span>Agents Playbook</span>
       </Link>
       <nav className="flex items-center gap-6 text-sm">
@@ -224,6 +267,7 @@ function SiteHeader() {
           GitHub
         </EcosystemLink>
       </nav>
+      </div>
     </header>
   );
 }
@@ -235,7 +279,7 @@ function Hero() {
         <div className="lg:col-span-7">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1 text-xs uppercase tracking-wider text-[color:var(--muted-foreground)]">
             <span className="h-1.5 w-1.5 rounded-full bg-accent-gradient" aria-hidden />
-            v0.1 · CC-BY-4.0
+            Works with any coding agent
           </div>
           <h1 className="text-balance text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
             Make AI agents ship code you&rsquo;d{" "}
@@ -262,10 +306,10 @@ function Hero() {
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
             </Link>
             <Link
-              href="/docs/templates/CLAUDE.md.template"
+              href="/docs/onboard-your-agent"
               className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
             >
-              Start from CLAUDE.md
+              Onboard your agent
             </Link>
           </div>
         </div>
@@ -282,15 +326,15 @@ function CodePreview() {
   return (
     <div className="relative">
       <div
-        className="absolute -inset-1 rounded-2xl bg-accent-gradient opacity-40 blur-xl"
+        className="absolute -inset-1 rounded-2xl bg-accent-gradient opacity-30 blur-2xl"
         aria-hidden
       />
-      <div className="relative overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-1)] shadow-2xl">
+      <div className="relative overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-1)] ring-glow">
         <div className="flex items-center gap-2 border-b border-[color:var(--border)] bg-[color:var(--surface-2)] px-4 py-2">
           <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--danger)] opacity-70" aria-hidden />
           <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--warning)] opacity-70" aria-hidden />
           <span className="h-2.5 w-2.5 rounded-full bg-[color:var(--success)] opacity-70" aria-hidden />
-          <span className="ml-3 text-xs text-[color:var(--subtle-foreground)] font-mono">CLAUDE.md</span>
+          <span className="ml-3 text-xs text-[color:var(--subtle-foreground)] font-mono">CLAUDE.md · AGENTS.md · .cursor/rules</span>
         </div>
         <pre className="overflow-x-auto p-5 text-[12.5px] leading-relaxed font-mono text-[color:var(--muted-foreground)]">
 {`# CLAUDE.md
@@ -484,25 +528,6 @@ function FailureModes() {
   );
 }
 
-function Stats() {
-  return (
-    <section className="relative z-10 mx-auto max-w-6xl border-t border-[color:var(--border)] px-6 py-12">
-      <div className="grid grid-cols-2 gap-8 sm:grid-cols-4">
-        {STATS.map((s) => (
-          <div key={s.label} className="text-center">
-            <div className="text-4xl font-semibold tracking-tight text-accent-gradient">
-              {s.value}
-            </div>
-            <div className="mt-1 text-sm uppercase tracking-wider text-[color:var(--muted-foreground)]">
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
 function Features() {
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
@@ -604,15 +629,23 @@ function AgentFriendly() {
               </li>
             </ul>
           </div>
-          <div className="min-w-0 overflow-hidden rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-5 font-mono text-[12.5px] leading-relaxed text-[color:var(--muted-foreground)]">
-            <pre className="overflow-x-auto">{`# fetch raw markdown from any doc
-curl https://playbook.agentskit.io/raw/pillars/architecture/universal.md
-
-# one-shot bundle for RAG indexing
-curl https://playbook.agentskit.io/llms-full.txt
-
-# zip everything
-curl -O https://playbook.agentskit.io/playbook-bundle.zip`}</pre>
+          <div className="flex min-w-0 flex-col gap-3">
+            {CURLS.map((c) => (
+              <div
+                key={c.cmd}
+                className="min-w-0 rounded-xl border border-[color:var(--border)] bg-[color:var(--background)] p-3.5"
+              >
+                <div className="mb-2 flex items-center justify-between gap-2">
+                  <span className="font-mono text-[11px] text-[color:var(--subtle-foreground)]">
+                    # {c.note}
+                  </span>
+                  <CopyPrompt text={c.cmd} label="Copy" className="shrink-0" />
+                </div>
+                <code className="block whitespace-pre-wrap [overflow-wrap:anywhere] font-mono text-[12.5px] leading-relaxed text-[color:var(--muted-foreground)]">
+                  {c.cmd}
+                </code>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -641,6 +674,15 @@ function CTASection() {
               Read the playbook
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
+            <EcosystemLink
+              href="https://github.com/AgentsKit-io/agents-playbook"
+              placement="cta"
+              event="community_clicked"
+              className="group inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
+            >
+              <Star className="h-4 w-4 text-[color:var(--warning)] transition group-hover:scale-110" aria-hidden />
+              Star on GitHub
+            </EcosystemLink>
             <Link
               href="/docs/matrix"
               className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
@@ -648,6 +690,18 @@ function CTASection() {
               See the matrix
             </Link>
           </div>
+          <p className="mx-auto mt-5 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
+            Free and open (CC-BY-4.0). If the playbook saved you a code review,{" "}
+            <EcosystemLink
+              href="https://github.com/AgentsKit-io/agents-playbook"
+              placement="cta"
+              event="community_clicked"
+              className="font-semibold text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current"
+            >
+              drop a star ↗
+            </EcosystemLink>{" "}
+            — it helps other teams find it.
+          </p>
           <p className="mx-auto mt-8 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
             Want the platform these practices run on?{" "}
             <EcosystemLink
@@ -670,6 +724,76 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
       <span className="h-px w-6 bg-accent-gradient" aria-hidden />
       {children}
     </div>
+  );
+}
+
+function WorksWith() {
+  return (
+    <section className="relative z-10 mx-auto max-w-6xl px-6 pb-10 pt-6">
+      <div className="text-center">
+        <SectionLabel>Agent-agnostic</SectionLabel>
+        <h2 className="mx-auto mt-3 max-w-2xl text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+          Whatever agent you run, it ships through the same playbook.
+        </h2>
+        <p className="mx-auto mt-3 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
+          Drops in as the bootstrap doc for any coding agent — rules, gates, and
+          prompts in, reviewable and shippable code out.
+        </p>
+      </div>
+      <div className="mt-10">
+        <AgentConvergence />
+      </div>
+    </section>
+  );
+}
+
+function TrainYourAgent() {
+  return (
+    <section id="train-your-agent" className="relative z-10 mx-auto max-w-6xl px-6 py-20">
+      <SectionLabel>Onboard in one paste</SectionLabel>
+      <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
+        Train your agent on the whole playbook.
+      </h2>
+      <p className="mt-4 max-w-2xl text-pretty text-[color:var(--muted-foreground)]">
+        Paste this into Claude Code, Cursor, Windsurf, Codex — any agent. It pulls
+        the entire playbook, audits your repo against it, and proposes a
+        prioritized adoption plan before touching a line of code.
+      </p>
+
+      <div className="mt-10 overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-1)] ring-glow">
+        <div className="flex items-center justify-between border-b border-[color:var(--border)] bg-[color:var(--surface-2)] px-5 py-3">
+          <span className="font-mono text-xs text-[color:var(--subtle-foreground)]">
+            onboarding prompt
+          </span>
+          <CopyPrompt text={ONBOARDING_PROMPT} />
+        </div>
+        <pre className="overflow-x-auto p-5 text-[12.5px] leading-relaxed font-mono text-[color:var(--muted-foreground)] whitespace-pre-wrap">
+          {ONBOARDING_PROMPT}
+        </pre>
+      </div>
+
+      <div className="mt-6 flex flex-wrap items-center gap-3">
+        <Link
+          href="/docs/onboard-your-agent"
+          className="group inline-flex items-center gap-2 rounded-md bg-accent-gradient px-5 py-2.5 text-sm font-semibold text-white shadow-glow-purple transition hover:bg-accent-gradient-hover"
+        >
+          Per-tool setup &amp; variants
+          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
+        </Link>
+        <Link
+          href="/llms-full.txt"
+          className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
+        >
+          <code className="font-mono text-[0.85em]">llms-full.txt</code>
+        </Link>
+        <Link
+          href="/llms.txt"
+          className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
+        >
+          <code className="font-mono text-[0.85em]">llms.txt</code>
+        </Link>
+      </div>
+    </section>
   );
 }
 

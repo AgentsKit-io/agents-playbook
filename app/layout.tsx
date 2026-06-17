@@ -43,6 +43,11 @@ export const metadata: Metadata = {
   keywords: [
     "AI coding agents",
     "Claude Code",
+    "Cursor",
+    "Windsurf",
+    "GitHub Copilot",
+    "OpenAI Codex",
+    "AGENTS.md",
     "playbook",
     "guardrails",
     "ADR",

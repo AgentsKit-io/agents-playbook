@@ -16,6 +16,7 @@ How to make an agent productive in your repo on day one and durably good across 
 | Concern | Universal principle | Concrete pattern |
 |---|---|---|
 | Bootstrap doc | One file an agent reads first, every session | `CLAUDE.md` (or `AGENTS.md`) at the repo root with non-negotiables + routing |
+| Agent compatibility | One playbook, every agent — the bootstrap doc is universal, only the filename differs | Canonical `AGENTS.md` + thin per-tool pointers (`.cursor/rules`, `.windsurfrules`, `copilot-instructions.md`) |
 | Routing table | Map "I want to change X" → "edit path Y" | `AGENTS.md` table; agents triage faster by group than by file |
 | Persistent memory | Lessons survive session ends | `MEMORY.md` (index) + `memory/*.md` (one fact per file) pattern |
 | Goal mode | Agent works toward a condition, not a turn count | Stop hook with goal condition; clears when the condition holds |
@@ -53,6 +54,7 @@ How to make an agent productive in your repo on day one and durably good across 
 
 - `universal.md`
 - `bootstrap-doc-pattern.md`
+- `agent-compatibility-pattern.md`
 - `memory-pattern.md`
 - `sub-agent-pattern.md`
 - `slash-commands-pattern.md`
