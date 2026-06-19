@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { RootProvider } from "fumadocs-ui/provider";
 import Script from "next/script";
 import { PostHogProvider } from "@/components/posthog-provider";
+import { AskWidget } from "@/components/ask-widget";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -96,6 +97,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             theme={{ defaultTheme: "dark", forcedTheme: "dark" }}
           >
             {children}
+            <AskWidget
+              corpus="playbook"
+              title="Ask the Playbook"
+              fabLabel="Ask Playbook"
+              placeholder="Ask about phases, pillars, gates..."
+              emptyState="Ask how to apply the Agents Playbook to your team, workflow, or AI coding-agent process."
+              accent="#8B5CF6"
+            />
           </RootProvider>
         </PostHogProvider>
       </body>
