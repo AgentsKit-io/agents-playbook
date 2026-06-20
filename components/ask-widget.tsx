@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 
 type ChatMessage = { role: "user" | "assistant"; content: string };
 
@@ -36,6 +36,40 @@ function decodeNdjson(buffer: string): { events: Array<{ type: string; delta?: s
     }
   });
   return { events, rest };
+}
+
+function LogoMark({ size = 16 }: { size?: number }) {
+  const height = Math.round((size * 64) / 72);
+  return (
+    <svg width={size} height={height} viewBox="0 0 72 64" fill="none" aria-hidden="true">
+      <line x1="12" y1="52" x2="36" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="36" y1="12" x2="60" y2="52" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <line x1="12" y1="52" x2="60" y2="52" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      <circle cx="36" cy="12" r="6" fill="currentColor" />
+      <circle cx="12" cy="52" r="6" fill="currentColor" />
+      <circle cx="60" cy="52" r="6" fill="currentColor" />
+    </svg>
+  );
+}
+
+function TextWithLinks({ content }: { content: string }) {
+  const pattern = /\[([^\]]+)\]\((https?:\/\/[^)\s]+|\/[^)\s]+)\)|(https?:\/\/[^\s)]+)/g;
+  const nodes: ReactNode[] = [];
+  let cursor = 0;
+  for (const match of content.matchAll(pattern)) {
+    const index = match.index ?? 0;
+    if (index > cursor) nodes.push(content.slice(cursor, index));
+    const label = match[1] || match[3] || "";
+    const href = match[2] || match[3] || "";
+    nodes.push(
+      <a key={`${href}-${index}`} href={href} target="_blank" rel="noreferrer">
+        {label}
+      </a>,
+    );
+    cursor = index + match[0].length;
+  }
+  if (cursor < content.length) nodes.push(content.slice(cursor));
+  return <>{nodes}</>;
 }
 
 export function AskWidget({
@@ -126,26 +160,88 @@ export function AskWidget({
 
   if (!open) {
     return (
-      <button className="ak-ask-fab" style={{ "--ask-accent": accent } as CSSProperties} onClick={() => setOpen(true)}>
-        {fabLabel}
-      </button>
+      <>
+        <button
+          className="ak-ask-fab"
+          style={{ "--ask-accent": accent } as CSSProperties}
+          aria-label={fabLabel}
+          onClick={() => setOpen(true)}
+        >
+          <LogoMark />
+          <span>{fabLabel}</span>
+        </button>
+        <style jsx>{`
+          .ak-ask-fab {
+            --ask-bg: var(--surface-1, #ffffff);
+            --ask-bg-elevated: var(--surface-2, #f6f8fb);
+            --ask-border: var(--border, #d8dee8);
+            --ask-text: var(--foreground, #10151f);
+            --ask-muted: var(--muted-foreground, #667085);
+            --ask-shadow: rgba(16, 24, 40, 0.14);
+            position: fixed;
+            right: 16px;
+            bottom: 16px;
+            z-index: 80;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid var(--ask-border);
+            border-radius: 999px;
+            background: var(--ask-bg);
+            color: var(--ask-text);
+            padding: 10px 16px;
+            box-shadow: 0 12px 32px var(--ask-shadow);
+            font-family: var(--font-mono), ui-monospace, monospace;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+          }
+          .ak-ask-fab:hover {
+            border-color: var(--ask-accent);
+            box-shadow: 0 16px 40px var(--ask-shadow), 0 0 28px color-mix(in srgb, var(--ask-accent) 24%, transparent);
+            transform: translateY(-1px);
+          }
+          :global(.dark) .ak-ask-fab {
+            --ask-bg: #0b1017;
+            --ask-bg-elevated: #151b24;
+            --ask-border: #2b3340;
+            --ask-text: #f2f5f8;
+            --ask-muted: #a9b2bf;
+            --ask-shadow: rgba(0, 0, 0, 0.34);
+          }
+          @media (prefers-color-scheme: dark) {
+            .ak-ask-fab {
+              --ask-bg: #0b1017;
+              --ask-bg-elevated: #151b24;
+              --ask-border: #2b3340;
+              --ask-text: #f2f5f8;
+              --ask-muted: #a9b2bf;
+              --ask-shadow: rgba(0, 0, 0, 0.34);
+            }
+          }
+        `}</style>
+      </>
     );
   }
 
   return (
     <section className="ak-ask-panel" style={{ "--ask-accent": accent } as CSSProperties} aria-label={title}>
       <header className="ak-ask-header">
-        <strong>{title}</strong>
+        <strong>
+          <LogoMark size={18} />
+          <span>{title}</span>
+        </strong>
         <div>
           <button onClick={() => setMessages([])}>clear</button>
-          <button onClick={() => setOpen(false)}>close</button>
+          <button aria-label="Close" onClick={() => setOpen(false)}>x</button>
         </div>
       </header>
       <div className="ak-ask-body">
         {messages.length === 0 ? <p className="ak-ask-empty">{emptyState}</p> : null}
         {messages.map((message, index) => (
           <div key={index} className={`ak-ask-message ${message.role}`}>
-            {message.content || (message.role === "assistant" && streaming ? "Searching..." : "")}
+            {message.content ? <TextWithLinks content={message.content} /> : message.role === "assistant" && streaming ? "Searching..." : ""}
           </div>
         ))}
         {error ? <p className="ak-ask-error">{error}</p> : null}
@@ -170,42 +266,74 @@ export function AskWidget({
       <style jsx>{`
         .ak-ask-fab,
         .ak-ask-panel {
+          --ask-bg: var(--surface-1, #ffffff);
+          --ask-bg-elevated: var(--surface-2, #f6f8fb);
+          --ask-bg-input: var(--surface-2, #f6f8fb);
+          --ask-border: var(--border, #d8dee8);
+          --ask-text: var(--foreground, #10151f);
+          --ask-muted: var(--muted-foreground, #667085);
+          --ask-danger: var(--danger, #b42318);
+          --ask-shadow: rgba(16, 24, 40, 0.14);
           position: fixed;
-          right: 18px;
+          right: 16px;
           z-index: 80;
           font-family: var(--font-mono), ui-monospace, monospace;
         }
         .ak-ask-fab {
-          bottom: 18px;
-          border: 1px solid color-mix(in srgb, var(--ask-accent) 48%, #2a3242);
+          bottom: 16px;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          border: 1px solid var(--ask-border);
           border-radius: 999px;
-          background: #10151f;
-          color: #f4f7fb;
-          padding: 10px 14px;
-          box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+          background: var(--ask-bg);
+          color: var(--ask-text);
+          padding: 10px 16px;
+          box-shadow: 0 12px 32px var(--ask-shadow);
+          font-size: 12px;
+          font-weight: 700;
+          cursor: pointer;
+          transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+        }
+        .ak-ask-fab:hover {
+          border-color: var(--ask-accent);
+          box-shadow: 0 16px 40px rgba(0, 0, 0, 0.44), 0 0 28px color-mix(in srgb, var(--ask-accent) 24%, transparent);
+          transform: translateY(-1px);
         }
         .ak-ask-panel {
-          bottom: 18px;
+          bottom: 16px;
           display: flex;
-          width: min(430px, calc(100vw - 24px));
-          height: min(620px, calc(100vh - 36px));
+          width: min(440px, calc(100vw - 32px));
+          height: min(620px, calc(100vh - 32px));
           flex-direction: column;
           overflow: hidden;
-          border: 1px solid #273143;
-          border-radius: 14px;
-          background: #0c1018;
-          color: #eef3f8;
-          box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+          border: 1px solid var(--ask-border);
+          border-radius: 12px;
+          background: var(--ask-bg);
+          color: var(--ask-text);
+          box-shadow: 0 24px 70px var(--ask-shadow);
         }
         .ak-ask-header,
         .ak-ask-footer {
-          border-color: #273143;
+          border-color: var(--ask-border);
           padding: 10px;
         }
         .ak-ask-header {
           display: flex;
+          align-items: center;
           justify-content: space-between;
-          border-bottom: 1px solid #273143;
+          border-bottom: 1px solid var(--ask-border);
+          background: linear-gradient(135deg, var(--ask-bg-elevated), var(--ask-bg));
+        }
+        .ak-ask-header strong {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          color: var(--ask-muted);
+          font-size: 12px;
+          font-weight: 500;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
         }
         .ak-ask-header button,
         .ak-ask-footer button,
@@ -224,17 +352,22 @@ export function AskWidget({
         }
         .ak-ask-empty,
         .ak-ask-error {
-          color: #98a6b8;
+          color: var(--ask-muted);
           font-size: 13px;
         }
         .ak-ask-error {
-          color: #ff7b72;
+          color: var(--ask-danger);
         }
         .ak-ask-message {
           margin: 0 0 10px;
           white-space: pre-wrap;
           font-size: 13px;
           line-height: 1.55;
+        }
+        .ak-ask-message a {
+          color: #77b7ff;
+          text-decoration: underline;
+          text-underline-offset: 3px;
         }
         .ak-ask-message.user {
           margin-left: auto;
@@ -247,17 +380,41 @@ export function AskWidget({
           display: grid;
           grid-template-columns: 1fr auto;
           gap: 8px;
-          border-top: 1px solid #273143;
+          border-top: 1px solid var(--ask-border);
         }
         .ak-ask-footer textarea {
           resize: none;
-          border: 1px solid #273143;
+          border: 1px solid var(--ask-border);
           border-radius: 10px;
-          background: #111824;
-          color: #eef3f8;
+          background: var(--ask-bg-input);
+          color: var(--ask-text);
           padding: 8px;
           font: inherit;
           font-size: 12px;
+        }
+        :global(.dark) .ak-ask-fab,
+        :global(.dark) .ak-ask-panel {
+          --ask-bg: #0b1017;
+          --ask-bg-elevated: #141a22;
+          --ask-bg-input: #151b24;
+          --ask-border: #2b3340;
+          --ask-text: #f2f5f8;
+          --ask-muted: #a9b2bf;
+          --ask-danger: #ff9a94;
+          --ask-shadow: rgba(0, 0, 0, 0.52);
+        }
+        @media (prefers-color-scheme: dark) {
+          .ak-ask-fab,
+          .ak-ask-panel {
+            --ask-bg: #0b1017;
+            --ask-bg-elevated: #141a22;
+            --ask-bg-input: #151b24;
+            --ask-border: #2b3340;
+            --ask-text: #f2f5f8;
+            --ask-muted: #a9b2bf;
+            --ask-danger: #ff9a94;
+            --ask-shadow: rgba(0, 0, 0, 0.52);
+          }
         }
       `}</style>
     </section>
