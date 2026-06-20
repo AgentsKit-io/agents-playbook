@@ -1,0 +1,47 @@
+
+---
+type: Playbook Pattern
+title: 'Force Equal-Height Columns Structurally, Not by Tuning Text'
+description: 'When parallel columns must align to the same height, enforce it with layout primitives (full-height containers plus flex/grid distribution) instead of hand-tuning content length.'
+---
+
+# Force Equal-Height Columns Structurally, Not by Tuning Text
+
+## TL;DR (human)
+
+When two or more columns must end at the same height, make the layout enforce it: give the items a full-height container and let flex or grid distribute the space. Never pad or trim the shorter column's text until it "looks" equal. Content-length tuning is non-deterministic — it holds at one viewport width and re-breaks at the next, turning every layout into an endless review loop.
+
+## For agents
+
+### Enforce height with layout primitives
+
+Make each column fill its track and let the container own the alignment:
+
+- Give columns a full-height container (e.g. `height: 100%` / `h-full`).
+- Use a flex or grid parent so siblings share a common cross-axis height by default.
+- Let an inner element absorb the slack (`flex: 1` / `flex-1`) so footers, buttons, or CTAs pin to the same baseline regardless of body length.
+
+The alignment then holds for any content and any width, because the browser computes it — you don't.
+
+### Don't tune content to fake alignment
+
+Do not add filler words, manual line breaks, or extra padding to the shorter column to match the taller one. This couples visual correctness to exact string lengths, which change with font, locale, and translation. It works only at the width you eyeballed and silently breaks everywhere else.
+
+### Why structural beats manual
+
+- **Deterministic:** layout math gives the same result on every screen size; tuned text does not.
+- **Robust to content change:** copy edits, dynamic data, and i18n no longer threaten the layout.
+- **No review treadmill:** you stop re-checking the same alignment at each breakpoint.
+
+### Common failure modes
+
+- Padding or trimming the shorter column's text to "balance" heights — re-breaks at other widths.
+- Setting a fixed pixel height to force equality — clips overflow or leaves dead space when content varies.
+- Aligning items individually instead of letting the shared container control height.
+- Forgetting `height: 100%` on the column, so `flex: 1` on the inner element has no full height to expand into.
+
+### See also
+
+- Flexbox and grid alignment fundamentals (cross-axis stretch, `flex-grow`).
+- Responsive layout patterns that avoid fixed dimensions.
+
