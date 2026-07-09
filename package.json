@@ -13,7 +13,10 @@
     "start": "next start",
     "postinstall": "fumadocs-mdx",
     "build:bundle": "node scripts/build-bundle.mjs",
-    "lint": "next lint"
+    "lint": "next lint",
+    "docs:bridge:index": "ak-docs index",
+    "docs:bridge:gate": "ak-docs gate run",
+    "docs:bridge:query": "ak-docs query"
   },
   "dependencies": {
     "fumadocs-core": "15.6.5",
@@ -26,6 +29,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@agentskit/doc-bridge": "link:/Users/rebecabraun/workspace/AgentsKit-io/doc-bridge",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22.10.0",

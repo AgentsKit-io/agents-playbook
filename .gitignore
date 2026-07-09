@@ -26,3 +26,6 @@ public/playbook-bundle.zip
 .idea/
 .vscode/
 .vercel
+
+# doc-bridge generated
+.doc-bridge/

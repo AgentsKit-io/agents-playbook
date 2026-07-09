@@ -1,0 +1,907 @@
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "agents-playbook"
+  },
+  "corpus": {
+    "agent": {
+      "root": "content/docs",
+      "index": "content/docs/index.mdx",
+      "include": [
+        "**/*.{md,mdx}"
+      ],
+      "exclude": [
+        "**/meta.json",
+        "**/node_modules/**"
+      ],
+      "okf": {
+        "requireType": true
+      }
+    },
+    "human": {
+      "plugin": "fumadocs",
+      "options": {
+        "contentDir": "content/docs",
+        "urlPrefix": "/docs",
+        "metaFile": "meta.json"
+      }
+    }
+  },
+  "routing": {
+    "options": {
+      "intents": [
+        {
+          "id": "find-pattern",
+          "title": "Find a playbook pattern by pillar or name",
+          "paths": [
+            "content/docs/pillars",
+            "content/docs/matrix.md"
+          ]
+        },
+        {
+          "id": "onboard-agent",
+          "title": "Onboard a coding agent to this playbook",
+          "paths": [
+            "content/docs/onboard-your-agent.md",
+            "content/docs/getting-started.mdx"
+          ]
+        }
+      ],
+      "changes": [
+        {
+          "id": "new-pattern",
+          "title": "Add or revise a pattern under pillars/",
+          "startHere": "content/docs/pillars"
+        }
+      ],
+      "ownership": {
+        "agent-compatibility-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/agent-compatibility-pattern.md",
+          "purpose": "Playbook pattern: agent-compatibility-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/agent-compatibility-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/agent-compatibility-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "bootstrap-doc-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/bootstrap-doc-pattern.md",
+          "purpose": "Playbook pattern: bootstrap-doc-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/bootstrap-doc-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/bootstrap-doc-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "concurrent-agent-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/concurrent-agent-pattern.md",
+          "purpose": "Playbook pattern: concurrent-agent-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/concurrent-agent-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/concurrent-agent-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "context-management-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/context-management-pattern.md",
+          "purpose": "Playbook pattern: context-management-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/context-management-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/context-management-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "hallucination-reduction-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/hallucination-reduction-pattern.md",
+          "purpose": "Playbook pattern: hallucination-reduction-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/hallucination-reduction-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/hallucination-reduction-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "honest-confidence-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/honest-confidence-pattern.md",
+          "purpose": "Playbook pattern: honest-confidence-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/honest-confidence-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/honest-confidence-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "human-in-the-loop-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/human-in-the-loop-pattern.md",
+          "purpose": "Playbook pattern: human-in-the-loop-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/human-in-the-loop-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/human-in-the-loop-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "memory-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/memory-pattern.md",
+          "purpose": "Playbook pattern: memory-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/memory-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/memory-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "open-knowledge-format-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/open-knowledge-format-pattern.md",
+          "purpose": "Playbook pattern: open-knowledge-format-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/open-knowledge-format-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/open-knowledge-format-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "prompt-versioning-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/prompt-versioning-pattern.md",
+          "purpose": "Playbook pattern: prompt-versioning-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/prompt-versioning-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/prompt-versioning-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "self-describe-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/self-describe-pattern.md",
+          "purpose": "Playbook pattern: self-describe-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/self-describe-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/self-describe-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "slash-commands-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/slash-commands-pattern.md",
+          "purpose": "Playbook pattern: slash-commands-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/slash-commands-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/slash-commands-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "sub-agent-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/sub-agent-pattern.md",
+          "purpose": "Playbook pattern: sub-agent-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/sub-agent-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/sub-agent-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "tool-design-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/tool-design-pattern.md",
+          "purpose": "Playbook pattern: tool-design-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/tool-design-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/tool-design-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "verify-first-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/verify-first-pattern.md",
+          "purpose": "Playbook pattern: verify-first-pattern",
+          "agentDoc": "content/docs/pillars/ai-collaboration/verify-first-pattern.md",
+          "humanDoc": "/docs/pillars/ai-collaboration/verify-first-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "adr-pattern": {
+          "path": "content/docs/pillars/architecture/adr-pattern.md",
+          "purpose": "Playbook pattern: adr-pattern",
+          "agentDoc": "content/docs/pillars/architecture/adr-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/adr-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "anti-overengineering": {
+          "path": "content/docs/pillars/architecture/anti-overengineering.md",
+          "purpose": "Playbook pattern: anti-overengineering",
+          "agentDoc": "content/docs/pillars/architecture/anti-overengineering.md",
+          "humanDoc": "/docs/pillars/architecture/anti-overengineering",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "api-gateway-pattern": {
+          "path": "content/docs/pillars/architecture/api-gateway-pattern.md",
+          "purpose": "Playbook pattern: api-gateway-pattern",
+          "agentDoc": "content/docs/pillars/architecture/api-gateway-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/api-gateway-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "api-versioning-pattern": {
+          "path": "content/docs/pillars/architecture/api-versioning-pattern.md",
+          "purpose": "Playbook pattern: api-versioning-pattern",
+          "agentDoc": "content/docs/pillars/architecture/api-versioning-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/api-versioning-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "caching-cdn-pattern": {
+          "path": "content/docs/pillars/architecture/caching-cdn-pattern.md",
+          "purpose": "Playbook pattern: caching-cdn-pattern",
+          "agentDoc": "content/docs/pillars/architecture/caching-cdn-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/caching-cdn-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "contracts-zod-pattern": {
+          "path": "content/docs/pillars/architecture/contracts-zod-pattern.md",
+          "purpose": "Playbook pattern: contracts-zod-pattern",
+          "agentDoc": "content/docs/pillars/architecture/contracts-zod-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/contracts-zod-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "distributed-data-pattern": {
+          "path": "content/docs/pillars/architecture/distributed-data-pattern.md",
+          "purpose": "Playbook pattern: distributed-data-pattern",
+          "agentDoc": "content/docs/pillars/architecture/distributed-data-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/distributed-data-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "error-hierarchy": {
+          "path": "content/docs/pillars/architecture/error-hierarchy.md",
+          "purpose": "Playbook pattern: error-hierarchy",
+          "agentDoc": "content/docs/pillars/architecture/error-hierarchy.md",
+          "humanDoc": "/docs/pillars/architecture/error-hierarchy",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "event-streaming-pattern": {
+          "path": "content/docs/pillars/architecture/event-streaming-pattern.md",
+          "purpose": "Playbook pattern: event-streaming-pattern",
+          "agentDoc": "content/docs/pillars/architecture/event-streaming-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/event-streaming-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "feature-flags-pattern": {
+          "path": "content/docs/pillars/architecture/feature-flags-pattern.md",
+          "purpose": "Playbook pattern: feature-flags-pattern",
+          "agentDoc": "content/docs/pillars/architecture/feature-flags-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/feature-flags-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "file-size-budget": {
+          "path": "content/docs/pillars/architecture/file-size-budget.md",
+          "purpose": "Playbook pattern: file-size-budget",
+          "agentDoc": "content/docs/pillars/architecture/file-size-budget.md",
+          "humanDoc": "/docs/pillars/architecture/file-size-budget",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "iac-pattern": {
+          "path": "content/docs/pillars/architecture/iac-pattern.md",
+          "purpose": "Playbook pattern: iac-pattern",
+          "agentDoc": "content/docs/pillars/architecture/iac-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/iac-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "multi-region-pattern": {
+          "path": "content/docs/pillars/architecture/multi-region-pattern.md",
+          "purpose": "Playbook pattern: multi-region-pattern",
+          "agentDoc": "content/docs/pillars/architecture/multi-region-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/multi-region-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "offline-first-sync-pattern": {
+          "path": "content/docs/pillars/architecture/offline-first-sync-pattern.md",
+          "purpose": "Playbook pattern: offline-first-sync-pattern",
+          "agentDoc": "content/docs/pillars/architecture/offline-first-sync-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/offline-first-sync-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "platform-engineering-idp-pattern": {
+          "path": "content/docs/pillars/architecture/platform-engineering-idp-pattern.md",
+          "purpose": "Playbook pattern: platform-engineering-idp-pattern",
+          "agentDoc": "content/docs/pillars/architecture/platform-engineering-idp-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/platform-engineering-idp-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "rfc-pattern": {
+          "path": "content/docs/pillars/architecture/rfc-pattern.md",
+          "purpose": "Playbook pattern: rfc-pattern",
+          "agentDoc": "content/docs/pillars/architecture/rfc-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/rfc-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "service-mesh-pattern": {
+          "path": "content/docs/pillars/architecture/service-mesh-pattern.md",
+          "purpose": "Playbook pattern: service-mesh-pattern",
+          "agentDoc": "content/docs/pillars/architecture/service-mesh-pattern.md",
+          "humanDoc": "/docs/pillars/architecture/service-mesh-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "ts-concrete": {
+          "path": "content/docs/pillars/architecture/ts-concrete.md",
+          "purpose": "Playbook pattern: ts-concrete",
+          "agentDoc": "content/docs/pillars/architecture/ts-concrete.md",
+          "humanDoc": "/docs/pillars/architecture/ts-concrete",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "merge-rules-pattern": {
+          "path": "content/docs/pillars/governance/merge-rules-pattern.md",
+          "purpose": "Playbook pattern: merge-rules-pattern",
+          "agentDoc": "content/docs/pillars/governance/merge-rules-pattern.md",
+          "humanDoc": "/docs/pillars/governance/merge-rules-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "phased-pr-pattern": {
+          "path": "content/docs/pillars/governance/phased-pr-pattern.md",
+          "purpose": "Playbook pattern: phased-pr-pattern",
+          "agentDoc": "content/docs/pillars/governance/phased-pr-pattern.md",
+          "humanDoc": "/docs/pillars/governance/phased-pr-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "pr-intent-pattern": {
+          "path": "content/docs/pillars/governance/pr-intent-pattern.md",
+          "purpose": "Playbook pattern: pr-intent-pattern",
+          "agentDoc": "content/docs/pillars/governance/pr-intent-pattern.md",
+          "humanDoc": "/docs/pillars/governance/pr-intent-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "tombstone-pattern": {
+          "path": "content/docs/pillars/governance/tombstone-pattern.md",
+          "purpose": "Playbook pattern: tombstone-pattern",
+          "agentDoc": "content/docs/pillars/governance/tombstone-pattern.md",
+          "humanDoc": "/docs/pillars/governance/tombstone-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "adversarial-bug-hunt-pattern": {
+          "path": "content/docs/pillars/quality/adversarial-bug-hunt-pattern.md",
+          "purpose": "Playbook pattern: adversarial-bug-hunt-pattern",
+          "agentDoc": "content/docs/pillars/quality/adversarial-bug-hunt-pattern.md",
+          "humanDoc": "/docs/pillars/quality/adversarial-bug-hunt-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "agent-eval-framework-pattern": {
+          "path": "content/docs/pillars/quality/agent-eval-framework-pattern.md",
+          "purpose": "Playbook pattern: agent-eval-framework-pattern",
+          "agentDoc": "content/docs/pillars/quality/agent-eval-framework-pattern.md",
+          "humanDoc": "/docs/pillars/quality/agent-eval-framework-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "alerting-runbooks-pattern": {
+          "path": "content/docs/pillars/quality/alerting-runbooks-pattern.md",
+          "purpose": "Playbook pattern: alerting-runbooks-pattern",
+          "agentDoc": "content/docs/pillars/quality/alerting-runbooks-pattern.md",
+          "humanDoc": "/docs/pillars/quality/alerting-runbooks-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "chaos-engineering-pattern": {
+          "path": "content/docs/pillars/quality/chaos-engineering-pattern.md",
+          "purpose": "Playbook pattern: chaos-engineering-pattern",
+          "agentDoc": "content/docs/pillars/quality/chaos-engineering-pattern.md",
+          "humanDoc": "/docs/pillars/quality/chaos-engineering-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "ci-cd-pipeline-pattern": {
+          "path": "content/docs/pillars/quality/ci-cd-pipeline-pattern.md",
+          "purpose": "Playbook pattern: ci-cd-pipeline-pattern",
+          "agentDoc": "content/docs/pillars/quality/ci-cd-pipeline-pattern.md",
+          "humanDoc": "/docs/pillars/quality/ci-cd-pipeline-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "contract-testing-pattern": {
+          "path": "content/docs/pillars/quality/contract-testing-pattern.md",
+          "purpose": "Playbook pattern: contract-testing-pattern",
+          "agentDoc": "content/docs/pillars/quality/contract-testing-pattern.md",
+          "humanDoc": "/docs/pillars/quality/contract-testing-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "cost-optimization-pattern": {
+          "path": "content/docs/pillars/quality/cost-optimization-pattern.md",
+          "purpose": "Playbook pattern: cost-optimization-pattern",
+          "agentDoc": "content/docs/pillars/quality/cost-optimization-pattern.md",
+          "humanDoc": "/docs/pillars/quality/cost-optimization-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "fail-loud-defaults-pattern": {
+          "path": "content/docs/pillars/quality/fail-loud-defaults-pattern.md",
+          "purpose": "Playbook pattern: fail-loud-defaults-pattern",
+          "agentDoc": "content/docs/pillars/quality/fail-loud-defaults-pattern.md",
+          "humanDoc": "/docs/pillars/quality/fail-loud-defaults-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "mutation-testing-pattern": {
+          "path": "content/docs/pillars/quality/mutation-testing-pattern.md",
+          "purpose": "Playbook pattern: mutation-testing-pattern",
+          "agentDoc": "content/docs/pillars/quality/mutation-testing-pattern.md",
+          "humanDoc": "/docs/pillars/quality/mutation-testing-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "observability-pattern": {
+          "path": "content/docs/pillars/quality/observability-pattern.md",
+          "purpose": "Playbook pattern: observability-pattern",
+          "agentDoc": "content/docs/pillars/quality/observability-pattern.md",
+          "humanDoc": "/docs/pillars/quality/observability-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "performance-budgets-pattern": {
+          "path": "content/docs/pillars/quality/performance-budgets-pattern.md",
+          "purpose": "Playbook pattern: performance-budgets-pattern",
+          "agentDoc": "content/docs/pillars/quality/performance-budgets-pattern.md",
+          "humanDoc": "/docs/pillars/quality/performance-budgets-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "pre-push-pattern": {
+          "path": "content/docs/pillars/quality/pre-push-pattern.md",
+          "purpose": "Playbook pattern: pre-push-pattern",
+          "agentDoc": "content/docs/pillars/quality/pre-push-pattern.md",
+          "humanDoc": "/docs/pillars/quality/pre-push-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "product-analytics-experimentation-pattern": {
+          "path": "content/docs/pillars/quality/product-analytics-experimentation-pattern.md",
+          "purpose": "Playbook pattern: product-analytics-experimentation-pattern",
+          "agentDoc": "content/docs/pillars/quality/product-analytics-experimentation-pattern.md",
+          "humanDoc": "/docs/pillars/quality/product-analytics-experimentation-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "property-fuzz-testing-pattern": {
+          "path": "content/docs/pillars/quality/property-fuzz-testing-pattern.md",
+          "purpose": "Playbook pattern: property-fuzz-testing-pattern",
+          "agentDoc": "content/docs/pillars/quality/property-fuzz-testing-pattern.md",
+          "humanDoc": "/docs/pillars/quality/property-fuzz-testing-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "quality-gates-pattern": {
+          "path": "content/docs/pillars/quality/quality-gates-pattern.md",
+          "purpose": "Playbook pattern: quality-gates-pattern",
+          "agentDoc": "content/docs/pillars/quality/quality-gates-pattern.md",
+          "humanDoc": "/docs/pillars/quality/quality-gates-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "sanity-pattern": {
+          "path": "content/docs/pillars/quality/sanity-pattern.md",
+          "purpose": "Playbook pattern: sanity-pattern",
+          "agentDoc": "content/docs/pillars/quality/sanity-pattern.md",
+          "humanDoc": "/docs/pillars/quality/sanity-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "test-pyramid": {
+          "path": "content/docs/pillars/quality/test-pyramid.md",
+          "purpose": "Playbook pattern: test-pyramid",
+          "agentDoc": "content/docs/pillars/quality/test-pyramid.md",
+          "humanDoc": "/docs/pillars/quality/test-pyramid",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "ai-llm-safety-pattern": {
+          "path": "content/docs/pillars/security/ai-llm-safety-pattern.md",
+          "purpose": "Playbook pattern: ai-llm-safety-pattern",
+          "agentDoc": "content/docs/pillars/security/ai-llm-safety-pattern.md",
+          "humanDoc": "/docs/pillars/security/ai-llm-safety-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "audit-ledger-pattern": {
+          "path": "content/docs/pillars/security/audit-ledger-pattern.md",
+          "purpose": "Playbook pattern: audit-ledger-pattern",
+          "agentDoc": "content/docs/pillars/security/audit-ledger-pattern.md",
+          "humanDoc": "/docs/pillars/security/audit-ledger-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "compliance-framework-pattern": {
+          "path": "content/docs/pillars/security/compliance-framework-pattern.md",
+          "purpose": "Playbook pattern: compliance-framework-pattern",
+          "agentDoc": "content/docs/pillars/security/compliance-framework-pattern.md",
+          "humanDoc": "/docs/pillars/security/compliance-framework-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "container-k8s-security-pattern": {
+          "path": "content/docs/pillars/security/container-k8s-security-pattern.md",
+          "purpose": "Playbook pattern: container-k8s-security-pattern",
+          "agentDoc": "content/docs/pillars/security/container-k8s-security-pattern.md",
+          "humanDoc": "/docs/pillars/security/container-k8s-security-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "data-classification-pattern": {
+          "path": "content/docs/pillars/security/data-classification-pattern.md",
+          "purpose": "Playbook pattern: data-classification-pattern",
+          "agentDoc": "content/docs/pillars/security/data-classification-pattern.md",
+          "humanDoc": "/docs/pillars/security/data-classification-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "dependency-hygiene-pattern": {
+          "path": "content/docs/pillars/security/dependency-hygiene-pattern.md",
+          "purpose": "Playbook pattern: dependency-hygiene-pattern",
+          "agentDoc": "content/docs/pillars/security/dependency-hygiene-pattern.md",
+          "humanDoc": "/docs/pillars/security/dependency-hygiene-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "egress-firewall-pattern": {
+          "path": "content/docs/pillars/security/egress-firewall-pattern.md",
+          "purpose": "Playbook pattern: egress-firewall-pattern",
+          "agentDoc": "content/docs/pillars/security/egress-firewall-pattern.md",
+          "humanDoc": "/docs/pillars/security/egress-firewall-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "governance-posture-pattern": {
+          "path": "content/docs/pillars/security/governance-posture-pattern.md",
+          "purpose": "Playbook pattern: governance-posture-pattern",
+          "agentDoc": "content/docs/pillars/security/governance-posture-pattern.md",
+          "humanDoc": "/docs/pillars/security/governance-posture-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "multi-tenant-isolation-pattern": {
+          "path": "content/docs/pillars/security/multi-tenant-isolation-pattern.md",
+          "purpose": "Playbook pattern: multi-tenant-isolation-pattern",
+          "agentDoc": "content/docs/pillars/security/multi-tenant-isolation-pattern.md",
+          "humanDoc": "/docs/pillars/security/multi-tenant-isolation-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "on-call-rotation-pattern": {
+          "path": "content/docs/pillars/security/on-call-rotation-pattern.md",
+          "purpose": "Playbook pattern: on-call-rotation-pattern",
+          "agentDoc": "content/docs/pillars/security/on-call-rotation-pattern.md",
+          "humanDoc": "/docs/pillars/security/on-call-rotation-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "rate-limiting-ddos-pattern": {
+          "path": "content/docs/pillars/security/rate-limiting-ddos-pattern.md",
+          "purpose": "Playbook pattern: rate-limiting-ddos-pattern",
+          "agentDoc": "content/docs/pillars/security/rate-limiting-ddos-pattern.md",
+          "humanDoc": "/docs/pillars/security/rate-limiting-ddos-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "rbac-pattern": {
+          "path": "content/docs/pillars/security/rbac-pattern.md",
+          "purpose": "Playbook pattern: rbac-pattern",
+          "agentDoc": "content/docs/pillars/security/rbac-pattern.md",
+          "humanDoc": "/docs/pillars/security/rbac-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "secrets-leak-postmortem-playbook": {
+          "path": "content/docs/pillars/security/secrets-leak-postmortem-playbook.md",
+          "purpose": "Playbook pattern: secrets-leak-postmortem-playbook",
+          "agentDoc": "content/docs/pillars/security/secrets-leak-postmortem-playbook.md",
+          "humanDoc": "/docs/pillars/security/secrets-leak-postmortem-playbook",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "secrets-mgmt-deep-pattern": {
+          "path": "content/docs/pillars/security/secrets-mgmt-deep-pattern.md",
+          "purpose": "Playbook pattern: secrets-mgmt-deep-pattern",
+          "agentDoc": "content/docs/pillars/security/secrets-mgmt-deep-pattern.md",
+          "humanDoc": "/docs/pillars/security/secrets-mgmt-deep-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "session-mgmt-pattern": {
+          "path": "content/docs/pillars/security/session-mgmt-pattern.md",
+          "purpose": "Playbook pattern: session-mgmt-pattern",
+          "agentDoc": "content/docs/pillars/security/session-mgmt-pattern.md",
+          "humanDoc": "/docs/pillars/security/session-mgmt-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "threat-model-template": {
+          "path": "content/docs/pillars/security/threat-model-template.md",
+          "purpose": "Playbook pattern: threat-model-template",
+          "agentDoc": "content/docs/pillars/security/threat-model-template.md",
+          "humanDoc": "/docs/pillars/security/threat-model-template",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "vault-pattern": {
+          "path": "content/docs/pillars/security/vault-pattern.md",
+          "purpose": "Playbook pattern: vault-pattern",
+          "agentDoc": "content/docs/pillars/security/vault-pattern.md",
+          "humanDoc": "/docs/pillars/security/vault-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "vulnerability-mgmt-pattern": {
+          "path": "content/docs/pillars/security/vulnerability-mgmt-pattern.md",
+          "purpose": "Playbook pattern: vulnerability-mgmt-pattern",
+          "agentDoc": "content/docs/pillars/security/vulnerability-mgmt-pattern.md",
+          "humanDoc": "/docs/pillars/security/vulnerability-mgmt-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "a11y-checklist": {
+          "path": "content/docs/pillars/ui-ux/a11y-checklist.md",
+          "purpose": "Playbook pattern: a11y-checklist",
+          "agentDoc": "content/docs/pillars/ui-ux/a11y-checklist.md",
+          "humanDoc": "/docs/pillars/ui-ux/a11y-checklist",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "accessibility-deep-pattern": {
+          "path": "content/docs/pillars/ui-ux/accessibility-deep-pattern.md",
+          "purpose": "Playbook pattern: accessibility-deep-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/accessibility-deep-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/accessibility-deep-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "design-system-governance-pattern": {
+          "path": "content/docs/pillars/ui-ux/design-system-governance-pattern.md",
+          "purpose": "Playbook pattern: design-system-governance-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/design-system-governance-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/design-system-governance-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "design-tokens-pattern": {
+          "path": "content/docs/pillars/ui-ux/design-tokens-pattern.md",
+          "purpose": "Playbook pattern: design-tokens-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/design-tokens-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/design-tokens-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "empty-states-pattern": {
+          "path": "content/docs/pillars/ui-ux/empty-states-pattern.md",
+          "purpose": "Playbook pattern: empty-states-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/empty-states-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/empty-states-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "i18n-deep-pattern": {
+          "path": "content/docs/pillars/ui-ux/i18n-deep-pattern.md",
+          "purpose": "Playbook pattern: i18n-deep-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/i18n-deep-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/i18n-deep-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "intl-pattern": {
+          "path": "content/docs/pillars/ui-ux/intl-pattern.md",
+          "purpose": "Playbook pattern: intl-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/intl-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/intl-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "primitives-pattern": {
+          "path": "content/docs/pillars/ui-ux/primitives-pattern.md",
+          "purpose": "Playbook pattern: primitives-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/primitives-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/primitives-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        },
+        "whitelabel-pattern": {
+          "path": "content/docs/pillars/ui-ux/whitelabel-pattern.md",
+          "purpose": "Playbook pattern: whitelabel-pattern",
+          "agentDoc": "content/docs/pillars/ui-ux/whitelabel-pattern.md",
+          "humanDoc": "/docs/pillars/ui-ux/whitelabel-pattern",
+          "checks": [
+            "pnpm run check:okf-type",
+            "pnpm run build"
+          ]
+        }
+      }
+    }
+  },
+  "index": {
+    "outFile": ".doc-bridge/index.json",
+    "llmsTxt": {
+      "enabled": true,
+      "outFile": ".doc-bridge/llms.txt"
+    },
+    "capabilities": {
+      "enabled": true,
+      "outFile": ".doc-bridge/capabilities.json"
+    }
+  },
+  "gates": {
+    "preset": "minimal",
+    "include": [
+      "index-freshness",
+      "okf-type"
+    ],
+    "exclude": [
+      "docs-style"
+    ]
+  },
+  "surfaces": {
+    "cli": {
+      "bin": "ak-docs",
+      "defaultFormat": "json"
+    },
+    "mcp": {
+      "enabled": true,
+      "tools": [
+        "doc.search",
+        "doc.get",
+        "gate.status",
+        "handoff.resolve"
+      ]
+    }
+  }
+}
