@@ -33,6 +33,9 @@ importers:
         specifier: ^19.0.0
         version: 19.2.7(react@19.2.7)
     devDependencies:
+      '@agentskit/doc-bridge':
+        specifier: link:/Users/rebecabraun/workspace/AgentsKit-io/doc-bridge
+        version: link:../../AgentsKit-io/doc-bridge
       '@tailwindcss/postcss':
         specifier: ^4.0.0
         version: 4.3.0
