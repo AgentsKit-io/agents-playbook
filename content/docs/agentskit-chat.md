@@ -1,4 +1,5 @@
 ---
+type: Guide
 title: AgentsKit Chat dogfood
 description: How Ask Playbook composes the public AgentsKit Chat framework without recreating chat state.
 ---
@@ -16,7 +17,7 @@ regeneration.
 
 1. Pin the stable npm packages `@agentskit/chat`,
    `@agentskit/chat-protocol`, and `@agentskit/chat-react` at exact version
-   `0.1.0`. Their published manifests resolve the internal graph without host
+   `0.2.0`. Their published manifests resolve the internal graph without host
    overrides.
 2. Build one `defineChat` definition with the public standard component
    manifest, an AgentsKit `AdapterFactory`, and `ChatMemory`.

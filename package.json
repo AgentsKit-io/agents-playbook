@@ -19,9 +19,9 @@
     "docs:bridge:gate": "ak-docs gate run"
   },
   "dependencies": {
-    "@agentskit/chat": "0.1.0",
-    "@agentskit/chat-protocol": "0.1.0",
-    "@agentskit/chat-react": "0.1.0",
+    "@agentskit/chat": "0.2.0",
+    "@agentskit/chat-protocol": "0.2.0",
+    "@agentskit/chat-react": "0.2.0",
     "@agentskit/core": "^1.12.3",
     "@agentskit/react": "^0.7.4",
     "fumadocs-core": "15.6.5",
