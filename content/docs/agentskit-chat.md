@@ -14,10 +14,10 @@ regeneration.
 
 ## Host recipe
 
-1. Pin the immutable `v0.1.0-alpha.1` release assets for
-   `@agentskit/chat`, `@agentskit/chat-protocol`, and
-   `@agentskit/chat-react`, including pnpm overrides for the two internal graph
-   roots.
+1. Pin the stable npm packages `@agentskit/chat`,
+   `@agentskit/chat-protocol`, and `@agentskit/chat-react` at exact version
+   `0.1.0`. Their published manifests resolve the internal graph without host
+   overrides.
 2. Build one `defineChat` definition with the public standard component
    manifest, an AgentsKit `AdapterFactory`, and `ChatMemory`.
 3. Project the Ask service's validated NDJSON records into ordered text and the

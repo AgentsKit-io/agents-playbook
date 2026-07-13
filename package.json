@@ -19,9 +19,9 @@
     "docs:bridge:gate": "ak-docs gate run"
   },
   "dependencies": {
-    "@agentskit/chat": "https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz",
-    "@agentskit/chat-protocol": "https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz",
-    "@agentskit/chat-react": "https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-react-0.1.0-alpha.2.tgz",
+    "@agentskit/chat": "0.1.0",
+    "@agentskit/chat-protocol": "0.1.0",
+    "@agentskit/chat-react": "0.1.0",
     "@agentskit/core": "^1.12.3",
     "@agentskit/react": "^0.7.4",
     "fumadocs-core": "15.6.5",
@@ -47,11 +47,5 @@
   "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": "22.x"
-  },
-  "pnpm": {
-    "overrides": {
-      "@agentskit/chat": "https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz",
-      "@agentskit/chat-protocol": "https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz"
-    }
   }
 }
