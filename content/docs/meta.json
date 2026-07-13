@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "getting-started",
+    "agentskit-chat",
     "onboard-your-agent",
     "matrix",
     "---Pillars---",
