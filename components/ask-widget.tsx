@@ -4,6 +4,7 @@ import {
   Children,
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -17,6 +18,8 @@ import { ChatContainer } from "@agentskit/react";
 import {
   SourceListPropsSchema,
   StandardComponentCatalog,
+  createAskAdapter,
+  createAskSessionMemory,
   defineChat,
   defineComponentManifest,
 } from "@agentskit/chat";
@@ -26,7 +29,6 @@ import {
   type AgentChatSlots,
   type StandardComponentProps,
 } from "@agentskit/chat-react";
-import { createAskAdapter, createAskSessionMemory } from "./ask-chat/ask-adapter";
 
 interface AskWidgetProps {
   readonly endpoint?: string;
@@ -161,6 +163,9 @@ export function AskWidget({
 }: AskWidgetProps) {
   const [open, setOpen] = useState(false);
   const chatRef = useRef<ChatReturn | null>(null);
+  const fabRef = useRef<HTMLButtonElement>(null);
+  const panelRef = useRef<HTMLElement>(null);
+  const openedOnceRef = useRef(false);
   const storageKey = `ak:ask-thread-v3:${corpus}`;
   const definition = useMemo(() => defineChat({
     id: `ask-${corpus}`,
@@ -173,9 +178,22 @@ export function AskWidget({
   const runtime = useMemo<AskRuntime>(() => ({ chat: chatRef, emptyState }), [emptyState]);
   const style = { "--ask-accent": accent } as CSSProperties;
 
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      if (open) {
+        openedOnceRef.current = true;
+        panelRef.current?.querySelector<HTMLTextAreaElement>("textarea")?.focus();
+      } else if (openedOnceRef.current) {
+        openedOnceRef.current = false;
+        fabRef.current?.focus();
+      }
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [open]);
+
   if (!open) return (
     <>
-      <button type="button" className="ak-ask-fab" style={style} aria-label={fabLabel} onClick={() => setOpen(true)}>
+      <button ref={fabRef} type="button" className="ak-ask-fab" style={style} aria-label={fabLabel} onClick={() => setOpen(true)}>
         <LogoMark /><span>{fabLabel}</span>
       </button>
       <AskStyles />
@@ -184,7 +202,12 @@ export function AskWidget({
 
   return (
     <AskRuntimeContext.Provider value={runtime}>
-      <section className="ak-ask-panel" style={style} aria-label={title}>
+      <section ref={panelRef} className="ak-ask-panel" style={style} role="dialog" aria-label={title} onKeyDown={(event) => {
+        if (event.key === "Escape") {
+          event.stopPropagation();
+          setOpen(false);
+        }
+      }}>
         <header className="ak-ask-header">
           <strong><LogoMark size={18} /><span>{title}</span></strong>
           <div>
