@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "project": { "name": "agents-playbook" },
+  "corpus": {
+    "agent": {
+      "root": "content/docs",
+      "index": "content/docs/index.mdx",
+      "include": ["**/*.md", "**/*.mdx"],
+      "exclude": ["**/node_modules/**"]
+    },
+    "human": {
+      "plugin": "fumadocs",
+      "options": { "contentDir": "content/docs", "urlPrefix": "/docs" }
+    }
+  },
+  "routing": {
+    "options": {
+      "ownership": {
+        "playbook": {
+          "path": "content/docs",
+          "purpose": "Playbook corpus, Next/Fumadocs host, and public documentation",
+          "agentDoc": "content/docs/index.mdx",
+          "humanDoc": "/docs",
+          "checks": ["pnpm lint", "pnpm test", "pnpm build", "pnpm docs:bridge:gate"]
+        },
+        "agentskit-chat": {
+          "path": "components/ask-chat",
+          "purpose": "Thin host integration for Ask Playbook over public AgentsKit Chat APIs",
+          "agentDoc": "content/docs/agentskit-chat.md",
+          "humanDoc": "/docs/agentskit-chat",
+          "checks": ["pnpm lint", "pnpm test", "pnpm build", "pnpm docs:bridge:gate"]
+        }
+      }
+    }
+  },
+  "index": {
+    "outFile": ".doc-bridge/index.json",
+    "llmsTxt": { "enabled": true, "outFile": ".doc-bridge/llms.txt", "preamble": "Agents Playbook documents production practices for software built with AI coding agents." },
+    "capabilities": { "enabled": true, "outFile": ".doc-bridge/capabilities.json" }
+  },
+  "gates": { "preset": "standard" },
+  "surfaces": {
+    "cli": { "bin": "ak-docs", "defaultFormat": "json" },
+    "mcp": { "enabled": true, "transport": "stdio" }
+  }
+}

@@ -4,10 +4,29 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  '@agentskit/chat': https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz
+  '@agentskit/chat-protocol': https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz
+
 importers:
 
   .:
     dependencies:
+      '@agentskit/chat':
+        specifier: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz
+        version: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)
+      '@agentskit/chat-protocol':
+        specifier: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz
+        version: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)
+      '@agentskit/chat-react':
+        specifier: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-react-0.1.0-alpha.2.tgz
+        version: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-react-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
+      '@agentskit/core':
+        specifier: ^1.12.3
+        version: 1.12.3
+      '@agentskit/react':
+        specifier: ^0.7.4
+        version: 0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
       fumadocs-core:
         specifier: 15.6.5
         version: 15.6.5(@types/react@19.2.17)(next@15.5.19(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
@@ -32,7 +51,13 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.2.7(react@19.2.7)
+      zod:
+        specifier: ^4.4.3
+        version: 4.4.3
     devDependencies:
+      '@agentskit/doc-bridge':
+        specifier: 1.0.2
+        version: 1.0.2(@agentskit/core@1.12.3)(@agentskit/memory@0.11.0)(react@19.2.7)
       '@tailwindcss/postcss':
         specifier: ^4.0.0
         version: 4.3.0
@@ -56,6 +81,62 @@ importers:
         version: 5.9.3
 
 packages:
+
+  '@agentskit/chat-protocol@https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz':
+    resolution: {tarball: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz}
+    version: 0.1.0-alpha.2
+    peerDependencies:
+      '@agentskit/core': ^1.12.1
+
+  '@agentskit/chat-react@https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-react-0.1.0-alpha.2.tgz':
+    resolution: {tarball: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-react-0.1.0-alpha.2.tgz}
+    version: 0.1.0-alpha.2
+    peerDependencies:
+      '@agentskit/react': ^0.7.1
+      react: '>=18'
+
+  '@agentskit/chat@https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz':
+    resolution: {tarball: https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz}
+    version: 0.1.0-alpha.2
+    peerDependencies:
+      '@agentskit/core': ^1.12.3
+
+  '@agentskit/core@1.12.3':
+    resolution: {integrity: sha512-fNHrzpEoCaWHDK2fwk/BIhcPseN6zCdy3N0WjzdelnmRuh7zy9/Ki0zcukesK5ZAAmXdz2+Dj8FI7AM32JyOKw==}
+
+  '@agentskit/doc-bridge@1.0.2':
+    resolution: {integrity: sha512-kE5oKKvmFOZliMm9Rfr8N+G1RWaBoDabOK3Vqjz7IJLHyTSyYnHxiE08O6HYKudtAbyV8x0o2R/IEsWNohyLVw==}
+    engines: {node: '>=22'}
+    hasBin: true
+    peerDependencies:
+      '@agentskit/adapters': '>=0.12.0 <1'
+      '@agentskit/core': '>=1.0.0 <2'
+      '@agentskit/ink': '>=0.8.0 <1'
+      '@agentskit/memory': '>=0.9.0 <1'
+      '@agentskit/rag': '>=0.3.0 <1'
+      react: '>=18.0.0'
+    peerDependenciesMeta:
+      '@agentskit/adapters':
+        optional: true
+      '@agentskit/core':
+        optional: true
+      '@agentskit/ink':
+        optional: true
+      '@agentskit/memory':
+        optional: true
+      '@agentskit/rag':
+        optional: true
+      react:
+        optional: true
+
+  '@agentskit/memory@0.11.0':
+    resolution: {integrity: sha512-sTAVVmaHIKLUYH3nFfbjmWwm3zfQ1Ljy1ct4mVhOlrvqfequ+sekrA+dzStX4PrQEtGob3MEy3qZlwwA+oxsqw==}
+
+  '@agentskit/react@0.7.4':
+    resolution: {integrity: sha512-puGYPDczHwPwGAkdr58Nbt67lkmAQWVujDeuas5NzGOfAGB2/oQMUU1L8qN6qODvQbEhsKOFQYYBUMXnS7Utvg==}
+    peerDependencies:
+      react: '>=18.0.0'
+      react-dom: '>=18.0.0'
 
   '@alloc/quick-lru@5.2.0':
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
@@ -1926,10 +2007,54 @@ packages:
   zod@3.25.76:
     resolution: {integrity: sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==}
 
+  zod@4.4.3:
+    resolution: {integrity: sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ==}
+
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
 
 snapshots:
+
+  '@agentskit/chat-protocol@https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)':
+    dependencies:
+      '@agentskit/core': 1.12.3
+      zod: 4.4.3
+
+  '@agentskit/chat-react@https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-react-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      '@agentskit/chat': https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)
+      '@agentskit/chat-protocol': https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)
+      '@agentskit/react': 0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react: 19.2.7
+    transitivePeerDependencies:
+      - '@agentskit/core'
+
+  '@agentskit/chat@https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)':
+    dependencies:
+      '@agentskit/chat-protocol': https://github.com/AgentsKit-io/agentskit-chat/releases/download/v0.1.0-alpha.2/agentskit-chat-protocol-0.1.0-alpha.2.tgz(@agentskit/core@1.12.3)
+      '@agentskit/core': 1.12.3
+      '@agentskit/memory': 0.11.0
+      zod: 4.4.3
+
+  '@agentskit/core@1.12.3': {}
+
+  '@agentskit/doc-bridge@1.0.2(@agentskit/core@1.12.3)(@agentskit/memory@0.11.0)(react@19.2.7)':
+    dependencies:
+      zod: 3.25.76
+    optionalDependencies:
+      '@agentskit/core': 1.12.3
+      '@agentskit/memory': 0.11.0
+      react: 19.2.7
+
+  '@agentskit/memory@0.11.0':
+    dependencies:
+      '@agentskit/core': 1.12.3
+
+  '@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)':
+    dependencies:
+      '@agentskit/core': 1.12.3
+      react: 19.2.7
+      react-dom: 19.2.7(react@19.2.7)
 
   '@alloc/quick-lru@5.2.0': {}
 
@@ -4069,5 +4194,7 @@ snapshots:
       isexe: 2.0.0
 
   zod@3.25.76: {}
+
+  zod@4.4.3: {}
 
   zwitch@2.0.4: {}
