@@ -8,8 +8,8 @@ import { track } from "@/lib/posthog-client";
  * Combined GitHub star count across the whole AgentsKit ecosystem (framework +
  * registry + playbook + AKOS). Any single repo is still young, but the family
  * total is a credible social-proof number — so we sum them and show one figure
- * in the header. Counts fetched client-side from the public GitHub API; on any
- * failure the link still works with no number.
+ * in the header. The same-origin route caches and bounds GitHub requests so a
+ * public API limit never leaks browser errors into the experience.
  */
 export function EcosystemStars({
   repos,
@@ -22,18 +22,13 @@ export function EcosystemStars({
 
   useEffect(() => {
     let active = true;
-    Promise.all(
-      repos.map((r) =>
-        fetch(`https://api.github.com/repos/${r}`)
-          .then((res) => (res.ok ? res.json() : null))
-          .then((d) => (d && typeof d.stargazers_count === "number" ? d.stargazers_count : 0))
-          .catch(() => 0),
-      ),
-    ).then((counts) => {
+    fetch("/api/ecosystem-stars")
+      .then((response) => response.ok ? response.json() as Promise<unknown> : null)
+      .then((value) => {
       if (!active) return;
-      const sum = counts.reduce((a, b) => a + b, 0);
-      if (sum > 0) setTotal(sum);
-    });
+      if (value && typeof value === "object" && "total" in value && typeof value.total === "number" && value.total > 0) setTotal(value.total);
+    })
+      .catch(() => undefined);
     return () => {
       active = false;
     };

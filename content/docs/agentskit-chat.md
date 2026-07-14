@@ -21,15 +21,19 @@ regeneration.
    overrides.
 2. Build one `defineChat` definition with the public standard component
    manifest, an AgentsKit `AdapterFactory`, and `ChatMemory`.
-3. Project the Ask service's validated NDJSON records into ordered text and the
+3. Load and verify the Playbook-owned deterministic artifact on first intent;
+   exact patterns, prompts, templates, scripts, phases, and navigation answer
+   locally before the fallback adapter is considered.
+4. Project the Ask service's validated NDJSON records into ordered text and the
    standard `source-list` component. Unknown records stay inert.
-4. Render `AgentChat` and use native React slots only for Playbook branding,
+5. Render `AgentChat` and use native React slots only for Playbook branding,
    linked prose, the composer, loading copy, and citations.
-5. Keep `corpus="playbook"` and `NEXT_PUBLIC_ASK_ENDPOINT` in this host.
+6. Keep `corpus="playbook"` and `NEXT_PUBLIC_ASK_ENDPOINT` in this host.
 
-The implementation lives in `components/ask-widget.tsx` and
-`components/ask-chat/ask-adapter.ts`. Do not add a reducer, stream loop, message
-store, cancellation state, or a second component protocol to the host.
+The host shell lives in `components/ask-widget.tsx`; deterministic composition
+lives in `lib/discovery.ts`; artifact generation lives in
+`scripts/lib/playbook-discovery.mjs`. Do not add a reducer, stream loop, message
+store, cancellation state, matcher, or second component protocol to the host.
 
 ## Migration and parity evidence
 
@@ -41,6 +45,8 @@ after the AgentsKit Chat integration covered:
 - cancellation through the public adapter source;
 - migration from `ak:ask-thread-v2:playbook` to canonical serialized memory;
 - safe, bounded citations and ordered text + `source-list` rendering;
+- verified local answers, ambiguity choices, semantic escalation, artifact
+  failure/retry, and truthful local/backend provenance;
 - empty/loading states, close, clear, send, stop, retry, edit, and regenerate;
 - production build plus responsive evidence at 375, 768, 1280, and 1440 px,
   with no sub-44 px panel targets.

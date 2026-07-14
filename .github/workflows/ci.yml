@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check:okf-type
+      - run: pnpm check:doc-bridge-config
+      - run: pnpm docs:bridge:index
+      - run: git diff --exit-code -- doc-bridge.config.json .doc-bridge
+      - run: pnpm docs:bridge:gate
+      - run: pnpm check:readme-standard
+      - run: pnpm test
+      - run: pnpm lint
+      - run: pnpm build
+      - run: test -s public/playbook-bundle.zip
+      - run: git diff --exit-code -- app/stats.snapshot.json public/deterministic
+
+  browser:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9.15.4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm test:e2e

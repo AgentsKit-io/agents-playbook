@@ -1,0 +1,3804 @@
+{
+  "protocol": "agentskit.chat.knowledge",
+  "version": 1,
+  "artifactId": "agents-playbook",
+  "siteId": "playbook",
+  "contentHash": "sha256:310cf8e105d755616ee92e0ad0d512af42eb995343b2038a8df421f5e297f2cd",
+  "generatedAt": "2026-07-14T00:00:00.000Z",
+  "entries": [
+    {
+      "id": "doc:agentskit-chat",
+      "kind": "document",
+      "label": "AgentsKit Chat dogfood",
+      "match": {
+        "type": "exact",
+        "values": [
+          "agentskit-chat",
+          "agentskit-chat.md",
+          "AgentsKit Chat dogfood",
+          "playbook AgentsKit Chat dogfood"
+        ]
+      },
+      "answer": {
+        "markdown": "## AgentsKit Chat dogfood\n\nHow Ask Playbook composes the public AgentsKit Chat framework without recreating chat state.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/agentskit-chat)\n[Read raw Markdown](https://playbook.agentskit.io/raw/agentskit-chat.md)",
+        "citations": [
+          {
+            "id": "doc:agentskit-chat",
+            "title": "AgentsKit Chat dogfood",
+            "href": "https://playbook.agentskit.io/docs/agentskit-chat"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:contributing",
+      "kind": "document",
+      "label": "Contribute a production-earned pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "contributing",
+          "contributing.mdx",
+          "Contribute a production-earned pattern",
+          "Contribute a production-earned",
+          "playbook Contribute a production-earned pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Contribute a production-earned pattern\n\nTurn a reproducible engineering lesson into a reviewable Playbook pattern, prompt, template, or gate.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/contributing)\n[Read raw Markdown](https://playbook.agentskit.io/raw/contributing.mdx)",
+        "citations": [
+          {
+            "id": "doc:contributing",
+            "title": "Contribute a production-earned pattern",
+            "href": "https://playbook.agentskit.io/docs/contributing"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:discovery",
+      "kind": "document",
+      "label": "Local-first pattern discovery",
+      "match": {
+        "type": "exact",
+        "values": [
+          "discovery",
+          "discovery.mdx",
+          "Local-first pattern discovery",
+          "playbook Local-first pattern discovery"
+        ]
+      },
+      "answer": {
+        "markdown": "## Local-first pattern discovery\n\nSee which Playbook questions answer instantly in the browser and when repository-specific synthesis uses the backend.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/discovery)\n[Read raw Markdown](https://playbook.agentskit.io/raw/discovery.mdx)",
+        "citations": [
+          {
+            "id": "doc:discovery",
+            "title": "Local-first pattern discovery",
+            "href": "https://playbook.agentskit.io/docs/discovery"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:getting-started",
+      "kind": "document",
+      "label": "Getting started",
+      "match": {
+        "type": "exact",
+        "values": [
+          "getting-started",
+          "getting-started.mdx",
+          "Getting started",
+          "playbook Getting started"
+        ]
+      },
+      "answer": {
+        "markdown": "## Getting started\n\nAdopt the playbook in your project in under an hour.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/getting-started)\n[Read raw Markdown](https://playbook.agentskit.io/raw/getting-started.mdx)",
+        "citations": [
+          {
+            "id": "doc:getting-started",
+            "title": "Getting started",
+            "href": "https://playbook.agentskit.io/docs/getting-started"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:glossary",
+      "kind": "document",
+      "label": "Glossary",
+      "match": {
+        "type": "exact",
+        "values": [
+          "glossary",
+          "glossary.md",
+          "playbook Glossary"
+        ]
+      },
+      "answer": {
+        "markdown": "## Glossary\n\nShort definitions for the terms used across this playbook.\n\nType: **Reference**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/glossary)\n[Read raw Markdown](https://playbook.agentskit.io/raw/glossary.md)",
+        "citations": [
+          {
+            "id": "doc:glossary",
+            "title": "Glossary",
+            "href": "https://playbook.agentskit.io/docs/glossary"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:index",
+      "kind": "document",
+      "label": "Welcome",
+      "match": {
+        "type": "exact",
+        "values": [
+          "index.mdx",
+          "Welcome",
+          "playbook Welcome"
+        ]
+      },
+      "answer": {
+        "markdown": "## Welcome\n\nThe gold-standard playbook for shipping production software with AI coding agents.\n\nType: **Index**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs)\n[Read raw Markdown](https://playbook.agentskit.io/raw/index.mdx)",
+        "citations": [
+          {
+            "id": "doc:index",
+            "title": "Welcome",
+            "href": "https://playbook.agentskit.io/docs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:matrix",
+      "kind": "document",
+      "label": "The matrix — pillars × phases",
+      "match": {
+        "type": "exact",
+        "values": [
+          "matrix",
+          "matrix.md",
+          "The matrix — pillars × phases",
+          "playbook The matrix — pillars × phases"
+        ]
+      },
+      "answer": {
+        "markdown": "## The matrix — pillars × phases\n\nThis is the master content map. Each cell points to the practices that apply when pillar meets SDLC phase.\n\nType: **Reference**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/matrix)\n[Read raw Markdown](https://playbook.agentskit.io/raw/matrix.md)",
+        "citations": [
+          {
+            "id": "doc:matrix",
+            "title": "The matrix — pillars × phases",
+            "href": "https://playbook.agentskit.io/docs/matrix"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:onboard-your-agent",
+      "kind": "document",
+      "label": "Onboard Your Agent",
+      "match": {
+        "type": "exact",
+        "values": [
+          "onboard-your-agent",
+          "onboard-your-agent.md",
+          "Onboard Your Agent",
+          "playbook Onboard Your Agent"
+        ]
+      },
+      "answer": {
+        "markdown": "## Onboard Your Agent\n\nOne paste that feeds any coding agent the whole playbook and has it audit your repo — Claude Code, Cursor, Windsurf, Codex, Copilot, and more.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/onboard-your-agent)\n[Read raw Markdown](https://playbook.agentskit.io/raw/onboard-your-agent.md)",
+        "citations": [
+          {
+            "id": "doc:onboard-your-agent",
+            "title": "Onboard Your Agent",
+            "href": "https://playbook.agentskit.io/docs/onboard-your-agent"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:phases:01-discover",
+      "kind": "document",
+      "label": "Phase 01 — Discover",
+      "match": {
+        "type": "exact",
+        "values": [
+          "phases/01-discover",
+          "phases/01-discover/index.md",
+          "01-discover",
+          "Phase 01 — Discover",
+          "playbook Phase 01 — Discover"
+        ]
+      },
+      "answer": {
+        "markdown": "## Phase 01 — Discover\n\nDefine what you are building, who consumes it, and what success looks like — before agents touch the codebase.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/01-discover)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/01-discover/index.md)",
+        "citations": [
+          {
+            "id": "doc:phases:01-discover",
+            "title": "Phase 01 — Discover",
+            "href": "https://playbook.agentskit.io/docs/phases/01-discover"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:phases:02-design",
+      "kind": "document",
+      "label": "Phase 02 — Design",
+      "match": {
+        "type": "exact",
+        "values": [
+          "phases/02-design",
+          "phases/02-design/index.md",
+          "02-design",
+          "Phase 02 — Design",
+          "playbook Phase 02 — Design"
+        ]
+      },
+      "answer": {
+        "markdown": "## Phase 02 — Design\n\nTurn the discover brief into ADRs, RFCs, and a contract package skeleton the build phase can compose against.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/02-design)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/02-design/index.md)",
+        "citations": [
+          {
+            "id": "doc:phases:02-design",
+            "title": "Phase 02 — Design",
+            "href": "https://playbook.agentskit.io/docs/phases/02-design"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:phases:03-build",
+      "kind": "document",
+      "label": "Phase 03 — Build",
+      "match": {
+        "type": "exact",
+        "values": [
+          "phases/03-build",
+          "phases/03-build/index.md",
+          "03-build",
+          "Phase 03 — Build",
+          "playbook Phase 03 — Build"
+        ]
+      },
+      "answer": {
+        "markdown": "## Phase 03 — Build\n\nWhere most of the agent-augmented work happens. Discipline shifts from ''writing code'' to ''stating intent, then verifying output against it''.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/03-build)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/03-build/index.md)",
+        "citations": [
+          {
+            "id": "doc:phases:03-build",
+            "title": "Phase 03 — Build",
+            "href": "https://playbook.agentskit.io/docs/phases/03-build"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:phases:04-test",
+      "kind": "document",
+      "label": "Phase 04 — Test",
+      "match": {
+        "type": "exact",
+        "values": [
+          "phases/04-test",
+          "phases/04-test/index.md",
+          "04-test",
+          "Phase 04 — Test",
+          "playbook Phase 04 — Test"
+        ]
+      },
+      "answer": {
+        "markdown": "## Phase 04 — Test\n\nHow ''tests pass'' stops being a feeling and starts being a contract.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/04-test)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/04-test/index.md)",
+        "citations": [
+          {
+            "id": "doc:phases:04-test",
+            "title": "Phase 04 — Test",
+            "href": "https://playbook.agentskit.io/docs/phases/04-test"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:phases:05-ship",
+      "kind": "document",
+      "label": "Phase 05 — Ship",
+      "match": {
+        "type": "exact",
+        "values": [
+          "phases/05-ship",
+          "phases/05-ship/index.md",
+          "05-ship",
+          "Phase 05 — Ship",
+          "playbook Phase 05 — Ship"
+        ]
+      },
+      "answer": {
+        "markdown": "## Phase 05 — Ship\n\nHow to turn a green main into a release without surprising consumers.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/05-ship)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/05-ship/index.md)",
+        "citations": [
+          {
+            "id": "doc:phases:05-ship",
+            "title": "Phase 05 — Ship",
+            "href": "https://playbook.agentskit.io/docs/phases/05-ship"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:phases:06-operate",
+      "kind": "document",
+      "label": "Phase 06 — Operate",
+      "match": {
+        "type": "exact",
+        "values": [
+          "phases/06-operate",
+          "phases/06-operate/index.md",
+          "06-operate",
+          "Phase 06 — Operate",
+          "playbook Phase 06 — Operate"
+        ]
+      },
+      "answer": {
+        "markdown": "## Phase 06 — Operate\n\nWhat ''running it'' looks like after agents have shipped the first release.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/06-operate)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/06-operate/index.md)",
+        "citations": [
+          {
+            "id": "doc:phases:06-operate",
+            "title": "Phase 06 — Operate",
+            "href": "https://playbook.agentskit.io/docs/phases/06-operate"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:agent-compatibility-pattern",
+      "kind": "document",
+      "label": "Agent Compatibility Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/agent-compatibility-pattern",
+          "pillars/ai-collaboration/agent-compatibility-pattern.md",
+          "agent-compatibility-pattern",
+          "Agent Compatibility Pattern",
+          "Agent Compatibility",
+          "playbook Agent Compatibility Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Agent Compatibility Pattern\n\nOne playbook, every agent — how to map the bootstrap-doc convention onto Claude Code, Cursor, Windsurf, Copilot, Codex, and the rest.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/agent-compatibility-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/agent-compatibility-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:agent-compatibility-pattern",
+            "title": "Agent Compatibility Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/agent-compatibility-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:bootstrap-doc-pattern",
+      "kind": "document",
+      "label": "Bootstrap Doc Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/bootstrap-doc-pattern",
+          "pillars/ai-collaboration/bootstrap-doc-pattern.md",
+          "bootstrap-doc-pattern",
+          "Bootstrap Doc Pattern",
+          "Bootstrap Doc",
+          "playbook Bootstrap Doc Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Bootstrap Doc Pattern\n\nThe file an agent reads first, every session. Two files together: one for non-negotiables, one for routing.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/bootstrap-doc-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/bootstrap-doc-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:bootstrap-doc-pattern",
+            "title": "Bootstrap Doc Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/bootstrap-doc-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:concurrent-agent-pattern",
+      "kind": "document",
+      "label": "Concurrent Agent Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/concurrent-agent-pattern",
+          "pillars/ai-collaboration/concurrent-agent-pattern.md",
+          "concurrent-agent-pattern",
+          "Concurrent Agent Pattern",
+          "Concurrent Agent",
+          "playbook Concurrent Agent Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Concurrent Agent Pattern\n\nHow to survive — and benefit from — multiple agents working in the same repo at the same time.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/concurrent-agent-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/concurrent-agent-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:concurrent-agent-pattern",
+            "title": "Concurrent Agent Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/concurrent-agent-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:context-management-pattern",
+      "kind": "document",
+      "label": "Context Management Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/context-management-pattern",
+          "pillars/ai-collaboration/context-management-pattern.md",
+          "context-management-pattern",
+          "Context Management Pattern",
+          "Context Management",
+          "playbook Context Management Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Context Management Pattern\n\nEngineer what goes into the context window — selection, ordering, compaction, retention — because the context is the program the model runs.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/context-management-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/context-management-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:context-management-pattern",
+            "title": "Context Management Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/context-management-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:hallucination-reduction-pattern",
+      "kind": "document",
+      "label": "Hallucination Reduction Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/hallucination-reduction-pattern",
+          "pillars/ai-collaboration/hallucination-reduction-pattern.md",
+          "hallucination-reduction-pattern",
+          "Hallucination Reduction Pattern",
+          "Hallucination Reduction",
+          "playbook Hallucination Reduction Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Hallucination Reduction Pattern\n\nMake model output you can put your name on — grounding, constrained generation, verification, and abstention — so the system says \"I don''t know\" instead of confidently inventing.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/hallucination-reduction-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/hallucination-reduction-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:hallucination-reduction-pattern",
+            "title": "Hallucination Reduction Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/hallucination-reduction-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:honest-confidence-pattern",
+      "kind": "document",
+      "label": "Honest Confidence Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/honest-confidence-pattern",
+          "pillars/ai-collaboration/honest-confidence-pattern.md",
+          "honest-confidence-pattern",
+          "Honest Confidence Pattern",
+          "Honest Confidence",
+          "playbook Honest Confidence Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Honest Confidence Pattern\n\nHow to report done-ness so a human can trust it — separating what was automatically verified from what was merely claimed.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/honest-confidence-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/honest-confidence-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:honest-confidence-pattern",
+            "title": "Honest Confidence Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/honest-confidence-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:human-in-the-loop-pattern",
+      "kind": "document",
+      "label": "Human-in-the-Loop Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/human-in-the-loop-pattern",
+          "pillars/ai-collaboration/human-in-the-loop-pattern.md",
+          "human-in-the-loop-pattern",
+          "Human-in-the-Loop Pattern",
+          "Human-in-the-Loop",
+          "playbook Human-in-the-Loop Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Human-in-the-Loop Pattern\n\nDesign where humans review, approve, correct, and take over from agents — so autonomy scales with confidence and every correction becomes training signal.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/human-in-the-loop-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/human-in-the-loop-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:human-in-the-loop-pattern",
+            "title": "Human-in-the-Loop Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/human-in-the-loop-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration",
+      "kind": "document",
+      "label": "Pillar — AI Collaboration",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration",
+          "pillars/ai-collaboration/index.md",
+          "ai-collaboration",
+          "Pillar — AI Collaboration",
+          "playbook Pillar — AI Collaboration"
+        ]
+      },
+      "answer": {
+        "markdown": "## Pillar — AI Collaboration\n\nHow to make an agent productive in your repo on day one and durably good across sessions.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/index.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration",
+            "title": "Pillar — AI Collaboration",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:memory-pattern",
+      "kind": "document",
+      "label": "Memory Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/memory-pattern",
+          "pillars/ai-collaboration/memory-pattern.md",
+          "memory-pattern",
+          "Memory Pattern",
+          "Memory",
+          "playbook Memory Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Memory Pattern\n\nHow to make agents durably learn from prior sessions without polluting context with chat transcripts.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/memory-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/memory-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:memory-pattern",
+            "title": "Memory Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/memory-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:open-knowledge-format-pattern",
+      "kind": "document",
+      "label": "Open Knowledge Format Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/open-knowledge-format-pattern",
+          "pillars/ai-collaboration/open-knowledge-format-pattern.md",
+          "open-knowledge-format-pattern",
+          "Open Knowledge Format Pattern",
+          "Open Knowledge Format",
+          "playbook Open Knowledge Format Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Open Knowledge Format Pattern\n\nRepresent agent-readable knowledge as a directory of markdown + YAML frontmatter — the OKF open standard, and how it formalizes patterns this playbook already uses.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/open-knowledge-format-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/open-knowledge-format-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:open-knowledge-format-pattern",
+            "title": "Open Knowledge Format Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/open-knowledge-format-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:prompt-versioning-pattern",
+      "kind": "document",
+      "label": "Prompt Versioning Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/prompt-versioning-pattern",
+          "pillars/ai-collaboration/prompt-versioning-pattern.md",
+          "prompt-versioning-pattern",
+          "Prompt Versioning Pattern",
+          "Prompt Versioning",
+          "playbook Prompt Versioning Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Prompt Versioning Pattern\n\nTreat prompts as versioned, tested, experimentable production assets — not strings buried in code — so you can A/B them, measure impact, and roll back instantly.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/prompt-versioning-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/prompt-versioning-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:prompt-versioning-pattern",
+            "title": "Prompt Versioning Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/prompt-versioning-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:self-describe-pattern",
+      "kind": "document",
+      "label": "Self-Describe Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/self-describe-pattern",
+          "pillars/ai-collaboration/self-describe-pattern.md",
+          "self-describe-pattern",
+          "Self-Describe Pattern",
+          "Self-Describe",
+          "playbook Self-Describe Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Self-Describe Pattern\n\nShip a machine-readable manifest of what your system can do, so external agents can discover and call it without reading your source.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/self-describe-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/self-describe-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:self-describe-pattern",
+            "title": "Self-Describe Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/self-describe-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:slash-commands-pattern",
+      "kind": "document",
+      "label": "Slash Commands Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/slash-commands-pattern",
+          "pillars/ai-collaboration/slash-commands-pattern.md",
+          "slash-commands-pattern",
+          "Slash Commands Pattern",
+          "Slash Commands",
+          "playbook Slash Commands Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Slash Commands Pattern\n\nHow to turn repeated workflows into palette-invoked commands so they run identically every time.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/slash-commands-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/slash-commands-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:slash-commands-pattern",
+            "title": "Slash Commands Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/slash-commands-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:sub-agent-pattern",
+      "kind": "document",
+      "label": "Sub-agent Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/sub-agent-pattern",
+          "pillars/ai-collaboration/sub-agent-pattern.md",
+          "sub-agent-pattern",
+          "Sub-agent Pattern",
+          "Sub-agent",
+          "playbook Sub-agent Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Sub-agent Pattern\n\nHow to delegate scoped tasks to specialist agents so the orchestrator stays focused.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/sub-agent-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/sub-agent-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:sub-agent-pattern",
+            "title": "Sub-agent Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/sub-agent-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:tool-design-pattern",
+      "kind": "document",
+      "label": "Tool & Capability Design Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/tool-design-pattern",
+          "pillars/ai-collaboration/tool-design-pattern.md",
+          "tool-design-pattern",
+          "Tool & Capability Design Pattern",
+          "Tool & Capability Design",
+          "playbook Tool & Capability Design Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Tool & Capability Design Pattern\n\nDesign the abstraction layer between a model and your product — tools, file systems, artifacts, skills — so complex multi-step work feels natural to the model and stays reliable for users.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/tool-design-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/tool-design-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:tool-design-pattern",
+            "title": "Tool & Capability Design Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/tool-design-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:universal",
+      "kind": "document",
+      "label": "AI Collaboration — Universal Principles",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/universal",
+          "pillars/ai-collaboration/universal.md",
+          "universal",
+          "AI Collaboration — Universal Principles",
+          "playbook AI Collaboration — Universal Principles"
+        ]
+      },
+      "answer": {
+        "markdown": "## AI Collaboration — Universal Principles\n\nHow to get production-grade work out of an AI coding agent, durably, across sessions and across multiple agents working in parallel.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/universal)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/universal.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:universal",
+            "title": "AI Collaboration — Universal Principles",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/universal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:verify-first-pattern",
+      "kind": "document",
+      "label": "Verify-First Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/verify-first-pattern",
+          "pillars/ai-collaboration/verify-first-pattern.md",
+          "verify-first-pattern",
+          "Verify-First Pattern",
+          "Verify-First",
+          "playbook Verify-First Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Verify-First Pattern\n\nWhy an agent must trust live code over docs, plans, and its own memory — and how to verify before claiming or \"fixing\".\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/verify-first-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/verify-first-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:verify-first-pattern",
+            "title": "Verify-First Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/verify-first-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:adr-pattern",
+      "kind": "document",
+      "label": "ADR Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/adr-pattern",
+          "pillars/architecture/adr-pattern.md",
+          "adr-pattern",
+          "ADR Pattern",
+          "ADR",
+          "playbook ADR Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## ADR Pattern\n\nHow to record architecture decisions so future agents (and humans) can find them, trust them, and supersede them cleanly.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/adr-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/adr-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:adr-pattern",
+            "title": "ADR Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/adr-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:anti-overengineering",
+      "kind": "document",
+      "label": "Anti-Overengineering",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/anti-overengineering",
+          "pillars/architecture/anti-overengineering.md",
+          "anti-overengineering",
+          "playbook Anti-Overengineering"
+        ]
+      },
+      "answer": {
+        "markdown": "## Anti-Overengineering\n\nHow to keep agents (and engineers) from building three layers of abstraction for what would have been ten lines of code.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/anti-overengineering)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/anti-overengineering.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:anti-overengineering",
+            "title": "Anti-Overengineering",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/anti-overengineering"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:api-gateway-pattern",
+      "kind": "document",
+      "label": "API Gateway Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/api-gateway-pattern",
+          "pillars/architecture/api-gateway-pattern.md",
+          "api-gateway-pattern",
+          "API Gateway Pattern",
+          "API Gateway",
+          "playbook API Gateway Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## API Gateway Pattern\n\nThe edge between clients and your services — what belongs there, what doesn''t, and how to keep it from becoming a monolith in disguise.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/api-gateway-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/api-gateway-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:api-gateway-pattern",
+            "title": "API Gateway Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/api-gateway-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:api-versioning-pattern",
+      "kind": "document",
+      "label": "API Versioning + Deprecation Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/api-versioning-pattern",
+          "pillars/architecture/api-versioning-pattern.md",
+          "api-versioning-pattern",
+          "API Versioning + Deprecation Pattern",
+          "API Versioning + Deprecation",
+          "playbook API Versioning + Deprecation Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## API Versioning + Deprecation Pattern\n\nHow to evolve public contracts without surprising consumers.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/api-versioning-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/api-versioning-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:api-versioning-pattern",
+            "title": "API Versioning + Deprecation Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/api-versioning-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:caching-cdn-pattern",
+      "kind": "document",
+      "label": "Caching + CDN Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/caching-cdn-pattern",
+          "pillars/architecture/caching-cdn-pattern.md",
+          "caching-cdn-pattern",
+          "Caching + CDN Pattern",
+          "Caching + CDN",
+          "playbook Caching + CDN Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Caching + CDN Pattern\n\nHow to layer caches so the system is fast, cheap, and consistent — three properties at tension.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/caching-cdn-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/caching-cdn-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:caching-cdn-pattern",
+            "title": "Caching + CDN Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/caching-cdn-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:contracts-zod-pattern",
+      "kind": "document",
+      "label": "Contracts — Zod Method Registry Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/contracts-zod-pattern",
+          "pillars/architecture/contracts-zod-pattern.md",
+          "contracts-zod-pattern",
+          "Contracts — Zod Method Registry Pattern",
+          "Contracts — Zod Method Registry",
+          "playbook Contracts — Zod Method Registry Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Contracts — Zod Method Registry Pattern\n\nTS-concrete recipe for a typed JSON-RPC / HTTP / IPC boundary. Scales to several hundred methods across dozens of namespaces in a real production codebase.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/contracts-zod-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/contracts-zod-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:contracts-zod-pattern",
+            "title": "Contracts — Zod Method Registry Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/contracts-zod-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:distributed-data-pattern",
+      "kind": "document",
+      "label": "Distributed Data Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/distributed-data-pattern",
+          "pillars/architecture/distributed-data-pattern.md",
+          "distributed-data-pattern",
+          "Distributed Data Pattern",
+          "Distributed Data",
+          "playbook Distributed Data Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Distributed Data Pattern\n\nHow to design data layout when one database stops being enough — read replicas, sharding, replication lag, CAP trade-offs, eventual consistency.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/distributed-data-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/distributed-data-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:distributed-data-pattern",
+            "title": "Distributed Data Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/distributed-data-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:error-hierarchy",
+      "kind": "document",
+      "label": "Error Hierarchy",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/error-hierarchy",
+          "pillars/architecture/error-hierarchy.md",
+          "error-hierarchy",
+          "Error Hierarchy",
+          "playbook Error Hierarchy"
+        ]
+      },
+      "answer": {
+        "markdown": "## Error Hierarchy\n\nHow to design an error model that survives multi-agent development and client-side pattern matching.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/error-hierarchy)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/error-hierarchy.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:error-hierarchy",
+            "title": "Error Hierarchy",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/error-hierarchy"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:event-streaming-pattern",
+      "kind": "document",
+      "label": "Event Streaming Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/event-streaming-pattern",
+          "pillars/architecture/event-streaming-pattern.md",
+          "event-streaming-pattern",
+          "Event Streaming Pattern",
+          "Event Streaming",
+          "playbook Event Streaming Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Event Streaming Pattern\n\nHow to design async, decoupled communication via queues, pub/sub, and event streams — without losing events, double-processing, or stalling consumers.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/event-streaming-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/event-streaming-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:event-streaming-pattern",
+            "title": "Event Streaming Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/event-streaming-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:feature-flags-pattern",
+      "kind": "document",
+      "label": "Feature Flags Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/feature-flags-pattern",
+          "pillars/architecture/feature-flags-pattern.md",
+          "feature-flags-pattern",
+          "Feature Flags Pattern",
+          "Feature Flags",
+          "playbook Feature Flags Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Feature Flags Pattern\n\nHow to ship code separately from shipping behavior, without accumulating a flag graveyard.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/feature-flags-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/feature-flags-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:feature-flags-pattern",
+            "title": "Feature Flags Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/feature-flags-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:file-size-budget",
+      "kind": "document",
+      "label": "File-size Budget",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/file-size-budget",
+          "pillars/architecture/file-size-budget.md",
+          "file-size-budget",
+          "File-size Budget",
+          "playbook File-size Budget"
+        ]
+      },
+      "answer": {
+        "markdown": "## File-size Budget\n\nHow to keep files reviewable when agents write most of the code.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/file-size-budget)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/file-size-budget.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:file-size-budget",
+            "title": "File-size Budget",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/file-size-budget"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:iac-pattern",
+      "kind": "document",
+      "label": "Infrastructure as Code (IaC) Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/iac-pattern",
+          "pillars/architecture/iac-pattern.md",
+          "iac-pattern",
+          "Infrastructure as Code (IaC) Pattern",
+          "Infrastructure as Code (IaC)",
+          "playbook Infrastructure as Code (IaC) Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Infrastructure as Code (IaC) Pattern\n\nHow to define + version + review + apply infrastructure as code, instead of clicking around cloud consoles.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/iac-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/iac-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:iac-pattern",
+            "title": "Infrastructure as Code (IaC) Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/iac-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture",
+      "kind": "document",
+      "label": "Pillar — Architecture",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture",
+          "pillars/architecture/index.md",
+          "architecture",
+          "Pillar — Architecture",
+          "playbook Pillar — Architecture"
+        ]
+      },
+      "answer": {
+        "markdown": "## Pillar — Architecture\n\nHow to keep a codebase legible and modular under multi-agent development.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/index.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture",
+            "title": "Pillar — Architecture",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:multi-region-pattern",
+      "kind": "document",
+      "label": "Multi-Region Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/multi-region-pattern",
+          "pillars/architecture/multi-region-pattern.md",
+          "multi-region-pattern",
+          "Multi-Region Pattern",
+          "Multi-Region",
+          "playbook Multi-Region Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Multi-Region Pattern\n\nHow to operate across geographic regions for latency, availability, and data sovereignty — without losing your mind.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/multi-region-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/multi-region-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:multi-region-pattern",
+            "title": "Multi-Region Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/multi-region-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:offline-first-sync-pattern",
+      "kind": "document",
+      "label": "Offline-First + Sync Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/offline-first-sync-pattern",
+          "pillars/architecture/offline-first-sync-pattern.md",
+          "offline-first-sync-pattern",
+          "Offline-First + Sync Pattern",
+          "Offline-First + Sync",
+          "playbook Offline-First + Sync Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Offline-First + Sync Pattern\n\nHow to design apps that work without network connectivity and reconcile state when connectivity returns.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/offline-first-sync-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/offline-first-sync-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:offline-first-sync-pattern",
+            "title": "Offline-First + Sync Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/offline-first-sync-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:platform-engineering-idp-pattern",
+      "kind": "document",
+      "label": "Platform Engineering + Internal Developer Platform Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/platform-engineering-idp-pattern",
+          "pillars/architecture/platform-engineering-idp-pattern.md",
+          "platform-engineering-idp-pattern",
+          "Platform Engineering + Internal Developer Platform Pattern",
+          "Platform Engineering + Internal Developer Platform",
+          "playbook Platform Engineering + Internal Developer Platform Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Platform Engineering + Internal Developer Platform Pattern\n\nHow to build the layer between cloud / infra and product engineers, so product teams ship fast without re-learning infra each time.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/platform-engineering-idp-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/platform-engineering-idp-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:platform-engineering-idp-pattern",
+            "title": "Platform Engineering + Internal Developer Platform Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/platform-engineering-idp-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:rfc-pattern",
+      "kind": "document",
+      "label": "RFC Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/rfc-pattern",
+          "pillars/architecture/rfc-pattern.md",
+          "rfc-pattern",
+          "RFC Pattern",
+          "RFC",
+          "playbook RFC Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## RFC Pattern\n\nWhen the decision is bigger than your team. Used for changes to public contracts, wire formats, plugin protocols, and any breaking change a consumer outside this repo would notice.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/rfc-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/rfc-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:rfc-pattern",
+            "title": "RFC Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/rfc-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:service-mesh-pattern",
+      "kind": "document",
+      "label": "Service Mesh Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/service-mesh-pattern",
+          "pillars/architecture/service-mesh-pattern.md",
+          "service-mesh-pattern",
+          "Service Mesh Pattern",
+          "Service Mesh",
+          "playbook Service Mesh Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Service Mesh Pattern\n\nHow to handle cross-service communication concerns (mTLS, retries, observability, routing) without coding them in every service.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/service-mesh-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/service-mesh-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:service-mesh-pattern",
+            "title": "Service Mesh Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/service-mesh-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:ts-concrete",
+      "kind": "document",
+      "label": "Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/ts-concrete",
+          "pillars/architecture/ts-concrete.md",
+          "ts-concrete",
+          "Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)",
+          "playbook Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)"
+        ]
+      },
+      "answer": {
+        "markdown": "## Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)\n\nCopy-paste-ready recipes that implement [`universal.md`](/docs/pillars/architecture/universal) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/ts-concrete)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/ts-concrete.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:ts-concrete",
+            "title": "Architecture — TS / Node ≥22 / pnpm Monorepo (Concrete)",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/ts-concrete"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:architecture:universal",
+      "kind": "document",
+      "label": "Architecture — Universal Principles",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/architecture/universal",
+          "pillars/architecture/universal.md",
+          "universal",
+          "Architecture — Universal Principles",
+          "playbook Architecture — Universal Principles"
+        ]
+      },
+      "answer": {
+        "markdown": "## Architecture — Universal Principles\n\nStack-agnostic. Applies to any language, any framework.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/universal)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/universal.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:architecture:universal",
+            "title": "Architecture — Universal Principles",
+            "href": "https://playbook.agentskit.io/docs/pillars/architecture/universal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:governance",
+      "kind": "document",
+      "label": "Pillar — Governance",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/governance",
+          "pillars/governance/index.md",
+          "governance",
+          "Pillar — Governance",
+          "playbook Pillar — Governance"
+        ]
+      },
+      "answer": {
+        "markdown": "## Pillar — Governance\n\nHow multiple agents (and humans) coordinate work in one repo without subtracting each other''s progress.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/index.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:governance",
+            "title": "Pillar — Governance",
+            "href": "https://playbook.agentskit.io/docs/pillars/governance"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:governance:merge-rules-pattern",
+      "kind": "document",
+      "label": "Merge Rules Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/governance/merge-rules-pattern",
+          "pillars/governance/merge-rules-pattern.md",
+          "merge-rules-pattern",
+          "Merge Rules Pattern",
+          "Merge Rules",
+          "playbook Merge Rules Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Merge Rules Pattern\n\nHow to resolve conflicts so the merge sums work instead of subtracting it.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance/merge-rules-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/merge-rules-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:governance:merge-rules-pattern",
+            "title": "Merge Rules Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/governance/merge-rules-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:governance:phased-pr-pattern",
+      "kind": "document",
+      "label": "Phased PR Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/governance/phased-pr-pattern",
+          "pillars/governance/phased-pr-pattern.md",
+          "phased-pr-pattern",
+          "Phased PR Pattern",
+          "Phased PR",
+          "playbook Phased PR Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Phased PR Pattern\n\nHow to ship initiatives too big for one PR without ending up with a long-lived branch hell.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance/phased-pr-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/phased-pr-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:governance:phased-pr-pattern",
+            "title": "Phased PR Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/governance/phased-pr-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:governance:pr-intent-pattern",
+      "kind": "document",
+      "label": "PR Intent Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/governance/pr-intent-pattern",
+          "pillars/governance/pr-intent-pattern.md",
+          "pr-intent-pattern",
+          "PR Intent Pattern",
+          "PR Intent",
+          "playbook PR Intent Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## PR Intent Pattern\n\nThe manifest that makes a PR''s claims verifiable.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance/pr-intent-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/pr-intent-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:governance:pr-intent-pattern",
+            "title": "PR Intent Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/governance/pr-intent-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:governance:tombstone-pattern",
+      "kind": "document",
+      "label": "Tombstone Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/governance/tombstone-pattern",
+          "pillars/governance/tombstone-pattern.md",
+          "tombstone-pattern",
+          "Tombstone Pattern",
+          "Tombstone",
+          "playbook Tombstone Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Tombstone Pattern\n\nHow to retire a doc, plan, ADR, screen, or package without losing the trail.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance/tombstone-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/tombstone-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:governance:tombstone-pattern",
+            "title": "Tombstone Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/governance/tombstone-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:governance:universal",
+      "kind": "document",
+      "label": "Governance — Universal Principles",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/governance/universal",
+          "pillars/governance/universal.md",
+          "universal",
+          "Governance — Universal Principles",
+          "playbook Governance — Universal Principles"
+        ]
+      },
+      "answer": {
+        "markdown": "## Governance — Universal Principles\n\nHow multiple contributors — agents and humans — coordinate so the whole sums.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance/universal)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/universal.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:governance:universal",
+            "title": "Governance — Universal Principles",
+            "href": "https://playbook.agentskit.io/docs/pillars/governance/universal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:adversarial-bug-hunt-pattern",
+      "kind": "document",
+      "label": "Adversarial Bug-Hunt Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/adversarial-bug-hunt-pattern",
+          "pillars/quality/adversarial-bug-hunt-pattern.md",
+          "adversarial-bug-hunt-pattern",
+          "Adversarial Bug-Hunt Pattern",
+          "Adversarial Bug-Hunt",
+          "playbook Adversarial Bug-Hunt Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Adversarial Bug-Hunt Pattern\n\nHow to find real logic bugs with a find → refute → reproduce loop, instead of trusting a single agent that says \"looks fine\".\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/adversarial-bug-hunt-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/adversarial-bug-hunt-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:adversarial-bug-hunt-pattern",
+            "title": "Adversarial Bug-Hunt Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/adversarial-bug-hunt-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:agent-eval-framework-pattern",
+      "kind": "document",
+      "label": "Agent Eval Framework Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/agent-eval-framework-pattern",
+          "pillars/quality/agent-eval-framework-pattern.md",
+          "agent-eval-framework-pattern",
+          "Agent Eval Framework Pattern",
+          "Agent Eval Framework",
+          "playbook Agent Eval Framework Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Agent Eval Framework Pattern\n\nHow to measure whether an AI agent is actually good — deterministic checks, LLM-as-judge, and production monitoring — so quality scales with the system instead of breaking as it grows.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/agent-eval-framework-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/agent-eval-framework-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:agent-eval-framework-pattern",
+            "title": "Agent Eval Framework Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/agent-eval-framework-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:alerting-runbooks-pattern",
+      "kind": "document",
+      "label": "Alerting + Runbooks Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/alerting-runbooks-pattern",
+          "pillars/quality/alerting-runbooks-pattern.md",
+          "alerting-runbooks-pattern",
+          "Alerting + Runbooks Pattern",
+          "Alerting + Runbooks",
+          "playbook Alerting + Runbooks Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Alerting + Runbooks Pattern\n\nHow to turn observability data into a healthy alerting setup — pages that matter, runbooks that work, alert hygiene that prevents pager fatigue.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/alerting-runbooks-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/alerting-runbooks-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:alerting-runbooks-pattern",
+            "title": "Alerting + Runbooks Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/alerting-runbooks-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:chaos-engineering-pattern",
+      "kind": "document",
+      "label": "Chaos Engineering Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/chaos-engineering-pattern",
+          "pillars/quality/chaos-engineering-pattern.md",
+          "chaos-engineering-pattern",
+          "Chaos Engineering Pattern",
+          "Chaos Engineering",
+          "playbook Chaos Engineering Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Chaos Engineering Pattern\n\nHow to find failure modes before customers do — deliberately, in a controlled way.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/chaos-engineering-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/chaos-engineering-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:chaos-engineering-pattern",
+            "title": "Chaos Engineering Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/chaos-engineering-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:ci-cd-pipeline-pattern",
+      "kind": "document",
+      "label": "CI/CD Pipeline Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/ci-cd-pipeline-pattern",
+          "pillars/quality/ci-cd-pipeline-pattern.md",
+          "ci-cd-pipeline-pattern",
+          "CI/CD Pipeline Pattern",
+          "CI/CD Pipeline",
+          "playbook CI/CD Pipeline Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## CI/CD Pipeline Pattern\n\nHow to wire continuous integration + continuous delivery so the path from commit to production is short, verifiable, reversible, and boring.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/ci-cd-pipeline-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/ci-cd-pipeline-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:ci-cd-pipeline-pattern",
+            "title": "CI/CD Pipeline Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/ci-cd-pipeline-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:contract-testing-pattern",
+      "kind": "document",
+      "label": "Contract Testing Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/contract-testing-pattern",
+          "pillars/quality/contract-testing-pattern.md",
+          "contract-testing-pattern",
+          "Contract Testing Pattern",
+          "Contract Testing",
+          "playbook Contract Testing Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Contract Testing Pattern\n\nHow to verify that consumer + provider agree on a contract, without expensive end-to-end tests.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/contract-testing-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/contract-testing-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:contract-testing-pattern",
+            "title": "Contract Testing Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/contract-testing-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:cost-optimization-pattern",
+      "kind": "document",
+      "label": "Cost Optimization Pattern (FinOps)",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/cost-optimization-pattern",
+          "pillars/quality/cost-optimization-pattern.md",
+          "cost-optimization-pattern",
+          "Cost Optimization Pattern (FinOps)",
+          "playbook Cost Optimization Pattern (FinOps)"
+        ]
+      },
+      "answer": {
+        "markdown": "## Cost Optimization Pattern (FinOps)\n\nHow to control cloud spend without micromanaging every commit.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/cost-optimization-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/cost-optimization-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:cost-optimization-pattern",
+            "title": "Cost Optimization Pattern (FinOps)",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/cost-optimization-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:fail-loud-defaults-pattern",
+      "kind": "document",
+      "label": "Fail-Loud Defaults Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/fail-loud-defaults-pattern",
+          "pillars/quality/fail-loud-defaults-pattern.md",
+          "fail-loud-defaults-pattern",
+          "Fail-Loud Defaults Pattern",
+          "Fail-Loud Defaults",
+          "playbook Fail-Loud Defaults Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Fail-Loud Defaults Pattern\n\nWhy a silent no-op default plus a test harness that overrides it lets broken production wiring pass CI green.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/fail-loud-defaults-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/fail-loud-defaults-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:fail-loud-defaults-pattern",
+            "title": "Fail-Loud Defaults Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/fail-loud-defaults-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality",
+      "kind": "document",
+      "label": "Pillar — Quality",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality",
+          "pillars/quality/index.md",
+          "quality",
+          "Pillar — Quality",
+          "playbook Pillar — Quality"
+        ]
+      },
+      "answer": {
+        "markdown": "## Pillar — Quality\n\nHow to know the code works without manually reviewing every agent-produced diff.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/index.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality",
+            "title": "Pillar — Quality",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:mutation-testing-pattern",
+      "kind": "document",
+      "label": "Mutation Testing Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/mutation-testing-pattern",
+          "pillars/quality/mutation-testing-pattern.md",
+          "mutation-testing-pattern",
+          "Mutation Testing Pattern",
+          "Mutation Testing",
+          "playbook Mutation Testing Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Mutation Testing Pattern\n\nHow to score whether your unit tests actually catch bugs, beyond what coverage tells you.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/mutation-testing-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/mutation-testing-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:mutation-testing-pattern",
+            "title": "Mutation Testing Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/mutation-testing-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:observability-pattern",
+      "kind": "document",
+      "label": "Observability Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/observability-pattern",
+          "pillars/quality/observability-pattern.md",
+          "observability-pattern",
+          "Observability Pattern",
+          "Observability",
+          "playbook Observability Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Observability Pattern\n\nHow to know what the system is doing in production, beyond ''tests passed''.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/observability-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/observability-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:observability-pattern",
+            "title": "Observability Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/observability-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:performance-budgets-pattern",
+      "kind": "document",
+      "label": "Performance Budgets Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/performance-budgets-pattern",
+          "pillars/quality/performance-budgets-pattern.md",
+          "performance-budgets-pattern",
+          "Performance Budgets Pattern",
+          "Performance Budgets",
+          "playbook Performance Budgets Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Performance Budgets Pattern\n\nHow to keep ''it''s fast enough'' from drifting into ''why is it slow?''\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/performance-budgets-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/performance-budgets-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:performance-budgets-pattern",
+            "title": "Performance Budgets Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/performance-budgets-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:pre-push-pattern",
+      "kind": "document",
+      "label": "Pre-push Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/pre-push-pattern",
+          "pillars/quality/pre-push-pattern.md",
+          "pre-push-pattern",
+          "Pre-push Pattern",
+          "Pre-push",
+          "playbook Pre-push Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Pre-push Pattern\n\nThe safety net between local changes and CI.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/pre-push-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/pre-push-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:pre-push-pattern",
+            "title": "Pre-push Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/pre-push-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:product-analytics-experimentation-pattern",
+      "kind": "document",
+      "label": "Product Analytics + Experimentation Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/product-analytics-experimentation-pattern",
+          "pillars/quality/product-analytics-experimentation-pattern.md",
+          "product-analytics-experimentation-pattern",
+          "Product Analytics + Experimentation Pattern",
+          "Product Analytics + Experimentation",
+          "playbook Product Analytics + Experimentation Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Product Analytics + Experimentation Pattern\n\nHow to measure what users do, run experiments cleanly, and let data drive product decisions — without inviting bias or noise.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/product-analytics-experimentation-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/product-analytics-experimentation-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:product-analytics-experimentation-pattern",
+            "title": "Product Analytics + Experimentation Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/product-analytics-experimentation-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:property-fuzz-testing-pattern",
+      "kind": "document",
+      "label": "Property-Based & Fuzz Testing Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/property-fuzz-testing-pattern",
+          "pillars/quality/property-fuzz-testing-pattern.md",
+          "property-fuzz-testing-pattern",
+          "Property-Based & Fuzz Testing Pattern",
+          "Property-Based & Fuzz Testing",
+          "playbook Property-Based & Fuzz Testing Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Property-Based & Fuzz Testing Pattern\n\nHow to test the laws your code must obey, instead of guessing individual inputs — and how this catches crypto and parser bugs example tests never will.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/property-fuzz-testing-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/property-fuzz-testing-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:property-fuzz-testing-pattern",
+            "title": "Property-Based & Fuzz Testing Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/property-fuzz-testing-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:quality-gates-pattern",
+      "kind": "document",
+      "label": "Quality Gates Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/quality-gates-pattern",
+          "pillars/quality/quality-gates-pattern.md",
+          "quality-gates-pattern",
+          "Quality Gates Pattern",
+          "Quality Gates",
+          "playbook Quality Gates Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Quality Gates Pattern\n\nHow to bundle structural rules into one fast command an agent runs before every push.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/quality-gates-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/quality-gates-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:quality-gates-pattern",
+            "title": "Quality Gates Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/quality-gates-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:sanity-pattern",
+      "kind": "document",
+      "label": "Sanity Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/sanity-pattern",
+          "pillars/quality/sanity-pattern.md",
+          "sanity-pattern",
+          "Sanity Pattern",
+          "Sanity",
+          "playbook Sanity Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Sanity Pattern\n\nThe cross-cutting audit that catches what individual gates miss.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/sanity-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/sanity-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:sanity-pattern",
+            "title": "Sanity Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/sanity-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:test-pyramid",
+      "kind": "document",
+      "label": "Test Pyramid",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/test-pyramid",
+          "pillars/quality/test-pyramid.md",
+          "test-pyramid",
+          "Test Pyramid",
+          "playbook Test Pyramid"
+        ]
+      },
+      "answer": {
+        "markdown": "## Test Pyramid\n\nHow to mix test types so the cheap ones catch most bugs and the expensive ones cover what only they can.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/test-pyramid)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/test-pyramid.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:test-pyramid",
+            "title": "Test Pyramid",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/test-pyramid"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:universal",
+      "kind": "document",
+      "label": "Quality — Universal Principles",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/universal",
+          "pillars/quality/universal.md",
+          "universal",
+          "Quality — Universal Principles",
+          "playbook Quality — Universal Principles"
+        ]
+      },
+      "answer": {
+        "markdown": "## Quality — Universal Principles\n\nHow to know agent-produced code works without manually reading every diff.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/universal)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/universal.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:universal",
+            "title": "Quality — Universal Principles",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/universal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:ai-llm-safety-pattern",
+      "kind": "document",
+      "label": "AI / LLM Safety Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/ai-llm-safety-pattern",
+          "pillars/security/ai-llm-safety-pattern.md",
+          "ai-llm-safety-pattern",
+          "AI / LLM Safety Pattern",
+          "AI / LLM Safety",
+          "playbook AI / LLM Safety Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## AI / LLM Safety Pattern\n\nHow to ship LLM-powered features without prompt injection, jailbreaks, data leakage, hallucinated tools, or runaway costs.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/ai-llm-safety-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/ai-llm-safety-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:ai-llm-safety-pattern",
+            "title": "AI / LLM Safety Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/ai-llm-safety-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:audit-ledger-pattern",
+      "kind": "document",
+      "label": "Audit Ledger Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/audit-ledger-pattern",
+          "pillars/security/audit-ledger-pattern.md",
+          "audit-ledger-pattern",
+          "Audit Ledger Pattern",
+          "Audit Ledger",
+          "playbook Audit Ledger Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Audit Ledger Pattern\n\nHow to prove who did what when, in a way that survives compromise.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/audit-ledger-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/audit-ledger-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:audit-ledger-pattern",
+            "title": "Audit Ledger Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/audit-ledger-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:compliance-framework-pattern",
+      "kind": "document",
+      "label": "Compliance Framework Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/compliance-framework-pattern",
+          "pillars/security/compliance-framework-pattern.md",
+          "compliance-framework-pattern",
+          "Compliance Framework Pattern",
+          "Compliance Framework",
+          "playbook Compliance Framework Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Compliance Framework Pattern\n\nHow to map SOC 2 / ISO 27001 / GDPR / HIPAA controls onto your codebase + ops, so audits are evidence-driven, not theatre.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/compliance-framework-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/compliance-framework-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:compliance-framework-pattern",
+            "title": "Compliance Framework Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/compliance-framework-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:container-k8s-security-pattern",
+      "kind": "document",
+      "label": "Container + Kubernetes Security Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/container-k8s-security-pattern",
+          "pillars/security/container-k8s-security-pattern.md",
+          "container-k8s-security-pattern",
+          "Container + Kubernetes Security Pattern",
+          "Container + Kubernetes Security",
+          "playbook Container + Kubernetes Security Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Container + Kubernetes Security Pattern\n\nHow to ship containers + run them on Kubernetes without making the runtime an attack surface.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/container-k8s-security-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/container-k8s-security-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:container-k8s-security-pattern",
+            "title": "Container + Kubernetes Security Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/container-k8s-security-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:data-classification-pattern",
+      "kind": "document",
+      "label": "Data Classification Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/data-classification-pattern",
+          "pillars/security/data-classification-pattern.md",
+          "data-classification-pattern",
+          "Data Classification Pattern",
+          "Data Classification",
+          "playbook Data Classification Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Data Classification Pattern\n\nHow to label every field by sensitivity, then make the labels drive redaction, retention, residency, and access.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/data-classification-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/data-classification-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:data-classification-pattern",
+            "title": "Data Classification Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/data-classification-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:dependency-hygiene-pattern",
+      "kind": "document",
+      "label": "Dependency Hygiene Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/dependency-hygiene-pattern",
+          "pillars/security/dependency-hygiene-pattern.md",
+          "dependency-hygiene-pattern",
+          "Dependency Hygiene Pattern",
+          "Dependency Hygiene",
+          "playbook Dependency Hygiene Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Dependency Hygiene Pattern\n\nHow to keep your dependency tree healthy across thousands of transitive packages without it becoming a full-time job.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/dependency-hygiene-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/dependency-hygiene-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:dependency-hygiene-pattern",
+            "title": "Dependency Hygiene Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/dependency-hygiene-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:egress-firewall-pattern",
+      "kind": "document",
+      "label": "Egress Firewall Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/egress-firewall-pattern",
+          "pillars/security/egress-firewall-pattern.md",
+          "egress-firewall-pattern",
+          "Egress Firewall Pattern",
+          "Egress Firewall",
+          "playbook Egress Firewall Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Egress Firewall Pattern\n\nDefault-deny outbound network access, configurable per workspace, evaluable at every call site.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/egress-firewall-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/egress-firewall-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:egress-firewall-pattern",
+            "title": "Egress Firewall Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/egress-firewall-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:governance-posture-pattern",
+      "kind": "document",
+      "label": "Governance Posture Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/governance-posture-pattern",
+          "pillars/security/governance-posture-pattern.md",
+          "governance-posture-pattern",
+          "Governance Posture Pattern",
+          "Governance Posture",
+          "playbook Governance Posture Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Governance Posture Pattern\n\nExpose the system''s live security and governance posture as a read-only, machine-readable signal — so agents, dashboards, and auditors can see what is enforced without admin rights.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/governance-posture-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/governance-posture-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:governance-posture-pattern",
+            "title": "Governance Posture Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/governance-posture-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security",
+      "kind": "document",
+      "label": "Pillar — Security",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security",
+          "pillars/security/index.md",
+          "security",
+          "Pillar — Security",
+          "playbook Pillar — Security"
+        ]
+      },
+      "answer": {
+        "markdown": "## Pillar — Security\n\nHow to build security in from day one when the people writing the code are agents, not a hardened security team.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/index.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security",
+            "title": "Pillar — Security",
+            "href": "https://playbook.agentskit.io/docs/pillars/security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:multi-tenant-isolation-pattern",
+      "kind": "document",
+      "label": "Multi-Tenant Isolation Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/multi-tenant-isolation-pattern",
+          "pillars/security/multi-tenant-isolation-pattern.md",
+          "multi-tenant-isolation-pattern",
+          "Multi-Tenant Isolation Pattern",
+          "Multi-Tenant Isolation",
+          "playbook Multi-Tenant Isolation Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Multi-Tenant Isolation Pattern\n\nHow to host many customers in one system without one customer leaking, blocking, or paying for another.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/multi-tenant-isolation-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/multi-tenant-isolation-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:multi-tenant-isolation-pattern",
+            "title": "Multi-Tenant Isolation Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/multi-tenant-isolation-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:on-call-rotation-pattern",
+      "kind": "document",
+      "label": "On-Call Rotation Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/on-call-rotation-pattern",
+          "pillars/security/on-call-rotation-pattern.md",
+          "on-call-rotation-pattern",
+          "On-Call Rotation Pattern",
+          "On-Call Rotation",
+          "playbook On-Call Rotation Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## On-Call Rotation Pattern\n\nHow to keep a system reliable 24/7 without burning out the team that maintains it.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/on-call-rotation-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/on-call-rotation-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:on-call-rotation-pattern",
+            "title": "On-Call Rotation Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/on-call-rotation-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:rate-limiting-ddos-pattern",
+      "kind": "document",
+      "label": "Rate Limiting + DDoS Protection Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/rate-limiting-ddos-pattern",
+          "pillars/security/rate-limiting-ddos-pattern.md",
+          "rate-limiting-ddos-pattern",
+          "Rate Limiting + DDoS Protection Pattern",
+          "Rate Limiting + DDoS Protection",
+          "playbook Rate Limiting + DDoS Protection Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Rate Limiting + DDoS Protection Pattern\n\nHow to absorb traffic spikes — both benign (popular feature) and malicious (DDoS / abuse) — without breaking for legitimate users.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/rate-limiting-ddos-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/rate-limiting-ddos-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:rate-limiting-ddos-pattern",
+            "title": "Rate Limiting + DDoS Protection Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/rate-limiting-ddos-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:rbac-pattern",
+      "kind": "document",
+      "label": "RBAC Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/rbac-pattern",
+          "pillars/security/rbac-pattern.md",
+          "rbac-pattern",
+          "RBAC Pattern",
+          "RBAC",
+          "playbook RBAC Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## RBAC Pattern\n\nHow to model ''who can do what'' so the checks survive multi-agent edits.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/rbac-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/rbac-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:rbac-pattern",
+            "title": "RBAC Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/rbac-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:secrets-leak-postmortem-playbook",
+      "kind": "document",
+      "label": "Secrets-Leak Post-Mortem Playbook",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/secrets-leak-postmortem-playbook",
+          "pillars/security/secrets-leak-postmortem-playbook.md",
+          "secrets-leak-postmortem-playbook",
+          "Secrets-Leak Post-Mortem Playbook",
+          "playbook Secrets-Leak Post-Mortem Playbook"
+        ]
+      },
+      "answer": {
+        "markdown": "## Secrets-Leak Post-Mortem Playbook\n\nWhen a secret leaks — git history, log, screenshot, public artefact — what to do, in what order, within what timeline.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/secrets-leak-postmortem-playbook)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/secrets-leak-postmortem-playbook.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:secrets-leak-postmortem-playbook",
+            "title": "Secrets-Leak Post-Mortem Playbook",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/secrets-leak-postmortem-playbook"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:secrets-mgmt-deep-pattern",
+      "kind": "document",
+      "label": "Secrets Management Deep Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/secrets-mgmt-deep-pattern",
+          "pillars/security/secrets-mgmt-deep-pattern.md",
+          "secrets-mgmt-deep-pattern",
+          "Secrets Management Deep Pattern",
+          "Secrets Management Deep",
+          "playbook Secrets Management Deep Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Secrets Management Deep Pattern\n\nBeyond `vault-pattern.md` — operational specifics: dynamic secrets, short-lived credentials, secret-zero, secret-less architectures, OIDC federation.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/secrets-mgmt-deep-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/secrets-mgmt-deep-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:secrets-mgmt-deep-pattern",
+            "title": "Secrets Management Deep Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/secrets-mgmt-deep-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:session-mgmt-pattern",
+      "kind": "document",
+      "label": "Session Management Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/session-mgmt-pattern",
+          "pillars/security/session-mgmt-pattern.md",
+          "session-mgmt-pattern",
+          "Session Management Pattern",
+          "Session Management",
+          "playbook Session Management Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Session Management Pattern\n\nHow to model + protect user sessions — login state, refresh, revocation, idle expiry, device binding.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/session-mgmt-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/session-mgmt-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:session-mgmt-pattern",
+            "title": "Session Management Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/session-mgmt-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:threat-model-template",
+      "kind": "document",
+      "label": "Threat Model Template",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/threat-model-template",
+          "pillars/security/threat-model-template.md",
+          "threat-model-template",
+          "Threat Model Template",
+          "Threat Model",
+          "playbook Threat Model Template"
+        ]
+      },
+      "answer": {
+        "markdown": "## Threat Model Template\n\nSkeleton for the per-project threat model doc. Lives at `docs/security/threat-model.md`. Revisited every release.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/threat-model-template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/threat-model-template.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:threat-model-template",
+            "title": "Threat Model Template",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/threat-model-template"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:universal",
+      "kind": "document",
+      "label": "Security — Universal Principles",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/universal",
+          "pillars/security/universal.md",
+          "universal",
+          "Security — Universal Principles",
+          "playbook Security — Universal Principles"
+        ]
+      },
+      "answer": {
+        "markdown": "## Security — Universal Principles\n\nHow to bake security into the codebase from PR #1, when agents (not a hardened security team) write most of it.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/universal)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/universal.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:universal",
+            "title": "Security — Universal Principles",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/universal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:vault-pattern",
+      "kind": "document",
+      "label": "Vault Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/vault-pattern",
+          "pillars/security/vault-pattern.md",
+          "vault-pattern",
+          "Vault Pattern",
+          "Vault",
+          "playbook Vault Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Vault Pattern\n\nHow to store secrets so a leaked log line, a stolen disk, or a curious agent does not compromise the system.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/vault-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/vault-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:vault-pattern",
+            "title": "Vault Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/vault-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:security:vulnerability-mgmt-pattern",
+      "kind": "document",
+      "label": "Vulnerability Management Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/security/vulnerability-mgmt-pattern",
+          "pillars/security/vulnerability-mgmt-pattern.md",
+          "vulnerability-mgmt-pattern",
+          "Vulnerability Management Pattern",
+          "Vulnerability Management",
+          "playbook Vulnerability Management Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Vulnerability Management Pattern\n\nHow to keep the system patched without bottlenecking on a person watching CVE feeds.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/vulnerability-mgmt-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/vulnerability-mgmt-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:security:vulnerability-mgmt-pattern",
+            "title": "Vulnerability Management Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/security/vulnerability-mgmt-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:a11y-checklist",
+      "kind": "document",
+      "label": "Accessibility Checklist",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/a11y-checklist",
+          "pillars/ui-ux/a11y-checklist.md",
+          "a11y-checklist",
+          "Accessibility Checklist",
+          "playbook Accessibility Checklist"
+        ]
+      },
+      "answer": {
+        "markdown": "## Accessibility Checklist\n\nWhat every shipped surface passes before merge, and how to prove it.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/a11y-checklist)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/a11y-checklist.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:a11y-checklist",
+            "title": "Accessibility Checklist",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/a11y-checklist"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:accessibility-deep-pattern",
+      "kind": "document",
+      "label": "Accessibility Deep Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/accessibility-deep-pattern",
+          "pillars/ui-ux/accessibility-deep-pattern.md",
+          "accessibility-deep-pattern",
+          "Accessibility Deep Pattern",
+          "Accessibility Deep",
+          "playbook Accessibility Deep Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Accessibility Deep Pattern\n\nBeyond the per-PR checklist — the substance of WCAG-AA conformance, the failure modes that matter, the testing discipline that catches what automation cannot.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/accessibility-deep-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/accessibility-deep-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:accessibility-deep-pattern",
+            "title": "Accessibility Deep Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/accessibility-deep-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:design-system-governance-pattern",
+      "kind": "document",
+      "label": "Design System Governance Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/design-system-governance-pattern",
+          "pillars/ui-ux/design-system-governance-pattern.md",
+          "design-system-governance-pattern",
+          "Design System Governance Pattern",
+          "Design System Governance",
+          "playbook Design System Governance Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Design System Governance Pattern\n\nHow to keep a design system useful as it grows — without bloat, without dictatorial restrictions, without drift.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/design-system-governance-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/design-system-governance-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:design-system-governance-pattern",
+            "title": "Design System Governance Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/design-system-governance-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:design-tokens-pattern",
+      "kind": "document",
+      "label": "Design Tokens Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/design-tokens-pattern",
+          "pillars/ui-ux/design-tokens-pattern.md",
+          "design-tokens-pattern",
+          "Design Tokens Pattern",
+          "Design Tokens",
+          "playbook Design Tokens Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Design Tokens Pattern\n\nHow to define visual values once and let them flow through every screen, theme, and brand.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/design-tokens-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/design-tokens-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:design-tokens-pattern",
+            "title": "Design Tokens Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/design-tokens-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:empty-states-pattern",
+      "kind": "document",
+      "label": "Empty States Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/empty-states-pattern",
+          "pillars/ui-ux/empty-states-pattern.md",
+          "empty-states-pattern",
+          "Empty States Pattern",
+          "Empty States",
+          "playbook Empty States Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Empty States Pattern\n\nHow to turn empty surfaces from dead ends into next-step launchpads.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/empty-states-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/empty-states-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:empty-states-pattern",
+            "title": "Empty States Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/empty-states-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:i18n-deep-pattern",
+      "kind": "document",
+      "label": "Internationalisation Deep Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/i18n-deep-pattern",
+          "pillars/ui-ux/i18n-deep-pattern.md",
+          "i18n-deep-pattern",
+          "Internationalisation Deep Pattern",
+          "Internationalisation Deep",
+          "playbook Internationalisation Deep Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Internationalisation Deep Pattern\n\nBeyond ''wrap every string in `t()`'' — the substance of locale-correct UI: plural rules, gender, ICU formatting, RTL, dates, numbers, currency, sorting, search.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/i18n-deep-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/i18n-deep-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:i18n-deep-pattern",
+            "title": "Internationalisation Deep Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/i18n-deep-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux",
+      "kind": "document",
+      "label": "Pillar — UI / UX",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux",
+          "pillars/ui-ux/index.md",
+          "ui-ux",
+          "Pillar — UI / UX",
+          "playbook Pillar — UI / UX"
+        ]
+      },
+      "answer": {
+        "markdown": "## Pillar — UI / UX\n\nHow to keep a multi-screen product visually coherent, intl-ready, and accessible when agents are writing screens in parallel.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/index.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux",
+            "title": "Pillar — UI / UX",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:intl-pattern",
+      "kind": "document",
+      "label": "Intl Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/intl-pattern",
+          "pillars/ui-ux/intl-pattern.md",
+          "intl-pattern",
+          "Intl Pattern",
+          "Intl",
+          "playbook Intl Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Intl Pattern\n\nHow to never ship hardcoded user-visible strings, so the next locale is configuration, not a sweep.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/intl-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/intl-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:intl-pattern",
+            "title": "Intl Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/intl-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:primitives-pattern",
+      "kind": "document",
+      "label": "Primitives Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/primitives-pattern",
+          "pillars/ui-ux/primitives-pattern.md",
+          "primitives-pattern",
+          "Primitives Pattern",
+          "Primitives",
+          "playbook Primitives Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Primitives Pattern\n\nHow to ship a one-package primitives catalog so every screen looks like the same product.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/primitives-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/primitives-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:primitives-pattern",
+            "title": "Primitives Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/primitives-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:universal",
+      "kind": "document",
+      "label": "UI / UX — Universal Principles",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/universal",
+          "pillars/ui-ux/universal.md",
+          "universal",
+          "UI / UX — Universal Principles",
+          "playbook UI / UX — Universal Principles"
+        ]
+      },
+      "answer": {
+        "markdown": "## UI / UX — Universal Principles\n\nHow to keep a multi-screen product visually coherent, intl-ready, accessible, and honest when agents author screens in parallel.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/universal)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/universal.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:universal",
+            "title": "UI / UX — Universal Principles",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/universal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ui-ux:whitelabel-pattern",
+      "kind": "document",
+      "label": "Whitelabel Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ui-ux/whitelabel-pattern",
+          "pillars/ui-ux/whitelabel-pattern.md",
+          "whitelabel-pattern",
+          "Whitelabel Pattern",
+          "Whitelabel",
+          "playbook Whitelabel Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Whitelabel Pattern\n\nHow to make every product surface reskinnable per tenant — even if you do not sell whitelabel today.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/whitelabel-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/whitelabel-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ui-ux:whitelabel-pattern",
+            "title": "Whitelabel Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ui-ux/whitelabel-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts",
+      "kind": "document",
+      "label": "Reusable prompts",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts",
+          "prompts/index.md",
+          "Reusable prompts",
+          "playbook Reusable prompts"
+        ]
+      },
+      "answer": {
+        "markdown": "## Reusable prompts\n\nSystem prompts, sub-agent recipes, and slash-command bodies that consistently produce gold-standard output.\n\nType: **Index**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/index.md)",
+        "citations": [
+          {
+            "id": "doc:prompts",
+            "title": "Reusable prompts",
+            "href": "https://playbook.agentskit.io/docs/prompts"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:slash-clear",
+      "kind": "document",
+      "label": "Slash Command — /clear",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/slash-clear",
+          "prompts/slash-clear.md",
+          "slash-clear",
+          "Slash Command — /clear",
+          "playbook Slash Command — /clear"
+        ]
+      },
+      "answer": {
+        "markdown": "## Slash Command — /clear\n\nReset session context cleanly without losing persistent memory.\n\nType: **Slash Command**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/slash-clear)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/slash-clear.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:slash-clear",
+            "title": "Slash Command — /clear",
+            "href": "https://playbook.agentskit.io/docs/prompts/slash-clear"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:slash-goal",
+      "kind": "document",
+      "label": "Slash Command — /goal",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/slash-goal",
+          "prompts/slash-goal.md",
+          "slash-goal",
+          "Slash Command — /goal",
+          "playbook Slash Command — /goal"
+        ]
+      },
+      "answer": {
+        "markdown": "## Slash Command — /goal\n\nSet a session goal with an explicit exit condition. Stops only when condition holds.\n\nType: **Slash Command**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/slash-goal)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/slash-goal.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:slash-goal",
+            "title": "Slash Command — /goal",
+            "href": "https://playbook.agentskit.io/docs/prompts/slash-goal"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:slash-loop",
+      "kind": "document",
+      "label": "Slash Command — /loop",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/slash-loop",
+          "prompts/slash-loop.md",
+          "slash-loop",
+          "Slash Command — /loop",
+          "playbook Slash Command — /loop"
+        ]
+      },
+      "answer": {
+        "markdown": "## Slash Command — /loop\n\nRun a task repeatedly. Either on a fixed interval or self-paced based on an exit condition.\n\nType: **Slash Command**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/slash-loop)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/slash-loop.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:slash-loop",
+            "title": "Slash Command — /loop",
+            "href": "https://playbook.agentskit.io/docs/prompts/slash-loop"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:slash-review",
+      "kind": "document",
+      "label": "Slash Command — /review",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/slash-review",
+          "prompts/slash-review.md",
+          "slash-review",
+          "Slash Command — /review",
+          "playbook Slash Command — /review"
+        ]
+      },
+      "answer": {
+        "markdown": "## Slash Command — /review\n\nMulti-agent code review pass on a PR (or current branch).\n\nType: **Slash Command**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/slash-review)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/slash-review.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:slash-review",
+            "title": "Slash Command — /review",
+            "href": "https://playbook.agentskit.io/docs/prompts/slash-review"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:slash-sanity",
+      "kind": "document",
+      "label": "Slash Command — /sanity",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/slash-sanity",
+          "prompts/slash-sanity.md",
+          "slash-sanity",
+          "Slash Command — /sanity",
+          "playbook Slash Command — /sanity"
+        ]
+      },
+      "answer": {
+        "markdown": "## Slash Command — /sanity\n\nRun the cross-cutting sanity audit, surface drift.\n\nType: **Slash Command**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/slash-sanity)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/slash-sanity.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:slash-sanity",
+            "title": "Slash Command — /sanity",
+            "href": "https://playbook.agentskit.io/docs/prompts/slash-sanity"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:slash-ship",
+      "kind": "document",
+      "label": "Slash Command — /ship",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/slash-ship",
+          "prompts/slash-ship.md",
+          "slash-ship",
+          "Slash Command — /ship",
+          "playbook Slash Command — /ship"
+        ]
+      },
+      "answer": {
+        "markdown": "## Slash Command — /ship\n\nRun the release-gate checklist. Does not actually release — produces the readiness verdict.\n\nType: **Slash Command**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/slash-ship)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/slash-ship.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:slash-ship",
+            "title": "Slash Command — /ship",
+            "href": "https://playbook.agentskit.io/docs/prompts/slash-ship"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:subagent-code-explorer",
+      "kind": "document",
+      "label": "Sub-agent Recipe — Code Explorer",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/subagent-code-explorer",
+          "prompts/subagent-code-explorer.md",
+          "subagent-code-explorer",
+          "Sub-agent Recipe — Code Explorer",
+          "playbook Sub-agent Recipe — Code Explorer"
+        ]
+      },
+      "answer": {
+        "markdown": "## Sub-agent Recipe — Code Explorer\n\nDeep-trace agent. Maps execution paths, dependencies, and abstraction layers across a feature so the orchestrator can reason about a change.\n\nType: **Sub-agent Recipe**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/subagent-code-explorer)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/subagent-code-explorer.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:subagent-code-explorer",
+            "title": "Sub-agent Recipe — Code Explorer",
+            "href": "https://playbook.agentskit.io/docs/prompts/subagent-code-explorer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:subagent-code-reviewer",
+      "kind": "document",
+      "label": "Sub-agent Recipe — Code Reviewer",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/subagent-code-reviewer",
+          "prompts/subagent-code-reviewer.md",
+          "subagent-code-reviewer",
+          "Sub-agent Recipe — Code Reviewer",
+          "playbook Sub-agent Recipe — Code Reviewer"
+        ]
+      },
+      "answer": {
+        "markdown": "## Sub-agent Recipe — Code Reviewer\n\nConfidence-filtered review pass on a diff. Returns issues; does not approve / merge.\n\nType: **Sub-agent Recipe**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/subagent-code-reviewer)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/subagent-code-reviewer.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:subagent-code-reviewer",
+            "title": "Sub-agent Recipe — Code Reviewer",
+            "href": "https://playbook.agentskit.io/docs/prompts/subagent-code-reviewer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:subagent-explore",
+      "kind": "document",
+      "label": "Sub-agent Recipe — Explore",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/subagent-explore",
+          "prompts/subagent-explore.md",
+          "subagent-explore",
+          "Sub-agent Recipe — Explore",
+          "playbook Sub-agent Recipe — Explore"
+        ]
+      },
+      "answer": {
+        "markdown": "## Sub-agent Recipe — Explore\n\nRead-only fan-out search agent. Orchestrator delegates ''find me X'' tasks here.\n\nType: **Sub-agent Recipe**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/subagent-explore)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/subagent-explore.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:subagent-explore",
+            "title": "Sub-agent Recipe — Explore",
+            "href": "https://playbook.agentskit.io/docs/prompts/subagent-explore"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:subagent-plan",
+      "kind": "document",
+      "label": "Sub-agent Recipe — Plan",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/subagent-plan",
+          "prompts/subagent-plan.md",
+          "subagent-plan",
+          "Sub-agent Recipe — Plan",
+          "playbook Sub-agent Recipe — Plan"
+        ]
+      },
+      "answer": {
+        "markdown": "## Sub-agent Recipe — Plan\n\nDesigns a step-by-step implementation plan from a task description and codebase context. Does not implement.\n\nType: **Sub-agent Recipe**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/subagent-plan)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/subagent-plan.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:subagent-plan",
+            "title": "Sub-agent Recipe — Plan",
+            "href": "https://playbook.agentskit.io/docs/prompts/subagent-plan"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:system-architect",
+      "kind": "document",
+      "label": "System Prompt — Architect",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/system-architect",
+          "prompts/system-architect.md",
+          "system-architect",
+          "System Prompt — Architect",
+          "Architect",
+          "playbook System Prompt — Architect"
+        ]
+      },
+      "answer": {
+        "markdown": "## System Prompt — Architect\n\nInject as system prompt when the task is designing a new package boundary, new contract, new ADR, or evaluating a structural change.\n\nType: **System Prompt**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/system-architect)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/system-architect.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:system-architect",
+            "title": "System Prompt — Architect",
+            "href": "https://playbook.agentskit.io/docs/prompts/system-architect"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:system-implementer",
+      "kind": "document",
+      "label": "System Prompt — Implementer",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/system-implementer",
+          "prompts/system-implementer.md",
+          "system-implementer",
+          "System Prompt — Implementer",
+          "Implementer",
+          "playbook System Prompt — Implementer"
+        ]
+      },
+      "answer": {
+        "markdown": "## System Prompt — Implementer\n\nInject as system prompt when the task is building a sub-unit against a finalised plan.\n\nType: **System Prompt**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/system-implementer)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/system-implementer.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:system-implementer",
+            "title": "System Prompt — Implementer",
+            "href": "https://playbook.agentskit.io/docs/prompts/system-implementer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:system-reviewer",
+      "kind": "document",
+      "label": "System Prompt — Reviewer",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/system-reviewer",
+          "prompts/system-reviewer.md",
+          "system-reviewer",
+          "System Prompt — Reviewer",
+          "Reviewer",
+          "playbook System Prompt — Reviewer"
+        ]
+      },
+      "answer": {
+        "markdown": "## System Prompt — Reviewer\n\nInject as system prompt for code review passes. Produces confidence-scored issue lists, not pile-on critique.\n\nType: **System Prompt**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/system-reviewer)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/system-reviewer.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:system-reviewer",
+            "title": "System Prompt — Reviewer",
+            "href": "https://playbook.agentskit.io/docs/prompts/system-reviewer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:prompts:system-security",
+      "kind": "document",
+      "label": "System Prompt — Security Reviewer",
+      "match": {
+        "type": "exact",
+        "values": [
+          "prompts/system-security",
+          "prompts/system-security.md",
+          "system-security",
+          "System Prompt — Security Reviewer",
+          "Security Reviewer",
+          "playbook System Prompt — Security Reviewer"
+        ]
+      },
+      "answer": {
+        "markdown": "## System Prompt — Security Reviewer\n\nInject as system prompt for security-focused review passes. Narrower than the general reviewer; deeper on the threat model.\n\nType: **System Prompt**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/system-security)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/system-security.md)",
+        "citations": [
+          {
+            "id": "doc:prompts:system-security",
+            "title": "System Prompt — Security Reviewer",
+            "href": "https://playbook.agentskit.io/docs/prompts/system-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-adr.example.mjs",
+      "kind": "command",
+      "label": "check-adr.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-adr.example.mjs",
+          "check-adr.example.mjs",
+          "playbook check-adr.example.mjs",
+          "run check-adr.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-adr.example.mjs\n\nAgents Playbook source: check-adr.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-adr.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-adr.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-adr.example.mjs",
+            "title": "check-adr.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-adr.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-completeness.example.mjs",
+      "kind": "command",
+      "label": "check-completeness.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-completeness.example.mjs",
+          "check-completeness.example.mjs",
+          "playbook check-completeness.example.mjs",
+          "run check-completeness.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-completeness.example.mjs\n\nAgents Playbook source: check-completeness.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-completeness.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-completeness.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-completeness.example.mjs",
+            "title": "check-completeness.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-completeness.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-error-raw.example.mjs",
+      "kind": "command",
+      "label": "check-error-raw.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-error-raw.example.mjs",
+          "check-error-raw.example.mjs",
+          "playbook check-error-raw.example.mjs",
+          "run check-error-raw.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-error-raw.example.mjs\n\nAgents Playbook source: check-error-raw.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-error-raw.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-error-raw.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-error-raw.example.mjs",
+            "title": "check-error-raw.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-error-raw.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-file-size.example.mjs",
+      "kind": "command",
+      "label": "check-file-size.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-file-size.example.mjs",
+          "check-file-size.example.mjs",
+          "playbook check-file-size.example.mjs",
+          "run check-file-size.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-file-size.example.mjs\n\nAgents Playbook source: check-file-size.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-file-size.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-file-size.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-file-size.example.mjs",
+            "title": "check-file-size.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-file-size.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-intl.example.mjs",
+      "kind": "command",
+      "label": "check-intl.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-intl.example.mjs",
+          "check-intl.example.mjs",
+          "playbook check-intl.example.mjs",
+          "run check-intl.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-intl.example.mjs\n\nAgents Playbook source: check-intl.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-intl.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-intl.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-intl.example.mjs",
+            "title": "check-intl.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-intl.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-named-exports.example.mjs",
+      "kind": "command",
+      "label": "check-named-exports.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-named-exports.example.mjs",
+          "check-named-exports.example.mjs",
+          "playbook check-named-exports.example.mjs",
+          "run check-named-exports.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-named-exports.example.mjs\n\nAgents Playbook source: check-named-exports.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-named-exports.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-named-exports.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-named-exports.example.mjs",
+            "title": "check-named-exports.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-named-exports.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-native-html.example.mjs",
+      "kind": "command",
+      "label": "check-native-html.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-native-html.example.mjs",
+          "check-native-html.example.mjs",
+          "playbook check-native-html.example.mjs",
+          "run check-native-html.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-native-html.example.mjs\n\nAgents Playbook source: check-native-html.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-native-html.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-native-html.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-native-html.example.mjs",
+            "title": "check-native-html.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-native-html.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-no-any.example.mjs",
+      "kind": "command",
+      "label": "check-no-any.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-no-any.example.mjs",
+          "check-no-any.example.mjs",
+          "playbook check-no-any.example.mjs",
+          "run check-no-any.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-no-any.example.mjs\n\nAgents Playbook source: check-no-any.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-no-any.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-no-any.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-no-any.example.mjs",
+            "title": "check-no-any.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-no-any.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-pr-intent.example.mjs",
+      "kind": "command",
+      "label": "check-pr-intent.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-pr-intent.example.mjs",
+          "check-pr-intent.example.mjs",
+          "playbook check-pr-intent.example.mjs",
+          "run check-pr-intent.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-pr-intent.example.mjs\n\nAgents Playbook source: check-pr-intent.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-pr-intent.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-pr-intent.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-pr-intent.example.mjs",
+            "title": "check-pr-intent.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-pr-intent.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-quality-gates.example.mjs",
+      "kind": "command",
+      "label": "check-quality-gates.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-quality-gates.example.mjs",
+          "check-quality-gates.example.mjs",
+          "playbook check-quality-gates.example.mjs",
+          "run check-quality-gates.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-quality-gates.example.mjs\n\nAgents Playbook source: check-quality-gates.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-quality-gates.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-quality-gates.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-quality-gates.example.mjs",
+            "title": "check-quality-gates.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-quality-gates.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-rfc.example.mjs",
+      "kind": "command",
+      "label": "check-rfc.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-rfc.example.mjs",
+          "check-rfc.example.mjs",
+          "playbook check-rfc.example.mjs",
+          "run check-rfc.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-rfc.example.mjs\n\nAgents Playbook source: check-rfc.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-rfc.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-rfc.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-rfc.example.mjs",
+            "title": "check-rfc.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-rfc.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-secrets.example.mjs",
+      "kind": "command",
+      "label": "check-secrets.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-secrets.example.mjs",
+          "check-secrets.example.mjs",
+          "playbook check-secrets.example.mjs",
+          "run check-secrets.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-secrets.example.mjs\n\nAgents Playbook source: check-secrets.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-secrets.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-secrets.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-secrets.example.mjs",
+            "title": "check-secrets.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-secrets.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts:check-tokens.example.mjs",
+      "kind": "command",
+      "label": "check-tokens.example.mjs",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts/check-tokens.example.mjs",
+          "check-tokens.example.mjs",
+          "playbook check-tokens.example.mjs",
+          "run check-tokens.example.mjs"
+        ]
+      },
+      "answer": {
+        "markdown": "## check-tokens.example.mjs\n\nAgents Playbook source: check-tokens.example.mjs.\n\nType: **Gate Script**\nRun after copying: `node scripts/check-tokens.example.mjs`\n\n[Open the canonical source](https://playbook.agentskit.io/raw/scripts/check-tokens.example.mjs)",
+        "citations": [
+          {
+            "id": "doc:scripts:check-tokens.example.mjs",
+            "title": "check-tokens.example.mjs",
+            "href": "https://playbook.agentskit.io/raw/scripts/check-tokens.example.mjs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:scripts",
+      "kind": "document",
+      "label": "Reference gate scripts",
+      "match": {
+        "type": "exact",
+        "values": [
+          "scripts",
+          "scripts/index.md",
+          "Reference gate scripts",
+          "playbook Reference gate scripts"
+        ]
+      },
+      "answer": {
+        "markdown": "## Reference gate scripts\n\nDrop-in reference implementations for the quality + structural gates the pillars rely on. Adapt to your stack; the contract each gate enforces is more important than the specific code.\n\nType: **Index**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/scripts)\n[Read raw Markdown](https://playbook.agentskit.io/raw/scripts/index.md)",
+        "citations": [
+          {
+            "id": "doc:scripts",
+            "title": "Reference gate scripts",
+            "href": "https://playbook.agentskit.io/docs/scripts"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:templates:ADR.template",
+      "kind": "document",
+      "label": "ADR Template",
+      "match": {
+        "type": "exact",
+        "values": [
+          "templates/ADR.template",
+          "templates/ADR.template.md",
+          "ADR.template",
+          "ADR Template",
+          "ADR",
+          "playbook ADR Template"
+        ]
+      },
+      "answer": {
+        "markdown": "## ADR Template\n\nSkeleton for an Architecture Decision Record. Copy the block below into docs/adr/NNNN-<slug>.md and fill the bracketed parts.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/ADR.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/ADR.template.md)",
+        "citations": [
+          {
+            "id": "doc:templates:ADR.template",
+            "title": "ADR Template",
+            "href": "https://playbook.agentskit.io/docs/templates/ADR.template"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:templates:AGENTS.md.template",
+      "kind": "document",
+      "label": "AGENTS.md template",
+      "match": {
+        "type": "exact",
+        "values": [
+          "templates/AGENTS.md.template",
+          "templates/AGENTS.md.template.md",
+          "AGENTS.md.template",
+          "AGENTS.md template",
+          "AGENTS.md",
+          "playbook AGENTS.md template"
+        ]
+      },
+      "answer": {
+        "markdown": "## AGENTS.md template\n\nDrop at repo root. The routing table that answers ''which package owns X?'' before an agent makes the wrong edit.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/AGENTS.md.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/AGENTS.md.template.md)",
+        "citations": [
+          {
+            "id": "doc:templates:AGENTS.md.template",
+            "title": "AGENTS.md template",
+            "href": "https://playbook.agentskit.io/docs/templates/AGENTS.md.template"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:templates:CLAUDE.md.template",
+      "kind": "document",
+      "label": "CLAUDE.md template",
+      "match": {
+        "type": "exact",
+        "values": [
+          "templates/CLAUDE.md.template",
+          "templates/CLAUDE.md.template.md",
+          "CLAUDE.md.template",
+          "CLAUDE.md template",
+          "CLAUDE.md",
+          "playbook CLAUDE.md template"
+        ]
+      },
+      "answer": {
+        "markdown": "## CLAUDE.md template\n\nDrop this at the repo root as `CLAUDE.md` (or `AGENTS.md` for tool-neutral). Customise the marked sections. Keep it under 200 lines; agents read the whole thing every session.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/CLAUDE.md.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/CLAUDE.md.template.md)",
+        "citations": [
+          {
+            "id": "doc:templates:CLAUDE.md.template",
+            "title": "CLAUDE.md template",
+            "href": "https://playbook.agentskit.io/docs/templates/CLAUDE.md.template"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:templates:MEMORY.md.template",
+      "kind": "document",
+      "label": "MEMORY pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "templates/MEMORY.md.template",
+          "templates/MEMORY.md.template.md",
+          "MEMORY.md.template",
+          "MEMORY pattern",
+          "MEMORY",
+          "playbook MEMORY pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## MEMORY pattern\n\nPersistent agent memory survives between sessions. The pattern: one fact per file, plus an index file.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/MEMORY.md.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/MEMORY.md.template.md)",
+        "citations": [
+          {
+            "id": "doc:templates:MEMORY.md.template",
+            "title": "MEMORY pattern",
+            "href": "https://playbook.agentskit.io/docs/templates/MEMORY.md.template"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:templates:PR-intent.template",
+      "kind": "document",
+      "label": "PR Intent Manifest",
+      "match": {
+        "type": "exact",
+        "values": [
+          "templates/PR-intent.template",
+          "templates/PR-intent.template.md",
+          "PR-intent.template",
+          "PR Intent Manifest",
+          "playbook PR Intent Manifest"
+        ]
+      },
+      "answer": {
+        "markdown": "## PR Intent Manifest\n\nEmbed this block in every PR description. A gate parses it and verifies that the diff matches the claims.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/PR-intent.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/PR-intent.template.md)",
+        "citations": [
+          {
+            "id": "doc:templates:PR-intent.template",
+            "title": "PR Intent Manifest",
+            "href": "https://playbook.agentskit.io/docs/templates/PR-intent.template"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:templates:RFC.template",
+      "kind": "document",
+      "label": "RFC Template",
+      "match": {
+        "type": "exact",
+        "values": [
+          "templates/RFC.template",
+          "templates/RFC.template.md",
+          "RFC.template",
+          "RFC Template",
+          "RFC",
+          "playbook RFC Template"
+        ]
+      },
+      "answer": {
+        "markdown": "## RFC Template\n\nSkeleton for a Request for Comments. Copy the block below into docs/rfc/NNNN-<slug>.md and fill the bracketed parts.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/RFC.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/RFC.template.md)",
+        "citations": [
+          {
+            "id": "doc:templates:RFC.template",
+            "title": "RFC Template",
+            "href": "https://playbook.agentskit.io/docs/templates/RFC.template"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:templates",
+      "kind": "document",
+      "label": "Templates",
+      "match": {
+        "type": "exact",
+        "values": [
+          "templates",
+          "templates/index.md",
+          "playbook Templates"
+        ]
+      },
+      "answer": {
+        "markdown": "## Templates\n\nCopy-paste skeletons for the documents the playbook relies on — bootstrap docs, decision records, and the PR-intent manifest.\n\nType: **Index**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/index.md)",
+        "citations": [
+          {
+            "id": "doc:templates",
+            "title": "Templates",
+            "href": "https://playbook.agentskit.io/docs/templates"
+          }
+        ]
+      }
+    },
+    {
+      "id": "command:onboard",
+      "kind": "command",
+      "label": "Onboard a coding agent",
+      "match": {
+        "type": "exact",
+        "values": [
+          "onboard my agent",
+          "onboard a coding agent",
+          "playbook onboarding",
+          "adopt the playbook"
+        ]
+      },
+      "answer": {
+        "markdown": "Start with the copy-ready onboarding prompt. It asks your coding agent to read the full bundle, audit the repository, rank gaps by risk, and wait for approval before changing code.",
+        "citations": [
+          {
+            "id": "command:onboard",
+            "title": "Onboard your agent",
+            "href": "https://playbook.agentskit.io/docs/onboard-your-agent"
+          }
+        ]
+      }
+    },
+    {
+      "id": "command:bundle",
+      "kind": "command",
+      "label": "Fetch the Playbook bundle",
+      "match": {
+        "type": "exact",
+        "values": [
+          "fetch playbook",
+          "download playbook",
+          "playbook bundle",
+          "curl playbook"
+        ]
+      },
+      "answer": {
+        "markdown": "Fetch the complete LLM-readable corpus with `curl https://playbook.agentskit.io/llms-full.txt` or download `playbook-bundle.zip` for local indexing.",
+        "citations": [
+          {
+            "id": "command:bundle",
+            "title": "Playbook machine-readable bundle",
+            "href": "https://playbook.agentskit.io/llms-full.txt"
+          }
+        ]
+      }
+    },
+    {
+      "id": "nav:contribute",
+      "kind": "contribution",
+      "label": "Contribute a production-earned pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "contribute",
+          "contribute a pattern",
+          "playbook contribution",
+          "add a playbook pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "Contributions are welcome when a pattern is backed by a reproducible production lesson. Follow the contribution guide, include the failure mode and enforcement evidence, then open a pull request.",
+        "citations": [
+          {
+            "id": "nav:contribute",
+            "title": "Contribute to Agents Playbook",
+            "href": "https://github.com/AgentsKit-io/agents-playbook/blob/main/CONTRIBUTING.md"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:agentskit",
+      "kind": "ecosystem",
+      "label": "AgentsKit framework",
+      "match": {
+        "type": "exact",
+        "values": [
+          "agentskit",
+          "agentskit framework",
+          "framework"
+        ]
+      },
+      "answer": {
+        "markdown": "AgentsKit is the parent framework. Use it to build the agents and runtimes governed by Playbook patterns.",
+        "citations": [
+          {
+            "id": "ecosystem:agentskit",
+            "title": "AgentsKit documentation",
+            "href": "https://www.agentskit.io/docs"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:registry",
+      "kind": "ecosystem",
+      "label": "AgentsKit Registry",
+      "match": {
+        "type": "exact",
+        "values": [
+          "registry",
+          "agentskit registry",
+          "ready agents"
+        ]
+      },
+      "answer": {
+        "markdown": "Use the Registry to install validated, readable agent source, then apply Playbook gates and review patterns as you adapt it.",
+        "citations": [
+          {
+            "id": "ecosystem:registry",
+            "title": "AgentsKit Registry",
+            "href": "https://registry.agentskit.io"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:chat",
+      "kind": "ecosystem",
+      "label": "AgentsKit Chat",
+      "match": {
+        "type": "exact",
+        "values": [
+          "agentskit chat",
+          "agentschat",
+          "chat framework"
+        ]
+      },
+      "answer": {
+        "markdown": "AgentsKit Chat powers this local-first assistant and turns one behavior definition into native chat experiences across supported interfaces.",
+        "citations": [
+          {
+            "id": "ecosystem:chat",
+            "title": "AgentsKit Chat",
+            "href": "https://github.com/AgentsKit-io/agentskit-chat"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:doc-bridge",
+      "kind": "ecosystem",
+      "label": "Doc Bridge",
+      "match": {
+        "type": "exact",
+        "values": [
+          "doc bridge",
+          "doc-bridge",
+          "documentation bridge"
+        ]
+      },
+      "answer": {
+        "markdown": "Doc Bridge validates the Playbook corpus, machine-readable index, ownership routes, and agent handoffs.",
+        "citations": [
+          {
+            "id": "ecosystem:doc-bridge",
+            "title": "Doc Bridge",
+            "href": "https://github.com/AgentsKit-io/doc-bridge"
+          }
+        ]
+      }
+    }
+  ]
+}

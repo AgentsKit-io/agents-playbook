@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "standardId": "agentskit-readme-standard-v1",
+  "status": "approved",
+  "approval": {
+    "approvedBy": "EmersonBraun",
+    "approvedOn": "2026-07-13",
+    "record": "https://github.com/AgentsKit-io/agentskit/issues/1203#issuecomment-4963143065"
+  },
+  "profiles": [
+    {
+      "id": "top-level-repository",
+      "description": "Parent or product repository with a full adoption and contribution journey.",
+      "budgets": {
+        "badges": {
+          "max": 12
+        },
+        "images": {
+          "min": 1,
+          "max": 6,
+          "zeroRequiresException": true
+        },
+        "accessibility": {
+          "maxMissingAlt": 0
+        },
+        "darkMode": {
+          "requireStrategy": true
+        },
+        "commandVerification": {
+          "maxUnverifiedPrimary": 0
+        },
+        "freshness": {
+          "reviewCadenceDays": 90,
+          "requireSourceHash": true
+        }
+      }
+    },
+    {
+      "id": "public-app",
+      "description": "Runnable public product or documentation application.",
+      "budgets": {
+        "badges": {
+          "max": 8
+        },
+        "images": {
+          "min": 1,
+          "max": 5,
+          "zeroRequiresException": true
+        },
+        "accessibility": {
+          "maxMissingAlt": 0
+        },
+        "darkMode": {
+          "requireStrategy": true
+        },
+        "commandVerification": {
+          "maxUnverifiedPrimary": 0
+        },
+        "freshness": {
+          "reviewCadenceDays": 90,
+          "requireSourceHash": true
+        }
+      }
+    },
+    {
+      "id": "major-package",
+      "description": "Primary package with its own adoption journey, examples, and compatibility surface.",
+      "budgets": {
+        "badges": {
+          "max": 8
+        },
+        "images": {
+          "min": 1,
+          "max": 4,
+          "zeroRequiresException": true
+        },
+        "accessibility": {
+          "maxMissingAlt": 0
+        },
+        "darkMode": {
+          "requireStrategy": true
+        },
+        "commandVerification": {
+          "maxUnverifiedPrimary": 0
+        },
+        "freshness": {
+          "reviewCadenceDays": 120,
+          "requireSourceHash": true
+        }
+      }
+    },
+    {
+      "id": "concise-package",
+      "description": "Focused package whose README may stay short when the package guide carries depth.",
+      "budgets": {
+        "badges": {
+          "max": 6
+        },
+        "images": {
+          "min": 0,
+          "max": 2,
+          "zeroRequiresException": true
+        },
+        "accessibility": {
+          "maxMissingAlt": 0
+        },
+        "darkMode": {
+          "requireStrategy": true
+        },
+        "commandVerification": {
+          "maxUnverifiedPrimary": 0
+        },
+        "freshness": {
+          "reviewCadenceDays": 180,
+          "requireSourceHash": true
+        }
+      }
+    }
+  ],
+  "surfaces": [
+    {
+      "id": "playbook-root",
+      "path": "README.md",
+      "profileId": "top-level-repository",
+      "dimensions": {
+        "promise": [
+          "Production-earned rules",
+          "It is intended for"
+        ],
+        "proof": [
+          "## What is verified",
+          "Doc Bridge health"
+        ],
+        "examples": [
+          "## Verify the local knowledge layer",
+          "<!-- readme-example:verify-playbook -->"
+        ],
+        "visuals": [
+          "docs/assets/playbook-flow.svg",
+          "```mermaid"
+        ],
+        "maturity": [
+          "currently `0.1.x`",
+          "internal React components as private"
+        ],
+        "compatibility": [
+          "Node.js 22",
+          "pnpm 9"
+        ],
+        "contribution": [
+          "## Contribute a production lesson",
+          "CONTRIBUTING.md",
+          "CC BY 4.0"
+        ],
+        "metadata": [
+          "**Topics:**",
+          "`ai-agents`",
+          "`developer-experience`"
+        ],
+        "ecosystem": [
+          "## AgentsKit ecosystem",
+          "registry.agentskit.io",
+          "AgentsKit Chat",
+          "Doc Bridge",
+          "Code Review CLI"
+        ]
+      },
+      "visuals": [
+        {
+          "src": "app/icon.svg",
+          "kind": "brand",
+          "darkMode": "neutral"
+        },
+        {
+          "src": "docs/assets/playbook-flow.svg",
+          "kind": "explanation",
+          "darkMode": "neutral"
+        }
+      ],
+      "commands": [
+        {
+          "id": "verify-local-knowledge",
+          "command": "node examples/verify-playbook.mjs",
+          "test": "scripts/readme-standard.test.mjs",
+          "testCommand": "pnpm test:readme-standard"
+        }
+      ],
+      "examples": [
+        {
+          "id": "verify-playbook",
+          "fixture": "examples/verify-playbook.mjs",
+          "test": "scripts/readme-standard.test.mjs",
+          "testCommand": "pnpm test:readme-standard"
+        }
+      ],
+      "freshness": {
+        "reviewedOn": "2026-07-14",
+        "reviewDueOn": "2026-10-12",
+        "sources": [
+          "README.md",
+          "CONTRIBUTING.md",
+          "app/stats.snapshot.json",
+          "doc-bridge.config.json",
+          "examples/verify-playbook.mjs",
+          "public/deterministic/knowledge.json",
+          "public/deterministic/site-config.json"
+        ],
+        "sourceHash": "sha256:6073502896536e023c9d657856d2f9bd3458b06a2c62b0bad2fd92a7d59093a3"
+      },
+      "exceptions": []
+    }
+  ]
+}

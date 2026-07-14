@@ -5,18 +5,28 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbo",
-    "prebuild": "node scripts/gen-stats-snapshot.mjs",
+    "prebuild": "node scripts/gen-stats-snapshot.mjs && node scripts/build-discovery.mjs && node scripts/build-bundle.mjs",
     "gen:stats": "node scripts/gen-stats-snapshot.mjs",
     "gen:okf-type": "node scripts/add-okf-type.mjs",
     "check:okf-type": "node scripts/add-okf-type.mjs --check",
-    "build": "node scripts/build-bundle.mjs && next build",
+    "build": "next build",
     "start": "next start",
     "postinstall": "fumadocs-mdx",
     "build:bundle": "node scripts/build-bundle.mjs",
+    "build:discovery": "node scripts/build-discovery.mjs",
     "lint": "tsc --noEmit",
-    "docs:bridge:index": "ak-docs index",
+    "test": "vitest run",
+    "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
+    "test:onboarding": "vitest run scripts/onboarding-proof.test.mjs",
+    "test:e2e": "playwright test",
+    "check:readme-standard": "node scripts/check-readme-standard.mjs",
+    "readme:standard:refresh": "node scripts/refresh-readme-standard.mjs",
+    "docs:bridge:config": "node scripts/generate-doc-bridge-config.mjs",
+    "check:doc-bridge-config": "node scripts/generate-doc-bridge-config.mjs --check",
+    "docs:bridge:index": "node scripts/generate-doc-bridge-config.mjs && ak-docs index",
     "docs:bridge:query": "ak-docs query",
-    "docs:bridge:gate": "ak-docs gate run"
+    "docs:bridge:gate": "ak-docs gate run",
+    "check:all": "pnpm check:okf-type && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:readme-standard && pnpm test && pnpm lint && pnpm build"
   },
   "dependencies": {
     "@agentskit/chat": "0.2.0",
@@ -35,14 +45,16 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@agentskit/doc-bridge": "1.1.1",
+    "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4.0.0",
-    "@agentskit/doc-bridge": "1.0.2",
     "@types/mdx": "^2.0.13",
     "@types/node": "^22.10.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "tailwindcss": "^4.0.0",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.10"
   },
   "packageManager": "pnpm@9.15.4",
   "engines": {

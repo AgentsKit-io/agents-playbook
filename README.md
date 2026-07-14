@@ -1,98 +1,149 @@
-# agents-playbook
+<p align="center">
+  <img src="./app/icon.svg" width="88" height="88" alt="AgentsKit logo" />
+</p>
 
-**The gold-standard playbook for shipping production software with AI coding agents.**
+<h1 align="center">Agents Playbook</h1>
 
-Distilled from ~1 year of agent-driven development on a multi-package TypeScript monorepo, this repo captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from agents like Claude, Cursor, and Copilot.
+<p align="center">
+  Production-earned rules, executable gates, and copy-ready templates for software built with AI coding agents.
+</p>
 
-**Live site:** https://playbook.agentskit.io (deploy via `pnpm install && pnpm dev`).
+<p align="center">
+  <a href="https://playbook.agentskit.io"><img alt="Live documentation" src="https://img.shields.io/badge/docs-live-7c3aed" /></a>
+  <a href="./LICENSE"><img alt="CC BY 4.0 license" src="https://img.shields.io/badge/license-CC_BY_4.0-2563eb" /></a>
+  <a href="./doc-bridge.config.json"><img alt="Doc Bridge grade A" src="https://img.shields.io/badge/Doc_Bridge-100%2F100_A-16a34a" /></a>
+  <a href="./public/deterministic/knowledge.json"><img alt="Local-first answers" src="https://img.shields.io/badge/Ask-local--first-f59e0b" /></a>
+</p>
 
-The repo is a Next.js + Fumadocs app rendering the playbook content under [`content/docs/`](./content/docs/). Each doc serves a raw `.md` at `/raw/<path>.md` and the full bundle at `/llms-full.txt` for agent retrieval.
+Agents Playbook turns hard-won engineering lessons into instructions that both people and LLMs can apply. Use it to establish project rules, design package boundaries, review agent-authored changes, and enforce quality before merge—without inventing a governance system from scratch.
 
-**Status:** v0 — full content + fumadocs site. See [`content/docs/matrix.md`](./content/docs/matrix.md) for the content map.
+It is intended for engineering teams adopting coding agents, maintainers standardizing many repositories, and agents that need structured, retrievable operational context.
 
-## Who this is for
+![Playbook adoption flow from evidence through patterns and executable gates to a production outcome](./docs/assets/playbook-flow.svg)
 
-Two audiences, every doc:
+## What is verified
 
-- **Humans** — tech leads, founders, staff engineers deciding how to run an agent-augmented team. Read the **TL;DR** block at the top of every doc.
-- **Agents** — Claude/Cursor/Copilot working inside a repo that follows this playbook. Read the **For agents** block; it's structured for RAG retrieval and system-prompt injection.
+The repository generates and checks its own claims from source:
 
-## How content is organized
+| Surface | Current proof |
+|---|---:|
+| Production patterns | 87 |
+| Engineering pillars | 6 |
+| SDLC phases | 6 |
+| Copy-ready templates | 6 |
+| Zero-dependency gate scripts | 13 |
+| Human and agent guides | 130 |
+| Deterministic local answers | 150 |
+| Doc Bridge health | 100/100 · A |
 
-Matrix of **6 pillars × 6 SDLC phases**. See [`matrix.md`](./content/docs/matrix.md) for the cross-reference.
+The source-of-truth counts live in [`app/stats.snapshot.json`](./app/stats.snapshot.json), the local answer catalog in [`public/deterministic/knowledge.json`](./public/deterministic/knowledge.json), and documentation ownership in [`doc-bridge.config.json`](./doc-bridge.config.json). CI rejects drift.
 
+## Start in five minutes
+
+Requirements: Node.js 22 and pnpm 9.
+
+```bash
+pnpm install --frozen-lockfile
+pnpm dev
 ```
-pillars/
-  architecture/        # ADR, RFC, modular monorepo, contracts, errors
-  security/            # RBAC, vault, audit ledger, threat model
-  ui-ux/               # design tokens, primitives, intl, a11y, motion
-  quality/             # tests, gates, sanity, file-size budgets
-  governance/          # PR intent, merge rules, change protocol
-  ai-collaboration/    # CLAUDE.md, MEMORY, sub-agents, slash commands
 
-phases/
-  01-discover/   02-design/   03-build/
-  04-test/       05-ship/     06-operate/
+Open `http://localhost:3000`. If you are new to agent governance, follow [Getting started](https://playbook.agentskit.io/docs/getting-started), copy the [AGENTS.md template](https://playbook.agentskit.io/docs/templates/AGENTS.md.template), and add one relevant gate before expanding the policy set.
 
-templates/    # copy-paste skeletons: ADR, RFC, PR-intent, CLAUDE.md, MEMORY.md
-scripts/      # quality gates, sanity checks, structural-gates reference impls
-prompts/      # system prompts, sub-agent recipes, slash commands
+For an LLM, use [`/llms.txt`](https://playbook.agentskit.io/llms.txt) for the map, [`/llms-full.txt`](https://playbook.agentskit.io/llms-full.txt) for the complete corpus, or replace `/docs/<path>` with `/raw/<path>.md` for a single source document.
+
+## Verify the local knowledge layer
+
+The Ask experience resolves exact, aliased, and ambiguous documentation questions from a content-addressed, hash-verified static artifact before considering the optional backend. Run the same protocol verification locally:
+
+<!-- readme-command:verify-local-knowledge -->
+```bash
+node examples/verify-playbook.mjs
 ```
 
-## Two scope levels
+<!-- readme-example:verify-playbook -->
+```js
+import { readFileSync } from 'node:fs'
+import { decodeDeterministicSiteConfig, verifyLocalKnowledgeArtifactSync } from '@agentskit/chat-protocol'
 
-Every pillar has two layers:
+const config = JSON.parse(readFileSync(new URL('../public/deterministic/site-config.json', import.meta.url)))
+const artifact = JSON.parse(readFileSync(new URL('../public/deterministic/knowledge.json', import.meta.url)))
+const site = decodeDeterministicSiteConfig(config)
+if (!site.ok) throw new Error(site.diagnostic.message)
+const verified = verifyLocalKnowledgeArtifactSync(artifact, {
+  expectedContentHash: site.value.artifact.contentHash,
+  expectedSiteId: site.value.siteId,
+})
+if (!verified.ok) throw new Error(verified.diagnostic.message)
+console.log(`Verified ${verified.value.entries.length} local Playbook answers.`)
+```
 
-1. **`universal.md`** — stack-agnostic principles. Apply to any language, any framework.
-2. **`ts-concrete.md`** (or `<topic>-pattern.md`) — copy-paste recipes for a TypeScript / Node ≥22 / pnpm / Turbo / Zod / React stack.
+Expected output:
 
-Pick the layer that matches your codebase. The universal layer is the contract; the concrete layer is one valid implementation.
+```text
+Verified 150 local Playbook answers.
+```
 
-## Start here
+## How the system fits together
 
-| Goal | Read |
+```mermaid
+flowchart LR
+    S["Markdown source"] --> F["Fumadocs site"]
+    S --> D["Doc Bridge index"]
+    S --> L["llms.txt + raw routes"]
+    S --> K["Deterministic knowledge artifact"]
+    K --> A["AgentsKit Chat"]
+    A -->|"unresolved only"| B["Optional backend"]
+    S --> G["Executable quality gates"]
+```
+
+- **Humans** get a searchable Fumadocs journey, visual explanations, examples, and contribution paths.
+- **LLMs** get stable raw Markdown, full-corpus exports, explicit ownership, and machine-readable local answers.
+- **Maintainers** get generated statistics, Doc Bridge routing, README certification, tests, and build gates.
+- **Visitors** can use Ask immediately for deterministic questions; backend calls happen only when local evidence cannot answer safely.
+
+See [Discovery and Ask](https://playbook.agentskit.io/docs/discovery) for the decision path, integrity checks, privacy behavior, and failure modes.
+
+## Repository map
+
+| Path | Purpose |
 |---|---|
-| Adopt this playbook in a new project | [`phases/01-discover/README.md`](./content/docs/phases/01-discover/README.md) → [`templates/CLAUDE.md.template.md`](./content/docs/templates/CLAUDE.md.template.md) |
-| Set non-negotiables for agents | [`templates/CLAUDE.md.template.md`](./content/docs/templates/CLAUDE.md.template.md), [`pillars/governance/README.md`](./content/docs/pillars/governance/README.md) |
-| Design a package boundary | [`pillars/architecture/universal.md`](./content/docs/pillars/architecture/universal.md) |
-| Add an ADR or RFC | [`templates/ADR.template.md`](./content/docs/templates/ADR.template.md), [`templates/RFC.template.md`](./content/docs/templates/RFC.template.md) |
-| Wire quality gates | [`pillars/quality/README.md`](./content/docs/pillars/quality/README.md), [`scripts/`](./content/docs/scripts/) |
-| Train an agent on lessons | [`templates/MEMORY.md.template.md`](./content/docs/templates/MEMORY.md.template.md), [`prompts/`](./content/docs/prompts/) |
-| Run a multi-agent merge | [`pillars/governance/README.md`](./content/docs/pillars/governance/README.md) (Agent Merge Rules) |
+| [`content/docs`](./content/docs) | Canonical guides, phases, prompts, and templates |
+| [`content/docs/scripts`](./content/docs/scripts) | Runnable, zero-dependency reference gates |
+| [`components/ask-widget.tsx`](./components/ask-widget.tsx) | Local-first AgentsKit Chat integration |
+| [`scripts`](./scripts) | Generation and quality verification |
+| [`public/deterministic`](./public/deterministic) | Verified static knowledge and site configuration |
+| [`.doc-bridge`](./.doc-bridge) | Generated agent-routing index and capabilities |
 
-## The eight non-negotiables (gold-standard core)
+## Quality commands
 
-The full canon lives across the pillars; this is the irreducible kernel. If an agent breaks one of these, fail the PR.
+```bash
+pnpm test
+pnpm check:okf-type
+pnpm check:doc-bridge-config
+pnpm docs:bridge:index
+pnpm docs:bridge:gate
+pnpm check:readme-standard
+pnpm lint
+pnpm build
+```
 
-1. **Typed boundaries.** Every external input is parsed by a runtime schema (Zod, io-ts, Pydantic, JSON Schema). No `any`. No unchecked casts.
-2. **Named exports only.** No `export default` outside framework-mandated files. Predictable refactors, predictable agent edits.
-3. **Typed error hierarchy with stable codes.** `AppError` subclasses with `<NAMESPACE>_<CODE>` constants. Never `throw new Error('...')` at a boundary.
-4. **Centralized logger.** `createLogger(tag)`. Never `console.log` in shipped code.
-5. **ADR before architecture change. RFC before breaking a public contract.** Decisions are written down; the doc IS the change.
-6. **Ship complete or don't ship.** No `TODO`/`FIXME`/`throw new Error('not implemented')`/disabled tabs in shipped surfaces. Stubs require a tracked issue + target release.
-7. **Merges sum work, never subtract.** Every PR has an intent manifest; removing another author's exported symbol requires explicit `removes:` justification.
-8. **Tokens, intl, primitives — no raw values in user-facing surfaces.** Design tokens for color/spacing, intl for every visible string, shared primitives instead of bare `<button>`/`<input>`.
+The corpus is usable as versioned documentation today. The web application is currently `0.1.x`; consumers should treat internal React components as private and depend on the published document and machine routes instead.
 
-Each is fully spec'd in the pillars and enforced by the gate scripts in [`scripts/`](./content/docs/scripts/).
+## Contribute a production lesson
 
-## How this playbook was earned
+Contributions are welcome when a pattern is grounded in a real failure mode, explains its enforcement, and remains useful across tools. Read [`CONTRIBUTING.md`](./CONTRIBUTING.md), then use the [contribution guide](https://playbook.agentskit.io/docs/contributing) to validate structure, cross-links, machine retrieval, and gates.
 
-Over the source codebase's lifetime, dozens of ADRs and RFCs accumulated to address recurring failure modes of agent-driven development. The most common ones:
+By contributing, you license the work under [CC BY 4.0](./LICENSE). Please report security concerns through the policy of the affected AgentsKit repository rather than a public issue.
 
-- agents reimplementing upstream primitives instead of depending on them,
-- agents nesting ternaries until the file was unreviewable,
-- agents merging by `git checkout --theirs` and silently deleting peer work,
-- agents marking screens "done" while half the tabs `throw new Error('not implemented')`,
-- agents grinding on a stale branch while main turned red,
-- agents losing context across sessions and repeating fixed mistakes,
-- agents claiming duplication based on doc names instead of actual exported APIs.
+## AgentsKit ecosystem
 
-Every rule, gate, and prompt pattern here is a **fix for a specific, reproducible failure**. Each is sourced — find the rationale in the linked ADR/RFC of the originating repo or in the corresponding pillar doc.
+Agents Playbook is the practice layer of the AgentsKit ecosystem:
 
-## License
+- [AgentsKit](https://www.agentskit.io/docs/for-agents) — the parent framework and agent runtime.
+- [Registry](https://registry.agentskit.io) — 300+ ready-to-use agent definitions and local discovery.
+- [AgentsKit Chat](https://github.com/AgentsKit-io/agentskit-chat) — configurable chat UI and local-first answer protocol used here.
+- [Doc Bridge](https://github.com/AgentsKit-io/doc-bridge) — documentation ownership, routing, health, and MCP handoff.
+- [AgentsKit OS](https://github.com/AgentsKit-io/agentskit-os) — the full agent operating environment.
+- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli) — automated review workflows for agent-authored code.
 
-[CC-BY-4.0](./LICENSE). Adapt freely. Attribution: link back to this repo.
-
-## Contributing
-
-See [`CONTRIBUTING.md`](./CONTRIBUTING.md). New patterns must come from real production lessons, not theory.
+**Topics:** `ai-agents` · `coding-agents` · `agent-governance` · `software-architecture` · `quality-gates` · `fumadocs` · `llms-txt` · `developer-experience`

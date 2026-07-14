@@ -1,0 +1,12 @@
+{
+  "protocol": "agentskit.chat.site",
+  "version": 1,
+  "siteId": "playbook",
+  "artifact": {
+    "href": "/deterministic/knowledge.json",
+    "contentHash": "sha256:310cf8e105d755616ee92e0ad0d512af42eb995343b2038a8df421f5e297f2cd"
+  },
+  "fallback": {
+    "mode": "backend"
+  }
+}
