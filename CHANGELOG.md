@@ -12,6 +12,7 @@ All notable changes to Agents Playbook are documented here. The format follows [
 - Dedicated discovery and contribution guides, raw gate-script routes, and expanded `llms.txt`/`llms-full.txt` coverage.
 - Unit, onboarding, desktop/mobile Playwright, build, and continuous-integration gates.
 - Cached same-origin ecosystem star aggregation to avoid public API failures in browsers.
+- Explicit analytics opt-in so an invalid PostHog project cannot emit errors on public pages.
 
 ### Changed
 
