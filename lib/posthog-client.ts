@@ -4,10 +4,14 @@ import posthog from "posthog-js";
 
 let initialized = false;
 
+export function isPostHogConfigured({ enabled, key }: { enabled: string | undefined; key: string | undefined }): boolean {
+  return enabled === "true" && Boolean(key && key !== "phc_...");
+}
+
 export function initPostHog(): void {
   if (initialized || typeof window === "undefined") return;
   const key = process.env.NEXT_PUBLIC_POSTHOG_KEY;
-  if (!key) return;
+  if (!key || !isPostHogConfigured({ enabled: process.env.NEXT_PUBLIC_POSTHOG_ENABLED, key })) return;
   initialized = true;
   posthog.init(key, {
     api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
@@ -23,6 +27,6 @@ export function initPostHog(): void {
 }
 
 export function track(event: string, props?: Record<string, unknown>): void {
-  if (typeof window === "undefined") return;
-  if (process.env.NEXT_PUBLIC_POSTHOG_KEY) posthog.capture(event, props);
+  if (typeof window === "undefined" || !initialized) return;
+  posthog.capture(event, props);
 }
