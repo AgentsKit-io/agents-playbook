@@ -4,7 +4,7 @@ import {
   decodeDeterministicSiteConfig,
   verifyLocalKnowledgeArtifactSync,
   type AnswerResponse,
-} from '@agentskit/chat-protocol'
+} from '@agentskit/chat/protocol'
 
 export interface PlaybookDiscoveryInputs {
   readonly siteConfig: unknown

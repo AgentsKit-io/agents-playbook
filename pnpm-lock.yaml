@@ -9,14 +9,8 @@ importers:
   .:
     dependencies:
       '@agentskit/chat':
-        specifier: 0.2.0
-        version: 0.2.0(@agentskit/core@1.12.3)
-      '@agentskit/chat-protocol':
-        specifier: 0.2.0
-        version: 0.2.0(@agentskit/core@1.12.3)
-      '@agentskit/chat-react':
-        specifier: 0.2.0
-        version: 0.2.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
+        specifier: 0.3.0
+        version: 0.3.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
       '@agentskit/core':
         specifier: ^1.12.3
         version: 1.12.3
@@ -84,21 +78,59 @@ importers:
 
 packages:
 
-  '@agentskit/chat-protocol@0.2.0':
-    resolution: {integrity: sha512-zzQrj4YRDi3wpdQ5GkSSyO1iafrMY0VwSat7XaxG2kf6A6xYyEuYVEFEee/2aWU+VVPLwR2qC2Mq8+oCIk9ItQ==}
+  '@agentskit/chat@0.3.0':
+    resolution: {integrity: sha512-N424oOZ5DClrCMTp5V5djOg+N2rwj2LJ+ZtqQvpwBEO/sZ1BORFnenqFAJEyWptAw3/REHi9etDhhTWJcWGBnQ==}
     peerDependencies:
-      '@agentskit/core': ^1.12.1
-
-  '@agentskit/chat-react@0.2.0':
-    resolution: {integrity: sha512-md1LjRoDbPM0BQPtzcTSUMrfUlO4WxfMBd7YTblaIW5uD5bvtY/SVSBPI1YldI1A/lhGi7PBFSDB5+VLzxiUzg==}
-    peerDependencies:
-      '@agentskit/react': ^0.7.1
-      react: '>=18'
-
-  '@agentskit/chat@0.2.0':
-    resolution: {integrity: sha512-7bxvOwFPkxZYywQkghL5f/1H8uW0Mx4H+T8BsZ7Xmh6fomdS3T2vk14mrX6V+YN3dcRUJ1uO1CHYOhvhJ3et8w==}
-    peerDependencies:
+      '@agentskit/angular': ^0.4.6
       '@agentskit/core': ^1.12.3
+      '@agentskit/ink': ^0.10.1
+      '@agentskit/react': ^0.7.1
+      '@agentskit/react-native': ^0.4.4
+      '@agentskit/solid': ^0.4.4
+      '@agentskit/svelte': ^0.4.4
+      '@agentskit/vue': ^0.4.4
+      '@angular/common': '>=18.1 <22'
+      '@angular/core': '>=18.1 <22'
+      ink: '>=7.1.0'
+      react: '>=18'
+      react-native: '*'
+      rxjs: ^7.0.0
+      solid-js: ^1.9.0
+      svelte: ^5.0.0
+      vue: ^3.4.0
+    peerDependenciesMeta:
+      '@agentskit/angular':
+        optional: true
+      '@agentskit/ink':
+        optional: true
+      '@agentskit/react':
+        optional: true
+      '@agentskit/react-native':
+        optional: true
+      '@agentskit/solid':
+        optional: true
+      '@agentskit/svelte':
+        optional: true
+      '@agentskit/vue':
+        optional: true
+      '@angular/common':
+        optional: true
+      '@angular/core':
+        optional: true
+      ink:
+        optional: true
+      react:
+        optional: true
+      react-native:
+        optional: true
+      rxjs:
+        optional: true
+      solid-js:
+        optional: true
+      svelte:
+        optional: true
+      vue:
+        optional: true
 
   '@agentskit/core@1.12.3':
     resolution: {integrity: sha512-fNHrzpEoCaWHDK2fwk/BIhcPseN6zCdy3N0WjzdelnmRuh7zy9/Ki0zcukesK5ZAAmXdz2+Dj8FI7AM32JyOKw==}
@@ -127,6 +159,9 @@ packages:
         optional: true
       react:
         optional: true
+
+  '@agentskit/eval@0.4.19':
+    resolution: {integrity: sha512-DYjEa6bgzP/rVqTZBuguXjn+JuoPG9NfVUa/ogubm5hPlVKL0SVD1ThTDfuhTqrMqOgqHIBwIHv5yFbjnqheDg==}
 
   '@agentskit/memory@0.11.0':
     resolution: {integrity: sha512-sTAVVmaHIKLUYH3nFfbjmWwm3zfQ1Ljy1ct4mVhOlrvqfequ+sekrA+dzStX4PrQEtGob3MEy3qZlwwA+oxsqw==}
@@ -542,10 +577,6 @@ packages:
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
-
-  '@noble/hashes@2.2.0':
-    resolution: {integrity: sha512-IYqDGiTXab6FniAgnSdZwgWbomxpy9FtYvLKs7wCUs2a8RkITG+DFGO1DM9cr+E3/RgADRpFjrKVaJ1z6sjtEg==}
-    engines: {node: '>= 20.19.0'}
 
   '@nodelib/fs.scandir@2.1.5':
     resolution: {integrity: sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g==}
@@ -2354,28 +2385,17 @@ packages:
 
 snapshots:
 
-  '@agentskit/chat-protocol@0.2.0(@agentskit/core@1.12.3)':
+  '@agentskit/chat@0.3.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@agentskit/core': 1.12.3
-      '@noble/hashes': 2.2.0
-      zod: 4.4.3
-
-  '@agentskit/chat-react@0.2.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)':
-    dependencies:
-      '@agentskit/chat': 0.2.0(@agentskit/core@1.12.3)
-      '@agentskit/chat-protocol': 0.2.0(@agentskit/core@1.12.3)
-      '@agentskit/react': 0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
-      react: 19.2.7
-    transitivePeerDependencies:
-      - '@agentskit/core'
-
-  '@agentskit/chat@0.2.0(@agentskit/core@1.12.3)':
-    dependencies:
-      '@agentskit/chat-protocol': 0.2.0(@agentskit/core@1.12.3)
-      '@agentskit/core': 1.12.3
+      '@agentskit/eval': 0.4.19
       '@agentskit/memory': 0.11.0
       '@agentskit/statechart': 0.2.0
+      tslib: 2.8.1
       zod: 4.4.3
+    optionalDependencies:
+      '@agentskit/react': 0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7)
+      react: 19.2.7
 
   '@agentskit/core@1.12.3': {}
 
@@ -2386,6 +2406,10 @@ snapshots:
       '@agentskit/core': 1.12.3
       '@agentskit/memory': 0.11.0
       react: 19.2.7
+
+  '@agentskit/eval@0.4.19':
+    dependencies:
+      '@agentskit/core': 1.12.3
 
   '@agentskit/memory@0.11.0':
     dependencies:
@@ -2699,8 +2723,6 @@ snapshots:
 
   '@next/swc-win32-x64-msvc@15.5.19':
     optional: true
-
-  '@noble/hashes@2.2.0': {}
 
   '@nodelib/fs.scandir@2.1.5':
     dependencies:
