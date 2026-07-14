@@ -9,7 +9,7 @@ import {
   LocalKnowledgeArtifactSchema,
   computeLocalKnowledgeArtifactContentHash,
   normalizeKnowledgeKey,
-} from '@agentskit/chat-protocol'
+} from '@agentskit/chat/protocol'
 
 const SITE = 'https://playbook.agentskit.io'
 const DOCS_ROOT = join('content', 'docs')

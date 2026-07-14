@@ -15,9 +15,9 @@ regeneration.
 
 ## Host recipe
 
-1. Pin the stable npm packages `@agentskit/chat`,
-   `@agentskit/chat-protocol`, and `@agentskit/chat-react` at exact version
-   `0.2.0`. Their published manifests resolve the internal graph without host
+1. Pin the stable npm package `@agentskit/chat` at exact version `0.3.0` and
+   import renderer and protocol APIs from its `/react` and `/protocol` subpaths.
+   Its published manifest resolves the internal graph without host
    overrides.
 2. Build one `defineChat` definition with the public standard component
    manifest, an AgentsKit `AdapterFactory`, and `ChatMemory`.

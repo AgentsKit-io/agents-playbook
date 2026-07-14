@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { createDeterministicAnswerResolver } from '@agentskit/chat'
-import { verifyLocalKnowledgeArtifactSync } from '@agentskit/chat-protocol'
+import { verifyLocalKnowledgeArtifactSync } from '@agentskit/chat/protocol'
 import { createPlaybookDiscoveryArtifact, createPlaybookSiteConfig } from './playbook-discovery.mjs'
 
 const ROOT = join(import.meta.dirname, '..', '..')

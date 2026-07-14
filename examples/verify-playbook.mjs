@@ -1,5 +1,5 @@
 import { readFileSync } from 'node:fs'
-import { decodeDeterministicSiteConfig, verifyLocalKnowledgeArtifactSync } from '@agentskit/chat-protocol'
+import { decodeDeterministicSiteConfig, verifyLocalKnowledgeArtifactSync } from '@agentskit/chat/protocol'
 
 const config = JSON.parse(readFileSync(new URL('../public/deterministic/site-config.json', import.meta.url)))
 const artifact = JSON.parse(readFileSync(new URL('../public/deterministic/knowledge.json', import.meta.url)))

@@ -29,7 +29,7 @@ import {
   StandardComponent as FrameworkStandardComponent,
   type AgentChatSlots,
   type StandardComponentProps,
-} from "@agentskit/chat-react";
+} from "@agentskit/chat/react";
 import { createPlaybookDiscoveryAdapter, loadPlaybookDiscovery, type PlaybookDiscoveryInputs } from "@/lib/discovery";
 
 const DISCOVERY_RETRY_DELAY_MS = 1_000;
