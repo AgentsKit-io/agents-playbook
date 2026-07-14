@@ -19,11 +19,12 @@ async function collect(): Promise<{ path: string; body: string }[]> {
       const full = join(dir, e.name);
       if (e.isDirectory()) {
         await walk(full, next);
-      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx")) {
+      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx") || e.name.endsWith(".mjs")) {
         const body = await readFile(full, "utf8");
-        const stem = next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
+        const isScript = e.name.endsWith(".mjs");
+        const stem = isScript ? next.join("/") : next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
         const cleaned = stem.replace(/\/index$/, "").replace(/\/README$/, "");
-        out.push({ path: `/docs/${cleaned}`, body });
+        out.push({ path: isScript ? `/raw/${cleaned}` : `/docs/${cleaned}`, body });
       }
     }
   }

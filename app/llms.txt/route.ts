@@ -12,6 +12,24 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io"
 
 type Doc = { url: string; rawUrl: string; title: string; description: string };
 
+const yamlScalar = (value: string | undefined): string | undefined => {
+  const trimmed = value?.trim();
+  if (!trimmed) return undefined;
+  if (trimmed.startsWith("'") && trimmed.endsWith("'")) return trimmed.slice(1, -1).replace(/''/g, "'");
+  if (trimmed.startsWith('"') && trimmed.endsWith('"')) return trimmed.slice(1, -1).replace(/\\"/g, '"');
+  return trimmed;
+};
+
+const scriptDescription = (body: string): string | undefined => {
+  const comments: string[] = [];
+  for (const line of body.split("\n").slice(1)) {
+    const match = line.match(/^\/\/\s*(.+)$/);
+    if (!match) break;
+    comments.push(match[1]);
+  }
+  return comments.join(" ").trim() || undefined;
+};
+
 async function collect(): Promise<Doc[]> {
   const docs: Doc[] = [];
   async function walk(dir: string, prefix: string[]): Promise<void> {
@@ -21,24 +39,27 @@ async function collect(): Promise<Doc[]> {
       const full = join(dir, e.name);
       if (e.isDirectory()) {
         await walk(full, next);
-      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx")) {
+      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx") || e.name.endsWith(".mjs")) {
         const body = await readFile(full, "utf8");
-        const titleMatch = body.match(/^#\s+(.+)$/m);
-        const title = titleMatch ? titleMatch[1].trim() : e.name.replace(/\.(md|mdx)$/, "");
-        const firstPara = body
+        const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
+        const title = yamlScalar(frontmatter.match(/^title:\s*(.+)$/m)?.[1]) ?? body.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? e.name.replace(/\.(md|mdx|mjs)$/, "");
+        const declaredDescription = yamlScalar(frontmatter.match(/^description:\s*(.+)$/m)?.[1]);
+        const isScript = e.name.endsWith(".mjs");
+        const firstPara = declaredDescription ?? (isScript ? scriptDescription(body) : undefined) ?? body
+          .replace(/^---\r?\n[\s\S]*?\r?\n---/, "")
           .split("\n")
-          .find((line) => line.trim() && !line.startsWith("#") && !line.startsWith(">"))
+          .find((line) => line.trim() && !line.startsWith("#") && !line.startsWith(">") && !line.startsWith("//"))
           ?.replace(/^[*\-\s]+/, "")
           .trim() ?? "";
         const description = firstPara.length > 180 ? firstPara.slice(0, 177) + "…" : firstPara;
-        const stem = next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
+        const stem = isScript ? next.join("/") : next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
         const cleanStem = stem
           .replace(/\/index$/, "")
           .replace(/\/README$/, "")
           .replace(/^(index|README)$/, "");
         docs.push({
-          url: cleanStem ? `${SITE}/docs/${cleanStem}` : `${SITE}/docs`,
-          rawUrl: cleanStem ? `${SITE}/raw/${cleanStem}.md` : `${SITE}/raw/index.md`,
+          url: isScript ? `${SITE}/raw/${cleanStem}` : cleanStem ? `${SITE}/docs/${cleanStem}` : `${SITE}/docs`,
+          rawUrl: isScript ? `${SITE}/raw/${cleanStem}` : cleanStem ? `${SITE}/raw/${cleanStem}.md` : `${SITE}/raw/index.md`,
           title,
           description,
         });
@@ -56,10 +77,15 @@ function ecosystemBlock(): string {
     const eco = JSON.parse(raw) as {
       properties: { id: string; name: string; tagline: string; url: string; llms: string }[];
     };
-    const lines = eco.properties
+    const properties = eco.properties
       .filter((p) => p.id !== "playbook")
-      .map((p) => `- [${p.name}](${p.url}) — ${p.tagline} llms.txt: ${p.llms}`)
-      .join("\n");
+      .map((p) => `- [${p.name}](${p.url}) — ${p.tagline} llms.txt: ${p.llms}`);
+    const sharedTools = [
+      "- [AgentsKit Chat](https://github.com/AgentsKit-io/agentskit-chat) — Configurable, local-first chat framework used by Ask Playbook.",
+      "- [Doc Bridge](https://github.com/AgentsKit-io/doc-bridge) — Documentation ownership, health, routing, and MCP handoff.",
+      "- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli) — Automated review workflows for agent-authored changes.",
+    ];
+    const lines = [...properties, ...sharedTools].join("\n");
     return `## The AgentsKit ecosystem\n\n${lines}\n\n`;
   } catch {
     return "";
@@ -80,6 +106,8 @@ export async function GET() {
 - Built by: https://www.agentskit.io
 - Full bundle (single file, LLM-friendly): ${SITE}/llms-full.txt
 - ZIP bundle: ${SITE}/playbook-bundle.zip
+- Deterministic site config: ${SITE}/deterministic/site-config.json
+- Deterministic knowledge: ${SITE}/deterministic/knowledge.json
 - License: CC-BY-4.0
 
 ${ecosystemBlock()}## Docs index

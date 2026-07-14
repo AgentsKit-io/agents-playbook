@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "getting-started",
+    "discovery",
     "agentskit-chat",
     "onboard-your-agent",
     "matrix",
@@ -14,6 +15,7 @@
     "templates",
     "prompts",
     "scripts",
-    "glossary"
+    "glossary",
+    "contributing"
   ]
 }

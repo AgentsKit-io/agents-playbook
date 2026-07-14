@@ -16,6 +16,7 @@ const ROOT = join(process.cwd(), "content", "docs");
 async function resolve(segments: string[]): Promise<string | null> {
   const base = join(ROOT, ...segments);
   const candidates = [
+    ...(base.endsWith(".mjs") ? [base] : []),
     `${base}.md`,
     `${base}.mdx`,
     join(base, "index.md"),
@@ -50,7 +51,7 @@ export async function GET(
   const body = await readFile(file, "utf8");
   return new Response(body, {
     headers: {
-      "content-type": "text/markdown; charset=utf-8",
+      "content-type": file.endsWith(".mjs") ? "text/javascript; charset=utf-8" : "text/markdown; charset=utf-8",
       "cache-control": "public, max-age=300, s-maxage=3600",
     },
   });
@@ -64,8 +65,8 @@ export async function generateStaticParams() {
       const next = [...prefix, e.name];
       if (e.isDirectory()) {
         await walk(join(dir, e.name), next);
-      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx")) {
-        const cleaned = next.map((s) => s.replace(/\.mdx?$/, ""));
+      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx") || e.name.endsWith(".mjs")) {
+        const cleaned = e.name.endsWith(".mjs") ? next : next.map((s) => s.replace(/\.mdx?$/, ""));
         out.push({ path: cleaned });
       }
     }

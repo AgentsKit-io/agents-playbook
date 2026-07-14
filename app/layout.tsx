@@ -91,7 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {JSON.stringify(JSON_LD)}
         </Script>
         {/* Shared ecosystem bar — single source on www.agentskit.io, embedded across all properties. */}
-        <Script src="https://www.agentskit.io/ecosystem-bar.js" strategy="afterInteractive" data-current="playbook" />
+        <Script src="https://www.agentskit.io/ecosystem-bar.js" strategy="lazyOnload" data-current="playbook" />
         <PostHogProvider>
           <RootProvider
             theme={{ defaultTheme: "dark", forcedTheme: "dark" }}

@@ -27,3 +27,5 @@ public/playbook-bundle.zip
 .idea/
 .vscode/
 .vercel
+test-results/
+playwright-report/

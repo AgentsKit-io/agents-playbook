@@ -2,6 +2,7 @@
 
 import {
   Children,
+  useCallback,
   createContext,
   useContext,
   useEffect,
@@ -29,6 +30,9 @@ import {
   type AgentChatSlots,
   type StandardComponentProps,
 } from "@agentskit/chat-react";
+import { createPlaybookDiscoveryAdapter, loadPlaybookDiscovery, type PlaybookDiscoveryInputs } from "@/lib/discovery";
+
+const DISCOVERY_RETRY_DELAY_MS = 1_000;
 
 interface AskWidgetProps {
   readonly endpoint?: string;
@@ -67,25 +71,73 @@ function LogoMark({ size = 16 }: { readonly size?: number }) {
   );
 }
 
-function LinkedText({ content }: { readonly content: string }) {
-  const pattern = /\[([^\]]+)\]\((https?:\/\/[^)\s]+|\/[^)\s]+)\)|(https?:\/\/[^\s)]+)/g;
+function InlineContent({ content }: { readonly content: string }) {
+  const pattern = /\[([^\]]+)\]\((https?:\/\/[^)\s]+|\/[^)\s]+)\)|`([^`]+)`|\*\*([^*]+)\*\*|(https?:\/\/[^\s)]+)/g;
   const nodes: ReactNode[] = [];
   let cursor = 0;
   for (const match of content.matchAll(pattern)) {
     const index = match.index ?? 0;
     if (index > cursor) nodes.push(content.slice(cursor, index));
-    const href = match[2] || match[3] || "";
-    nodes.push(<a key={`${href}-${index}`} href={href} target="_blank" rel="noreferrer">{match[1] || match[3]}</a>);
+    const href = match[2] || match[5];
+    if (href) nodes.push(<a key={`${href}-${index}`} href={href} target="_blank" rel="noreferrer">{match[1] || match[5]}</a>);
+    else if (match[3]) nodes.push(<code key={`code-${index}`}>{match[3]}</code>);
+    else nodes.push(<strong key={`strong-${index}`}>{match[4]}</strong>);
     cursor = index + match[0].length;
   }
   if (cursor < content.length) nodes.push(content.slice(cursor));
   return <>{nodes}</>;
 }
 
+function MarkdownContent({ content }: { readonly content: string }) {
+  const lines = content.split("\n");
+  const nodes: ReactNode[] = [];
+  let index = 0;
+  while (index < lines.length) {
+    const line = lines[index]?.trim() ?? "";
+    if (!line) { index += 1; continue; }
+    if (line.startsWith("```")) {
+      const language = line.slice(3).trim();
+      const code: string[] = [];
+      index += 1;
+      while (index < lines.length && !(lines[index]?.trim() ?? "").startsWith("```")) {
+        code.push(lines[index] ?? "");
+        index += 1;
+      }
+      if (index < lines.length) index += 1;
+      nodes.push(<pre key={`code-block-${index}`}><code data-language={language || undefined}>{code.join("\n")}</code></pre>);
+      continue;
+    }
+    if (line.startsWith("## ")) {
+      nodes.push(<h3 key={`heading-${index}`}><InlineContent content={line.slice(3)} /></h3>);
+      index += 1;
+      continue;
+    }
+    if (line.startsWith("- ")) {
+      const items: ReactNode[] = [];
+      while ((lines[index]?.trim() ?? "").startsWith("- ")) {
+        const item = lines[index]?.trim().slice(2) ?? "";
+        items.push(<li key={`item-${index}`}><InlineContent content={item} /></li>);
+        index += 1;
+      }
+      nodes.push(<ul key={`list-${index}`}>{items}</ul>);
+      continue;
+    }
+    const paragraph: string[] = [];
+    while (index < lines.length) {
+      const value = lines[index]?.trim() ?? "";
+      if (!value || value.startsWith("## ") || value.startsWith("- ") || value.startsWith("```")) break;
+      paragraph.push(value);
+      index += 1;
+    }
+    nodes.push(<p key={`paragraph-${index}`}><InlineContent content={paragraph.join(" ")} /></p>);
+  }
+  return <>{nodes}</>;
+}
+
 function AskMessage({ message }: { readonly message: AgentsKitMessage }) {
   return (
     <div className={`ak-ask-message ${message.role === "user" ? "user" : "assistant"}`} data-ak-message={message.role}>
-      <LinkedText content={message.content} />
+      {message.role === "user" ? message.content : <MarkdownContent content={message.content} />}
     </div>
   );
 }
@@ -162,19 +214,50 @@ export function AskWidget({
   cta,
 }: AskWidgetProps) {
   const [open, setOpen] = useState(false);
+  const [discovery, setDiscovery] = useState<PlaybookDiscoveryInputs | null | undefined>(undefined);
+  const [answerPath, setAnswerPath] = useState<"local" | "backend" | "pending" | null>(null);
   const chatRef = useRef<ChatReturn | null>(null);
+  const discoveryPromiseRef = useRef<Promise<void> | null>(null);
+  const discoveryFailureAtRef = useRef(0);
   const fabRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLElement>(null);
   const openedOnceRef = useRef(false);
   const storageKey = `ak:ask-thread-v3:${corpus}`;
-  const definition = useMemo(() => defineChat({
-    id: `ask-${corpus}`,
-    components: ASK_COMPONENTS,
-    chat: {
-      adapter: createAskAdapter({ endpoint, corpus }),
-      memory: createAskSessionMemory({ key: storageKey, legacyKeys: [`ak:ask-thread-v2:${corpus}`, `ak:ask-thread:${corpus}`] }),
-    },
-  }), [corpus, endpoint, storageKey]);
+  const ensureDiscovery = useCallback(() => {
+    if (discovery || discoveryPromiseRef.current) return discoveryPromiseRef.current;
+    if (discovery === null && Date.now() - discoveryFailureAtRef.current < DISCOVERY_RETRY_DELAY_MS) return null;
+    const pending = loadPlaybookDiscovery(fetch)
+      .then((inputs) => {
+        discoveryFailureAtRef.current = inputs ? 0 : Date.now();
+        setDiscovery(inputs);
+      })
+      .finally(() => { discoveryPromiseRef.current = null; });
+    discoveryPromiseRef.current = pending;
+    return pending;
+  }, [discovery]);
+  const definition = useMemo(() => {
+    const fallback = createAskAdapter({ endpoint, corpus });
+    const answer = createPlaybookDiscoveryAdapter({
+      inputs: discovery ?? null,
+      fallback,
+      onDecision: (decision) => {
+        if (decision.outcome === "answer") setAnswerPath(decision.provenance.source);
+        else if (decision.outcome === "escalation") setAnswerPath("pending");
+        else setAnswerPath("local");
+      },
+      onBackendStart: () => setAnswerPath("pending"),
+      onBackendAnswer: () => setAnswerPath("backend"),
+    });
+    return defineChat({
+      id: `ask-${corpus}`,
+      components: ASK_COMPONENTS,
+      ...(answer.deterministic ? { choiceSubmission: answer.deterministic.resolveChoiceSubmission } : {}),
+      chat: {
+        adapter: answer.adapter,
+        memory: createAskSessionMemory({ key: storageKey, legacyKeys: [`ak:ask-thread-v2:${corpus}`, `ak:ask-thread:${corpus}`] }),
+      },
+    });
+  }, [corpus, discovery, endpoint, storageKey]);
   const runtime = useMemo<AskRuntime>(() => ({ chat: chatRef, emptyState }), [emptyState]);
   const style = { "--ask-accent": accent } as CSSProperties;
 
@@ -189,11 +272,11 @@ export function AskWidget({
       }
     });
     return () => cancelAnimationFrame(frame);
-  }, [open]);
+  }, [discovery, open]);
 
   if (!open) return (
     <>
-      <button ref={fabRef} type="button" className="ak-ask-fab" style={style} aria-label={fabLabel} onClick={() => setOpen(true)}>
+      <button ref={fabRef} type="button" className="ak-ask-fab" style={style} aria-label={fabLabel} onFocus={() => { void ensureDiscovery(); }} onPointerEnter={() => { void ensureDiscovery(); }} onClick={() => { void ensureDiscovery(); setOpen(true); }}>
         <LogoMark /><span>{fabLabel}</span>
       </button>
       <AskStyles />
@@ -211,19 +294,24 @@ export function AskWidget({
         <header className="ak-ask-header">
           <strong><LogoMark size={18} /><span>{title}</span></strong>
           <div>
-            <button type="button" onClick={() => void chatRef.current?.clear()}>clear</button>
+            <button type="button" onClick={() => { setAnswerPath(null); void chatRef.current?.clear(); }}>clear</button>
             <button type="button" aria-label="Close" onClick={() => setOpen(false)}>×</button>
           </div>
         </header>
         <div className="ak-ask-runtime">
-          <AgentChat
-            key={storageKey}
-            definition={definition}
-            placeholder={placeholder}
-            slots={{ Container: AskContainer, Message: AskMessage, Input: AskInput, Thinking: AskThinking, StandardComponent: AskStandardComponent }}
-          />
+          {discovery === undefined
+            ? <p className="ak-ask-loading" role="status"><LogoMark size={15} /> Preparing local Playbook knowledge…</p>
+            : <AgentChat
+                key={storageKey}
+                definition={definition}
+                placeholder={placeholder}
+                slots={{ Container: AskContainer, Message: AskMessage, Input: AskInput, Thinking: AskThinking, StandardComponent: AskStandardComponent }}
+              />}
         </div>
-        {cta ? <footer className="ak-ask-footer"><a href={cta.href}>{cta.label}</a></footer> : null}
+        <footer className="ak-ask-footer">
+          <a href={cta?.href ?? "/docs"}>{cta?.label ?? "Browse the Playbook →"}</a>
+          {answerPath ? <span data-ak-answer-path={answerPath}>{answerPath === "local" ? "instant · local" : answerPath === "backend" ? "grounded · backend" : "consulting backend"}</span> : null}
+        </footer>
         <AskStyles />
       </section>
     </AskRuntimeContext.Provider>
@@ -241,11 +329,11 @@ function AskStyles() {
     .ak-ask-header button,.ak-ask-footer a,.ak-ask-compose button,.ak-ask-runtime [data-ak-app-chat]>button,.ak-ask-runtime [aria-label="Response actions"] button{min-width:44px;min-height:44px;border:0;background:transparent;color:var(--ask-accent);font:inherit;font-size:.6875rem;text-transform:uppercase;cursor:pointer}
     .ak-ask-runtime{min-height:0;flex:1;overflow:hidden;padding:.75rem}.ak-ask-runtime>[data-ak-app-chat]{display:flex;height:100%;min-height:0;flex-direction:column}.ak-ask-runtime>[data-ak-app-chat]>[role=log]{display:flex;min-height:0;flex:1;overflow:hidden}
     .ak-ask-body{display:flex;min-height:0;flex:1;flex-direction:column;gap:.65rem;overflow-y:auto}.ak-ask-empty{margin:0;color:var(--ask-muted);font-size:.8125rem;line-height:1.5}
-    .ak-ask-message{max-width:92%;white-space:pre-wrap;font-size:.8125rem;line-height:1.55}.ak-ask-message.user{align-self:flex-end;border-radius:.625rem;background:color-mix(in srgb,var(--ask-accent) 14%,transparent);padding:.5rem .625rem}.ak-ask-message.assistant{align-self:flex-start}.ak-ask-message a,.ak-ask-sources a{color:#8fc5ff;text-decoration:underline;text-underline-offset:3px}
+    .ak-ask-message{max-width:92%;font-size:.8125rem;line-height:1.55}.ak-ask-message.user{align-self:flex-end;white-space:pre-wrap;border-radius:.625rem;background:color-mix(in srgb,var(--ask-accent) 14%,transparent);padding:.5rem .625rem}.ak-ask-message.assistant{align-self:flex-start}.ak-ask-message.assistant h3{margin:0 0 .6rem;font-size:1rem}.ak-ask-message.assistant p{margin:0 0 .65rem}.ak-ask-message.assistant ul{margin:0 0 .65rem;padding-left:1.25rem}.ak-ask-message.assistant code{border:1px solid var(--ask-border);border-radius:.25rem;background:var(--ask-surface);padding:.08rem .25rem;font-size:.75rem}.ak-ask-message.assistant pre{max-width:100%;overflow-x:auto;border:1px solid var(--ask-border);border-radius:.5rem;background:var(--ask-surface);padding:.625rem}.ak-ask-message.assistant pre code{display:block;border:0;background:transparent;padding:0;white-space:pre}.ak-ask-message a,.ak-ask-sources a{color:#8fc5ff;text-decoration:underline;text-underline-offset:3px}
     .ak-ask-thinking{display:flex;align-items:center;gap:.5rem;color:var(--ask-muted);font-size:.75rem}.ak-ask-sources{border-top:1px solid var(--ask-border);padding-top:.5rem;font-size:.75rem}.ak-ask-sources strong{color:var(--ask-muted);text-transform:uppercase}.ak-ask-sources ol{margin:.4rem 0 0;padding-left:1.25rem}
     .ak-ask-compose{display:grid;grid-template-columns:1fr auto;gap:.5rem;border-top:1px solid var(--ask-border);padding-top:.625rem}.ak-ask-compose label{min-width:0}.ak-ask-compose textarea{box-sizing:border-box;width:100%;resize:none;border:1px solid var(--ask-border);border-radius:.625rem;background:var(--ask-surface);color:var(--ask-text);padding:.5rem;font:inherit;font-size:.75rem}.ak-ask-compose button{color:var(--ask-accent)}
     .ak-ask-runtime [role=alert]{margin:.4rem 0;color:var(--ask-danger);font-size:.75rem}.ak-ask-runtime [aria-label="Response actions"]{display:flex;flex-wrap:wrap;gap:.25rem;border-top:1px solid var(--ask-border)}
-    .ak-ask-footer{border-top:1px solid var(--ask-border);padding:0 .75rem}.ak-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .ak-ask-loading{display:flex;align-items:center;gap:.5rem;color:var(--ask-muted);font-size:.75rem}.ak-ask-footer{display:flex;min-height:44px;align-items:center;justify-content:space-between;gap:.5rem;border-top:1px solid var(--ask-border);padding:0 .75rem}.ak-ask-footer a{display:inline-flex;align-items:center}.ak-ask-footer [data-ak-answer-path]{color:var(--ask-muted);font-size:.625rem;letter-spacing:.08em;text-transform:uppercase}.ak-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
     .ak-ask-panel button:focus-visible,.ak-ask-panel a:focus-visible,.ak-ask-panel textarea:focus-visible,.ak-ask-fab:focus-visible{outline:2px solid var(--ask-accent);outline-offset:2px}
     @media(max-width:639px){.ak-ask-panel{inset:.5rem;width:auto;height:auto}.ak-ask-fab{right:.75rem;bottom:.75rem}}
     @media(prefers-reduced-motion:reduce){.ak-ask-fab{transition:none}.ak-ask-fab:hover{transform:none}}

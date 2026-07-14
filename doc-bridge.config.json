@@ -1,46 +1,1227 @@
 {
   "schemaVersion": 1,
-  "project": { "name": "agents-playbook" },
+  "project": {
+    "name": "agents-playbook"
+  },
   "corpus": {
     "agent": {
       "root": "content/docs",
       "index": "content/docs/index.mdx",
-      "include": ["**/*.md", "**/*.mdx"],
-      "exclude": ["**/node_modules/**"]
+      "include": [
+        "**/*.md",
+        "**/*.mdx"
+      ],
+      "exclude": [
+        "**/node_modules/**"
+      ]
     },
     "human": {
       "plugin": "fumadocs",
-      "options": { "contentDir": "content/docs", "urlPrefix": "/docs" }
+      "options": {
+        "contentDir": "content/docs",
+        "urlPrefix": "/docs"
+      }
     }
   },
   "routing": {
     "options": {
       "ownership": {
-        "playbook": {
-          "path": "content/docs",
-          "purpose": "Playbook corpus, Next/Fumadocs host, and public documentation",
-          "agentDoc": "content/docs/index.mdx",
-          "humanDoc": "/docs",
-          "checks": ["pnpm lint", "pnpm test", "pnpm build", "pnpm docs:bridge:gate"]
-        },
         "agentskit-chat": {
-          "path": "components/ask-chat",
-          "purpose": "Thin host integration for Ask Playbook over public AgentsKit Chat APIs",
+          "path": "content/docs/agentskit-chat.md",
+          "purpose": "How Ask Playbook composes the public AgentsKit Chat framework without recreating chat state.",
           "agentDoc": "content/docs/agentskit-chat.md",
-          "humanDoc": "/docs/agentskit-chat",
-          "checks": ["pnpm lint", "pnpm test", "pnpm build", "pnpm docs:bridge:gate"]
+          "humanDoc": "https://playbook.agentskit.io/docs/agentskit-chat",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "contributing": {
+          "path": "content/docs/contributing.mdx",
+          "purpose": "Turn a reproducible engineering lesson into a reviewable Playbook pattern, prompt, template, or gate.",
+          "agentDoc": "content/docs/contributing.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/contributing",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "discovery": {
+          "path": "content/docs/discovery.mdx",
+          "purpose": "See which Playbook questions answer instantly in the browser and when repository-specific synthesis uses the backend.",
+          "agentDoc": "content/docs/discovery.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/discovery",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "getting-started": {
+          "path": "content/docs/getting-started.mdx",
+          "purpose": "Adopt the playbook in your project in under an hour.",
+          "agentDoc": "content/docs/getting-started.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/getting-started",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "glossary": {
+          "path": "content/docs/glossary.md",
+          "purpose": "Short definitions for the terms used across this playbook.",
+          "agentDoc": "content/docs/glossary.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/glossary",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "playbook": {
+          "path": "content/docs/index.mdx",
+          "purpose": "The gold-standard playbook for shipping production software with AI coding agents.",
+          "agentDoc": "content/docs/getting-started.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "matrix": {
+          "path": "content/docs/matrix.md",
+          "purpose": "This is the master content map. Each cell points to the practices that apply when pillar meets SDLC phase.",
+          "agentDoc": "content/docs/matrix.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/matrix",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "onboard-your-agent": {
+          "path": "content/docs/onboard-your-agent.md",
+          "purpose": "One paste that feeds any coding agent the whole playbook and has it audit your repo — Claude Code, Cursor, Windsurf, Codex, Copilot, and more.",
+          "agentDoc": "content/docs/onboard-your-agent.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/onboard-your-agent",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "phases--01-discover": {
+          "path": "content/docs/phases/01-discover/index.md",
+          "purpose": "Define what you are building, who consumes it, and what success looks like — before agents touch the codebase.",
+          "agentDoc": "content/docs/phases/01-discover/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/phases/01-discover",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "phases--02-design": {
+          "path": "content/docs/phases/02-design/index.md",
+          "purpose": "Turn the discover brief into ADRs, RFCs, and a contract package skeleton the build phase can compose against.",
+          "agentDoc": "content/docs/phases/02-design/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/phases/02-design",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "phases--03-build": {
+          "path": "content/docs/phases/03-build/index.md",
+          "purpose": "Where most of the agent-augmented work happens. Discipline shifts from ''writing code'' to ''stating intent, then verifying output against it''.",
+          "agentDoc": "content/docs/phases/03-build/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/phases/03-build",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "phases--04-test": {
+          "path": "content/docs/phases/04-test/index.md",
+          "purpose": "How ''tests pass'' stops being a feeling and starts being a contract.",
+          "agentDoc": "content/docs/phases/04-test/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/phases/04-test",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "phases--05-ship": {
+          "path": "content/docs/phases/05-ship/index.md",
+          "purpose": "How to turn a green main into a release without surprising consumers.",
+          "agentDoc": "content/docs/phases/05-ship/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/phases/05-ship",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "phases--06-operate": {
+          "path": "content/docs/phases/06-operate/index.md",
+          "purpose": "What ''running it'' looks like after agents have shipped the first release.",
+          "agentDoc": "content/docs/phases/06-operate/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/phases/06-operate",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "agent-compatibility-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/agent-compatibility-pattern.md",
+          "purpose": "One playbook, every agent — how to map the bootstrap-doc convention onto Claude Code, Cursor, Windsurf, Copilot, Codex, and the rest.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/agent-compatibility-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/agent-compatibility-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "bootstrap-doc-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/bootstrap-doc-pattern.md",
+          "purpose": "The file an agent reads first, every session. Two files together: one for non-negotiables, one for routing.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/bootstrap-doc-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/bootstrap-doc-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "concurrent-agent-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/concurrent-agent-pattern.md",
+          "purpose": "How to survive — and benefit from — multiple agents working in the same repo at the same time.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/concurrent-agent-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/concurrent-agent-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "context-management-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/context-management-pattern.md",
+          "purpose": "Engineer what goes into the context window — selection, ordering, compaction, retention — because the context is the program the model runs.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/context-management-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/context-management-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "hallucination-reduction-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/hallucination-reduction-pattern.md",
+          "purpose": "Make model output you can put your name on — grounding, constrained generation, verification, and abstention — so the system says \"I don''t know\" instead of confidently inventing.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/hallucination-reduction-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/hallucination-reduction-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "honest-confidence-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/honest-confidence-pattern.md",
+          "purpose": "How to report done-ness so a human can trust it — separating what was automatically verified from what was merely claimed.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/honest-confidence-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/honest-confidence-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "human-in-the-loop-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/human-in-the-loop-pattern.md",
+          "purpose": "Design where humans review, approve, correct, and take over from agents — so autonomy scales with confidence and every correction becomes training signal.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/human-in-the-loop-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/human-in-the-loop-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--ai-collaboration": {
+          "path": "content/docs/pillars/ai-collaboration/index.md",
+          "purpose": "How to make an agent productive in your repo on day one and durably good across sessions.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "memory-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/memory-pattern.md",
+          "purpose": "How to make agents durably learn from prior sessions without polluting context with chat transcripts.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/memory-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/memory-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "open-knowledge-format-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/open-knowledge-format-pattern.md",
+          "purpose": "Represent agent-readable knowledge as a directory of markdown + YAML frontmatter — the OKF open standard, and how it formalizes patterns this playbook already uses.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/open-knowledge-format-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/open-knowledge-format-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "prompt-versioning-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/prompt-versioning-pattern.md",
+          "purpose": "Treat prompts as versioned, tested, experimentable production assets — not strings buried in code — so you can A/B them, measure impact, and roll back instantly.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/prompt-versioning-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/prompt-versioning-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "self-describe-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/self-describe-pattern.md",
+          "purpose": "Ship a machine-readable manifest of what your system can do, so external agents can discover and call it without reading your source.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/self-describe-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/self-describe-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "slash-commands-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/slash-commands-pattern.md",
+          "purpose": "How to turn repeated workflows into palette-invoked commands so they run identically every time.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/slash-commands-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/slash-commands-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "sub-agent-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/sub-agent-pattern.md",
+          "purpose": "How to delegate scoped tasks to specialist agents so the orchestrator stays focused.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/sub-agent-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/sub-agent-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "tool-design-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/tool-design-pattern.md",
+          "purpose": "Design the abstraction layer between a model and your product — tools, file systems, artifacts, skills — so complex multi-step work feels natural to the model and stays reliable for users.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/tool-design-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/tool-design-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--ai-collaboration--universal": {
+          "path": "content/docs/pillars/ai-collaboration/universal.md",
+          "purpose": "How to get production-grade work out of an AI coding agent, durably, across sessions and across multiple agents working in parallel.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/universal.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/universal",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "verify-first-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/verify-first-pattern.md",
+          "purpose": "Why an agent must trust live code over docs, plans, and its own memory — and how to verify before claiming or \"fixing\".",
+          "agentDoc": "content/docs/pillars/ai-collaboration/verify-first-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/verify-first-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "adr-pattern": {
+          "path": "content/docs/pillars/architecture/adr-pattern.md",
+          "purpose": "How to record architecture decisions so future agents (and humans) can find them, trust them, and supersede them cleanly.",
+          "agentDoc": "content/docs/pillars/architecture/adr-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/adr-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "anti-overengineering": {
+          "path": "content/docs/pillars/architecture/anti-overengineering.md",
+          "purpose": "How to keep agents (and engineers) from building three layers of abstraction for what would have been ten lines of code.",
+          "agentDoc": "content/docs/pillars/architecture/anti-overengineering.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/anti-overengineering",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "api-gateway-pattern": {
+          "path": "content/docs/pillars/architecture/api-gateway-pattern.md",
+          "purpose": "The edge between clients and your services — what belongs there, what doesn''t, and how to keep it from becoming a monolith in disguise.",
+          "agentDoc": "content/docs/pillars/architecture/api-gateway-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/api-gateway-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "api-versioning-pattern": {
+          "path": "content/docs/pillars/architecture/api-versioning-pattern.md",
+          "purpose": "How to evolve public contracts without surprising consumers.",
+          "agentDoc": "content/docs/pillars/architecture/api-versioning-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/api-versioning-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "caching-cdn-pattern": {
+          "path": "content/docs/pillars/architecture/caching-cdn-pattern.md",
+          "purpose": "How to layer caches so the system is fast, cheap, and consistent — three properties at tension.",
+          "agentDoc": "content/docs/pillars/architecture/caching-cdn-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/caching-cdn-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "contracts-zod-pattern": {
+          "path": "content/docs/pillars/architecture/contracts-zod-pattern.md",
+          "purpose": "TS-concrete recipe for a typed JSON-RPC / HTTP / IPC boundary. Scales to several hundred methods across dozens of namespaces in a real production codebase.",
+          "agentDoc": "content/docs/pillars/architecture/contracts-zod-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/contracts-zod-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "distributed-data-pattern": {
+          "path": "content/docs/pillars/architecture/distributed-data-pattern.md",
+          "purpose": "How to design data layout when one database stops being enough — read replicas, sharding, replication lag, CAP trade-offs, eventual consistency.",
+          "agentDoc": "content/docs/pillars/architecture/distributed-data-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/distributed-data-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "error-hierarchy": {
+          "path": "content/docs/pillars/architecture/error-hierarchy.md",
+          "purpose": "How to design an error model that survives multi-agent development and client-side pattern matching.",
+          "agentDoc": "content/docs/pillars/architecture/error-hierarchy.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/error-hierarchy",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "event-streaming-pattern": {
+          "path": "content/docs/pillars/architecture/event-streaming-pattern.md",
+          "purpose": "How to design async, decoupled communication via queues, pub/sub, and event streams — without losing events, double-processing, or stalling consumers.",
+          "agentDoc": "content/docs/pillars/architecture/event-streaming-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/event-streaming-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "feature-flags-pattern": {
+          "path": "content/docs/pillars/architecture/feature-flags-pattern.md",
+          "purpose": "How to ship code separately from shipping behavior, without accumulating a flag graveyard.",
+          "agentDoc": "content/docs/pillars/architecture/feature-flags-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/feature-flags-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "file-size-budget": {
+          "path": "content/docs/pillars/architecture/file-size-budget.md",
+          "purpose": "How to keep files reviewable when agents write most of the code.",
+          "agentDoc": "content/docs/pillars/architecture/file-size-budget.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/file-size-budget",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "iac-pattern": {
+          "path": "content/docs/pillars/architecture/iac-pattern.md",
+          "purpose": "How to define + version + review + apply infrastructure as code, instead of clicking around cloud consoles.",
+          "agentDoc": "content/docs/pillars/architecture/iac-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/iac-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--architecture": {
+          "path": "content/docs/pillars/architecture/index.md",
+          "purpose": "How to keep a codebase legible and modular under multi-agent development.",
+          "agentDoc": "content/docs/pillars/architecture/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "multi-region-pattern": {
+          "path": "content/docs/pillars/architecture/multi-region-pattern.md",
+          "purpose": "How to operate across geographic regions for latency, availability, and data sovereignty — without losing your mind.",
+          "agentDoc": "content/docs/pillars/architecture/multi-region-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/multi-region-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "offline-first-sync-pattern": {
+          "path": "content/docs/pillars/architecture/offline-first-sync-pattern.md",
+          "purpose": "How to design apps that work without network connectivity and reconcile state when connectivity returns.",
+          "agentDoc": "content/docs/pillars/architecture/offline-first-sync-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/offline-first-sync-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "platform-engineering-idp-pattern": {
+          "path": "content/docs/pillars/architecture/platform-engineering-idp-pattern.md",
+          "purpose": "How to build the layer between cloud / infra and product engineers, so product teams ship fast without re-learning infra each time.",
+          "agentDoc": "content/docs/pillars/architecture/platform-engineering-idp-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/platform-engineering-idp-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "rfc-pattern": {
+          "path": "content/docs/pillars/architecture/rfc-pattern.md",
+          "purpose": "When the decision is bigger than your team. Used for changes to public contracts, wire formats, plugin protocols, and any breaking change a consumer outside this repo would notice.",
+          "agentDoc": "content/docs/pillars/architecture/rfc-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/rfc-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "service-mesh-pattern": {
+          "path": "content/docs/pillars/architecture/service-mesh-pattern.md",
+          "purpose": "How to handle cross-service communication concerns (mTLS, retries, observability, routing) without coding them in every service.",
+          "agentDoc": "content/docs/pillars/architecture/service-mesh-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/service-mesh-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "ts-concrete": {
+          "path": "content/docs/pillars/architecture/ts-concrete.md",
+          "purpose": "Copy-paste-ready recipes that implement [`universal.md`](/docs/pillars/architecture/universal) on a TypeScript stack. Calibrated on a real multi-package, multi-app monorepo built primarily by AI agents over ~1 year.",
+          "agentDoc": "content/docs/pillars/architecture/ts-concrete.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/ts-concrete",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--architecture--universal": {
+          "path": "content/docs/pillars/architecture/universal.md",
+          "purpose": "Stack-agnostic. Applies to any language, any framework.",
+          "agentDoc": "content/docs/pillars/architecture/universal.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/architecture/universal",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--governance": {
+          "path": "content/docs/pillars/governance/index.md",
+          "purpose": "How multiple agents (and humans) coordinate work in one repo without subtracting each other''s progress.",
+          "agentDoc": "content/docs/pillars/governance/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/governance",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "merge-rules-pattern": {
+          "path": "content/docs/pillars/governance/merge-rules-pattern.md",
+          "purpose": "How to resolve conflicts so the merge sums work instead of subtracting it.",
+          "agentDoc": "content/docs/pillars/governance/merge-rules-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/governance/merge-rules-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "phased-pr-pattern": {
+          "path": "content/docs/pillars/governance/phased-pr-pattern.md",
+          "purpose": "How to ship initiatives too big for one PR without ending up with a long-lived branch hell.",
+          "agentDoc": "content/docs/pillars/governance/phased-pr-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/governance/phased-pr-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pr-intent-pattern": {
+          "path": "content/docs/pillars/governance/pr-intent-pattern.md",
+          "purpose": "The manifest that makes a PR''s claims verifiable.",
+          "agentDoc": "content/docs/pillars/governance/pr-intent-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/governance/pr-intent-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "tombstone-pattern": {
+          "path": "content/docs/pillars/governance/tombstone-pattern.md",
+          "purpose": "How to retire a doc, plan, ADR, screen, or package without losing the trail.",
+          "agentDoc": "content/docs/pillars/governance/tombstone-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/governance/tombstone-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--governance--universal": {
+          "path": "content/docs/pillars/governance/universal.md",
+          "purpose": "How multiple contributors — agents and humans — coordinate so the whole sums.",
+          "agentDoc": "content/docs/pillars/governance/universal.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/governance/universal",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "adversarial-bug-hunt-pattern": {
+          "path": "content/docs/pillars/quality/adversarial-bug-hunt-pattern.md",
+          "purpose": "How to find real logic bugs with a find → refute → reproduce loop, instead of trusting a single agent that says \"looks fine\".",
+          "agentDoc": "content/docs/pillars/quality/adversarial-bug-hunt-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/adversarial-bug-hunt-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "agent-eval-framework-pattern": {
+          "path": "content/docs/pillars/quality/agent-eval-framework-pattern.md",
+          "purpose": "How to measure whether an AI agent is actually good — deterministic checks, LLM-as-judge, and production monitoring — so quality scales with the system instead of breaking as it grows.",
+          "agentDoc": "content/docs/pillars/quality/agent-eval-framework-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/agent-eval-framework-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "alerting-runbooks-pattern": {
+          "path": "content/docs/pillars/quality/alerting-runbooks-pattern.md",
+          "purpose": "How to turn observability data into a healthy alerting setup — pages that matter, runbooks that work, alert hygiene that prevents pager fatigue.",
+          "agentDoc": "content/docs/pillars/quality/alerting-runbooks-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/alerting-runbooks-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "chaos-engineering-pattern": {
+          "path": "content/docs/pillars/quality/chaos-engineering-pattern.md",
+          "purpose": "How to find failure modes before customers do — deliberately, in a controlled way.",
+          "agentDoc": "content/docs/pillars/quality/chaos-engineering-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/chaos-engineering-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "ci-cd-pipeline-pattern": {
+          "path": "content/docs/pillars/quality/ci-cd-pipeline-pattern.md",
+          "purpose": "How to wire continuous integration + continuous delivery so the path from commit to production is short, verifiable, reversible, and boring.",
+          "agentDoc": "content/docs/pillars/quality/ci-cd-pipeline-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/ci-cd-pipeline-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "contract-testing-pattern": {
+          "path": "content/docs/pillars/quality/contract-testing-pattern.md",
+          "purpose": "How to verify that consumer + provider agree on a contract, without expensive end-to-end tests.",
+          "agentDoc": "content/docs/pillars/quality/contract-testing-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/contract-testing-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "cost-optimization-pattern": {
+          "path": "content/docs/pillars/quality/cost-optimization-pattern.md",
+          "purpose": "How to control cloud spend without micromanaging every commit.",
+          "agentDoc": "content/docs/pillars/quality/cost-optimization-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/cost-optimization-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "fail-loud-defaults-pattern": {
+          "path": "content/docs/pillars/quality/fail-loud-defaults-pattern.md",
+          "purpose": "Why a silent no-op default plus a test harness that overrides it lets broken production wiring pass CI green.",
+          "agentDoc": "content/docs/pillars/quality/fail-loud-defaults-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/fail-loud-defaults-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--quality": {
+          "path": "content/docs/pillars/quality/index.md",
+          "purpose": "How to know the code works without manually reviewing every agent-produced diff.",
+          "agentDoc": "content/docs/pillars/quality/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "mutation-testing-pattern": {
+          "path": "content/docs/pillars/quality/mutation-testing-pattern.md",
+          "purpose": "How to score whether your unit tests actually catch bugs, beyond what coverage tells you.",
+          "agentDoc": "content/docs/pillars/quality/mutation-testing-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/mutation-testing-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "observability-pattern": {
+          "path": "content/docs/pillars/quality/observability-pattern.md",
+          "purpose": "How to know what the system is doing in production, beyond ''tests passed''.",
+          "agentDoc": "content/docs/pillars/quality/observability-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/observability-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "performance-budgets-pattern": {
+          "path": "content/docs/pillars/quality/performance-budgets-pattern.md",
+          "purpose": "How to keep ''it''s fast enough'' from drifting into ''why is it slow?''",
+          "agentDoc": "content/docs/pillars/quality/performance-budgets-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/performance-budgets-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pre-push-pattern": {
+          "path": "content/docs/pillars/quality/pre-push-pattern.md",
+          "purpose": "The safety net between local changes and CI.",
+          "agentDoc": "content/docs/pillars/quality/pre-push-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/pre-push-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "product-analytics-experimentation-pattern": {
+          "path": "content/docs/pillars/quality/product-analytics-experimentation-pattern.md",
+          "purpose": "How to measure what users do, run experiments cleanly, and let data drive product decisions — without inviting bias or noise.",
+          "agentDoc": "content/docs/pillars/quality/product-analytics-experimentation-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/product-analytics-experimentation-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "property-fuzz-testing-pattern": {
+          "path": "content/docs/pillars/quality/property-fuzz-testing-pattern.md",
+          "purpose": "How to test the laws your code must obey, instead of guessing individual inputs — and how this catches crypto and parser bugs example tests never will.",
+          "agentDoc": "content/docs/pillars/quality/property-fuzz-testing-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/property-fuzz-testing-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "quality-gates-pattern": {
+          "path": "content/docs/pillars/quality/quality-gates-pattern.md",
+          "purpose": "How to bundle structural rules into one fast command an agent runs before every push.",
+          "agentDoc": "content/docs/pillars/quality/quality-gates-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/quality-gates-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "sanity-pattern": {
+          "path": "content/docs/pillars/quality/sanity-pattern.md",
+          "purpose": "The cross-cutting audit that catches what individual gates miss.",
+          "agentDoc": "content/docs/pillars/quality/sanity-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/sanity-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "test-pyramid": {
+          "path": "content/docs/pillars/quality/test-pyramid.md",
+          "purpose": "How to mix test types so the cheap ones catch most bugs and the expensive ones cover what only they can.",
+          "agentDoc": "content/docs/pillars/quality/test-pyramid.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/test-pyramid",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--quality--universal": {
+          "path": "content/docs/pillars/quality/universal.md",
+          "purpose": "How to know agent-produced code works without manually reading every diff.",
+          "agentDoc": "content/docs/pillars/quality/universal.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/universal",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "ai-llm-safety-pattern": {
+          "path": "content/docs/pillars/security/ai-llm-safety-pattern.md",
+          "purpose": "How to ship LLM-powered features without prompt injection, jailbreaks, data leakage, hallucinated tools, or runaway costs.",
+          "agentDoc": "content/docs/pillars/security/ai-llm-safety-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/ai-llm-safety-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "audit-ledger-pattern": {
+          "path": "content/docs/pillars/security/audit-ledger-pattern.md",
+          "purpose": "How to prove who did what when, in a way that survives compromise.",
+          "agentDoc": "content/docs/pillars/security/audit-ledger-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/audit-ledger-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "compliance-framework-pattern": {
+          "path": "content/docs/pillars/security/compliance-framework-pattern.md",
+          "purpose": "How to map SOC 2 / ISO 27001 / GDPR / HIPAA controls onto your codebase + ops, so audits are evidence-driven, not theatre.",
+          "agentDoc": "content/docs/pillars/security/compliance-framework-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/compliance-framework-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "container-k8s-security-pattern": {
+          "path": "content/docs/pillars/security/container-k8s-security-pattern.md",
+          "purpose": "How to ship containers + run them on Kubernetes without making the runtime an attack surface.",
+          "agentDoc": "content/docs/pillars/security/container-k8s-security-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/container-k8s-security-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "data-classification-pattern": {
+          "path": "content/docs/pillars/security/data-classification-pattern.md",
+          "purpose": "How to label every field by sensitivity, then make the labels drive redaction, retention, residency, and access.",
+          "agentDoc": "content/docs/pillars/security/data-classification-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/data-classification-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "dependency-hygiene-pattern": {
+          "path": "content/docs/pillars/security/dependency-hygiene-pattern.md",
+          "purpose": "How to keep your dependency tree healthy across thousands of transitive packages without it becoming a full-time job.",
+          "agentDoc": "content/docs/pillars/security/dependency-hygiene-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/dependency-hygiene-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "egress-firewall-pattern": {
+          "path": "content/docs/pillars/security/egress-firewall-pattern.md",
+          "purpose": "Default-deny outbound network access, configurable per workspace, evaluable at every call site.",
+          "agentDoc": "content/docs/pillars/security/egress-firewall-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/egress-firewall-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "governance-posture-pattern": {
+          "path": "content/docs/pillars/security/governance-posture-pattern.md",
+          "purpose": "Expose the system''s live security and governance posture as a read-only, machine-readable signal — so agents, dashboards, and auditors can see what is enforced without admin rights.",
+          "agentDoc": "content/docs/pillars/security/governance-posture-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/governance-posture-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--security": {
+          "path": "content/docs/pillars/security/index.md",
+          "purpose": "How to build security in from day one when the people writing the code are agents, not a hardened security team.",
+          "agentDoc": "content/docs/pillars/security/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "multi-tenant-isolation-pattern": {
+          "path": "content/docs/pillars/security/multi-tenant-isolation-pattern.md",
+          "purpose": "How to host many customers in one system without one customer leaking, blocking, or paying for another.",
+          "agentDoc": "content/docs/pillars/security/multi-tenant-isolation-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/multi-tenant-isolation-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "on-call-rotation-pattern": {
+          "path": "content/docs/pillars/security/on-call-rotation-pattern.md",
+          "purpose": "How to keep a system reliable 24/7 without burning out the team that maintains it.",
+          "agentDoc": "content/docs/pillars/security/on-call-rotation-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/on-call-rotation-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "rate-limiting-ddos-pattern": {
+          "path": "content/docs/pillars/security/rate-limiting-ddos-pattern.md",
+          "purpose": "How to absorb traffic spikes — both benign (popular feature) and malicious (DDoS / abuse) — without breaking for legitimate users.",
+          "agentDoc": "content/docs/pillars/security/rate-limiting-ddos-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/rate-limiting-ddos-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "rbac-pattern": {
+          "path": "content/docs/pillars/security/rbac-pattern.md",
+          "purpose": "How to model ''who can do what'' so the checks survive multi-agent edits.",
+          "agentDoc": "content/docs/pillars/security/rbac-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/rbac-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "secrets-leak-postmortem-playbook": {
+          "path": "content/docs/pillars/security/secrets-leak-postmortem-playbook.md",
+          "purpose": "When a secret leaks — git history, log, screenshot, public artefact — what to do, in what order, within what timeline.",
+          "agentDoc": "content/docs/pillars/security/secrets-leak-postmortem-playbook.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/secrets-leak-postmortem-playbook",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "secrets-mgmt-deep-pattern": {
+          "path": "content/docs/pillars/security/secrets-mgmt-deep-pattern.md",
+          "purpose": "Beyond `vault-pattern.md` — operational specifics: dynamic secrets, short-lived credentials, secret-zero, secret-less architectures, OIDC federation.",
+          "agentDoc": "content/docs/pillars/security/secrets-mgmt-deep-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/secrets-mgmt-deep-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "session-mgmt-pattern": {
+          "path": "content/docs/pillars/security/session-mgmt-pattern.md",
+          "purpose": "How to model + protect user sessions — login state, refresh, revocation, idle expiry, device binding.",
+          "agentDoc": "content/docs/pillars/security/session-mgmt-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/session-mgmt-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "threat-model-template": {
+          "path": "content/docs/pillars/security/threat-model-template.md",
+          "purpose": "Skeleton for the per-project threat model doc. Lives at `docs/security/threat-model.md`. Revisited every release.",
+          "agentDoc": "content/docs/pillars/security/threat-model-template.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/threat-model-template",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--security--universal": {
+          "path": "content/docs/pillars/security/universal.md",
+          "purpose": "How to bake security into the codebase from PR #1, when agents (not a hardened security team) write most of it.",
+          "agentDoc": "content/docs/pillars/security/universal.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/universal",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "vault-pattern": {
+          "path": "content/docs/pillars/security/vault-pattern.md",
+          "purpose": "How to store secrets so a leaked log line, a stolen disk, or a curious agent does not compromise the system.",
+          "agentDoc": "content/docs/pillars/security/vault-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/vault-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "vulnerability-mgmt-pattern": {
+          "path": "content/docs/pillars/security/vulnerability-mgmt-pattern.md",
+          "purpose": "How to keep the system patched without bottlenecking on a person watching CVE feeds.",
+          "agentDoc": "content/docs/pillars/security/vulnerability-mgmt-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/security/vulnerability-mgmt-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "a11y-checklist": {
+          "path": "content/docs/pillars/ui-ux/a11y-checklist.md",
+          "purpose": "What every shipped surface passes before merge, and how to prove it.",
+          "agentDoc": "content/docs/pillars/ui-ux/a11y-checklist.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/a11y-checklist",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "accessibility-deep-pattern": {
+          "path": "content/docs/pillars/ui-ux/accessibility-deep-pattern.md",
+          "purpose": "Beyond the per-PR checklist — the substance of WCAG-AA conformance, the failure modes that matter, the testing discipline that catches what automation cannot.",
+          "agentDoc": "content/docs/pillars/ui-ux/accessibility-deep-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/accessibility-deep-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "design-system-governance-pattern": {
+          "path": "content/docs/pillars/ui-ux/design-system-governance-pattern.md",
+          "purpose": "How to keep a design system useful as it grows — without bloat, without dictatorial restrictions, without drift.",
+          "agentDoc": "content/docs/pillars/ui-ux/design-system-governance-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/design-system-governance-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "design-tokens-pattern": {
+          "path": "content/docs/pillars/ui-ux/design-tokens-pattern.md",
+          "purpose": "How to define visual values once and let them flow through every screen, theme, and brand.",
+          "agentDoc": "content/docs/pillars/ui-ux/design-tokens-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/design-tokens-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "empty-states-pattern": {
+          "path": "content/docs/pillars/ui-ux/empty-states-pattern.md",
+          "purpose": "How to turn empty surfaces from dead ends into next-step launchpads.",
+          "agentDoc": "content/docs/pillars/ui-ux/empty-states-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/empty-states-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "i18n-deep-pattern": {
+          "path": "content/docs/pillars/ui-ux/i18n-deep-pattern.md",
+          "purpose": "Beyond ''wrap every string in `t()`'' — the substance of locale-correct UI: plural rules, gender, ICU formatting, RTL, dates, numbers, currency, sorting, search.",
+          "agentDoc": "content/docs/pillars/ui-ux/i18n-deep-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/i18n-deep-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--ui-ux": {
+          "path": "content/docs/pillars/ui-ux/index.md",
+          "purpose": "How to keep a multi-screen product visually coherent, intl-ready, and accessible when agents are writing screens in parallel.",
+          "agentDoc": "content/docs/pillars/ui-ux/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "intl-pattern": {
+          "path": "content/docs/pillars/ui-ux/intl-pattern.md",
+          "purpose": "How to never ship hardcoded user-visible strings, so the next locale is configuration, not a sweep.",
+          "agentDoc": "content/docs/pillars/ui-ux/intl-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/intl-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "primitives-pattern": {
+          "path": "content/docs/pillars/ui-ux/primitives-pattern.md",
+          "purpose": "How to ship a one-package primitives catalog so every screen looks like the same product.",
+          "agentDoc": "content/docs/pillars/ui-ux/primitives-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/primitives-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "pillars--ui-ux--universal": {
+          "path": "content/docs/pillars/ui-ux/universal.md",
+          "purpose": "How to keep a multi-screen product visually coherent, intl-ready, accessible, and honest when agents author screens in parallel.",
+          "agentDoc": "content/docs/pillars/ui-ux/universal.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/universal",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "whitelabel-pattern": {
+          "path": "content/docs/pillars/ui-ux/whitelabel-pattern.md",
+          "purpose": "How to make every product surface reskinnable per tenant — even if you do not sell whitelabel today.",
+          "agentDoc": "content/docs/pillars/ui-ux/whitelabel-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ui-ux/whitelabel-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "prompts": {
+          "path": "content/docs/prompts/index.md",
+          "purpose": "System prompts, sub-agent recipes, and slash-command bodies that consistently produce gold-standard output.",
+          "agentDoc": "content/docs/prompts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "slash-clear": {
+          "path": "content/docs/prompts/slash-clear.md",
+          "purpose": "Reset session context cleanly without losing persistent memory.",
+          "agentDoc": "content/docs/prompts/slash-clear.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/slash-clear",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "slash-goal": {
+          "path": "content/docs/prompts/slash-goal.md",
+          "purpose": "Set a session goal with an explicit exit condition. Stops only when condition holds.",
+          "agentDoc": "content/docs/prompts/slash-goal.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/slash-goal",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "slash-loop": {
+          "path": "content/docs/prompts/slash-loop.md",
+          "purpose": "Run a task repeatedly. Either on a fixed interval or self-paced based on an exit condition.",
+          "agentDoc": "content/docs/prompts/slash-loop.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/slash-loop",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "slash-review": {
+          "path": "content/docs/prompts/slash-review.md",
+          "purpose": "Multi-agent code review pass on a PR (or current branch).",
+          "agentDoc": "content/docs/prompts/slash-review.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/slash-review",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "slash-sanity": {
+          "path": "content/docs/prompts/slash-sanity.md",
+          "purpose": "Run the cross-cutting sanity audit, surface drift.",
+          "agentDoc": "content/docs/prompts/slash-sanity.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/slash-sanity",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "slash-ship": {
+          "path": "content/docs/prompts/slash-ship.md",
+          "purpose": "Run the release-gate checklist. Does not actually release — produces the readiness verdict.",
+          "agentDoc": "content/docs/prompts/slash-ship.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/slash-ship",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "subagent-code-explorer": {
+          "path": "content/docs/prompts/subagent-code-explorer.md",
+          "purpose": "Deep-trace agent. Maps execution paths, dependencies, and abstraction layers across a feature so the orchestrator can reason about a change.",
+          "agentDoc": "content/docs/prompts/subagent-code-explorer.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/subagent-code-explorer",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "subagent-code-reviewer": {
+          "path": "content/docs/prompts/subagent-code-reviewer.md",
+          "purpose": "Confidence-filtered review pass on a diff. Returns issues; does not approve / merge.",
+          "agentDoc": "content/docs/prompts/subagent-code-reviewer.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/subagent-code-reviewer",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "subagent-explore": {
+          "path": "content/docs/prompts/subagent-explore.md",
+          "purpose": "Read-only fan-out search agent. Orchestrator delegates ''find me X'' tasks here.",
+          "agentDoc": "content/docs/prompts/subagent-explore.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/subagent-explore",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "subagent-plan": {
+          "path": "content/docs/prompts/subagent-plan.md",
+          "purpose": "Designs a step-by-step implementation plan from a task description and codebase context. Does not implement.",
+          "agentDoc": "content/docs/prompts/subagent-plan.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/subagent-plan",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "system-architect": {
+          "path": "content/docs/prompts/system-architect.md",
+          "purpose": "Inject as system prompt when the task is designing a new package boundary, new contract, new ADR, or evaluating a structural change.",
+          "agentDoc": "content/docs/prompts/system-architect.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/system-architect",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "system-implementer": {
+          "path": "content/docs/prompts/system-implementer.md",
+          "purpose": "Inject as system prompt when the task is building a sub-unit against a finalised plan.",
+          "agentDoc": "content/docs/prompts/system-implementer.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/system-implementer",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "system-reviewer": {
+          "path": "content/docs/prompts/system-reviewer.md",
+          "purpose": "Inject as system prompt for code review passes. Produces confidence-scored issue lists, not pile-on critique.",
+          "agentDoc": "content/docs/prompts/system-reviewer.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/system-reviewer",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "system-security": {
+          "path": "content/docs/prompts/system-security.md",
+          "purpose": "Inject as system prompt for security-focused review passes. Narrower than the general reviewer; deeper on the threat model.",
+          "agentDoc": "content/docs/prompts/system-security.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/prompts/system-security",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "scripts": {
+          "path": "content/docs/scripts/index.md",
+          "purpose": "Drop-in reference implementations for the quality + structural gates the pillars rely on. Adapt to your stack; the contract each gate enforces is more important than the specific code.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "ADR.template": {
+          "path": "content/docs/templates/ADR.template.md",
+          "purpose": "Skeleton for an Architecture Decision Record. Copy the block below into docs/adr/NNNN-<slug>.md and fill the bracketed parts.",
+          "agentDoc": "content/docs/templates/ADR.template.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/templates/ADR.template",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "AGENTS.md.template": {
+          "path": "content/docs/templates/AGENTS.md.template.md",
+          "purpose": "Drop at repo root. The routing table that answers ''which package owns X?'' before an agent makes the wrong edit.",
+          "agentDoc": "content/docs/templates/AGENTS.md.template.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/templates/AGENTS.md.template",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "CLAUDE.md.template": {
+          "path": "content/docs/templates/CLAUDE.md.template.md",
+          "purpose": "Drop this at the repo root as `CLAUDE.md` (or `AGENTS.md` for tool-neutral). Customise the marked sections. Keep it under 200 lines; agents read the whole thing every session.",
+          "agentDoc": "content/docs/templates/CLAUDE.md.template.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/templates/CLAUDE.md.template",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "MEMORY.md.template": {
+          "path": "content/docs/templates/MEMORY.md.template.md",
+          "purpose": "Persistent agent memory survives between sessions. The pattern: one fact per file, plus an index file.",
+          "agentDoc": "content/docs/templates/MEMORY.md.template.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/templates/MEMORY.md.template",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "PR-intent.template": {
+          "path": "content/docs/templates/PR-intent.template.md",
+          "purpose": "Embed this block in every PR description. A gate parses it and verifies that the diff matches the claims.",
+          "agentDoc": "content/docs/templates/PR-intent.template.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/templates/PR-intent.template",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "RFC.template": {
+          "path": "content/docs/templates/RFC.template.md",
+          "purpose": "Skeleton for a Request for Comments. Copy the block below into docs/rfc/NNNN-<slug>.md and fill the bracketed parts.",
+          "agentDoc": "content/docs/templates/RFC.template.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/templates/RFC.template",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "templates": {
+          "path": "content/docs/templates/index.md",
+          "purpose": "Copy-paste skeletons for the documents the playbook relies on — bootstrap docs, decision records, and the PR-intent manifest.",
+          "agentDoc": "content/docs/templates/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/templates",
+          "checks": [
+            "pnpm check:all"
+          ]
         }
       }
     }
   },
   "index": {
     "outFile": ".doc-bridge/index.json",
-    "llmsTxt": { "enabled": true, "outFile": ".doc-bridge/llms.txt", "preamble": "Agents Playbook documents production practices for software built with AI coding agents." },
-    "capabilities": { "enabled": true, "outFile": ".doc-bridge/capabilities.json" }
+    "llmsTxt": {
+      "enabled": true,
+      "outFile": ".doc-bridge/llms.txt",
+      "preamble": "Agents Playbook documents production practices for software built with AI coding agents."
+    },
+    "capabilities": {
+      "enabled": true,
+      "outFile": ".doc-bridge/capabilities.json"
+    }
   },
-  "gates": { "preset": "standard" },
+  "gates": {
+    "preset": "standard"
+  },
   "surfaces": {
-    "cli": { "bin": "ak-docs", "defaultFormat": "json" },
-    "mcp": { "enabled": true, "transport": "stdio" }
+    "cli": {
+      "bin": "ak-docs",
+      "defaultFormat": "json"
+    },
+    "mcp": {
+      "enabled": true,
+      "transport": "stdio"
+    }
   }
 }
