@@ -20,6 +20,7 @@ export default function Layout({ children }: { children: ReactNode }) {
         url: "/",
       }}
       links={[
+        { text: "For agents", url: "/for-agents" },
         { text: "Matrix", url: "/docs/matrix" },
         { text: "Glossary", url: "/docs/glossary" },
         {

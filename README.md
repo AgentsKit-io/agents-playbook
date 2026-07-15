@@ -32,8 +32,8 @@ The repository generates and checks its own claims from source:
 | SDLC phases | 6 |
 | Copy-ready templates | 6 |
 | Zero-dependency gate scripts | 13 |
-| Human and agent guides | 130 |
-| Deterministic local answers | 150 |
+| Human and agent guides | 131 |
+| Deterministic local answers | 153 |
 | Doc Bridge health | 100/100 · A |
 
 The source-of-truth counts live in [`app/stats.snapshot.json`](./app/stats.snapshot.json), the local answer catalog in [`public/deterministic/knowledge.json`](./public/deterministic/knowledge.json), and documentation ownership in [`doc-bridge.config.json`](./doc-bridge.config.json). CI rejects drift.
@@ -80,7 +80,7 @@ console.log(`Verified ${verified.value.entries.length} local Playbook answers.`)
 Expected output:
 
 ```text
-Verified 150 local Playbook answers.
+Verified 153 local Playbook answers.
 ```
 
 ## How the system fits together
@@ -139,11 +139,11 @@ By contributing, you license the work under [CC BY 4.0](./LICENSE). Please repor
 
 Agents Playbook is the practice layer of the AgentsKit ecosystem:
 
-- [AgentsKit](https://www.agentskit.io/docs/for-agents) — the parent framework and agent runtime.
-- [Registry](https://registry.agentskit.io) — 300+ ready-to-use agent definitions and local discovery.
-- [AgentsKit Chat](https://github.com/AgentsKit-io/agentskit-chat) — configurable chat UI and local-first answer protocol used here.
-- [Doc Bridge](https://github.com/AgentsKit-io/doc-bridge) — documentation ownership, routing, health, and MCP handoff.
-- [AgentsKit OS](https://github.com/AgentsKit-io/agentskit-os) — the full agent operating environment.
-- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli) — automated review workflows for agent-authored code.
+- [AgentsKit](https://www.agentskit.io/docs) — build agents without gluing many libraries together.
+- [Registry](https://registry.agentskit.io/docs) — copy ready-made agents and own the source.
+- [AgentsKit Chat](https://chat.agentskit.io/docs) — define one conversational experience across interfaces.
+- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — turn repository docs into executable agent handoffs.
+- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli#readme) — verify agent-authored changes before merge.
+- [AKOS](https://akos.agentskit.io/docs) — run and govern agents in production.
 
 **Topics:** `ai-agents` · `coding-agents` · `agent-governance` · `software-architecture` · `quality-gates` · `fumadocs` · `llms-txt` · `developer-experience`

@@ -26,7 +26,10 @@
     "docs:bridge:index": "node scripts/generate-doc-bridge-config.mjs && ak-docs index",
     "docs:bridge:query": "ak-docs query",
     "docs:bridge:gate": "ak-docs gate run",
-    "check:all": "pnpm check:okf-type && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:readme-standard && pnpm test && pnpm lint && pnpm build"
+    "docs:bridge:doctor": "ak-docs doctor",
+    "docs:bridge:conformance": "ak-docs conformance run documentation-standard-v1 --text",
+    "check:doc-bridge-score": "node scripts/check-doc-bridge-score.mjs",
+    "check:all": "pnpm check:okf-type && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:doc-bridge-score && pnpm check:readme-standard && pnpm test && pnpm lint && pnpm build"
   },
   "dependencies": {
     "@agentskit/chat": "0.3.0",

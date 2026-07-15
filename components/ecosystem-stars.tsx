@@ -5,8 +5,8 @@ import { Star } from "lucide-react";
 import { track } from "@/lib/posthog-client";
 
 /**
- * Combined GitHub star count across the whole AgentsKit ecosystem (framework +
- * registry + playbook + AKOS). Any single repo is still young, but the family
+ * Combined GitHub star count across the whole seven-product AgentsKit ecosystem.
+ * Any single repo is still young, but the family
  * total is a credible social-proof number — so we sum them and show one figure
  * in the header. The same-origin route caches and bounds GitHub requests so a
  * public API limit never leaks browser errors into the experience.

@@ -5,6 +5,7 @@ import { RootProvider } from "fumadocs-ui/provider";
 import Script from "next/script";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { AskWidget } from "@/components/ask-widget";
+import { SharedEcosystemBar } from "@/components/shared-ecosystem-bar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -90,12 +91,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           {JSON.stringify(JSON_LD)}
         </Script>
-        {/* Shared ecosystem bar — single source on www.agentskit.io, embedded across all properties. */}
-        <Script src="https://www.agentskit.io/ecosystem-bar.js" strategy="lazyOnload" data-current="playbook" />
         <PostHogProvider>
           <RootProvider
             theme={{ defaultTheme: "dark", forcedTheme: "dark" }}
           >
+            <SharedEcosystemBar />
             {children}
             <AskWidget
               corpus="playbook"

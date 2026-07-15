@@ -23,8 +23,11 @@ async function collect(): Promise<{ path: string; body: string }[]> {
         const body = await readFile(full, "utf8");
         const isScript = e.name.endsWith(".mjs");
         const stem = isScript ? next.join("/") : next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
-        const cleaned = stem.replace(/\/index$/, "").replace(/\/README$/, "");
-        out.push({ path: isScript ? `/raw/${cleaned}` : `/docs/${cleaned}`, body });
+        const cleaned = stem
+          .replace(/\/index$/, "")
+          .replace(/\/README$/, "")
+          .replace(/^(index|README)$/, "");
+        out.push({ path: isScript ? `/raw/${cleaned}` : cleaned ? `/docs/${cleaned}` : "/docs", body });
       }
     }
   }
@@ -42,6 +45,10 @@ Single-file dump of every doc. Documents are separated by lines starting with "=
 Each section begins with the canonical URL at ${SITE}.
 
 Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
+
+Agent entry point: ${SITE}/for-agents
+Concise map: ${SITE}/llms.txt
+Raw source: replace /docs/<path> with /raw/<path>.md
 
 Generated automatically; treat as the canonical reference snapshot.
 

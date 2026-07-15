@@ -5,18 +5,17 @@
   },
   "corpus": {
     "agent": {
-      "root": "content/docs",
-      "index": "content/docs/index.mdx",
+      "root": "docs/for-agents",
+      "index": "docs/for-agents/INDEX.md",
       "include": [
-        "**/*.md",
-        "**/*.mdx"
+        "**/*.md"
       ],
       "exclude": [
         "**/node_modules/**"
       ]
     },
     "human": {
-      "plugin": "fumadocs",
+      "plugin": "plain-markdown",
       "options": {
         "contentDir": "content/docs",
         "urlPrefix": "/docs"
@@ -49,6 +48,15 @@
           "purpose": "See which Playbook questions answer instantly in the browser and when repository-specific synthesis uses the backend.",
           "agentDoc": "content/docs/discovery.mdx",
           "humanDoc": "https://playbook.agentskit.io/docs/discovery",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "for-agents": {
+          "path": "content/docs/for-agents.mdx",
+          "purpose": "The shortest reliable path for an agent to retrieve, apply, and verify the Agents Playbook.",
+          "agentDoc": "content/docs/for-agents.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/for-agents",
           "checks": [
             "pnpm check:all"
           ]
@@ -1212,7 +1220,108 @@
     }
   },
   "gates": {
-    "preset": "standard"
+    "preset": "standard",
+    "include": [
+      "documentation-standard-v1"
+    ]
+  },
+  "conformance": {
+    "documentationStandardV1": {
+      "rawSources": [
+        "README.md",
+        "content/docs/index.mdx",
+        "content/docs/for-agents.mdx",
+        "docs/for-agents/INDEX.md"
+      ],
+      "contributionPaths": [
+        "CONTRIBUTING.md",
+        "content/docs/contributing.mdx"
+      ],
+      "metadata": [
+        {
+          "path": "app/layout.tsx",
+          "contains": [
+            "export const metadata",
+            "title:",
+            "description:",
+            "openGraph:",
+            "twitter:"
+          ]
+        }
+      ],
+      "links": [
+        {
+          "url": "https://www.agentskit.io/docs",
+          "paths": [
+            "README.md",
+            "content/docs/for-agents.mdx"
+          ]
+        },
+        {
+          "url": "https://registry.agentskit.io/docs",
+          "paths": [
+            "README.md",
+            "content/docs/for-agents.mdx"
+          ]
+        },
+        {
+          "url": "https://chat.agentskit.io/docs",
+          "paths": [
+            "README.md",
+            "content/docs/for-agents.mdx"
+          ]
+        },
+        {
+          "url": "https://agentskit-io.github.io/doc-bridge/",
+          "paths": [
+            "README.md",
+            "content/docs/for-agents.mdx"
+          ]
+        },
+        {
+          "url": "https://github.com/AgentsKit-io/code-review-cli#readme",
+          "paths": [
+            "README.md",
+            "content/docs/for-agents.mdx"
+          ]
+        },
+        {
+          "url": "https://akos.agentskit.io/docs",
+          "paths": [
+            "README.md",
+            "content/docs/for-agents.mdx"
+          ]
+        }
+      ],
+      "ecosystemContract": {
+        "manifest": "ecosystem.json",
+        "claims": "ecosystem-claims.json",
+        "productId": "playbook"
+      },
+      "quickstarts": [
+        {
+          "id": "adopt-playbook",
+          "doc": "content/docs/getting-started.mdx",
+          "test": "scripts/onboarding-proof.test.mjs",
+          "command": "pnpm test:onboarding",
+          "testContains": [
+            "content/docs/getting-started.mdx",
+            "proves an adopted gate against an isolated starter fixture"
+          ]
+        }
+      ],
+      "visuals": [
+        "docs/assets/playbook-flow.svg"
+      ],
+      "diagrams": [
+        {
+          "path": "content/docs/discovery.mdx",
+          "contains": [
+            "```mermaid"
+          ]
+        }
+      ]
+    }
   },
   "surfaces": {
     "cli": {

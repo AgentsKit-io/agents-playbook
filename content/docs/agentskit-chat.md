@@ -7,7 +7,7 @@ description: How Ask Playbook composes the public AgentsKit Chat framework witho
 # Ask Playbook on AgentsKit Chat
 
 Ask Playbook is a production dogfood host for
-[`@agentskit/chat`](https://github.com/AgentsKit-io/agentskit-chat). The host
+[`@agentskit/chat`](https://chat.agentskit.io/docs). The host
 keeps the `playbook` corpus, endpoint, brand, CTA, and CSS. AgentsKit Chat owns
 the definition, session, ordered content, standard components, and React shell;
 AgentsKit owns messages, streaming, memory, cancellation, retry, editing, and
@@ -54,3 +54,7 @@ after the AgentsKit Chat integration covered:
 See AgentsKit Chat issue
 [#27](https://github.com/AgentsKit-io/agentskit-chat/issues/27) for the shared
 Registry/Playbook evidence and upstream-adoption record.
+
+For reusable chat definitions and renderer contracts, continue in the
+[AgentsKit Chat documentation](https://chat.agentskit.io/docs). For ownership,
+retrieval, or documentation gates, use [Doc Bridge](https://agentskit-io.github.io/doc-bridge/).

@@ -33,6 +33,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
   return [
     { url: SITE, lastModified: now, priority: 1.0 },
+    { url: `${SITE}/for-agents`, lastModified: now, priority: 0.9 },
     { url: `${SITE}/llms.txt`, lastModified: now },
     { url: `${SITE}/llms-full.txt`, lastModified: now },
     ...docs.map((d) => ({

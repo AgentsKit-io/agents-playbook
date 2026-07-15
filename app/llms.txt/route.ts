@@ -1,9 +1,10 @@
 // /llms.txt — the emerging convention for LLM-readable site map.
-// Lists every doc with a one-line description so an LLM can decide what to fetch.
+// Curates the entry points an LLM needs to choose what to fetch next.
 
-import { readdir, readFile, stat } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
-import { existsSync, readFileSync } from "node:fs";
+import { existsSync } from "node:fs";
+import { ecosystemPeers } from "../../lib/ecosystem";
 
 export const dynamic = "force-static";
 
@@ -70,27 +71,42 @@ async function collect(): Promise<Doc[]> {
   return docs;
 }
 
-/** Sibling-property discovery block, generated from the canonical ecosystem.json. */
 function ecosystemBlock(): string {
-  try {
-    const raw = readFileSync(join(process.cwd(), "ecosystem.json"), "utf8");
-    const eco = JSON.parse(raw) as {
-      properties: { id: string; name: string; tagline: string; url: string; llms: string }[];
-    };
-    const properties = eco.properties
-      .filter((p) => p.id !== "playbook")
-      .map((p) => `- [${p.name}](${p.url}) — ${p.tagline} llms.txt: ${p.llms}`);
-    const sharedTools = [
-      "- [AgentsKit Chat](https://github.com/AgentsKit-io/agentskit-chat) — Configurable, local-first chat framework used by Ask Playbook.",
-      "- [Doc Bridge](https://github.com/AgentsKit-io/doc-bridge) — Documentation ownership, health, routing, and MCP handoff.",
-      "- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli) — Automated review workflows for agent-authored changes.",
-    ];
-    const lines = [...properties, ...sharedTools].join("\n");
-    return `## The AgentsKit ecosystem\n\n${lines}\n\n`;
-  } catch {
-    return "";
-  }
+  const lines = ecosystemPeers("playbook")
+    .map(
+      (product) =>
+        `- [${product.name}](${product.surfaces.docs}) — ${product.promise} llms.txt: ${product.surfaces.llms}`,
+    )
+    .join("\n");
+  return `## The AgentsKit ecosystem\n\n${lines}\n\n`;
 }
+
+const CORE_ROUTES = new Set([
+  `${SITE}/docs`,
+  `${SITE}/docs/getting-started`,
+  `${SITE}/docs/for-agents`,
+  `${SITE}/docs/discovery`,
+  `${SITE}/docs/agentskit-chat`,
+  `${SITE}/docs/onboard-your-agent`,
+  `${SITE}/docs/matrix`,
+  `${SITE}/docs/pillars/architecture`,
+  `${SITE}/docs/pillars/security`,
+  `${SITE}/docs/pillars/ui-ux`,
+  `${SITE}/docs/pillars/quality`,
+  `${SITE}/docs/pillars/governance`,
+  `${SITE}/docs/pillars/ai-collaboration`,
+  `${SITE}/docs/phases/01-discover`,
+  `${SITE}/docs/phases/02-design`,
+  `${SITE}/docs/phases/03-build`,
+  `${SITE}/docs/phases/04-test`,
+  `${SITE}/docs/phases/05-ship`,
+  `${SITE}/docs/phases/06-operate`,
+  `${SITE}/docs/templates`,
+  `${SITE}/docs/prompts`,
+  `${SITE}/docs/scripts`,
+  `${SITE}/docs/contributing`,
+  `${SITE}/docs/glossary`,
+]);
 
 export async function GET() {
   const docs = await collect();
@@ -103,6 +119,7 @@ export async function GET() {
 > Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
 
 - Site: ${SITE}
+- Agent entry point: ${SITE}/for-agents
 - Built by: https://www.agentskit.io
 - Full bundle (single file, LLM-friendly): ${SITE}/llms-full.txt
 - ZIP bundle: ${SITE}/playbook-bundle.zip
@@ -110,15 +127,18 @@ export async function GET() {
 - Deterministic knowledge: ${SITE}/deterministic/knowledge.json
 - License: CC-BY-4.0
 
-${ecosystemBlock()}## Docs index
+${ecosystemBlock()}## Core docs
 
 `;
 
   const lines = docs
+    .filter((doc) => CORE_ROUTES.has(doc.url))
     .map((d) => `- [${d.title}](${d.url}) — ${d.description}\n  Raw: ${d.rawUrl}`)
     .join("\n");
 
-  return new Response(header + lines + "\n", {
+  const footer = `\n\n## Complete corpus\n\n- Full text: ${SITE}/llms-full.txt\n- ZIP: ${SITE}/playbook-bundle.zip\n- Focused source: replace /docs/<path> with /raw/<path>.md\n`;
+
+  return new Response(header + lines + footer, {
     headers: {
       "content-type": "text/plain; charset=utf-8",
       "cache-control": "public, max-age=300, s-maxage=3600",
