@@ -29,7 +29,7 @@
     "check:all": "pnpm check:okf-type && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:readme-standard && pnpm test && pnpm lint && pnpm build"
   },
   "dependencies": {
-    "@agentskit/chat": "0.3.0",
+    "@agentskit/chat": "0.4.0",
     "@agentskit/core": "^1.12.3",
     "@agentskit/react": "^0.7.4",
     "fumadocs-core": "15.6.5",
