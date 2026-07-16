@@ -141,8 +141,8 @@ Agents Playbook is the practice layer of the AgentsKit ecosystem:
 
 - [AgentsKit](https://www.agentskit.io/docs/for-agents) — the parent framework and agent runtime.
 - [Registry](https://registry.agentskit.io) — 300+ ready-to-use agent definitions and local discovery.
-- [AgentsKit Chat](https://github.com/AgentsKit-io/agentskit-chat) — configurable chat UI and local-first answer protocol used here.
-- [Doc Bridge](https://github.com/AgentsKit-io/doc-bridge) — documentation ownership, routing, health, and MCP handoff.
+- [AgentsKit Chat](https://chat.agentskit.io/docs) — configurable chat UI and local-first answer protocol used here; [machine-readable docs](https://chat.agentskit.io/llms.txt).
+- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — documentation ownership, routing, health, and MCP handoff; [machine-readable docs](https://agentskit-io.github.io/doc-bridge/llms.txt).
 - [AgentsKit OS](https://github.com/AgentsKit-io/agentskit-os) — the full agent operating environment.
 - [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli) — automated review workflows for agent-authored code.
 
