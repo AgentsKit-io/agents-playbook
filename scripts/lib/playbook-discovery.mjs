@@ -132,13 +132,13 @@ const fixedEntries = [
     id: 'ecosystem:chat', kind: 'ecosystem', label: 'AgentsKit Chat',
     values: ['agentskit chat', 'agentschat', 'chat framework'],
     markdown: 'AgentsKit Chat powers this local-first assistant and turns one behavior definition into native chat experiences across supported interfaces.',
-    title: 'AgentsKit Chat', href: 'https://github.com/AgentsKit-io/agentskit-chat',
+    title: 'AgentsKit Chat documentation', href: 'https://chat.agentskit.io/docs',
   },
   {
     id: 'ecosystem:doc-bridge', kind: 'ecosystem', label: 'Doc Bridge',
     values: ['doc bridge', 'doc-bridge', 'documentation bridge'],
     markdown: 'Doc Bridge validates the Playbook corpus, machine-readable index, ownership routes, and agent handoffs.',
-    title: 'Doc Bridge', href: 'https://github.com/AgentsKit-io/doc-bridge',
+    title: 'Doc Bridge documentation', href: 'https://agentskit-io.github.io/doc-bridge/',
   },
 ].map((entry) => ({
   id: entry.id,

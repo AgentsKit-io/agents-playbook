@@ -81,9 +81,9 @@ function ecosystemBlock(): string {
       .filter((p) => p.id !== "playbook")
       .map((p) => `- [${p.name}](${p.url}) — ${p.tagline} llms.txt: ${p.llms}`);
     const sharedTools = [
-      "- [AgentsKit Chat](https://github.com/AgentsKit-io/agentskit-chat) — Configurable, local-first chat framework used by Ask Playbook.",
-      "- [Doc Bridge](https://github.com/AgentsKit-io/doc-bridge) — Documentation ownership, health, routing, and MCP handoff.",
-      "- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli) — Automated review workflows for agent-authored changes.",
+      "- [AgentsKit Chat](https://chat.agentskit.io/docs) — Configurable, local-first chat framework used by Ask Playbook. llms.txt: https://chat.agentskit.io/llms.txt",
+      "- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — Documentation ownership, health, routing, and MCP handoff. llms.txt: https://agentskit-io.github.io/doc-bridge/llms.txt",
+      "- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli#readme) — Automated review workflows for agent-authored changes. llms.txt: https://raw.githubusercontent.com/AgentsKit-io/code-review-cli/main/llms.txt",
     ];
     const lines = [...properties, ...sharedTools].join("\n");
     return `## The AgentsKit ecosystem\n\n${lines}\n\n`;
@@ -103,6 +103,7 @@ export async function GET() {
 > Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
 
 - Site: ${SITE}
+- Site map: ${SITE}/llms.txt
 - Built by: https://www.agentskit.io
 - Full bundle (single file, LLM-friendly): ${SITE}/llms-full.txt
 - ZIP bundle: ${SITE}/playbook-bundle.zip
