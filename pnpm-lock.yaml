@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@agentskit/chat':
-        specifier: 0.3.0
-        version: 0.3.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
+        specifier: 0.4.0
+        version: 0.4.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)
       '@agentskit/core':
         specifier: ^1.12.3
         version: 1.12.3
@@ -78,8 +78,8 @@ importers:
 
 packages:
 
-  '@agentskit/chat@0.3.0':
-    resolution: {integrity: sha512-N424oOZ5DClrCMTp5V5djOg+N2rwj2LJ+ZtqQvpwBEO/sZ1BORFnenqFAJEyWptAw3/REHi9etDhhTWJcWGBnQ==}
+  '@agentskit/chat@0.4.0':
+    resolution: {integrity: sha512-RJ4akVS3LtoXrFpy7/3Lqd92cCpdbg10DcGxnm/w0DgdO1wM33s5OTD6JeWJ6QBojUFbG0IdH+AGm1ZPsh1KtQ==}
     peerDependencies:
       '@agentskit/angular': ^0.4.6
       '@agentskit/core': ^1.12.3
@@ -2385,7 +2385,7 @@ packages:
 
 snapshots:
 
-  '@agentskit/chat@0.3.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)':
+  '@agentskit/chat@0.4.0(@agentskit/core@1.12.3)(@agentskit/react@0.7.4(react-dom@19.2.7(react@19.2.7))(react@19.2.7))(react@19.2.7)':
     dependencies:
       '@agentskit/core': 1.12.3
       '@agentskit/eval': 0.4.19
