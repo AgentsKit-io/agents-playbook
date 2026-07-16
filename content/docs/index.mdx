@@ -50,7 +50,7 @@ Every doc has two layers:
 
 ## The eight non-negotiables
 
-The irreducible kernel. If an agent breaks one of these, fail the PR.
+The irreducible **kernel is eight rules** (not ten). Landing samples and templates use the same eight. If an agent breaks one of these, fail the PR.
 
 1. **Typed boundaries.** Every external input is parsed by a runtime schema. No `any`.
 2. **Named exports only.** Predictable refactors, predictable agent edits.
@@ -62,6 +62,16 @@ The irreducible kernel. If an agent breaks one of these, fail the PR.
 8. **Tokens, intl, primitives.** No raw values in user-facing surfaces.
 
 Each is fully spec'd across the pillars and enforced by gate scripts.
+
+## In the AgentsKit ecosystem
+
+Playbook is the **discipline** product. Pair it with:
+
+- [AgentsKit](https://www.agentskit.io) — foundation library and runtime
+- [AgentsKit Chat](https://chat.agentskit.io) — product chat experience ([dogfood notes](/docs/agentskit-chat))
+- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — deterministic documentation handoffs
+- [Registry](https://registry.agentskit.io) — copy-ready agent starting points
+- [AKOS](https://akos.agentskit.io) — enterprise operation
 
 ## For agents reading this
 

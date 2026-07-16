@@ -18,7 +18,7 @@ const OUTCOMES: readonly { label: string; desc: string; icon: LucideIcon }[] = [
   },
   {
     label: "Secure",
-    desc: "RBAC, vault, signed audit ledger, and egress allowlists on by default — security designed into the contract, not bolted on after a leak.",
+    desc: "Patterns and gates for secrets, auth boundaries, and safe defaults — security designed into the contract, not bolted on after a leak. Production runtime enforcement lives in AKOS when you need it.",
     icon: ShieldCheck,
   },
   {

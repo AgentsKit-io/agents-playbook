@@ -22,6 +22,9 @@ import {
   Blocks,
   Cpu,
   Star,
+  MessageSquare,
+  BookMarked,
+  GitPullRequest,
 } from "lucide-react";
 import stats from "./stats.snapshot.json";
 import ecosystem from "@/ecosystem.json";
@@ -349,9 +352,8 @@ function CodePreview() {
    breaking contracts.
 6. Ship complete or don't ship.
 7. Merges sum work, never subtract.
-8. UI via shared primitives only.
-9. Every visible string is intl.
-10. Tokens; no raw color literals.
+8. Tokens, intl, primitives — no raw
+   values on user-facing surfaces.
 
 ## Before you ship
 \`\`\`
@@ -364,79 +366,105 @@ pnpm check:all
   );
 }
 
-// Cohesive ecosystem narrative — one role sentence per property, in workflow
-// order. Accent + tagline data come from ecosystem.json (synced from the
-// canonical registry); this layer adds the "where it fits" framing.
-const ECOSYSTEM_ROLE: Record<
-  string,
-  { kind: string; icon: typeof Package; role: string; cta: string; target: string }
-> = {
-  agentskit: {
-    kind: "The libraries",
+// Ecosystem product mesh — roles aligned to AgentsKit ecosystem.json.
+type EcosystemCard = {
+  id: string;
+  kind: string;
+  icon: typeof Package;
+  role: string;
+  cta: string;
+  target: string;
+  href?: string;
+  current?: boolean;
+};
+
+const ECOSYSTEM_CARDS: EcosystemCard[] = [
+  {
+    id: "agentskit",
+    kind: "Foundation",
     icon: Package,
-    role: "Build the agent, skip the plumbing. Chat UI, runtime, tools, memory, and RAG in one JavaScript toolkit.",
-    cta: "Build an agent",
+    role: "Build agents without gluing many libraries together — runtime, tools, memory, RAG, adapters, and headless UI bindings.",
+    cta: "Build on the foundation",
     target: "agentskit",
   },
-  registry: {
-    kind: "The registry",
+  {
+    id: "registry",
+    kind: "Starting point",
     icon: Blocks,
-    role: "The shadcn for agents. Copy production-ready agents straight into your project — no boilerplate.",
+    role: "Copy ready-made agents and own the source — no registry runtime, no lock-in.",
     cta: "Browse agents",
     target: "registry",
   },
-  playbook: {
-    kind: "The standards",
+  {
+    id: "agentskit-chat",
+    kind: "Experience",
+    icon: MessageSquare,
+    role: "Define one agent experience and deliver it across web, terminal, and other chat surfaces. Playbook dogfoods Chat — see /docs/agentskit-chat.",
+    cta: "Chat docs · playbook dogfood",
+    target: "agentskit-chat",
+    href: "/docs/agentskit-chat",
+  },
+  {
+    id: "playbook",
+    kind: "Discipline",
     icon: BookOpenCheck,
-    role: "You're here. The engineering discipline that keeps agent-built code reviewable, safe, and shippable.",
+    role: "You're here. Make agents ship code a human would actually merge.",
     cta: "Read the playbook",
     target: "playbook",
+    current: true,
   },
-  akos: {
-    kind: "The OS",
+  {
+    id: "doc-bridge",
+    kind: "Understanding",
+    icon: BookMarked,
+    role: "Turn repository documentation into executable handoffs for coding agents.",
+    cta: "Make docs agent-ready",
+    target: "doc-bridge",
+  },
+  {
+    id: "code-review",
+    kind: "Verification",
+    icon: GitPullRequest,
+    role: "Run focused, low-noise review with the model already in your workflow.",
+    cta: "Verify before merge",
+    target: "code-review",
+  },
+  {
+    id: "akos",
+    kind: "Operation",
     icon: Cpu,
-    role: "Orchestrate and govern agents in production — identity, audit, permissions, and cost control.",
+    role: "Run and govern agents in production — identity, audit, permissions, and cost control.",
     cta: "Explore AKOS",
     target: "akos",
   },
-};
-const ECOSYSTEM_ORDER = ["agentskit", "registry", "playbook", "akos"] as const;
+];
 
 function EcosystemSection() {
-  const props = Object.fromEntries(
-    ecosystem.properties.map((p) => [p.id, p]),
-  );
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
       <SectionLabel>The ecosystem</SectionLabel>
       <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        One workflow. Four parts that fit together.
+        One foundation. Useful next steps for every stage.
       </h2>
       <p className="mt-4 max-w-3xl text-pretty text-[color:var(--muted-foreground)]">
-        <span className="font-medium text-[color:var(--foreground)]">AgentsKit</span>{" "}
-        builds it, the{" "}
-        <span className="font-medium text-[color:var(--foreground)]">Registry</span>{" "}
-        gives you a head start, this{" "}
-        <span className="font-medium text-[color:var(--foreground)]">Playbook</span>{" "}
-        keeps it shippable, and{" "}
-        <span className="font-medium text-[color:var(--foreground)]">AKOS</span>{" "}
-        runs it in production. Same standards end to end.
+        Contextual handoffs across the AgentsKit products — every product remains
+        optional. Same standards end to end.
       </p>
 
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {ECOSYSTEM_ORDER.map((id) => {
-          const p = props[id];
-          const meta = ECOSYSTEM_ROLE[id];
+      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {ECOSYSTEM_CARDS.map((meta) => {
+          const product = ecosystem.products.find((candidate) => candidate.id === meta.id);
+          if (!product) return null;
           const Icon = meta.icon;
-          const current = id === "playbook";
+          const current = Boolean(meta.current);
           const inner = (
             <>
               <div className="flex items-center justify-between">
                 <span
                   className="inline-flex h-9 w-9 items-center justify-center rounded-md"
                   style={{
-                    backgroundColor: `${p.accent}1a`,
-                    color: p.accent,
+                    backgroundColor: `${product.accent}1a`,
+                    color: product.accent,
                   }}
                 >
                   <Icon className="h-4 w-4" aria-hidden />
@@ -451,13 +479,13 @@ function EcosystemSection() {
                   </span>
                 )}
               </div>
-              <h3 className="mt-4 text-base font-semibold">{p.name}</h3>
+              <h3 className="mt-4 text-base font-semibold">{product.name}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
                 {meta.role}
               </p>
               <div
                 className="mt-5 inline-flex items-center gap-1 text-sm font-medium"
-                style={{ color: current ? "var(--accent-strong)" : p.accent }}
+                style={{ color: current ? "var(--accent-strong)" : product.accent }}
               >
                 {meta.cta}
                 <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden />
@@ -470,13 +498,13 @@ function EcosystemSection() {
               : "border-[color:var(--border)] bg-[color:var(--surface-1)]"
           }`;
           return current ? (
-            <Link key={id} href="/docs" className={cardClass}>
+            <Link key={meta.id} href="/docs" className={cardClass}>
               {inner}
             </Link>
           ) : (
             <EcosystemLink
-              key={id}
-              href={p.url}
+              key={meta.id}
+              href={meta.href ?? product.surfaces.home}
               placement="ecosystem_grid"
               target={meta.target}
               className={cardClass}

@@ -2,24 +2,24 @@ import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
 
 /**
- * The canonical one-line ecosystem sentence, shared verbatim across every
- * AgentsKit property. Pass the current property's id — it renders bold/plain,
- * the other three render as tracked outbound links in the same fixed order:
- * framework → registry → playbook → akos.
- *
- * Drop this identical component into agentskit / registry / akos with a
- * different `current` and the whole family reads the same narrative.
+ * Compact ecosystem sentence for human landings.
+ * Foundation → starting point → discipline → operation, with optional peers
+ * available in the fuller grid below.
  */
 const ORDER = ["agentskit", "registry", "playbook", "akos"] as const;
 
-// Per-property clause: the connective text + the link label. Keep these strings
-// identical across all sibling repos so the sentence is verbatim everywhere.
 const CLAUSE: Record<string, { lead: string; label: string }> = {
-  agentskit: { lead: "build with the", label: "framework" },
-  registry: { lead: "grab ready-made agents from the", label: "Registry" },
-  playbook: { lead: "ship by the", label: "Playbook" },
-  akos: { lead: "run them in production on", label: "AKOS" },
+  agentskit: { lead: "build on the", label: "AgentsKit foundation" },
+  registry: { lead: "start from the", label: "Registry" },
+  playbook: { lead: "ship with the", label: "Playbook" },
+  akos: { lead: "operate on", label: "AKOS" },
 };
+
+function productHome(id: string): string {
+  const product = ecosystem.products.find((candidate) => candidate.id === id);
+  if (!product) throw new Error(`Unknown ecosystem product: ${id}`);
+  return product.surfaces.home;
+}
 
 export function EcosystemCrossRef({
   current,
@@ -32,7 +32,7 @@ export function EcosystemCrossRef({
   className?: string;
   linkClassName?: string;
 }) {
-  const byId = Object.fromEntries(ecosystem.properties.map((p) => [p.id, p]));
+  const byId = Object.fromEntries(ecosystem.products.map((product) => [product.id, product]));
 
   return (
     <p className={className}>
@@ -49,7 +49,7 @@ export function EcosystemCrossRef({
             </span>
           ) : (
             <EcosystemLink
-              href={p.url}
+              href={p.surfaces.home}
               placement={placement}
               target={id}
               className={linkClassName}
@@ -64,6 +64,33 @@ export function EcosystemCrossRef({
           </span>
         );
       })}
+      . Also:{" "}
+      <EcosystemLink
+        href={productHome("agentskit-chat")}
+        placement={placement}
+        target="agentskit-chat"
+        className={linkClassName}
+      >
+        Chat
+      </EcosystemLink>
+      ,{" "}
+      <EcosystemLink
+        href={productHome("doc-bridge")}
+        placement={placement}
+        target="doc-bridge"
+        className={linkClassName}
+      >
+        Doc Bridge
+      </EcosystemLink>
+      , and{" "}
+      <EcosystemLink
+        href={productHome("code-review")}
+        placement={placement}
+        target="code-review"
+        className={linkClassName}
+      >
+        Code Review
+      </EcosystemLink>
       .
     </p>
   );
