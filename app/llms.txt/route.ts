@@ -1,9 +1,10 @@
 // /llms.txt — the emerging convention for LLM-readable site map.
 // Lists every doc with a one-line description so an LLM can decide what to fetch.
 
-import { readdir, readFile, stat } from "node:fs/promises";
+import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
+import { formatEcosystemLlmsBlock } from "@/lib/ecosystem-llms-block";
 
 export const dynamic = "force-static";
 
@@ -70,23 +71,29 @@ async function collect(): Promise<Doc[]> {
   return docs;
 }
 
-/** Sibling-property discovery block, generated from the canonical ecosystem.json. */
+/** Canonical seven-product mesh from ecosystem.json (shared template). */
 function ecosystemBlock(): string {
   try {
     const raw = readFileSync(join(process.cwd(), "ecosystem.json"), "utf8");
     const eco = JSON.parse(raw) as {
-      properties: { id: string; name: string; tagline: string; url: string; llms: string }[];
+      products: Array<{
+        id: string;
+        name: string;
+        role?: string;
+        promise: string;
+        maturity?: string;
+        surfaces: { home?: string; docs?: string; llms?: string };
+        navigation: { order: number };
+      }>;
     };
-    const properties = eco.properties
-      .filter((p) => p.id !== "playbook")
-      .map((p) => `- [${p.name}](${p.url}) — ${p.tagline} llms.txt: ${p.llms}`);
-    const sharedTools = [
-      "- [AgentsKit Chat](https://chat.agentskit.io/docs) — Configurable, local-first chat framework used by Ask Playbook. llms.txt: https://chat.agentskit.io/llms.txt",
-      "- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — Documentation ownership, health, routing, and MCP handoff. llms.txt: https://agentskit-io.github.io/doc-bridge/llms.txt",
-      "- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli#readme) — Automated review workflows for agent-authored changes. llms.txt: https://raw.githubusercontent.com/AgentsKit-io/code-review-cli/main/llms.txt",
-    ];
-    const lines = [...properties, ...sharedTools].join("\n");
-    return `## The AgentsKit ecosystem\n\n${lines}\n\n`;
+    const products = [...eco.products].sort(
+      (left, right) => left.navigation.order - right.navigation.order,
+    );
+    return formatEcosystemLlmsBlock({
+      products,
+      currentProductId: "playbook",
+      prefer: "docs",
+    }).join("\n");
   } catch {
     return "";
   }
