@@ -352,9 +352,8 @@ function CodePreview() {
    breaking contracts.
 6. Ship complete or don't ship.
 7. Merges sum work, never subtract.
-8. UI via shared primitives only.
-9. Every visible string is intl.
-10. Tokens; no raw color literals.
+8. Tokens, intl, primitives — no raw
+   values on user-facing surfaces.
 
 ## Before you ship
 \`\`\`
@@ -409,10 +408,10 @@ const ECOSYSTEM_CARDS: EcosystemCard[] = [
     name: "AgentsKit Chat",
     kind: "Experience",
     icon: MessageSquare,
-    role: "Define one agent experience and deliver it across web, terminal, and other chat surfaces.",
-    cta: "Build product chats",
+    role: "Define one agent experience and deliver it across web, terminal, and other chat surfaces. Playbook dogfoods Chat — see /docs/agentskit-chat.",
+    cta: "Chat docs · playbook dogfood",
     target: "agentskit-chat",
-    url: "https://chat.agentskit.io",
+    url: "/docs/agentskit-chat",
     accent: "#F59E0B",
   },
   {
