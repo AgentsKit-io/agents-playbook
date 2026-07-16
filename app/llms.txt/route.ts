@@ -4,7 +4,7 @@
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { existsSync, readFileSync } from "node:fs";
-import { formatEcosystemLlmsBlock } from "@/lib/ecosystem-llms-block";
+import { formatEcosystemLlmsBlock } from "../../lib/ecosystem-llms-block";
 
 export const dynamic = "force-static";
 
