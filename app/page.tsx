@@ -369,95 +369,73 @@ pnpm check:all
 // Ecosystem product mesh — roles aligned to AgentsKit ecosystem.json.
 type EcosystemCard = {
   id: string;
-  name: string;
   kind: string;
   icon: typeof Package;
   role: string;
   cta: string;
   target: string;
-  url: string;
-  accent: string;
+  href?: string;
   current?: boolean;
 };
 
 const ECOSYSTEM_CARDS: EcosystemCard[] = [
   {
     id: "agentskit",
-    name: "AgentsKit",
     kind: "Foundation",
     icon: Package,
     role: "Build agents without gluing many libraries together — runtime, tools, memory, RAG, adapters, and headless UI bindings.",
     cta: "Build on the foundation",
     target: "agentskit",
-    url: "https://www.agentskit.io",
-    accent: "#2EA043",
   },
   {
     id: "registry",
-    name: "AgentsKit Registry",
     kind: "Starting point",
     icon: Blocks,
     role: "Copy ready-made agents and own the source — no registry runtime, no lock-in.",
     cta: "Browse agents",
     target: "registry",
-    url: "https://registry.agentskit.io",
-    accent: "#58A6FF",
   },
   {
     id: "agentskit-chat",
-    name: "AgentsKit Chat",
     kind: "Experience",
     icon: MessageSquare,
     role: "Define one agent experience and deliver it across web, terminal, and other chat surfaces. Playbook dogfoods Chat — see /docs/agentskit-chat.",
     cta: "Chat docs · playbook dogfood",
     target: "agentskit-chat",
-    url: "/docs/agentskit-chat",
-    accent: "#F59E0B",
+    href: "/docs/agentskit-chat",
   },
   {
     id: "playbook",
-    name: "Agents Playbook",
     kind: "Discipline",
     icon: BookOpenCheck,
     role: "You're here. Make agents ship code a human would actually merge.",
     cta: "Read the playbook",
     target: "playbook",
-    url: "https://playbook.agentskit.io",
-    accent: "#8B5CF6",
     current: true,
   },
   {
     id: "doc-bridge",
-    name: "Doc Bridge",
     kind: "Understanding",
     icon: BookMarked,
     role: "Turn repository documentation into executable handoffs for coding agents.",
     cta: "Make docs agent-ready",
     target: "doc-bridge",
-    url: "https://agentskit-io.github.io/doc-bridge/",
-    accent: "#06B6D4",
   },
   {
     id: "code-review",
-    name: "AgentsKit Code Review",
     kind: "Verification",
     icon: GitPullRequest,
     role: "Run focused, low-noise review with the model already in your workflow.",
     cta: "Verify before merge",
     target: "code-review",
-    url: "https://github.com/AgentsKit-io/code-review-cli#readme",
-    accent: "#F97316",
   },
   {
     id: "akos",
-    name: "AgentsKit OS",
     kind: "Operation",
     icon: Cpu,
     role: "Run and govern agents in production — identity, audit, permissions, and cost control.",
     cta: "Explore AKOS",
     target: "akos",
-    url: "https://akos.agentskit.io",
-    accent: "#34D399",
   },
 ];
 
@@ -475,6 +453,8 @@ function EcosystemSection() {
 
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {ECOSYSTEM_CARDS.map((meta) => {
+          const product = ecosystem.products.find((candidate) => candidate.id === meta.id);
+          if (!product) return null;
           const Icon = meta.icon;
           const current = Boolean(meta.current);
           const inner = (
@@ -483,8 +463,8 @@ function EcosystemSection() {
                 <span
                   className="inline-flex h-9 w-9 items-center justify-center rounded-md"
                   style={{
-                    backgroundColor: `${meta.accent}1a`,
-                    color: meta.accent,
+                    backgroundColor: `${product.accent}1a`,
+                    color: product.accent,
                   }}
                 >
                   <Icon className="h-4 w-4" aria-hidden />
@@ -499,13 +479,13 @@ function EcosystemSection() {
                   </span>
                 )}
               </div>
-              <h3 className="mt-4 text-base font-semibold">{meta.name}</h3>
+              <h3 className="mt-4 text-base font-semibold">{product.name}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
                 {meta.role}
               </p>
               <div
                 className="mt-5 inline-flex items-center gap-1 text-sm font-medium"
-                style={{ color: current ? "var(--accent-strong)" : meta.accent }}
+                style={{ color: current ? "var(--accent-strong)" : product.accent }}
               >
                 {meta.cta}
                 <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden />
@@ -524,7 +504,7 @@ function EcosystemSection() {
           ) : (
             <EcosystemLink
               key={meta.id}
-              href={meta.url}
+              href={meta.href ?? product.surfaces.home}
               placement="ecosystem_grid"
               target={meta.target}
               className={cardClass}

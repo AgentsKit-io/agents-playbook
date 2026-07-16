@@ -15,6 +15,12 @@ const CLAUSE: Record<string, { lead: string; label: string }> = {
   akos: { lead: "operate on", label: "AKOS" },
 };
 
+function productHome(id: string): string {
+  const product = ecosystem.products.find((candidate) => candidate.id === id);
+  if (!product) throw new Error(`Unknown ecosystem product: ${id}`);
+  return product.surfaces.home;
+}
+
 export function EcosystemCrossRef({
   current,
   placement,
@@ -26,7 +32,7 @@ export function EcosystemCrossRef({
   className?: string;
   linkClassName?: string;
 }) {
-  const byId = Object.fromEntries(ecosystem.properties.map((p) => [p.id, p]));
+  const byId = Object.fromEntries(ecosystem.products.map((product) => [product.id, product]));
 
   return (
     <p className={className}>
@@ -43,7 +49,7 @@ export function EcosystemCrossRef({
             </span>
           ) : (
             <EcosystemLink
-              href={p.url}
+              href={p.surfaces.home}
               placement={placement}
               target={id}
               className={linkClassName}
@@ -60,7 +66,7 @@ export function EcosystemCrossRef({
       })}
       . Also:{" "}
       <EcosystemLink
-        href="https://chat.agentskit.io/"
+        href={productHome("agentskit-chat")}
         placement={placement}
         target="agentskit-chat"
         className={linkClassName}
@@ -69,7 +75,7 @@ export function EcosystemCrossRef({
       </EcosystemLink>
       ,{" "}
       <EcosystemLink
-        href="https://agentskit-io.github.io/doc-bridge/"
+        href={productHome("doc-bridge")}
         placement={placement}
         target="doc-bridge"
         className={linkClassName}
@@ -78,7 +84,7 @@ export function EcosystemCrossRef({
       </EcosystemLink>
       , and{" "}
       <EcosystemLink
-        href="https://github.com/AgentsKit-io/code-review-cli#readme"
+        href={productHome("code-review")}
         placement={placement}
         target="code-review"
         className={linkClassName}
