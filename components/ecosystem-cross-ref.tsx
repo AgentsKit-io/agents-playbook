@@ -2,23 +2,17 @@ import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
 
 /**
- * The canonical one-line ecosystem sentence, shared verbatim across every
- * AgentsKit property. Pass the current property's id — it renders bold/plain,
- * the other three render as tracked outbound links in the same fixed order:
- * framework → registry → playbook → akos.
- *
- * Drop this identical component into agentskit / registry / akos with a
- * different `current` and the whole family reads the same narrative.
+ * Compact ecosystem sentence for human landings.
+ * Foundation → starting point → discipline → operation, with optional peers
+ * available in the fuller grid below.
  */
 const ORDER = ["agentskit", "registry", "playbook", "akos"] as const;
 
-// Per-property clause: the connective text + the link label. Keep these strings
-// identical across all sibling repos so the sentence is verbatim everywhere.
 const CLAUSE: Record<string, { lead: string; label: string }> = {
-  agentskit: { lead: "build with the", label: "framework" },
-  registry: { lead: "grab ready-made agents from the", label: "Registry" },
-  playbook: { lead: "ship by the", label: "Playbook" },
-  akos: { lead: "run them in production on", label: "AKOS" },
+  agentskit: { lead: "build on the", label: "AgentsKit foundation" },
+  registry: { lead: "start from the", label: "Registry" },
+  playbook: { lead: "ship with the", label: "Playbook" },
+  akos: { lead: "operate on", label: "AKOS" },
 };
 
 export function EcosystemCrossRef({
@@ -64,6 +58,33 @@ export function EcosystemCrossRef({
           </span>
         );
       })}
+      . Also:{" "}
+      <EcosystemLink
+        href="https://chat.agentskit.io/"
+        placement={placement}
+        target="agentskit-chat"
+        className={linkClassName}
+      >
+        Chat
+      </EcosystemLink>
+      ,{" "}
+      <EcosystemLink
+        href="https://agentskit-io.github.io/doc-bridge/"
+        placement={placement}
+        target="doc-bridge"
+        className={linkClassName}
+      >
+        Doc Bridge
+      </EcosystemLink>
+      , and{" "}
+      <EcosystemLink
+        href="https://github.com/AgentsKit-io/code-review-cli#readme"
+        placement={placement}
+        target="code-review"
+        className={linkClassName}
+      >
+        Code Review
+      </EcosystemLink>
       .
     </p>
   );
