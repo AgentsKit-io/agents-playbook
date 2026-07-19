@@ -1,16 +1,25 @@
+import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
-import { ecosystemPeers, type ProductId } from "@/lib/ecosystem";
 
-/** Compact sibling discovery for narrative surfaces. */
-const ACTION: Record<ProductId, string> = {
-  agentskit: "build with",
-  registry: "start from",
-  "agentskit-chat": "deliver chat with",
-  playbook: "apply discipline with",
-  "doc-bridge": "connect docs through",
-  "code-review": "verify with",
-  akos: "operate at enterprise scale with",
+/**
+ * Compact ecosystem sentence for human landings.
+ * Foundation → starting point → discipline → operation, with optional peers
+ * available in the fuller grid below.
+ */
+const ORDER = ["agentskit", "registry", "playbook", "akos"] as const;
+
+const CLAUSE: Record<string, { lead: string; label: string }> = {
+  agentskit: { lead: "build on the", label: "AgentsKit foundation" },
+  registry: { lead: "start from the", label: "Registry" },
+  playbook: { lead: "ship with the", label: "Playbook" },
+  akos: { lead: "operate on", label: "AKOS" },
 };
+
+function productHome(id: string): string {
+  const product = ecosystem.products.find((candidate) => candidate.id === id);
+  if (!product) throw new Error(`Unknown ecosystem product: ${id}`);
+  return product.surfaces.home;
+}
 
 export function EcosystemCrossRef({
   current,
@@ -18,34 +27,70 @@ export function EcosystemCrossRef({
   className,
   linkClassName = "font-medium text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current",
 }: {
-  current: ProductId;
+  current: (typeof ORDER)[number];
   placement: string;
   className?: string;
   linkClassName?: string;
 }) {
-  const peers = ecosystemPeers(current);
+  const byId = Object.fromEntries(ecosystem.products.map((product) => [product.id, product]));
 
   return (
     <p className={className}>
-      Continue through the AgentsKit ecosystem:{" "}
-      {peers.map((product, index) => {
-        const last = index === peers.length - 1;
-        const separator = index === 0 ? "" : last ? ", or " : ", ";
-        return (
-          <span key={product.id}>
-            {separator}
-            {ACTION[product.id as ProductId]}{" "}
+      Part of the AgentsKit ecosystem:{" "}
+      {ORDER.map((id, i) => {
+        const c = CLAUSE[id];
+        const p = byId[id];
+        const last = i === ORDER.length - 1;
+        const sep = i === 0 ? "" : last ? ", and " : ", ";
+        const label =
+          id === current ? (
+            <span className="font-medium text-[color:var(--foreground)]">
+              {c.label}
+            </span>
+          ) : (
             <EcosystemLink
-              href={product.surfaces.docs}
+              href={p.surfaces.home}
               placement={placement}
-              target={product.id}
+              target={id}
               className={linkClassName}
             >
-              {product.shortName}
+              {c.label}
             </EcosystemLink>
+          );
+        return (
+          <span key={id}>
+            {sep}
+            {c.lead} {label}
           </span>
         );
       })}
+      . Also:{" "}
+      <EcosystemLink
+        href={productHome("agentskit-chat")}
+        placement={placement}
+        target="agentskit-chat"
+        className={linkClassName}
+      >
+        Chat
+      </EcosystemLink>
+      ,{" "}
+      <EcosystemLink
+        href={productHome("doc-bridge")}
+        placement={placement}
+        target="doc-bridge"
+        className={linkClassName}
+      >
+        Doc Bridge
+      </EcosystemLink>
+      , and{" "}
+      <EcosystemLink
+        href={productHome("code-review")}
+        placement={placement}
+        target="code-review"
+        className={linkClassName}
+      >
+        Code Review
+      </EcosystemLink>
       .
     </p>
   );

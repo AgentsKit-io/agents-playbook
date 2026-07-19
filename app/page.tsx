@@ -21,17 +21,18 @@ import {
   Package,
   Blocks,
   Cpu,
-  MessageSquare,
-  SearchCheck,
   Star,
+  MessageSquare,
+  BookMarked,
+  GitPullRequest,
 } from "lucide-react";
 import stats from "./stats.snapshot.json";
+import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
 import { EcosystemStars } from "@/components/ecosystem-stars";
 import { EcosystemCrossRef } from "@/components/ecosystem-cross-ref";
 import { CopyPrompt } from "@/components/copy-prompt";
 import { AgentConvergence } from "@/components/agent-convergence";
-import { ecosystemPeers, ecosystemProducts } from "@/lib/ecosystem";
 
 // Counts are derived from content by scripts/compute-stats.mjs (single source).
 const C = stats.counts;
@@ -241,10 +242,10 @@ function SiteHeader() {
         <BrandMark className="h-6 w-6" />
         <span>Agents Playbook</span>
       </Link>
-      <nav className="flex items-center gap-3 text-sm sm:gap-5">
+      <nav className="flex items-center gap-6 text-sm">
         <Link href="/docs" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Docs</Link>
-        <Link href="/docs/matrix" className="hidden md:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Matrix</Link>
-        <Link href="/docs/glossary" className="hidden lg:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Glossary</Link>
+        <Link href="/docs/matrix" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Matrix</Link>
+        <Link href="/docs/glossary" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Glossary</Link>
         <Link
           href="/llms.txt"
           className="hidden md:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
@@ -258,9 +259,7 @@ function SiteHeader() {
         >
           AgentsKit ↗
         </EcosystemLink>
-        <span className="hidden sm:inline-flex">
-          <EcosystemStars repos={ecosystemProducts.map((product) => product.repo)} />
-        </span>
+        <EcosystemStars repos={ecosystem.properties.map((p) => p.repo)} />
         <EcosystemLink
           href="https://github.com/AgentsKit-io/agents-playbook"
           placement="header"
@@ -353,8 +352,8 @@ function CodePreview() {
    breaking contracts.
 6. Ship complete or don't ship.
 7. Merges sum work, never subtract.
-8. Tokens, intl, and shared primitives;
-   no raw user-facing values.
+8. Tokens, intl, primitives — no raw
+   values on user-facing surfaces.
 
 ## Before you ship
 \`\`\`
@@ -367,75 +366,97 @@ pnpm check:all
   );
 }
 
-// Manual six-peer framing for the Playbook landing. Identity, order, routes,
-// and accents come from the canonical manifest; this table owns only the
-// contextual "when to continue" copy and presentation metadata.
-const ECOSYSTEM_ROLE: Record<
-  string,
-  { kind: string; icon: typeof Package; role: string; cta: string; target: string }
-> = {
-  agentskit: {
-    kind: "The libraries",
+// Ecosystem product mesh — roles aligned to AgentsKit ecosystem.json.
+type EcosystemCard = {
+  id: string;
+  kind: string;
+  icon: typeof Package;
+  role: string;
+  cta: string;
+  target: string;
+  href?: string;
+  current?: boolean;
+};
+
+const ECOSYSTEM_CARDS: EcosystemCard[] = [
+  {
+    id: "agentskit",
+    kind: "Foundation",
     icon: Package,
-    role: "Build the agent, skip the plumbing. Chat UI, runtime, tools, memory, and RAG in one JavaScript toolkit.",
-    cta: "Build an agent",
+    role: "Build agents without gluing many libraries together — runtime, tools, memory, RAG, adapters, and headless UI bindings.",
+    cta: "Build on the foundation",
     target: "agentskit",
   },
-  registry: {
-    kind: "The registry",
+  {
+    id: "registry",
+    kind: "Starting point",
     icon: Blocks,
-    role: "The shadcn for agents. Copy production-ready agents straight into your project — no boilerplate.",
+    role: "Copy ready-made agents and own the source — no registry runtime, no lock-in.",
     cta: "Browse agents",
     target: "registry",
   },
-  "agentskit-chat": {
-    kind: "The experience",
+  {
+    id: "agentskit-chat",
+    kind: "Experience",
     icon: MessageSquare,
-    role: "Define one conversational experience and deliver it across supported interfaces.",
-    cta: "Build chat experiences",
+    role: "Define one agent experience and deliver it across web, terminal, and other chat surfaces. Playbook dogfoods Chat — see /docs/agentskit-chat.",
+    cta: "Chat docs · playbook dogfood",
     target: "agentskit-chat",
+    href: "/docs/agentskit-chat",
   },
-  "doc-bridge": {
-    kind: "The documentation layer",
+  {
+    id: "playbook",
+    kind: "Discipline",
     icon: BookOpenCheck,
-    role: "Turn repository documentation into precise, executable handoffs for agents.",
-    cta: "Connect your docs",
+    role: "You're here. Make agents ship code a human would actually merge.",
+    cta: "Read the playbook",
+    target: "playbook",
+    current: true,
+  },
+  {
+    id: "doc-bridge",
+    kind: "Understanding",
+    icon: BookMarked,
+    role: "Turn repository documentation into executable handoffs for coding agents.",
+    cta: "Make docs agent-ready",
     target: "doc-bridge",
   },
-  "code-review": {
-    kind: "The verification layer",
-    icon: SearchCheck,
-    role: "Run a focused, low-noise review with the model already in your workflow.",
-    cta: "Review before merge",
+  {
+    id: "code-review",
+    kind: "Verification",
+    icon: GitPullRequest,
+    role: "Run focused, low-noise review with the model already in your workflow.",
+    cta: "Verify before merge",
     target: "code-review",
   },
-  akos: {
-    kind: "The OS",
+  {
+    id: "akos",
+    kind: "Operation",
     icon: Cpu,
-    role: "Orchestrate and govern agents in production — identity, audit, permissions, and cost control.",
+    role: "Run and govern agents in production — identity, audit, permissions, and cost control.",
     cta: "Explore AKOS",
     target: "akos",
   },
-};
+];
 
 function EcosystemSection() {
-  const peers = ecosystemPeers("playbook");
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
       <SectionLabel>The ecosystem</SectionLabel>
       <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        One workflow. Six useful next steps.
+        One foundation. Useful next steps for every stage.
       </h2>
       <p className="mt-4 max-w-3xl text-pretty text-[color:var(--muted-foreground)]">
-        Build on AgentsKit, start from the Registry, deliver chat with AgentsKit
-        Chat, connect documentation through Doc Bridge, verify with Code Review,
-        and move enterprise operations to AKOS.
+        Contextual handoffs across the AgentsKit products — every product remains
+        optional. Same standards end to end.
       </p>
 
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {peers.map((product) => {
-          const meta = ECOSYSTEM_ROLE[product.id];
+        {ECOSYSTEM_CARDS.map((meta) => {
+          const product = ecosystem.products.find((candidate) => candidate.id === meta.id);
+          if (!product) return null;
           const Icon = meta.icon;
+          const current = Boolean(meta.current);
           const inner = (
             <>
               <div className="flex items-center justify-between">
@@ -448,9 +469,15 @@ function EcosystemSection() {
                 >
                   <Icon className="h-4 w-4" aria-hidden />
                 </span>
-                <span className="text-[11px] uppercase tracking-wider text-[color:var(--subtle-foreground)]">
-                  {meta.kind}
-                </span>
+                {current ? (
+                  <span className="rounded-full border border-[color:var(--accent-strong)] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[color:var(--accent-strong)]">
+                    You are here
+                  </span>
+                ) : (
+                  <span className="text-[11px] uppercase tracking-wider text-[color:var(--subtle-foreground)]">
+                    {meta.kind}
+                  </span>
+                )}
               </div>
               <h3 className="mt-4 text-base font-semibold">{product.name}</h3>
               <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
@@ -458,18 +485,26 @@ function EcosystemSection() {
               </p>
               <div
                 className="mt-5 inline-flex items-center gap-1 text-sm font-medium"
-                style={{ color: product.accent }}
+                style={{ color: current ? "var(--accent-strong)" : product.accent }}
               >
                 {meta.cta}
                 <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden />
               </div>
             </>
           );
-          const cardClass = "card-lift group flex min-h-64 flex-col rounded-xl border border-[color:var(--border)] bg-[color:var(--surface-1)] p-6";
-          return (
+          const cardClass = `card-lift group rounded-xl border p-6 ${
+            current
+              ? "border-[color:var(--accent-strong)] bg-[color:var(--surface-2)]"
+              : "border-[color:var(--border)] bg-[color:var(--surface-1)]"
+          }`;
+          return current ? (
+            <Link key={meta.id} href="/docs" className={cardClass}>
+              {inner}
+            </Link>
+          ) : (
             <EcosystemLink
-              key={product.id}
-              href={product.surfaces.docs}
+              key={meta.id}
+              href={meta.href ?? product.surfaces.home}
               placement="ecosystem_grid"
               target={meta.target}
               className={cardClass}
