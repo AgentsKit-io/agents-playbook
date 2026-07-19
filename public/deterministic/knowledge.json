@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:33643950bc4b00c8f4750803789f26d77c6c0c268fe77aa49d54a69b326bc198",
+  "contentHash": "sha256:6e26c0cd9d3be3d2a2f6f783f3ffed71d7f80eb2e8740a342eb03c72d4e9b85a",
   "generatedAt": "2026-07-14T00:00:00.000Z",
   "entries": [
     {
@@ -75,6 +75,30 @@
             "id": "doc:discovery",
             "title": "Local-first pattern discovery",
             "href": "https://playbook.agentskit.io/docs/discovery"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:for-agents",
+      "kind": "document",
+      "label": "For agents",
+      "match": {
+        "type": "exact",
+        "values": [
+          "for-agents",
+          "for-agents.mdx",
+          "For agents",
+          "playbook For agents"
+        ]
+      },
+      "answer": {
+        "markdown": "## For agents\n\nThe shortest reliable path for an agent to retrieve, apply, and verify the Agents Playbook.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/for-agents)\n[Read raw Markdown](https://playbook.agentskit.io/raw/for-agents.mdx)",
+        "citations": [
+          {
+            "id": "doc:for-agents",
+            "title": "For agents",
+            "href": "https://playbook.agentskit.io/docs/for-agents"
           }
         ]
       }
@@ -3749,7 +3773,7 @@
           {
             "id": "ecosystem:registry",
             "title": "AgentsKit Registry",
-            "href": "https://registry.agentskit.io"
+            "href": "https://registry.agentskit.io/docs"
           }
         ]
       }
@@ -3771,7 +3795,7 @@
         "citations": [
           {
             "id": "ecosystem:chat",
-            "title": "AgentsKit Chat documentation",
+            "title": "AgentsKit Chat",
             "href": "https://chat.agentskit.io/docs"
           }
         ]
@@ -3794,8 +3818,55 @@
         "citations": [
           {
             "id": "ecosystem:doc-bridge",
-            "title": "Doc Bridge documentation",
+            "title": "Doc Bridge",
             "href": "https://agentskit-io.github.io/doc-bridge/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:code-review",
+      "kind": "ecosystem",
+      "label": "AgentsKit Code Review",
+      "match": {
+        "type": "exact",
+        "values": [
+          "agentskit code review",
+          "code review cli",
+          "review before merge"
+        ]
+      },
+      "answer": {
+        "markdown": "Use AgentsKit Code Review to run a focused, low-noise verification pass before an agent-authored change is merged.",
+        "citations": [
+          {
+            "id": "ecosystem:code-review",
+            "title": "AgentsKit Code Review",
+            "href": "https://github.com/AgentsKit-io/code-review-cli#readme"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:akos",
+      "kind": "ecosystem",
+      "label": "AKOS",
+      "match": {
+        "type": "exact",
+        "values": [
+          "akos",
+          "agentskit os",
+          "enterprise agents",
+          "production governance"
+        ]
+      },
+      "answer": {
+        "markdown": "Use AKOS when the system needs enterprise orchestration, governance, identity, audit, permissions, and production controls.",
+        "citations": [
+          {
+            "id": "ecosystem:akos",
+            "title": "AKOS documentation",
+            "href": "https://akos.agentskit.io/docs"
           }
         ]
       }
