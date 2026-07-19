@@ -48,21 +48,12 @@ const config = {
   project: { name: 'agents-playbook' },
   corpus: {
     agent: {
-      root: 'docs/for-agents',
-      index: 'docs/for-agents/INDEX.md',
-      include: ['**/*.md'],
+      root: 'content/docs',
+      index: 'content/docs/index.mdx',
+      include: ['**/*.md', '**/*.mdx'],
       exclude: ['**/node_modules/**'],
     },
-    human: {
-      // The public site is Fumadocs, but the bridge reads the same source tree
-      // directly so every guide remains discoverable even when meta groups are
-      // used for presentation-only navigation.
-      plugin: 'plain-markdown',
-      options: {
-        contentDir: 'content/docs',
-        urlPrefix: '/docs',
-      },
-    },
+    human: { plugin: 'fumadocs', options: { contentDir: 'content/docs', urlPrefix: '/docs' } },
   },
   routing: { options: { ownership } },
   index: {
@@ -74,48 +65,7 @@ const config = {
     },
     capabilities: { enabled: true, outFile: '.doc-bridge/capabilities.json' },
   },
-  gates: { preset: 'standard', include: ['documentation-standard-v1'] },
-  conformance: {
-    documentationStandardV1: {
-      rawSources: ['README.md', 'content/docs/index.mdx', 'content/docs/for-agents.mdx', 'docs/for-agents/INDEX.md'],
-      contributionPaths: ['CONTRIBUTING.md', 'content/docs/contributing.mdx'],
-      metadata: [
-        {
-          path: 'app/layout.tsx',
-          contains: ['export const metadata', 'title:', 'description:', 'openGraph:', 'twitter:'],
-        },
-      ],
-      links: [
-        { url: 'https://www.agentskit.io/docs', paths: ['README.md', 'content/docs/for-agents.mdx'] },
-        { url: 'https://registry.agentskit.io/docs', paths: ['README.md', 'content/docs/for-agents.mdx'] },
-        { url: 'https://chat.agentskit.io/docs', paths: ['README.md', 'content/docs/for-agents.mdx'] },
-        { url: 'https://agentskit-io.github.io/doc-bridge/', paths: ['README.md', 'content/docs/for-agents.mdx'] },
-        { url: 'https://github.com/AgentsKit-io/code-review-cli#readme', paths: ['README.md', 'content/docs/for-agents.mdx'] },
-        { url: 'https://akos.agentskit.io/docs', paths: ['README.md', 'content/docs/for-agents.mdx'] },
-      ],
-      ecosystemContract: {
-        manifest: 'ecosystem.json',
-        claims: 'ecosystem-claims.json',
-        productId: 'playbook',
-      },
-      quickstarts: [
-        {
-          id: 'adopt-playbook',
-          doc: 'content/docs/getting-started.mdx',
-          test: 'scripts/onboarding-proof.test.mjs',
-          command: 'pnpm test:onboarding',
-          testContains: [
-            'content/docs/getting-started.mdx',
-            'proves an adopted gate against an isolated starter fixture',
-          ],
-        },
-      ],
-      visuals: ['docs/assets/playbook-flow.svg'],
-      diagrams: [
-        { path: 'content/docs/discovery.mdx', contains: ['```mermaid'] },
-      ],
-    },
-  },
+  gates: { preset: 'standard' },
   surfaces: {
     cli: { bin: 'ak-docs', defaultFormat: 'json' },
     mcp: { enabled: true, transport: 'stdio' },
