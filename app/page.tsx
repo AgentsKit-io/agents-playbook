@@ -405,15 +405,6 @@ const ECOSYSTEM_CARDS: EcosystemCard[] = [
     href: "/docs/agentskit-chat",
   },
   {
-    id: "playbook",
-    kind: "Discipline",
-    icon: BookOpenCheck,
-    role: "You're here. Make agents ship code a human would actually merge.",
-    cta: "Read the playbook",
-    target: "playbook",
-    current: true,
-  },
-  {
     id: "doc-bridge",
     kind: "Understanding",
     icon: BookMarked,
@@ -444,11 +435,12 @@ function EcosystemSection() {
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
       <SectionLabel>The ecosystem</SectionLabel>
       <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        One foundation. Useful next steps for every stage.
+        One workflow. Six useful next steps.
       </h2>
       <p className="mt-4 max-w-3xl text-pretty text-[color:var(--muted-foreground)]">
-        Contextual handoffs across the AgentsKit products — every product remains
-        optional. Same standards end to end.
+        Start here: build with AgentsKit, start from the Registry, deliver chat with
+        AgentsKit Chat, connect docs through Doc Bridge, verify with AgentsKit Code
+        Review, and reach enterprise scale with AKOS.
       </p>
 
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
