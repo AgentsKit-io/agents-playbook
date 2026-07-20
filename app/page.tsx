@@ -18,14 +18,9 @@ import {
   GitBranch,
   FileWarning,
   Repeat,
-  Package,
-  Blocks,
-  Cpu,
   Star,
-  MessageSquare,
-  BookMarked,
-  GitPullRequest,
 } from "lucide-react";
+import { EcosystemShowcase } from "@/components/ecosystem-showcase";
 import stats from "./stats.snapshot.json";
 import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
@@ -210,7 +205,7 @@ export default function HomePage() {
 
       <TrainYourAgent />
 
-      <EcosystemSection />
+      <EcosystemShowcase />
 
       <CTASection />
 
@@ -363,150 +358,6 @@ pnpm check:all
         </pre>
       </div>
     </div>
-  );
-}
-
-// Ecosystem product mesh — roles aligned to AgentsKit ecosystem.json.
-type EcosystemCard = {
-  id: string;
-  kind: string;
-  icon: typeof Package;
-  role: string;
-  cta: string;
-  target: string;
-  href?: string;
-  current?: boolean;
-};
-
-const ECOSYSTEM_CARDS: EcosystemCard[] = [
-  {
-    id: "agentskit",
-    kind: "Foundation",
-    icon: Package,
-    role: "Build agents without gluing many libraries together — runtime, tools, memory, RAG, adapters, and headless UI bindings.",
-    cta: "Build on the foundation",
-    target: "agentskit",
-  },
-  {
-    id: "registry",
-    kind: "Starting point",
-    icon: Blocks,
-    role: "Copy ready-made agents and own the source — no registry runtime, no lock-in.",
-    cta: "Browse agents",
-    target: "registry",
-  },
-  {
-    id: "agentskit-chat",
-    kind: "Experience",
-    icon: MessageSquare,
-    role: "Define one agent experience and deliver it across web, terminal, and other chat surfaces. Playbook dogfoods Chat — see /docs/agentskit-chat.",
-    cta: "Chat docs · playbook dogfood",
-    target: "agentskit-chat",
-    href: "/docs/agentskit-chat",
-  },
-  {
-    id: "doc-bridge",
-    kind: "Understanding",
-    icon: BookMarked,
-    role: "Turn repository documentation into executable handoffs for coding agents.",
-    cta: "Make docs agent-ready",
-    target: "doc-bridge",
-  },
-  {
-    id: "code-review",
-    kind: "Verification",
-    icon: GitPullRequest,
-    role: "Run focused, low-noise review with the model already in your workflow.",
-    cta: "Verify before merge",
-    target: "code-review",
-  },
-  {
-    id: "akos",
-    kind: "Operation",
-    icon: Cpu,
-    role: "Run and govern agents in production — identity, audit, permissions, and cost control.",
-    cta: "Explore AKOS",
-    target: "akos",
-  },
-];
-
-function EcosystemSection() {
-  return (
-    <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
-      <SectionLabel>The ecosystem</SectionLabel>
-      <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        One workflow. Six useful next steps.
-      </h2>
-      <p className="mt-4 max-w-3xl text-pretty text-[color:var(--muted-foreground)]">
-        Start here: build with AgentsKit, start from the Registry, deliver chat with
-        AgentsKit Chat, connect docs through Doc Bridge, verify with AgentsKit Code
-        Review, and reach enterprise scale with AKOS.
-      </p>
-
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {ECOSYSTEM_CARDS.map((meta) => {
-          const product = ecosystem.products.find((candidate) => candidate.id === meta.id);
-          if (!product) return null;
-          const Icon = meta.icon;
-          const current = Boolean(meta.current);
-          const inner = (
-            <>
-              <div className="flex items-center justify-between">
-                <span
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-md"
-                  style={{
-                    backgroundColor: `${product.accent}1a`,
-                    color: product.accent,
-                  }}
-                >
-                  <Icon className="h-4 w-4" aria-hidden />
-                </span>
-                {current ? (
-                  <span className="rounded-full border border-[color:var(--accent-strong)] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[color:var(--accent-strong)]">
-                    You are here
-                  </span>
-                ) : (
-                  <span className="text-[11px] uppercase tracking-wider text-[color:var(--subtle-foreground)]">
-                    {meta.kind}
-                  </span>
-                )}
-              </div>
-              <h3 className="mt-4 text-base font-semibold">{product.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-                {meta.role}
-              </p>
-              <div
-                className="mt-5 inline-flex items-center gap-1 text-sm font-medium"
-                style={{ color: current ? "var(--accent-strong)" : product.accent }}
-              >
-                {meta.cta}
-                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden />
-              </div>
-            </>
-          );
-          const cardClass = `card-lift group rounded-xl border p-6 ${
-            current
-              ? "border-[color:var(--accent-strong)] bg-[color:var(--surface-2)]"
-              : "border-[color:var(--border)] bg-[color:var(--surface-1)]"
-          }`;
-          return current ? (
-            <Link key={meta.id} href="/docs" className={cardClass}>
-              {inner}
-            </Link>
-          ) : (
-            <EcosystemLink
-              key={meta.id}
-              href={meta.href ?? product.surfaces.home}
-              placement="ecosystem_grid"
-              target={meta.target}
-              className={cardClass}
-            >
-              {inner}
-            </EcosystemLink>
-          );
-        })}
-      </div>
-    </section>
   );
 }
 
