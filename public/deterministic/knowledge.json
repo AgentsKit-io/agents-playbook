@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:b607aee4412dece8ef32e0c4da83bf4f3a8f6135211d1005577138728b3b27fd",
+  "contentHash": "sha256:800969e4f57270aeb0bbefa0f397b3c347a5627fb77b4ce6aca94b80a5507386",
   "generatedAt": "2026-07-14T00:00:00.000Z",
   "entries": [
     {
@@ -163,7 +163,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Welcome\n\nThe gold-standard playbook for shipping production software with AI coding agents.\n\nType: **Index**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs)\n[Read raw Markdown](https://playbook.agentskit.io/raw/index.mdx)",
+        "markdown": "## Welcome\n\nThe open engineering harness for coding agents — train repeatable behavior, not model weights.\n\nType: **Index**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs)\n[Read raw Markdown](https://playbook.agentskit.io/raw/index.mdx)",
         "citations": [
           {
             "id": "doc:index",

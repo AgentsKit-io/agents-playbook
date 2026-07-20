@@ -71,7 +71,7 @@ async function collect(): Promise<Doc[]> {
   return docs;
 }
 
-/** Canonical seven-product mesh from ecosystem.json (shared template). */
+/** Canonical public-product mesh from ecosystem.json (shared template). */
 function ecosystemBlock(): string {
   try {
     const raw = readFileSync(join(process.cwd(), "ecosystem.json"), "utf8");
@@ -83,10 +83,12 @@ function ecosystemBlock(): string {
         promise: string;
         maturity?: string;
         surfaces: { home?: string; docs?: string; llms?: string };
-        navigation: { order: number };
+        navigation: { order: number; showInBar?: boolean };
       }>;
     };
-    const products = [...eco.products].sort(
+    const products = eco.products.filter(
+      (product) => product.navigation.showInBar !== false,
+    ).sort(
       (left, right) => left.navigation.order - right.navigation.order,
     );
     return formatEcosystemLlmsBlock({
@@ -105,8 +107,8 @@ export async function GET() {
 
   const header = `# Agents Playbook
 
-> The gold-standard playbook for shipping production software with AI coding agents.
-> Pillars, patterns, prompts, and gates earned from real production.
+> The open engineering harness for coding agents.
+> Rules, prompts, memory, evals, and executable gates train repeatable behavior, not model weights.
 > Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
 
 - Site: ${SITE}

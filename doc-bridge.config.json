@@ -82,7 +82,7 @@
         },
         "playbook": {
           "path": "content/docs/index.mdx",
-          "purpose": "The gold-standard playbook for shipping production software with AI coding agents.",
+          "purpose": "The open engineering harness for coding agents — train repeatable behavior, not model weights.",
           "agentDoc": "content/docs/getting-started.mdx",
           "humanDoc": "https://playbook.agentskit.io/docs",
           "checks": [
