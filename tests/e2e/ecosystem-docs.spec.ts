@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-const PRODUCT_LABELS = ['AgentsKit', 'Registry', 'Chat', 'Playbook', 'Doc Bridge', 'Code Review', 'AKOS']
+const PRODUCT_LABELS = ['AgentsKit', 'Registry', 'Chat', 'Playbook', 'Doc Bridge', 'AKOS']
 
-test('renders seven-product navigation and six Playbook continuation cards', async ({ page }) => {
+test('renders six-product navigation and the shared ecosystem showcase', async ({ page }) => {
   await page.goto('/')
 
   const bar = page.getByRole('navigation', { name: 'AgentsKit ecosystem' })
@@ -12,11 +12,8 @@ test('renders seven-product navigation and six Playbook continuation cards', asy
   }
   await expect(bar.getByRole('link', { name: 'Playbook', exact: true })).toHaveAttribute('aria-current', 'page')
 
-  const section = page.getByRole('heading', { name: 'One workflow. Six useful next steps.' }).locator('..')
-  const peerLinks = section.getByRole('link')
-  await expect(peerLinks).toHaveCount(6)
-  await expect(peerLinks).toContainText(['AgentsKit', 'AgentsKit Registry', 'AgentsKit Chat', 'Doc Bridge', 'AgentsKit Code Review', 'AgentsKit OS'])
-  await expect(page.getByText(/build with AgentsKit.*connect docs through Doc Bridge.*enterprise scale with AKOS/)).toBeVisible()
+  await expect(page.locator('agentskit-ecosystem[current="playbook"]')).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Build the agent. Then take it all the way.' })).toBeVisible()
 })
 
 test('keeps the ecosystem bar inside the mobile viewport', async ({ page, isMobile }) => {
@@ -45,7 +42,7 @@ test('certifies ecosystem layout at the four required widths', async ({ page }, 
     }
     const bodyWidth = await page.evaluate(() => document.documentElement.scrollWidth)
     expect(bodyWidth).toBeLessThanOrEqual(width)
-    await expect(page.getByRole('heading', { name: 'One workflow. Six useful next steps.' })).toBeVisible()
+    await expect(page.getByRole('heading', { name: 'Build the agent. Then take it all the way.' })).toBeVisible()
   }
 })
 
