@@ -54,3 +54,7 @@ after the AgentsKit Chat integration covered:
 See AgentsKit Chat issue
 [#27](https://github.com/AgentsKit-io/agentskit-chat/issues/27) for the shared
 Registry/Playbook evidence and upstream-adoption record.
+
+For reusable chat definitions and renderer contracts, continue in the
+[AgentsKit Chat documentation](https://chat.agentskit.io/docs). For ownership,
+retrieval, or documentation gates, use [Doc Bridge](https://agentskit-io.github.io/doc-bridge/).

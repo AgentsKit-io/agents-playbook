@@ -16,7 +16,7 @@ describe('Playbook deterministic discovery', () => {
       expectedSiteId: config.siteId,
     })
     expect(verified.ok).toBe(true)
-    expect(result.artifact.entries).toHaveLength(150)
+    expect(result.artifact.entries).toHaveLength(153)
     expect(result.bytes).toBeLessThan(512 * 1024)
     expect(result.serialized).toBe(readFileSync(join(ROOT, 'public/deterministic/knowledge.json'), 'utf8'))
     expect(`${JSON.stringify(config, null, 2)}\n`).toBe(readFileSync(join(ROOT, 'public/deterministic/site-config.json'), 'utf8'))
@@ -37,6 +37,8 @@ describe('Playbook deterministic discovery', () => {
     expect(resolver.resolve('ADR Pattern')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
     expect(resolver.resolve('check-no-any.example.mjs')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
     expect(resolver.resolve('onboard my agent')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
+    expect(resolver.resolve('review before merge')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
+    expect(resolver.resolve('production governance')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
     expect(resolver.resolve('universal')).toMatchObject({ outcome: 'choices', confidence: { basis: 'ambiguous' } })
     expect(resolver.resolve('How should I adapt several patterns to a Rust monorepo?')).toMatchObject({ outcome: 'escalation', reason: 'miss' })
   })

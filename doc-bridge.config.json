@@ -53,6 +53,15 @@
             "pnpm check:all"
           ]
         },
+        "for-agents": {
+          "path": "content/docs/for-agents.mdx",
+          "purpose": "The shortest reliable path for an agent to retrieve, apply, and verify the Agents Playbook.",
+          "agentDoc": "content/docs/for-agents.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/for-agents",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
         "getting-started": {
           "path": "content/docs/getting-started.mdx",
           "purpose": "Adopt the playbook in your project in under an hour.",
