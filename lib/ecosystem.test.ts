@@ -26,7 +26,7 @@ describe("ecosystem contract", () => {
       "https://chat.agentskit.io/docs",
     );
     expect(ecosystemProduct("doc-bridge").surfaces.docs).toBe(
-      "https://agentskit-io.github.io/doc-bridge/",
+      "https://doc-bridge.agentskit.io/",
     );
     expect(ecosystemProduct("akos").surfaces.docs).toBe(
       "https://akos.agentskit.io/docs",

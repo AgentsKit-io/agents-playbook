@@ -142,7 +142,7 @@ Agents Playbook is the practice layer of the AgentsKit ecosystem:
 - [AgentsKit](https://www.agentskit.io/docs) — build agents without gluing many libraries together.
 - [Registry](https://registry.agentskit.io/docs) — copy ready-made agents and own the source.
 - [AgentsKit Chat](https://chat.agentskit.io/docs) — define one conversational experience across interfaces.
-- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — turn repository docs into executable agent handoffs.
+- [Doc Bridge](https://doc-bridge.agentskit.io/) — turn repository docs into executable agent handoffs.
 - [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli#readme) — verify agent-authored changes before merge.
 - [AKOS](https://akos.agentskit.io/docs) — run and govern agents in production.
 
