@@ -7,10 +7,11 @@ test('renders six-product navigation and the shared ecosystem showcase', async (
 
   const bar = page.getByRole('navigation', { name: 'AgentsKit ecosystem' })
   for (const label of PRODUCT_LABELS) {
-    await expect(bar.getByRole('link', { name: label, exact: true })).toBeVisible()
-    await expect(bar.getByRole('link', { name: label, exact: true })).not.toHaveAttribute('target', '_blank')
+    const productLink = bar.locator('.ak-eco-link', { hasText: label })
+    await expect(productLink).toBeVisible()
+    await expect(productLink).not.toHaveAttribute('target', '_blank')
   }
-  await expect(bar.getByRole('link', { name: 'Playbook', exact: true })).toHaveAttribute('aria-current', 'page')
+  await expect(bar.locator('.ak-eco-link', { hasText: 'Playbook' })).toHaveAttribute('aria-current', 'page')
 
   await expect(page.locator('agentskit-ecosystem[current="playbook"]')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Build the agent. Then take it all the way.' })).toBeVisible()
@@ -38,7 +39,7 @@ test('certifies ecosystem layout at the four required widths', async ({ page }, 
     await page.goto('/')
     const bar = page.getByRole('navigation', { name: 'AgentsKit ecosystem' })
     for (const label of PRODUCT_LABELS) {
-      await expect(bar.getByRole('link', { name: label, exact: true })).toBeVisible()
+      await expect(bar.locator('.ak-eco-link', { hasText: label })).toBeVisible()
     }
     const bodyWidth = await page.evaluate(() => document.documentElement.scrollWidth)
     expect(bodyWidth).toBeLessThanOrEqual(width)
