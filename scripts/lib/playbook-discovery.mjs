@@ -138,7 +138,7 @@ const fixedEntries = [
     id: 'ecosystem:doc-bridge', kind: 'ecosystem', label: 'Doc Bridge',
     values: ['doc bridge', 'doc-bridge', 'documentation bridge'],
     markdown: 'Doc Bridge validates the Playbook corpus, machine-readable index, ownership routes, and agent handoffs.',
-    title: 'Doc Bridge', href: 'https://agentskit-io.github.io/doc-bridge/',
+    title: 'Doc Bridge', href: 'https://doc-bridge.agentskit.io/',
   },
   {
     id: 'ecosystem:code-review', kind: 'ecosystem', label: 'AgentsKit Code Review',

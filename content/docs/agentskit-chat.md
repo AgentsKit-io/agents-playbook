@@ -57,4 +57,4 @@ Registry/Playbook evidence and upstream-adoption record.
 
 For reusable chat definitions and renderer contracts, continue in the
 [AgentsKit Chat documentation](https://chat.agentskit.io/docs). For ownership,
-retrieval, or documentation gates, use [Doc Bridge](https://agentskit-io.github.io/doc-bridge/).
+retrieval, or documentation gates, use [Doc Bridge](https://doc-bridge.agentskit.io/).

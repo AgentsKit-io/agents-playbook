@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Script from "next/script";
-import { EcosystemBar } from "@/components/ecosystem-bar";
 
 const SHARED_BAR_URL = "https://www.agentskit.io/ecosystem-bar.js";
 
@@ -20,7 +19,7 @@ export function SharedEcosystemBar() {
       const productLinks = shared?.querySelectorAll(
         "a.ak-eco-link:not(.ak-eco-cta)",
       ).length ?? 0;
-      if (shared && productLinks === 7) {
+      if (shared && productLinks > 0) {
         setSharedReady(true);
         return;
       }
@@ -38,7 +37,11 @@ export function SharedEcosystemBar() {
         onLoad={validateSharedBar}
         onReady={validateSharedBar}
       />
-      {sharedReady ? null : <EcosystemBar />}
+      {sharedReady ? null : (
+        <div className="relative z-40 flex min-h-11 items-center justify-center border-b border-[color:var(--border)] bg-[#090b10] px-4 text-xs text-slate-300" role="status">
+          Loading AgentsKit ecosystem navigation…
+        </div>
+      )}
     </>
   );
 }
