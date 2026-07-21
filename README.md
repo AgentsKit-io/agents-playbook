@@ -5,7 +5,7 @@
 <h1 align="center">Agents Playbook</h1>
 
 <p align="center">
-  Production-earned rules, executable gates, and copy-ready templates for software built with AI coding agents.
+  The open engineering harness for coding agents — train repeatable behavior, not model weights.
 </p>
 
 <p align="center">
@@ -15,7 +15,7 @@
   <a href="./public/deterministic/knowledge.json"><img alt="Local-first answers" src="https://img.shields.io/badge/Ask-local--first-f59e0b" /></a>
 </p>
 
-Agents Playbook turns hard-won engineering lessons into instructions that both people and LLMs can apply. Use it to establish project rules, design package boundaries, review agent-authored changes, and enforce quality before merge—without inventing a governance system from scratch.
+Agents Playbook turns hard-won engineering lessons into repeatable coding-agent behavior. Use its open rules, prompts, memory, evals, and executable gates to establish project standards, design package boundaries, review agent-authored changes, and enforce quality before merge—without fine-tuning model weights or inventing a governance system from scratch.
 
 It is intended for engineering teams adopting coding agents, maintainers standardizing many repositories, and agents that need structured, retrievable operational context.
 
@@ -137,13 +137,12 @@ By contributing, you license the work under [CC BY 4.0](./LICENSE). Please repor
 
 ## AgentsKit ecosystem
 
-Agents Playbook is the practice layer of the AgentsKit ecosystem:
+Agents Playbook is the open engineering harness in the AgentsKit ecosystem:
 
 - [AgentsKit](https://www.agentskit.io/docs) — build agents without gluing many libraries together.
 - [Registry](https://registry.agentskit.io/docs) — copy ready-made agents and own the source.
 - [AgentsKit Chat](https://chat.agentskit.io/docs) — define one conversational experience across interfaces.
 - [Doc Bridge](https://doc-bridge.agentskit.io/) — turn repository docs into executable agent handoffs.
-- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli#readme) — verify agent-authored changes before merge.
 - [AKOS](https://akos.agentskit.io/docs) — run and govern agents in production.
 
 **Topics:** `ai-agents` · `coding-agents` · `agent-governance` · `software-architecture` · `quality-gates` · `fumadocs` · `llms-txt` · `developer-experience`

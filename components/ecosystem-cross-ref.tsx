@@ -73,7 +73,7 @@ export function EcosystemCrossRef({
       >
         Chat
       </EcosystemLink>
-      ,{" "}
+      {" and "}
       <EcosystemLink
         href={productHome("doc-bridge")}
         placement={placement}
@@ -81,15 +81,6 @@ export function EcosystemCrossRef({
         className={linkClassName}
       >
         Doc Bridge
-      </EcosystemLink>
-      , and{" "}
-      <EcosystemLink
-        href={productHome("code-review")}
-        placement={placement}
-        target="code-review"
-        className={linkClassName}
-      >
-        Code Review
       </EcosystemLink>
       .
     </p>

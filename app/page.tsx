@@ -217,14 +217,14 @@ export default function HomePage() {
 function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
   return (
     <svg viewBox="0 0 72 64" fill="none" className={className} aria-hidden>
-      <g stroke="#2997ff" strokeWidth="3" strokeLinecap="round">
+      <g stroke="var(--accent-strong)" strokeWidth="3" strokeLinecap="round">
         <line x1="12" y1="52" x2="36" y2="12" />
         <line x1="36" y1="12" x2="60" y2="52" />
         <line x1="12" y1="52" x2="60" y2="52" />
       </g>
-      <circle cx="36" cy="12" r="6" fill="#2997ff" />
-      <circle cx="12" cy="52" r="6" fill="#2997ff" />
-      <circle cx="60" cy="52" r="6" fill="#2997ff" />
+      <circle cx="36" cy="12" r="6" fill="var(--accent-strong)" />
+      <circle cx="12" cy="52" r="6" fill="var(--accent-strong)" />
+      <circle cx="60" cy="52" r="6" fill="var(--accent-strong)" />
     </svg>
   );
 }
@@ -277,18 +277,18 @@ function Hero() {
         <div className="lg:col-span-7">
           <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1 text-xs uppercase tracking-wider text-[color:var(--muted-foreground)]">
             <span className="h-1.5 w-1.5 rounded-full bg-accent-gradient" aria-hidden />
-            Works with any coding agent
+            Open engineering harness
           </div>
           <h1 className="text-balance text-5xl font-semibold leading-[1.04] tracking-tight sm:text-6xl lg:text-7xl">
-            Make AI agents ship code you&rsquo;d{" "}
-            <span className="text-accent-gradient">actually merge</span>.
+            Train coding agents to ship code{" "}
+            <span className="text-accent-gradient">your team would merge</span>.
           </h1>
           <p className="mt-6 max-w-xl text-pretty text-lg text-[color:var(--muted-foreground)]">
-            They reimplement primitives, nest ternaries past readability, and mark
-            screens &ldquo;done&rdquo; with half the tabs throwing{" "}
-            <span className="font-mono text-[0.95em] text-[color:var(--foreground)]">not implemented</span>.
-            This is the rules, gates, and prompts — earned over a year of
-            agent-driven production — that stop it.
+            Open rules, prompts, memory, evals, and executable gates turn every
+            correction into behavior your coding agents can repeat.
+          </p>
+          <p className="mt-4 font-mono text-sm text-[color:var(--accent-strong)]">
+            Train the behavior, not the model.
           </p>
           <EcosystemCrossRef
             current="playbook"
@@ -297,17 +297,17 @@ function Hero() {
           />
           <div className="mt-8 flex flex-wrap items-center gap-3">
             <Link
-              href="/docs"
+              href="/docs/onboard-your-agent"
               className="group inline-flex items-center gap-2 rounded-md bg-accent-gradient px-5 py-2.5 text-sm font-semibold text-white shadow-glow-purple transition hover:bg-accent-gradient-hover"
             >
-              Read the playbook
+              Train your agent
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
             </Link>
             <Link
-              href="/docs/onboard-your-agent"
+              href="/docs"
               className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
             >
-              Onboard your agent
+              Explore the harness
             </Link>
           </div>
         </div>
@@ -356,6 +356,9 @@ pnpm check:quality-gates
 pnpm check:all
 \`\`\``}
         </pre>
+        <div className="border-t border-[color:var(--border)] px-5 py-3 font-mono text-[11px] text-[color:var(--accent-strong)]">
+          Failure → rule → context → gate → mergeable code
+        </div>
       </div>
     </div>
   );
@@ -366,12 +369,11 @@ function FailureModes() {
     <section className="relative z-10 mx-auto max-w-6xl px-6 pt-4 pb-12">
       <SectionLabel>The problem</SectionLabel>
       <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        You&rsquo;ve shipped — or caught — every one of these.
+        Turn every failure into reusable training.
       </h2>
       <p className="mt-4 max-w-2xl text-pretty text-[color:var(--muted-foreground)]">
-        Each rule in the playbook is the fix for a specific, reproducible way
-        agents break production code. Not theory — failure modes paid for in real
-        repos.
+        The harness captures production corrections as rules, context, and gates
+        that the next coding-agent session can apply automatically.
       </p>
 
       <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -402,9 +404,9 @@ function FailureModes() {
 function Features() {
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
-      <SectionLabel>Why</SectionLabel>
+      <SectionLabel>The harness</SectionLabel>
       <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        Built for the kind of code agents actually ship.
+        Behavior you can inspect, adapt, and enforce.
       </h2>
       <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {FEATURES.map((f) => (
@@ -427,7 +429,7 @@ function Features() {
 function PillarShowcase() {
   return (
     <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
-      <SectionLabel>Pillars</SectionLabel>
+      <SectionLabel>The training surface</SectionLabel>
       <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
         Six pillars. Six SDLC phases. One matrix.
       </h2>
@@ -531,18 +533,18 @@ function CTASection() {
         <div className="pointer-events-none absolute inset-0 bg-hero-gradient opacity-50" aria-hidden />
         <div className="relative">
           <h2 className="text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-            Start with the eight non-negotiables.
+            Your next agent session should start better than the last one.
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-pretty text-[color:var(--muted-foreground)]">
-            The kernel of the playbook. If an agent breaks one, fail the PR.
-            Everything else flows from these.
+            Adopt the open harness, persist your engineering standards, and make
+            every correction reusable.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href="/docs"
+              href="/docs/onboard-your-agent"
               className="inline-flex items-center gap-2 rounded-md bg-accent-gradient px-5 py-2.5 text-sm font-semibold text-white shadow-glow-purple transition hover:bg-accent-gradient-hover"
             >
-              Read the playbook
+              Train your agent
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
             <EcosystemLink
@@ -555,10 +557,10 @@ function CTASection() {
               Star on GitHub
             </EcosystemLink>
             <Link
-              href="/docs/matrix"
+              href="/docs"
               className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
             >
-              See the matrix
+              Explore the harness
             </Link>
           </div>
           <p className="mx-auto mt-5 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
@@ -604,11 +606,11 @@ function WorksWith() {
       <div className="text-center">
         <SectionLabel>Agent-agnostic</SectionLabel>
         <h2 className="mx-auto mt-3 max-w-2xl text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
-          Whatever agent you run, it ships through the same playbook.
+          One open harness. Every coding agent.
         </h2>
         <p className="mx-auto mt-3 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
-          Drops in as the bootstrap doc for any coding agent — rules, gates, and
-          prompts in, reviewable and shippable code out.
+          Claude Code, Codex, Cursor, Copilot, and other agents learn the same
+          repository behavior without changing the underlying model.
         </p>
       </div>
       <div className="mt-10">
@@ -623,12 +625,12 @@ function TrainYourAgent() {
     <section id="train-your-agent" className="relative z-10 mx-auto max-w-6xl px-6 py-20">
       <SectionLabel>Onboard in one paste</SectionLabel>
       <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        Train your agent on the whole playbook.
+        Install the harness in one paste.
       </h2>
       <p className="mt-4 max-w-2xl text-pretty text-[color:var(--muted-foreground)]">
-        Paste this into Claude Code, Cursor, Windsurf, Codex — any agent. It pulls
-        the entire playbook, audits your repo against it, and proposes a
-        prioritized adoption plan before touching a line of code.
+        Paste this into any coding agent. It loads the open playbook, audits your
+        repository, and proposes a prioritized adoption plan before touching code.
+        You train repeatable behavior, not model weights.
       </p>
 
       <div className="mt-10 overflow-hidden rounded-2xl border border-[color:var(--border)] bg-[color:var(--surface-1)] ring-glow">
@@ -648,7 +650,7 @@ function TrainYourAgent() {
           href="/docs/onboard-your-agent"
           className="group inline-flex items-center gap-2 rounded-md bg-accent-gradient px-5 py-2.5 text-sm font-semibold text-white shadow-glow-purple transition hover:bg-accent-gradient-hover"
         >
-          Per-tool setup &amp; variants
+          Train your agent
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
         </Link>
         <Link

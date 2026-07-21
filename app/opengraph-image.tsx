@@ -21,7 +21,7 @@ export default async function OGImage() {
           alignItems: "flex-start",
           padding: "80px",
           background:
-            "radial-gradient(ellipse at top left, rgba(140,100,255,0.30), transparent 55%), radial-gradient(ellipse at bottom right, rgba(30,180,255,0.20), transparent 50%), #0b0a13",
+            "radial-gradient(ellipse at top left, rgba(140,100,255,0.30), transparent 55%), radial-gradient(ellipse at bottom right, rgba(140,100,255,0.16), transparent 50%), #0b0a13",
           color: "white",
           fontFamily: "Inter, system-ui",
         }}
@@ -44,7 +44,7 @@ export default async function OGImage() {
               height: "12px",
               borderRadius: "9999px",
               background:
-                "linear-gradient(135deg, oklch(0.72 0.18 295), oklch(0.68 0.18 240))",
+                "linear-gradient(135deg, oklch(0.72 0.18 295), oklch(0.78 0.15 295))",
             }}
           />
           Agents Playbook
@@ -59,17 +59,17 @@ export default async function OGImage() {
             maxWidth: "1000px",
           }}
         >
-          The gold-standard playbook for shipping production software with{" "}
+          Train coding agents to ship code{" "}
           <span
             style={{
               background:
-                "linear-gradient(135deg, oklch(0.85 0.18 295), oklch(0.80 0.18 240))",
+                "linear-gradient(135deg, oklch(0.85 0.18 295), oklch(0.78 0.16 295))",
               backgroundClip: "text",
               color: "transparent",
               marginLeft: "12px",
             }}
           >
-            AI coding agents.
+            your team would merge.
           </span>
         </div>
         <div

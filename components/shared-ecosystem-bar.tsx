@@ -8,7 +8,7 @@ const SHARED_BAR_URL = "https://www.agentskit.io/ecosystem-bar.js";
 /**
  * The central artifact remains authoritative. The local manifest-backed bar is
  * a fail-closed fallback while an older deployment or a network failure cannot
- * satisfy the seven-product contract.
+ * satisfy the six-product public contract.
  */
 export function SharedEcosystemBar() {
   const [sharedReady, setSharedReady] = useState(false);

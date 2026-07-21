@@ -124,7 +124,7 @@
       "profileId": "top-level-repository",
       "dimensions": {
         "promise": [
-          "Production-earned rules",
+          "open engineering harness",
           "It is intended for"
         ],
         "proof": [
@@ -161,8 +161,7 @@
           "## AgentsKit ecosystem",
           "registry.agentskit.io",
           "AgentsKit Chat",
-          "Doc Bridge",
-          "Code Review CLI"
+          "Doc Bridge"
         ]
       },
       "visuals": [
@@ -205,7 +204,7 @@
           "public/deterministic/knowledge.json",
           "public/deterministic/site-config.json"
         ],
-        "sourceHash": "sha256:4763a789a982891efb2bfbf7371a849cc2813326fd071b4acae433e887e60e2c"
+        "sourceHash": "sha256:0be5083455bbbacfa39c85779ac01541c967df95bbf39c51167b6c6f2e00efe4"
       },
       "exceptions": []
     }
