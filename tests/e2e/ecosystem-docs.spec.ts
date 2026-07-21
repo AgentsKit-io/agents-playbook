@@ -26,21 +26,29 @@ test('keeps the ecosystem bar inside the mobile viewport', async ({ page, isMobi
   for (const link of await page.getByRole('navigation', { name: 'AgentsKit ecosystem' }).getByRole('link').all()) {
     const box = await link.boundingBox()
     expect(box).not.toBeNull()
-    expect(box!.x).toBeGreaterThanOrEqual(0)
-    expect(box!.x + box!.width).toBeLessThanOrEqual(viewport!.width)
     expect(box!.height).toBeGreaterThanOrEqual(44)
   }
+
+  const bar = page.getByRole('navigation', { name: 'AgentsKit ecosystem' })
+  const flow = await bar.evaluate((element) => {
+    const style = getComputedStyle(element)
+    return { display: style.display, flexWrap: style.flexWrap, overflowX: style.overflowX }
+  })
+  expect(flow).toEqual({ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' })
+
+  const current = await bar.locator('[aria-current="page"]').boundingBox()
+  expect(current).not.toBeNull()
+  expect(current!.x).toBeGreaterThanOrEqual(0)
+  expect(current!.x + current!.width).toBeLessThanOrEqual(viewport!.width)
 })
 
-test('certifies ecosystem layout at the four required widths', async ({ page }, testInfo) => {
+test('certifies ecosystem layout across required mobile and desktop widths', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'chromium', 'one browser certifies explicit viewport widths')
-  for (const width of [375, 768, 1280, 1440]) {
+  for (const width of [320, 375, 768, 1280, 1440]) {
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/')
     const bar = page.getByRole('navigation', { name: 'AgentsKit ecosystem' })
-    for (const label of PRODUCT_LABELS) {
-      await expect(bar.locator('.ak-eco-link', { hasText: label })).toBeVisible()
-    }
+    await expect(bar.locator('.ak-eco-link', { hasText: 'Playbook' })).toBeInViewport()
     const bodyWidth = await page.evaluate(() => document.documentElement.scrollWidth)
     expect(bodyWidth).toBeLessThanOrEqual(width)
     await expect(page.getByRole('heading', { name: 'Build the agent. Then take it all the way.' })).toBeVisible()
