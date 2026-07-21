@@ -28,6 +28,7 @@ import { EcosystemStars } from "@/components/ecosystem-stars";
 import { EcosystemCrossRef } from "@/components/ecosystem-cross-ref";
 import { CopyPrompt } from "@/components/copy-prompt";
 import { AgentConvergence } from "@/components/agent-convergence";
+import { SiteSearchTrigger } from "@/components/site-search-trigger";
 
 // Counts are derived from content by scripts/compute-stats.mjs (single source).
 const C = stats.counts;
@@ -231,40 +232,64 @@ function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
 
 function SiteHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-[color:var(--border)] glass">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3.5">
-      <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-        <BrandMark className="h-6 w-6" />
-        <span>Agents Playbook</span>
-      </Link>
-      <nav className="flex items-center gap-6 text-sm">
-        <Link href="/docs" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Docs</Link>
-        <Link href="/docs/matrix" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Matrix</Link>
-        <Link href="/docs/glossary" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Glossary</Link>
+    <header className="sticky top-0 z-30 h-14 border-b border-[color:var(--border)] glass">
+      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <Link
-          href="/llms.txt"
-          className="hidden md:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+          href="/"
+          className="inline-flex min-h-11 items-center gap-2 font-semibold tracking-tight"
         >
-          llms.txt
+          <BrandMark className="h-6 w-6" />
+          <span>Agents Playbook</span>
         </Link>
-        <EcosystemLink
-          href="https://www.agentskit.io/"
-          placement="header"
-          className="hidden sm:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+        <nav
+          className="flex min-w-0 items-center gap-1 sm:gap-2"
+          aria-label="Playbook"
         >
-          AgentsKit ↗
-        </EcosystemLink>
-        <EcosystemStars repos={ecosystem.properties.map((p) => p.repo)} />
-        <EcosystemLink
-          href="https://github.com/AgentsKit-io/agents-playbook"
-          placement="header"
-          event="community_clicked"
-          className="hidden sm:inline-flex items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1.5 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
-        >
-          <Github className="h-3.5 w-3.5" aria-hidden />
-          GitHub
-        </EcosystemLink>
-      </nav>
+          <Link
+            href="/docs"
+            className="inline-flex min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+          >
+            Docs
+          </Link>
+          <Link
+            href="/docs/matrix"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] lg:inline-flex"
+          >
+            Matrix
+          </Link>
+          <Link
+            href="/docs/glossary"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] lg:inline-flex"
+          >
+            Glossary
+          </Link>
+          <Link
+            href="/llms.txt"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] xl:inline-flex"
+          >
+            llms.txt
+          </Link>
+          <EcosystemLink
+            href="https://www.agentskit.io/"
+            placement="header"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] xl:inline-flex"
+          >
+            AgentsKit ↗
+          </EcosystemLink>
+          <SiteSearchTrigger />
+          <div className="hidden xl:block">
+            <EcosystemStars repos={ecosystem.properties.map((p) => p.repo)} />
+          </div>
+          <EcosystemLink
+            href="https://github.com/AgentsKit-io/agents-playbook"
+            placement="header"
+            event="community_clicked"
+            className="hidden min-h-11 items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)] xl:inline-flex"
+          >
+            <Github className="h-3.5 w-3.5" aria-hidden />
+            GitHub
+          </EcosystemLink>
+        </nav>
       </div>
     </header>
   );

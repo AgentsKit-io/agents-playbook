@@ -38,7 +38,7 @@ export function SharedEcosystemBar() {
         onReady={validateSharedBar}
       />
       {sharedReady ? null : (
-        <div className="relative z-40 flex min-h-11 items-center justify-center border-b border-[color:var(--border)] bg-[#090b10] px-4 text-xs text-slate-300" role="status">
+        <div className="relative z-40 flex min-h-14 items-center justify-center border-b border-[color:var(--border)] bg-[#090b10] px-4 text-xs text-slate-300" role="status">
           Loading AgentsKit ecosystem navigation…
         </div>
       )}

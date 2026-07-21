@@ -47,12 +47,13 @@ export function EcosystemStars({
       target="_blank"
       rel="noreferrer"
       onClick={() => track("community_clicked", { target: "github", placement: "header_total" })}
-      title="Total stars across the AgentsKit ecosystem"
-      className="inline-flex items-center gap-1.5 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-2.5 py-1.5 text-sm text-[color:var(--foreground)] transition hover:bg-[color:var(--surface-2)]"
+      title="Total GitHub stars across AgentsKit projects"
+      aria-label={formatted ? `${formatted} GitHub stars across AgentsKit projects` : "AgentsKit projects on GitHub"}
+      className="inline-flex min-h-11 items-center gap-1.5 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-2.5 text-sm text-[color:var(--foreground)] transition hover:bg-[color:var(--surface-2)]"
     >
       <Star className="h-3.5 w-3.5 text-[color:var(--warning)]" aria-hidden />
       <span className="font-mono text-xs">{formatted ?? "★"}</span>
-      <span className="hidden sm:inline text-[color:var(--muted-foreground)]">ecosystem</span>
+      <span className="text-[color:var(--muted-foreground)]">GitHub stars</span>
     </a>
   );
 }
