@@ -196,8 +196,34 @@ html, body {
 .prose a:hover { text-decoration-color: var(--accent-strong); }
 .prose .not-prose a { text-decoration: none; }
 
-/* The host owns stacking only. The shared artifact owns responsive navigation. */
-#ak-eco { z-index: 60 !important; }
+/* The host owns stacking and the shared 56px header rhythm only. */
+#ak-eco { z-index: 60 !important; min-height: 56px !important; }
+
+/* Keep the assistant launcher usable before its client bundle hydrates. */
+.ak-ask-fab {
+  --ask-bg: #0b1017;
+  --ask-border: #2b3340;
+  --ask-text: #f2f5f8;
+  --ask-accent: var(--accent-strong);
+  position: fixed;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 80;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid var(--ask-border);
+  border-radius: 999px;
+  background: var(--ask-bg);
+  color: var(--ask-text);
+  padding: 0.625rem 1rem;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 34%);
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
 
 /* Headings — brighter + a hairline under h2 for rhythm. */
 .prose :is(h1, h2, h3, h4) { color: var(--foreground); letter-spacing: -0.01em; }
