@@ -25,6 +25,27 @@ const basenames = files.map((path) => path.split(sep).at(-1)?.replace(/\.mdx?$/,
 const counts = new Map(basenames.map((name) => [name, basenames.filter((candidate) => candidate === name).length]))
 const ownership = {}
 
+const infrastructureOwnership = {
+  'pre-commit-provider': ['.pre-commit-hooks.yaml', 'Versioned pre-commit provider manifest.'],
+  'project-automation': ['scripts', 'Repository automation, generators, and integration tests.'],
+  'continuous-integration': ['.github/workflows', 'Continuous-integration workflows.'],
+  'project-manifest': ['package.json', 'Project commands, dependencies, and runtime contract.'],
+  'project-readme': ['README.md', 'Repository introduction and adoption path.'],
+  changelog: ['CHANGELOG.md', 'Release-facing project change history.'],
+  'readme-standard': ['readme-standard-v1.json', 'README Standard evidence and freshness hashes.'],
+  'doc-bridge-config': ['doc-bridge.config.json', 'Generated Doc Bridge routing configuration.'],
+}
+
+for (const [id, [path, purpose]] of Object.entries(infrastructureOwnership)) {
+  ownership[id] = {
+    path,
+    purpose,
+    agentDoc: 'content/docs/scripts/index.md',
+    humanDoc: `${site}/docs/scripts`,
+    checks: ['pnpm check:all'],
+  }
+}
+
 for (const path of files) {
   const sourcePath = relative(root, path).split(sep).join('/')
   const route = relative(docsRoot, path).split(sep).join('/').replace(/\.mdx?$/, '').replace(/\/index$/, '').replace(/^(index|README)$/, '')

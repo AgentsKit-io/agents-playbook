@@ -62,7 +62,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: python -m pip install pre-commit==4.6.1
       - run: node scripts/sync-playbook-package.mjs --check
       - run: node --test packages/playbook/test/cli.test.mjs
+      - run: node scripts/test-pre-commit-hook.mjs
       - run: npm pack --dry-run
         working-directory: packages/playbook

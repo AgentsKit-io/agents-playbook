@@ -19,6 +19,7 @@
     "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
     "test:onboarding": "vitest run scripts/onboarding-proof.test.mjs",
     "test:playbook-package": "node --test packages/playbook/test/cli.test.mjs",
+    "test:pre-commit-hook": "node scripts/test-pre-commit-hook.mjs",
     "test:e2e": "playwright test",
     "sync:playbook-package": "node scripts/sync-playbook-package.mjs",
     "check:playbook-package": "node scripts/sync-playbook-package.mjs --check",
