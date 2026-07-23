@@ -3,9 +3,10 @@ import { lstatSync, mkdtempSync, readlinkSync, rmSync, unlinkSync, writeFileSync
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { spawnSync } from 'node:child_process'
+import { resolveNpxCommand } from './resolve-npx-command.mjs'
 
 const snapshot = mkdtempSync(join(tmpdir(), 'agentskit-playbook-staged-'))
-const npx = process.platform === 'win32' ? 'npx.cmd' : 'npx'
+const npx = resolveNpxCommand()
 let exitCode = 1
 
 function replaceStagedSymlinks() {
@@ -34,8 +35,8 @@ try {
   const normalized = checkout.status === 0 ? replaceStagedSymlinks() : checkout.status
   if (normalized === 0) {
     const result = spawnSync(
-      npx,
-      ['--yes', '@agentskit/playbook@0.1.0', 'run', ...process.argv.slice(2), '--cwd', snapshot],
+      npx.command,
+      [...npx.args, '--yes', '@agentskit/playbook@0.1.0', 'run', ...process.argv.slice(2), '--cwd', snapshot],
       { stdio: 'inherit' },
     )
     if (result.error) throw result.error

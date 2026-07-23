@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { promisify } from 'node:util'
+import { resolveNpxCommand } from './resolve-npx-command.mjs'
 
 const execute = promisify(execFile)
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
@@ -42,6 +43,15 @@ const provider = join(temporaryRoot, 'provider')
 const consumer = join(temporaryRoot, 'consumer')
 
 try {
+  const simulatedWindowsNode = join(temporaryRoot, 'node', 'node.exe')
+  const simulatedWindowsNpx = join(temporaryRoot, 'node', 'node_modules', 'npm', 'bin', 'npx-cli.js')
+  await mkdir(dirname(simulatedWindowsNpx), { recursive: true })
+  await writeFile(simulatedWindowsNpx, '')
+  assert.deepEqual(
+    resolveNpxCommand({ platform: 'win32', nodeExecutable: simulatedWindowsNode }),
+    { command: simulatedWindowsNode, args: [simulatedWindowsNpx] },
+  )
+
   await mkdir(provider)
   await mkdir(consumer)
   await copyFile(join(repositoryRoot, '.pre-commit-hooks.yaml'), join(provider, '.pre-commit-hooks.yaml'))
@@ -49,6 +59,10 @@ try {
   await copyFile(
     join(repositoryRoot, 'scripts', 'run-pre-commit-hook.mjs'),
     join(provider, 'scripts', 'run-pre-commit-hook.mjs'),
+  )
+  await copyFile(
+    join(repositoryRoot, 'scripts', 'resolve-npx-command.mjs'),
+    join(provider, 'scripts', 'resolve-npx-command.mjs'),
   )
   await chmod(join(provider, 'scripts', 'run-pre-commit-hook.mjs'), 0o755)
   await initializeRepository(provider)
