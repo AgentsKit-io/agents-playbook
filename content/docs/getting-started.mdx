@@ -10,7 +10,7 @@ The playbook is designed to be **adopted incrementally** — you can pull one pi
 
 1. **Copy `CLAUDE.md`** (and `AGENTS.md` if you don't already have one) from [templates](/docs/templates) into your repo root. Customise the non-negotiables to your stack.
 2. **Add the `MEMORY.md` index** + a `.agent-memory/` directory. Every lesson learned becomes a one-file memory.
-3. **Pick 2-3 gate scripts** from [scripts](/docs/scripts) — start with `check-file-size`, `check-no-any`, `check-named-exports`. Wire them as a `pnpm check:quality-gates` script.
+3. **Run 2-3 quality gates** with `npx @agentskit/playbook run file-size no-any named-exports`, or copy their source from [scripts](/docs/scripts) when you need to customize the contracts.
 4. **Stand up `docs/adr/`** with ADR-0001 (Philosophy) using the [ADR template](/docs/templates/ADR.template).
 5. **Adopt the PR-intent manifest** ([template](/docs/templates/PR-intent.template)) on the next PR.
 

@@ -8,6 +8,15 @@ description: 'Drop-in reference implementations for the quality + structural gat
 
 Drop-in reference implementations for the quality + structural gates the pillars rely on. Adapt to your stack; the contract each gate enforces is more important than the specific code.
 
+Run any gate immediately without copying files:
+
+```bash
+npx @agentskit/playbook run no-any named-exports
+npx @agentskit/playbook run --fast
+```
+
+Use `npx @agentskit/playbook list` to see every packaged gate. The source files below remain the canonical, copy-ready implementations; the npm package is synchronized from them and has zero runtime dependencies.
+
 ## Status
 
 ✓ All 12 gate reference impls shipped + orchestrator. Pure Node 22 ESM, zero deps. Adapt the regexes / paths to your codebase.

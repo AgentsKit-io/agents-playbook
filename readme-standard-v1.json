@@ -204,7 +204,7 @@
           "public/deterministic/knowledge.json",
           "public/deterministic/site-config.json"
         ],
-        "sourceHash": "sha256:0be5083455bbbacfa39c85779ac01541c967df95bbf39c51167b6c6f2e00efe4"
+        "sourceHash": "sha256:4752ab92ce62cca87514f754dce6f7160276cc9ee0e289894057e29f39d958b4"
       },
       "exceptions": []
     }

@@ -1,0 +1,43 @@
+{
+  "name": "@agentskit/playbook",
+  "version": "0.1.0",
+  "description": "Zero-dependency quality gates from the Agents Playbook",
+  "type": "module",
+  "bin": {
+    "agents-playbook": "bin/agents-playbook.mjs",
+    "ak-playbook": "bin/agents-playbook.mjs"
+  },
+  "files": [
+    "bin",
+    "gates",
+    "gate-manifest.json",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/cli.test.mjs",
+    "prepack": "node ../../scripts/sync-playbook-package.mjs --check"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgentsKit-io/agents-playbook.git",
+    "directory": "packages/playbook"
+  },
+  "homepage": "https://playbook.agentskit.io/docs/scripts",
+  "bugs": "https://github.com/AgentsKit-io/agents-playbook/issues",
+  "keywords": [
+    "ai-agents",
+    "coding-agents",
+    "quality-gates",
+    "code-quality",
+    "developer-tools"
+  ],
+  "author": "Emerson Braun",
+  "license": "CC-BY-4.0",
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
