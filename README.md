@@ -49,6 +49,8 @@ pnpm dev
 
 Open `http://localhost:3000`. If you are new to agent governance, follow [Getting started](https://playbook.agentskit.io/docs/getting-started), copy the [AGENTS.md template](https://playbook.agentskit.io/docs/templates/AGENTS.md.template), and add one relevant gate before expanding the policy set.
 
+Run the fast gates on every commit with the versioned [pre-commit provider](https://playbook.agentskit.io/docs/scripts), or select exact gates through its `args` configuration.
+
 For an LLM, use [`/llms.txt`](https://playbook.agentskit.io/llms.txt) for the map, [`/llms-full.txt`](https://playbook.agentskit.io/llms-full.txt) for the complete corpus, or replace `/docs/<path>` with `/raw/<path>.md` for a single source document.
 
 ## Verify the local knowledge layer

@@ -26,6 +26,78 @@
   "routing": {
     "options": {
       "ownership": {
+        "pre-commit-provider": {
+          "path": ".pre-commit-hooks.yaml",
+          "purpose": "Versioned pre-commit provider manifest.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "project-automation": {
+          "path": "scripts",
+          "purpose": "Repository automation, generators, and integration tests.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "continuous-integration": {
+          "path": ".github/workflows",
+          "purpose": "Continuous-integration workflows.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "project-manifest": {
+          "path": "package.json",
+          "purpose": "Project commands, dependencies, and runtime contract.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "project-readme": {
+          "path": "README.md",
+          "purpose": "Repository introduction and adoption path.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "changelog": {
+          "path": "CHANGELOG.md",
+          "purpose": "Release-facing project change history.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "readme-standard": {
+          "path": "readme-standard-v1.json",
+          "purpose": "README Standard evidence and freshness hashes.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "doc-bridge-config": {
+          "path": "doc-bridge.config.json",
+          "purpose": "Generated Doc Bridge routing configuration.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
         "agentskit-chat": {
           "path": "content/docs/agentskit-chat.md",
           "purpose": "How Ask Playbook composes the public AgentsKit Chat framework without recreating chat state.",
