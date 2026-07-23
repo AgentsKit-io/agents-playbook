@@ -109,6 +109,7 @@ See [Discovery and Ask](https://playbook.agentskit.io/docs/discovery) for the de
 |---|---|
 | [`content/docs`](./content/docs) | Canonical guides, phases, prompts, and templates |
 | [`content/docs/scripts`](./content/docs/scripts) | Runnable, zero-dependency reference gates |
+| [`packages/playbook`](./packages/playbook) | Zero-dependency `@agentskit/playbook` CLI package |
 | [`components/ask-widget.tsx`](./components/ask-widget.tsx) | Local-first AgentsKit Chat integration |
 | [`scripts`](./scripts) | Generation and quality verification |
 | [`public/deterministic`](./public/deterministic) | Verified static knowledge and site configuration |
@@ -118,6 +119,8 @@ See [Discovery and Ask](https://playbook.agentskit.io/docs/discovery) for the de
 
 ```bash
 pnpm test
+pnpm test:playbook-package
+pnpm check:playbook-package
 pnpm check:okf-type
 pnpm check:doc-bridge-config
 pnpm docs:bridge:index
