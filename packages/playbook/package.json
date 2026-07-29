@@ -1,6 +1,6 @@
 {
   "name": "@agentskit/playbook",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Zero-dependency quality gates from the Agents Playbook",
   "type": "module",
   "bin": {
@@ -33,7 +33,7 @@
     "developer-tools"
   ],
   "author": "Emerson Braun",
-  "license": "CC-BY-4.0",
+  "license": "MIT",
   "engines": {
     "node": ">=22"
   },

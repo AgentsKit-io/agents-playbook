@@ -2,6 +2,11 @@
 
 This playbook only accepts patterns earned in production. Theory is welcome only as the *rationale* for a rule that already paid off in a shipped repo.
 
+Participation is governed by the [Code of Conduct](./CODE_OF_CONDUCT.md) and
+[project governance](./GOVERNANCE.md). Report vulnerabilities through
+[SECURITY.md](./SECURITY.md), never in a public issue. Do not submit secrets,
+credentials, private customer information, or confidential repository details.
+
 ## Submission rules
 
 1. **Source the lesson.** Every new rule, gate, or prompt pattern must cite a concrete failure mode it prevents. Link to the originating ADR/RFC/issue/PR where possible.
@@ -9,7 +14,11 @@ This playbook only accepts patterns earned in production. Theory is welcome only
 3. **Two scope levels.** Add the universal principle first. If a TypeScript-specific recipe makes it land cleanly, add it to `ts-concrete.md` or a `<topic>-pattern.md` sibling — never mix them in one file.
 4. **No bare assertions.** Every "do this" comes with the failure mode it prevents and the gate that enforces it (or a note that the gate is missing).
 5. **English only.** Maximum reach, best RAG retrieval. Translations live as forks.
-6. **CC-BY-4.0.** By submitting, you license your contribution under the repo license.
+6. **Respect the license boundary.** Software contributions are licensed under
+   [MIT](./LICENSE). Written patterns, prompts, templates, illustrations, and
+   other editorial content are licensed under
+   [CC BY 4.0](./LICENSE-CONTENT). By submitting a contribution, you agree that
+   it is distributed under the license applicable to the files you change.
 
 ## Doc shape
 
