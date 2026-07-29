@@ -17,6 +17,8 @@ All notable changes to Agents Playbook are documented here. The format follows [
 
 ### Changed
 
+- Prepared `@agentskit/playbook@0.1.1` with an explicit dual-license boundary:
+  CLI software under MIT and the Playbook content corpus under CC BY 4.0.
 - Updated Doc Bridge to 1.1.1.
 - Deferred the shared ecosystem bar until idle to protect the critical rendering path.
 - Expanded ecosystem cross-links across human and machine-readable surfaces.

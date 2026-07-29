@@ -34,4 +34,7 @@ Read the [gate reference](https://playbook.agentskit.io/docs/scripts) for the en
 
 ## License
 
-CC BY 4.0. See `LICENSE`.
+The CLI software is licensed under the [MIT License](./LICENSE). The Playbook
+corpus—written patterns, prompts, templates, illustrations, and other editorial
+content—is licensed separately under
+[CC BY 4.0](https://github.com/AgentsKit-io/agents-playbook/blob/main/LICENSE-CONTENT).

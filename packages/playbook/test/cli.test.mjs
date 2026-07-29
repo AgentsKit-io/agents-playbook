@@ -22,7 +22,7 @@ test('renders help and version', async () => {
   const help = await execute(process.execPath, [cli, '--help'])
   const version = await execute(process.execPath, [cli, '--version'])
   assert.match(help.stdout, /@agentskit\/playbook run/)
-  assert.equal(version.stdout, '0.1.0\n')
+  assert.equal(version.stdout, '0.1.1\n')
 })
 
 test('lists every gate as JSON', async () => {
