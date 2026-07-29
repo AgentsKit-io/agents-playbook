@@ -12,6 +12,7 @@
   <a href="https://playbook.agentskit.io"><img alt="Live documentation" src="https://img.shields.io/badge/docs-live-7c3aed" /></a>
   <a href="./LICENSE"><img alt="MIT software license" src="https://img.shields.io/badge/software-MIT-2563eb" /></a>
   <a href="./LICENSE-CONTENT"><img alt="CC BY 4.0 content license" src="https://img.shields.io/badge/content-CC_BY_4.0-2563eb" /></a>
+  <a href="https://www.bestpractices.dev/projects/13878"><img alt="OpenSSF Best Practices" src="https://www.bestpractices.dev/projects/13878/baseline" /></a>
   <a href="./doc-bridge.config.json"><img alt="Doc Bridge grade A" src="https://img.shields.io/badge/Doc_Bridge-100%2F100_A-16a34a" /></a>
   <a href="./public/deterministic/knowledge.json"><img alt="Local-first answers" src="https://img.shields.io/badge/Ask-local--first-f59e0b" /></a>
 </p>
