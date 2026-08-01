@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:800969e4f57270aeb0bbefa0f397b3c347a5627fb77b4ce6aca94b80a5507386",
+  "contentHash": "sha256:338a08daf4cd3151692952b8372441c9d652e375e502076f09d7d7e81a80e298",
   "generatedAt": "2026-07-14T00:00:00.000Z",
   "entries": [
     {
@@ -3142,6 +3142,30 @@
             "id": "doc:prompts:system-security",
             "title": "System Prompt — Security Reviewer",
             "href": "https://playbook.agentskit.io/docs/prompts/system-security"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:review-agent-authored-contributions",
+      "kind": "document",
+      "label": "Review agent-authored pull requests with executable evidence",
+      "match": {
+        "type": "exact",
+        "values": [
+          "review-agent-authored-contributions",
+          "review-agent-authored-contributions.mdx",
+          "Review agent-authored pull requests with executable evidence",
+          "playbook Review agent-authored pull requests with executable evidence"
+        ]
+      },
+      "answer": {
+        "markdown": "## Review agent-authored pull requests with executable evidence\n\nReplace subjective instructions with a local quality gate, reproduce a failure, and require the same evidence in CI before approving an agent-authored change.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/review-agent-authored-contributions)\n[Read raw Markdown](https://playbook.agentskit.io/raw/review-agent-authored-contributions.mdx)",
+        "citations": [
+          {
+            "id": "doc:review-agent-authored-contributions",
+            "title": "Review agent-authored pull requests with executable evidence",
+            "href": "https://playbook.agentskit.io/docs/review-agent-authored-contributions"
           }
         ]
       }
