@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "getting-started",
+    "review-agent-authored-contributions",
     "discovery",
     "agentskit-chat",
     "for-agents",

@@ -1205,6 +1205,15 @@
             "pnpm check:all"
           ]
         },
+        "review-agent-authored-contributions": {
+          "path": "content/docs/review-agent-authored-contributions.mdx",
+          "purpose": "Replace subjective instructions with a local quality gate, reproduce a failure, and require the same evidence in CI before approving an agent-authored change.",
+          "agentDoc": "content/docs/review-agent-authored-contributions.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/review-agent-authored-contributions",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
         "scripts": {
           "path": "content/docs/scripts/index.md",
           "purpose": "Drop-in reference implementations for the quality + structural gates the pillars rely on. Adapt to your stack; the contract each gate enforces is more important than the specific code.",
