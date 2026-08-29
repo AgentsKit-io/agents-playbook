@@ -7,12 +7,12 @@
   "contract": {
     "intent": "Implement and validate the portable AgentsKit Harness package and its CLI.",
     "scope": {
-      "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", ".codex/verification.json"],
+      "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", ".codex/verification.json"],
       "outOfScope": ["marketing redesign", "provider-specific agent adapters", "automatic git push or PR creation"]
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "package", "statement": "The typed harness library builds, tests, exposes a usable CLI, and installs correctly in a clean consumer project.", "checks": ["harness-tests", "harness-build", "harness-cli", "harness-consumer"] },
+      { "id": "package", "statement": "The typed harness library builds, exposes a usable CLI lifecycle, and installs correctly in a clean consumer project.", "checks": ["harness-tests", "harness-build", "harness-cli", "harness-cli-flow", "harness-consumer"] },
       { "id": "protocol", "statement": "The contract, state machine, evidence, stale detection, and approval protocol are enforced.", "checks": ["harness-contract"] },
       { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] }
     ]
@@ -30,6 +30,7 @@
     { "id": "harness-tests", "category": "logic", "command": "pnpm --filter @agentskit/harness test", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-build", "category": "build", "command": "pnpm --filter @agentskit/harness build", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-cli", "category": "cli", "execution": "real", "command": "pnpm exec ak-harness --version && pnpm exec ak-harness --help >/dev/null && pnpm exec ak-harness doctor --json", "evidence": "structured", "timeoutMs": 30000 },
+    { "id": "harness-cli-flow", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-cli-flow.mjs", "evidence": "structured", "timeoutMs": 60000 },
     { "id": "harness-consumer", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-consumer.mjs", "evidence": "structured", "timeoutMs": 180000 },
     { "id": "harness-contract", "category": "logic", "command": "pnpm --filter @agentskit/harness test:contract", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 },
