@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { benchmarkRuns, validateBenchmarkManifest } from '../src/index.js'
+import { benchmarkRuns, loadBenchmarkManifest, recordBenchmarkObservation, validateBenchmarkManifest } from '../src/index.js'
 
 const writeRun = (stateDir: string, runId: string, state: string, extra: Record<string, unknown> = {}): void => {
   mkdirSync(join(stateDir, 'runs', runId), { recursive: true })
@@ -47,4 +47,13 @@ it('returns an empty, typed report when no runs exist', () => {
 it('validates a benchmark manifest task identity', () => {
   const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [] })
   expect(manifest.tasks[0]?.id).toBe('task')
+})
+
+it('records one atomic baseline observation and rejects duplicates', () => {
+  const manifestPath = join(mkdtempSync(join(tmpdir(), 'agentskit-harness-baseline-record-')), 'manifest.json')
+  writeFileSync(manifestPath, JSON.stringify({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [] }))
+  const recorded = recordBenchmarkObservation(manifestPath, { taskId: 'task', status: 'passed', source: 'manual-run-1', recordedAt: '2026-01-01T00:00:00.000Z', attempts: 2, durationMs: 100, reviewMinutes: 5, escapedIncomplete: 1 })
+  expect(recorded.observations[0]).toMatchObject({ taskId: 'task', source: 'manual-run-1', attempts: 2, durationMs: 100, reviewMinutes: 5, escapedIncomplete: 1 })
+  expect(loadBenchmarkManifest(manifestPath).observations).toHaveLength(1)
+  expect(() => recordBenchmarkObservation(manifestPath, { taskId: 'task', status: 'passed', source: 'manual-run-2' })).toThrow(/already has an observation/)
 })

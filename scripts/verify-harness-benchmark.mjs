@@ -5,7 +5,7 @@ import { resolve } from 'node:path'
 
 const root = resolve(import.meta.dirname, '..')
 const cli = resolve(root, 'packages/harness/dist/cli.js')
-const manifest = resolve(root, process.env.HARNESS_BENCHMARK_MANIFEST ?? 'benchmarks/harness-phase-5.json')
+const manifest = resolve(root, process.env.HARNESS_BENCHMARK_MANIFEST ?? 'benchmarks/harness-phase-7.json')
 const manifestInput = JSON.parse(readFileSync(manifest, 'utf8'))
 const result = spawnSync(process.execPath, [cli, 'benchmark', '--manifest', manifest, '--config', resolve(root, '.codex/verification.json'), '--json'], { cwd: root, encoding: 'utf8' })
 const output = result.stdout.trim().split(/\r?\n/).at(-1)

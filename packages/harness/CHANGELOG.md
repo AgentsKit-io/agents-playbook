@@ -29,5 +29,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Shell-free child-process runtime with timeout, output limits, and structured process failures.
 - Optional Docker runtime with a no-network, read-only, unprivileged, resource-limited sandbox profile.
 - Typed runtime attestation with Docker image digest and effective profile hash in terminal tool events.
+- Controlled baseline observation recording through the typed API and `ak-harness benchmark baseline`, with duplicate, unknown-task, and atomic-write protections.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

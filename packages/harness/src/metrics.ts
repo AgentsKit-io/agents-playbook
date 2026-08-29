@@ -1,5 +1,6 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs'
+import { existsSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { tmpdir } from 'node:os'
 import { fail } from './errors.js'
 import { readRun } from './files.js'
 import { RUN_STATES } from './types.js'
@@ -96,6 +97,17 @@ export interface BenchmarkReport {
   readonly summary: BenchmarkSummary
   readonly manifest?: { readonly suiteId: string; readonly taskCount: number; readonly baselineCount: number; readonly comparableTaskCount: number }
   readonly comparisons: readonly BenchmarkComparison[]
+}
+
+export interface BenchmarkObservationInput {
+  readonly taskId: string
+  readonly status: BenchmarkObservationStatus
+  readonly source: string
+  readonly recordedAt?: string
+  readonly attempts?: number
+  readonly durationMs?: number
+  readonly reviewMinutes?: number
+  readonly escapedIncomplete?: number
 }
 
 const percentage = (part: number, total: number): number | null => total ? Number((part / total).toFixed(4)) : null
@@ -206,6 +218,38 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
 
 export const loadBenchmarkManifest = (path: string): BenchmarkManifest => {
   try { return validateBenchmarkManifest(JSON.parse(readFileSync(path, 'utf8')) as unknown) } catch (error) { if (error instanceof SyntaxError) return fail(`Invalid benchmark manifest JSON: ${error.message}`, 'INVALID_CONFIG'); throw error }
+}
+
+export const recordBenchmarkObservation = (path: string, input: BenchmarkObservationInput): BenchmarkManifest => {
+  const originalContent = readFileSync(path, 'utf8')
+  const manifest = loadBenchmarkManifest(path)
+  const taskId = nonEmptyString(input.taskId, 'benchmark observation.taskId')
+  if (!manifest.tasks.some((task) => task.id === taskId)) fail(`benchmark observation references unknown task: ${taskId}.`, 'INVALID_INPUT')
+  if (manifest.observations.some((observation) => observation.taskId === taskId)) fail(`benchmark already has an observation for task: ${taskId}.`, 'INVALID_INPUT')
+  const observation = validateBenchmarkManifest({
+    ...manifest,
+    observations: [...manifest.observations, {
+      taskId,
+      mode: 'baseline',
+      status: input.status,
+      source: input.source,
+      recordedAt: input.recordedAt ?? new Date().toISOString(),
+      ...(input.attempts === undefined ? {} : { attempts: input.attempts }),
+      ...(input.durationMs === undefined ? {} : { durationMs: input.durationMs }),
+      ...(input.reviewMinutes === undefined ? {} : { reviewMinutes: input.reviewMinutes }),
+      ...(input.escapedIncomplete === undefined ? {} : { escapedIncomplete: input.escapedIncomplete }),
+    }],
+  })
+  const temporaryRoot = mkdtempSync(join(tmpdir(), 'agentskit-harness-baseline-'))
+  const temporaryPath = join(temporaryRoot, 'manifest.json')
+  try {
+    writeFileSync(temporaryPath, `${JSON.stringify(observation, null, 2)}\n`, 'utf8')
+    if (readFileSync(path, 'utf8') !== originalContent) fail('benchmark manifest changed while recording an observation.', 'STALE')
+    renameSync(temporaryPath, path)
+  } finally {
+    rmSync(temporaryRoot, { recursive: true, force: true })
+  }
+  return observation
 }
 
 const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest): readonly BenchmarkComparison[] => manifest.tasks.map((task) => {

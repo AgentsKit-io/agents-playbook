@@ -55,7 +55,7 @@ it('executes a real tool inside the default Docker sandbox', async () => {
   expect(result).toMatchObject({ runtimeEvidence: { provider: 'docker', imageDigest: expect.stringMatching(/^sha256:[a-f0-9]{64}$/), network: 'none', readOnlyRootFilesystem: true, noNewPrivileges: true, capabilities: 'drop-all', user: '65532:65532', memoryLimit: '512m', cpus: '1', pidsLimit: 128 } })
   expect(result).not.toHaveProperty('stdout')
   expect(result).not.toHaveProperty('result')
-})
+}, 30_000)
 
 it('rejects unsafe or incomplete Docker definitions', () => {
   expect(() => createDockerToolRuntime({ tools: [{ toolId: 'empty', image: 'alpine:3.21', command: [] }] })).toThrow(/non-empty string array/)

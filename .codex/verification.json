@@ -4,11 +4,11 @@
   "root": "..",
   "stateDir": ".codex/verification/harness",
   "profile": "strict",
-  "benchmark": { "suiteId": "agentskit-harness-phase-6", "taskId": "harness-runtime-attestation", "mode": "harness" },
+  "benchmark": { "suiteId": "agentskit-harness-phase-7", "taskId": "harness-benchmark-observation", "mode": "harness" },
   "contract": {
     "intent": "Implement and validate the portable AgentsKit Harness package and its CLI.",
     "scope": {
-      "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "benchmarks/harness-phase-6.json", ".codex/verification.json"],
+      "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "benchmarks/harness-phase-7.json", ".codex/verification.json"],
       "outOfScope": ["marketing redesign", "provider-specific agent adapters", "automatic git push or PR creation"]
     },
     "ambiguities": [],
@@ -30,6 +30,7 @@
       { "id": "process-runtime", "statement": "Allowed actions can execute through a shell-free child-process runtime with timeout, output limits, and structured recovery evidence.", "checks": ["harness-process-runtime"] },
       { "id": "docker-runtime", "statement": "Allowed actions can execute through an optional Docker sandbox with deny-by-default isolation and resource limits.", "checks": ["harness-docker-runtime"] },
       { "id": "runtime-attestation", "statement": "Terminal tool evidence identifies the actual sandbox image and effective security/resource profile used for each Docker action.", "checks": ["harness-runtime-attestation"] },
+      { "id": "benchmark-observation", "statement": "Controlled baseline observations can be recorded safely through the public CLI and compared without inventing missing evidence.", "checks": ["harness-benchmark-record"] },
       { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] }
     ]
   },
@@ -64,6 +65,7 @@
     { "id": "harness-process-runtime", "category": "logic", "command": "pnpm --filter @agentskit/harness test:process-runtime", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docker-runtime", "category": "logic", "command": "pnpm --filter @agentskit/harness test:docker-runtime", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-runtime-attestation", "category": "logic", "command": "pnpm --filter @agentskit/harness test:runtime-attestation", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-benchmark-record", "category": "cli", "execution": "real", "command": "pnpm --filter @agentskit/harness test:benchmark-record", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-benchmark", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-benchmark.mjs", "evidence": "structured", "timeoutMs": 60000 },
     { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "package-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs", "evidence": "structured", "timeoutMs": 120000 }

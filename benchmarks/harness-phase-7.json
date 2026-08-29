@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-7",
+  "name": "AgentsKit Harness Phase 7",
+  "tasks": [
+    {
+      "id": "harness-benchmark-observation",
+      "title": "Record a controlled baseline for harness comparison",
+      "acceptanceCriteria": [
+        "A baseline observation can be recorded through the public CLI without manual JSON editing.",
+        "The observation records status, source, timestamp, attempts, duration, review time, and escaped incompleteness when provided.",
+        "Unknown tasks, invalid values, and duplicate observations are rejected without corrupting the manifest.",
+        "The benchmark report exposes a comparable baseline only when both baseline and harness evidence exist."
+      ],
+      "observations": []
+    }
+  ]
+}

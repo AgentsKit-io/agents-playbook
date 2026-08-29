@@ -231,16 +231,29 @@ Attach a task to a benchmark suite in the verification contract:
 ```json
 {
   "benchmark": {
-    "suiteId": "agentskit-harness-phase-5",
-    "taskId": "harness-docker-sandbox",
+    "suiteId": "agentskit-harness-phase-7",
+    "taskId": "harness-benchmark-observation",
     "mode": "harness"
   }
 }
 ```
 
-The manifest format is available at `benchmarks/harness-phase-5.json`. Baseline
-observations are explicit records with a source and timestamp. An empty or
-`not-run` baseline is reported as non-comparable rather than treated as success.
+The manifest format is available at `benchmarks/harness-phase-7.json`. Record a
+controlled baseline through the public CLI instead of editing JSON by hand:
+
+```bash
+ak-harness benchmark baseline harness-benchmark-observation \
+  --manifest benchmarks/harness-phase-7.json \
+  --status passed \
+  --source manual-run-2026-08-29 \
+  --attempts 1 --duration-ms 900000 \
+  --review-minutes 20 --escaped-incomplete 0
+```
+
+The command validates the task and values, rejects duplicate observations, and
+atomically updates the manifest. Baseline observations are explicit records
+with a source and timestamp. An empty or `not-run` baseline is reported as
+non-comparable rather than treated as success.
 
 ## Development
 
