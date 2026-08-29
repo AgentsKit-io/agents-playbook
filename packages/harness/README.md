@@ -171,6 +171,23 @@ Missing tools, handler errors, and timeouts become structured failures. This is
 an execution boundary, not a process/container security sandbox; use a
 provider-specific isolated runtime when hard isolation is required.
 
+For a shell-free child-process boundary, register fixed commands with
+`createProcessToolRuntime`. It sends one JSON request over stdin, kills a
+timed-out or oversized process, and hashes stdout without storing it:
+
+```ts
+import { createProcessToolRuntime } from '@agentskit/harness'
+
+const runtime = createProcessToolRuntime({
+  timeoutMs: 30_000,
+  maxOutputBytes: 1_048_576,
+  tools: [{ toolId: 'worker', command: process.execPath, args: ['worker.mjs'] }],
+})
+```
+
+This is a process boundary with bounded I/O, not a container or operating
+system security boundary. Use an isolated provider runtime for untrusted code.
+
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
 and average/median verification duration. With `--manifest`, it also compares
@@ -184,14 +201,14 @@ Attach a task to a benchmark suite in the verification contract:
 ```json
 {
   "benchmark": {
-    "suiteId": "agentskit-harness-phase-3",
-    "taskId": "harness-runtime-executor",
+    "suiteId": "agentskit-harness-phase-4",
+    "taskId": "harness-process-sandbox",
     "mode": "harness"
   }
 }
 ```
 
-The manifest format is available at `benchmarks/harness-phase-2.json`. Baseline
+The manifest format is available at `benchmarks/harness-phase-4.json`. Baseline
 observations are explicit records with a source and timestamp. An empty or
 `not-run` baseline is reported as non-comparable rather than treated as success.
 

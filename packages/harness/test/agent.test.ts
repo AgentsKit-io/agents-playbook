@@ -67,3 +67,16 @@ it('requires implementation state and validates adapter metadata', async () => {
   const implementing = { ...run, state: 'IMPLEMENTING' } as const
   expect(() => createSessionRecorder({ stateDir: root, run: implementing as never, adapter: { ...adapter, capabilities: [''] }, policy, runtime })).toThrow(/capabilities/)
 })
+
+it('closes a failed execution and requires a fresh policy-approved action for recovery', async () => {
+  const { root, run } = await fixture()
+  let attempts = 0
+  const flaky = createToolRuntime({ tools: [{ toolId: 'shell', execute: async () => { attempts += 1; if (attempts === 1) throw new Error('transient'); return 'recovered' } }] })
+  const recorder = createSessionRecorder({ stateDir: join(root, '.codex', 'verification'), run, adapter, policy, runtime: flaky })
+  const turn = recorder.startTurn('recovery-input', 'recovery-turn')
+  const first = recorder.requestTool({ turnId: turn.payload.turnId, actionId: 'failed-action', toolId: 'shell', argumentsHash: 'hash-1' })
+  await expect(recorder.executeTool({ actionId: first.payload.actionId, arguments: { attempt: 1 } })).resolves.toMatchObject({ status: 'failed', errorCode: 'RUNTIME_ERROR' })
+  const second = recorder.requestTool({ turnId: turn.payload.turnId, actionId: 'recovered-action', toolId: 'shell', argumentsHash: 'hash-2' })
+  await expect(recorder.executeTool({ actionId: second.payload.actionId, arguments: { attempt: 2 } })).resolves.toMatchObject({ status: 'completed' })
+  recorder.end('completed')
+})
