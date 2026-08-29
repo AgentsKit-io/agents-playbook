@@ -17,5 +17,5 @@ const updated = JSON.parse(readFileSync(manifest, 'utf8'))
 if (updated.observations?.length !== 1 || updated.observations[0]?.source !== 'cli-fixture') failures.push('baseline observation was not persisted')
 if (duplicate.status === 0) failures.push('duplicate baseline was accepted')
 rmSync(fixture, { recursive: true, force: true })
-console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['metrics'], failures } : { status: 'passed', criteria: ['metrics'], observationCount: updated.observations.length }))
+console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['benchmark-observation'], failures } : { status: 'passed', criteria: ['benchmark-observation'], observationCount: updated.observations.length }))
 process.exitCode = failures.length ? 1 : 0
