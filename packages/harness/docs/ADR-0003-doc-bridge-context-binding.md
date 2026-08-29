@@ -15,6 +15,11 @@ with a `contextHash`. The lifecycle log records one `context.attached` event per
 snapshot. Resolution timestamps remain audit metadata and are excluded from the
 reproducibility hash.
 
+Shell-based agents use the same wire boundary with `context resolve` and
+`plan --context-file`. A context file contains one snapshot or an array of
+snapshots, allowing another provider to participate without a dynamic runtime
+loader.
+
 ## Boundaries
 
 The adapter does not install or import Doc Bridge, access remote services, or

@@ -96,6 +96,16 @@ const run = await planRun({
 })
 ```
 
+The same boundary is available to shell-based agents:
+
+```bash
+ak-harness context resolve harness --scope playbook --json > context.json
+ak-harness plan approved --context-file context.json --json
+```
+
+`context.json` may contain one snapshot or an array of snapshots, so providers
+outside this package can participate without a runtime plugin loader.
+
 The snapshot stores the Doc Bridge `contentHash`, reference hashes, and a
 stable `contextHash`; resolution time is metadata and does not change the
 reproducibility hash. Context is resolved before planning and is frozen with

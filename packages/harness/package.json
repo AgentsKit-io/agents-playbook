@@ -25,6 +25,7 @@
     "test:context": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context']}))\"",
     "test:doc-bridge": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/doc-bridge.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['doc-bridge-adapter']}))\"",
     "test:context-binding": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts -t \"binds context\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context-binding']}))\"",
+    "test:context-cli": "pnpm typecheck && node scripts/verify-harness-context-cli.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context-cli']}))\"",
     "prepublishOnly": "pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {

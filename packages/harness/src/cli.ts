@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs'
 import { Command } from 'commander'
-import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, loadConfig, loadLatestRun, planRun, retryRun, startRun, verifyRun } from './index.js'
+import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, createDocBridgeContextProvider, loadConfig, loadLatestRun, planRun, readContextSnapshots, retryRun, startRun, verifyRun } from './index.js'
+import { fail } from './errors.js'
 
 interface CliOptions { readonly config: string; readonly json: boolean }
 const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { readonly version: string }
@@ -14,7 +15,13 @@ const decisionArgs = (first: string, second: string | undefined): { readonly dec
   return decisions.has(first) ? { decision: first, ...(second ? { runId: second } : {}) } : { decision: second ?? '', runId: first }
 }
 program.command('doctor').description('Validate the contract without starting a run.').action(() => print({ status: 'passed', criteria: ['package'], config: loadConfig(options().config).config }))
-program.command('plan <decision>').description('Approve the frozen task contract and create a planned run.').option('--by <actor>', 'approval actor', 'human').option('--allow-dirty', 'allow a human-authorized dirty worktree').action(async (decision: string, command: { readonly by: string; readonly allowDirty?: boolean }) => print(await planRun({ configPath: options().config, decision, actor: command.by, allowDirty: command.allowDirty ?? false })))
+program.command('plan <decision>').description('Approve the frozen task contract and create a planned run.').option('--by <actor>', 'approval actor', 'human').option('--allow-dirty', 'allow a human-authorized dirty worktree').option('--context-file <path>', 'attach a context snapshot JSON file').action(async (decision: string, command: { readonly by: string; readonly allowDirty?: boolean; readonly contextFile?: string }) => print(await planRun({ configPath: options().config, decision, actor: command.by, allowDirty: command.allowDirty ?? false, contextSnapshots: command.contextFile ? readContextSnapshots(command.contextFile) : [] })))
+const context = program.command('context').description('Resolve portable, provenance-bearing context snapshots.')
+context.command('resolve <query>').description('Resolve a Doc Bridge snapshot from the local index.').option('--provider <provider>', 'context provider', 'doc-bridge').option('--scope <scope...>', 'optional search scopes').option('--index <path>', 'Doc Bridge index path', '.doc-bridge/index.json').action(async (query: string, command: { readonly provider: string; readonly scope?: readonly string[]; readonly index: string }) => {
+  if (command.provider !== 'doc-bridge') fail(`Unsupported context provider: ${command.provider}`, 'INVALID_INPUT')
+  const loaded = loadConfig(options().config)
+  print(await createDocBridgeContextProvider({ root: loaded.root, indexPath: command.index }).resolve({ query, ...(command.scope?.length ? { scope: command.scope } : {}) }))
+})
 program.command('start').description('Move a planned run into implementation.').action(() => print(startRun(loadConfig(options().config))))
 program.command('verify').description('Execute every configured check and record evidence.').action(async () => print(await verifyRun({ configPath: options().config })))
 program.command('run').description('Alias for verify, compatible with the common protocol.').action(async () => print(await verifyRun({ configPath: options().config })))
