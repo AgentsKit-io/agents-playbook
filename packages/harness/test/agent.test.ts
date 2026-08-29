@@ -1,0 +1,60 @@
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { expect, it } from 'vitest'
+import { createSessionRecorder, FileEventStore, loadConfig, planRun, startRun } from '../src/index.js'
+
+const fixture = async (): Promise<{ readonly root: string; readonly run: Awaited<ReturnType<typeof startRun>> }> => {
+  const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-agent-test-'))
+  mkdirSync(join(root, '.codex'), { recursive: true })
+  writeFileSync(join(root, '.codex', 'verification.json'), JSON.stringify({
+    schemaVersion: 1, project: 'agent-fixture', root: '..', profile: 'strict',
+    contract: { intent: 'Capture an agent session.', scope: { inScope: ['fixture'], outOfScope: ['production'] }, ambiguities: [], outcomes: [{ id: 'outcome', statement: 'The fixture is valid.', checks: ['logic'] }] },
+    surfaces: { logic: true, endpoint: false, database: false, cli: false, mcp: false, ui: false, docs: false },
+    checks: [{ id: 'logic', category: 'logic', command: 'true', evidence: 'structured' }], tracking: { required: false, reason: 'fixture' },
+  }, null, 2))
+  const configPath = join(root, '.codex', 'verification.json')
+  await planRun({ configPath, decision: 'approved' })
+  return { root, run: startRun(loadConfig(configPath)) }
+}
+
+const adapter = { id: 'fixture-agent', version: '1.0.0', capabilities: ['tool-calls'] } as const
+
+it('records a privacy-preserving, correlated session and tool lifecycle', async () => {
+  const { root, run } = await fixture()
+  const stateDir = join(root, '.codex', 'verification')
+  const recorder = createSessionRecorder({ stateDir, run, adapter, sessionId: 'session-1' })
+  recorder.startTurn('input-hash', 'turn-1')
+  recorder.requestTool({ turnId: 'turn-1', actionId: 'action-1', toolId: 'shell', argumentsHash: 'arguments-hash' })
+  recorder.completeTool({ actionId: 'action-1', resultHash: 'result-hash', durationMs: 12 })
+  recorder.startTurn('input-hash-2', 'turn-2')
+  recorder.requestTool({ turnId: 'turn-2', actionId: 'action-2', toolId: 'shell', argumentsHash: 'arguments-hash-2' })
+  recorder.failTool({ actionId: 'action-2', errorCode: 'TIMEOUT', retryable: true })
+  recorder.end('completed')
+  const events = new FileEventStore(stateDir).read(run.runId)
+  expect(events.map((event) => event.type)).toEqual(['run.created', 'state.transitioned', 'state.transitioned', 'session.started', 'agent.turn.started', 'tool.requested', 'tool.completed', 'agent.turn.started', 'tool.requested', 'tool.failed', 'session.ended'])
+  expect(events.slice(3).every((event) => event.sessionId === 'session-1')).toBe(true)
+  expect(readFileSync(join(stateDir, 'runs', run.runId, 'events.ndjson'), 'utf8')).not.toContain('raw prompt or tool arguments')
+})
+
+it('rejects invalid ordering, duplicate actions, pending completion, and post-end calls', async () => {
+  const { root, run } = await fixture()
+  const recorder = createSessionRecorder({ stateDir: join(root, '.codex', 'verification'), run, adapter })
+  expect(() => recorder.requestTool({ turnId: 'missing', toolId: 'shell', argumentsHash: 'hash' })).toThrow(/Turn does not exist/)
+  recorder.startTurn('input', 'turn')
+  recorder.requestTool({ turnId: 'turn', actionId: 'action', toolId: 'shell', argumentsHash: 'hash' })
+  expect(() => recorder.requestTool({ turnId: 'turn', actionId: 'action', toolId: 'shell', argumentsHash: 'hash' })).toThrow(/already exists/)
+  expect(() => recorder.end('completed')).toThrow(/pending/)
+  recorder.completeTool({ actionId: 'action', resultHash: 'result', durationMs: 0 })
+  expect(() => recorder.completeTool({ actionId: 'action', resultHash: 'result', durationMs: 0 })).toThrow(/not pending/)
+  recorder.end('completed')
+  expect(() => recorder.startTurn('input-2')).toThrow(/already ended/)
+})
+
+it('requires implementation state and validates adapter metadata', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-agent-state-test-'))
+  const run = { runId: 'planned', state: 'PLANNED', sourceRevision: 'revision', configHash: 'config' } as const
+  expect(() => createSessionRecorder({ stateDir: root, run: run as never, adapter })).toThrow(/IMPLEMENTING/)
+  const implementing = { ...run, state: 'IMPLEMENTING' } as const
+  expect(() => createSessionRecorder({ stateDir: root, run: implementing as never, adapter: { ...adapter, capabilities: [''] } })).toThrow(/capabilities/)
+})

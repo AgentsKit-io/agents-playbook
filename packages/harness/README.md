@@ -114,6 +114,28 @@ stable `contextHash`; resolution time is metadata and does not change the
 reproducibility hash. Context is resolved before planning and is frozen with
 the run, so later index changes cannot silently change its evidence.
 
+Agent sessions can record adapter identity, turns, and guarded tool actions
+during `IMPLEMENTING` without persisting prompt, argument, or result contents:
+
+```ts
+import { createSessionRecorder } from '@agentskit/harness'
+
+const session = createSessionRecorder({
+  stateDir: '.codex/verification',
+  run: implementingRun,
+  adapter: { id: 'my-agent', version: '1.0.0', capabilities: ['tool-calls'] },
+})
+const turn = session.startTurn(inputHash)
+const action = session.requestTool({ turnId: turn.payload.turnId, toolId: 'shell', argumentsHash })
+session.completeTool({ actionId: action.payload.actionId, resultHash, durationMs: 42 })
+session.end('completed')
+```
+
+The recorder enforces turn-before-tool, one terminal result per action, no
+pending actions at session end, and no calls after termination. It is an
+observation seam; tool execution and policy decisions remain separate kernel
+phases.
+
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
 and average/median verification duration. With `--manifest`, it also compares
@@ -127,14 +149,14 @@ Attach a task to a benchmark suite in the verification contract:
 ```json
 {
   "benchmark": {
-    "suiteId": "agentskit-harness-phase-0",
-    "taskId": "harness-benchmark",
+    "suiteId": "agentskit-harness-phase-1",
+    "taskId": "harness-agent-protocol",
     "mode": "harness"
   }
 }
 ```
 
-The manifest format is available at `benchmarks/harness-phase-0.json`. Baseline
+The manifest format is available at `benchmarks/harness-phase-1.json`. Baseline
 observations are explicit records with a source and timestamp. An empty or
 `not-run` baseline is reported as non-comparable rather than treated as success.
 

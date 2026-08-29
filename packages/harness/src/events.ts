@@ -5,13 +5,20 @@ import type { ContextQuery } from './context.js'
 import type { RunState } from './types.js'
 
 export const HARNESS_EVENT_SCHEMA_VERSION = 1 as const
-export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached'] as const
+export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached', 'session.started', 'agent.turn.started', 'tool.requested', 'tool.completed', 'tool.failed', 'session.ended'] as const
 export type HarnessEventType = typeof HARNESS_EVENT_TYPES[number]
+const SESSION_EVENT_TYPES = new Set<HarnessEventType>(['session.started', 'agent.turn.started', 'tool.requested', 'tool.completed', 'tool.failed', 'session.ended'])
 
 export interface HarnessEventPayloads {
   readonly 'run.created': { readonly project: string; readonly baselineRevision: string; readonly baselineStatusHash: string }
   readonly 'state.transitioned': { readonly from: RunState | null; readonly to: RunState; readonly actor: string; readonly reason?: string; readonly transitionIndex: number }
   readonly 'context.attached': { readonly providerId: string; readonly sourceHash: string; readonly snapshotHash: string; readonly query: ContextQuery }
+  readonly 'session.started': { readonly adapterId: string; readonly adapterVersion: string; readonly capabilities: readonly string[] }
+  readonly 'agent.turn.started': { readonly turnId: string; readonly inputHash: string }
+  readonly 'tool.requested': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string }
+  readonly 'tool.completed': { readonly actionId: string; readonly resultHash: string; readonly durationMs: number }
+  readonly 'tool.failed': { readonly actionId: string; readonly errorCode: string; readonly retryable: boolean }
+  readonly 'session.ended': { readonly status: 'completed' | 'failed' | 'cancelled' }
 }
 
 export type HarnessEvent<K extends HarnessEventType = HarnessEventType> = K extends HarnessEventType ? {
@@ -21,6 +28,7 @@ export type HarnessEvent<K extends HarnessEventType = HarnessEventType> = K exte
     readonly at: string
     readonly sourceRevision: string
     readonly configHash: string
+    readonly sessionId?: string
     readonly type: K
     readonly payload: HarnessEventPayloads[K]
   } : never
@@ -39,7 +47,7 @@ const isEventType = (value: unknown): value is HarnessEventType => typeof value 
 const parseEvent = (value: unknown, expectedSequence: number): HarnessEvent => {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) fail('Event log contains a non-object record.', 'HARNESS_ERROR')
   const record = value as Record<string, unknown>
-  if (record['schemaVersion'] !== HARNESS_EVENT_SCHEMA_VERSION || typeof record['runId'] !== 'string' || typeof record['sequence'] !== 'number' || record['sequence'] !== expectedSequence || typeof record['at'] !== 'string' || typeof record['sourceRevision'] !== 'string' || typeof record['configHash'] !== 'string' || !isEventType(record['type']) || typeof record['payload'] !== 'object' || record['payload'] === null) fail('Event log is invalid or out of order.', 'HARNESS_ERROR')
+  if (record['schemaVersion'] !== HARNESS_EVENT_SCHEMA_VERSION || typeof record['runId'] !== 'string' || typeof record['sequence'] !== 'number' || record['sequence'] !== expectedSequence || typeof record['at'] !== 'string' || typeof record['sourceRevision'] !== 'string' || typeof record['configHash'] !== 'string' || !isEventType(record['type']) || typeof record['payload'] !== 'object' || record['payload'] === null || (record['sessionId'] !== undefined && (typeof record['sessionId'] !== 'string' || !record['sessionId'].trim())) || (SESSION_EVENT_TYPES.has(record['type']) && typeof record['sessionId'] !== 'string')) fail('Event log is invalid or out of order.', 'HARNESS_ERROR')
   return record as unknown as HarnessEvent
 }
 
@@ -49,8 +57,11 @@ export class FileEventStore implements EventStore {
   public append<K extends HarnessEventType>(event: HarnessEventInput<K>): HarnessEvent<K> {
     if (!event.runId.trim()) fail('Event runId is required.', 'INVALID_INPUT')
     if (!event.sourceRevision.trim() || !event.configHash.trim()) fail('Event sourceRevision and configHash are required.', 'INVALID_INPUT')
+    if (!isEventType(event.type)) fail('Event type is invalid.', 'INVALID_INPUT')
+    if (SESSION_EVENT_TYPES.has(event.type) && (!event.sessionId || !event.sessionId.trim())) fail('Session events require a sessionId.', 'INVALID_INPUT')
+    if (event.sessionId !== undefined && !event.sessionId.trim()) fail('Event sessionId cannot be empty.', 'INVALID_INPUT')
     const events = this.read(event.runId)
-    const record = { schemaVersion: HARNESS_EVENT_SCHEMA_VERSION, sequence: events.length + 1, at: new Date().toISOString(), runId: event.runId, sourceRevision: event.sourceRevision, configHash: event.configHash, type: event.type, payload: event.payload } as HarnessEvent<K>
+    const record = { schemaVersion: HARNESS_EVENT_SCHEMA_VERSION, sequence: events.length + 1, at: new Date().toISOString(), runId: event.runId, sourceRevision: event.sourceRevision, configHash: event.configHash, ...(event.sessionId ? { sessionId: event.sessionId } : {}), type: event.type, payload: event.payload } as HarnessEvent<K>
     const path = eventPath(this.stateDir, event.runId)
     mkdirSync(join(this.stateDir, 'runs', event.runId), { recursive: true })
     appendFileSync(path, `${JSON.stringify(record)}\n`, 'utf8')
