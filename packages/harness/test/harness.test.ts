@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { approveRun, authorizeRun, cancelRun, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
+import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
 import type { TrackingConfig, VerificationCheck, VerificationConfig } from '../src/index.js'
 
 const quote = (value: string): string => `'${value.replaceAll("'", "'\"'\"'")}'`
@@ -111,4 +111,37 @@ it('blocks a check that exceeds its declared timeout', async () => {
 
 it('rejects UI checks without real-browser and screenshot capabilities', () => {
   expect(() => validateConfig({ schemaVersion: 1, project: 'invalid-ui', contract: { intent: 'test', scope: { inScope: ['fixture'], outOfScope: [] }, ambiguities: [], outcomes: [{ id: 'ui-outcome', statement: 'test', checks: ['ui'] }] }, checks: [{ id: 'ui', category: 'ui', execution: 'real', command: 'true', evidence: 'structured' }], surfaces: { logic: false, endpoint: false, database: false, cli: false, mcp: false, ui: true, docs: false }, tracking: { required: false, reason: 'test' } })).toThrow(/real-browser/)
+})
+
+it('rejects required checks that are not mapped to an outcome', () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  const raw = JSON.parse(readFileSync(fixture.configPath, 'utf8')) as { contract: { outcomes: Array<{ checks: string[] }> } }
+  raw.contract.outcomes[0].checks = []
+  expect(() => validateConfig(raw)).toThrow(/every required check must map to an outcome/)
+})
+
+it('requires real execution for CLI, endpoint, database, MCP, and UI checks', () => {
+  const fixture = project([{ id: 'cli', category: 'cli', command: 'true', evidence: 'structured' }])
+  expect(() => loadConfig(fixture.configPath)).toThrow(/execution: real/)
+})
+
+it('rejects approval attempts made by an agent actor', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  await runToVerify(fixture)
+  await expect(approveRun({ configPath: fixture.configPath, decision: 'approved', actor: 'agent' })).rejects.toMatchObject({ code: 'HUMAN_APPROVAL_REQUIRED' })
+})
+
+it('blocks rejected external tracking authorization', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }], [], { required: true, target: 'github:fixture/repo#1' })
+  await runToVerify(fixture)
+  await approveRun({ configPath: fixture.configPath, decision: 'approved' })
+  expect((await authorizeRun({ configPath: fixture.configPath, decision: 'rejected' })).state).toBe('BLOCKED')
+})
+
+it('rejects cleanup roots outside the project', () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  const raw = JSON.parse(readFileSync(fixture.configPath, 'utf8')) as { cleanup: { roots: string[] } }
+  raw.cleanup.roots = ['..']
+  writeFileSync(fixture.configPath, `${JSON.stringify(raw, null, 2)}\n`)
+  expect(() => cleanTaskArtifacts(fixture.configPath)).toThrow(/Cleanup root escapes project root/)
 })
