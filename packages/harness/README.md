@@ -17,7 +17,7 @@ ak-harness doctor --json
 ak-harness plan approved --by human
 ak-harness start
 ak-verify run --json
-ak-verify approve approved <run-id> --by human --json
+ak-verify approve <run-id> approved --by human --json
 ```
 
 `plan` rejects unresolved ambiguities and unauthorized dirty worktrees. After `start`, the contract is frozen. Any source, configuration, or contract change invalidates evidence and moves the run to `STALE`.
