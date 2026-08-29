@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-12",
+  "name": "AgentsKit Harness Phase 12",
+  "tasks": [
+    {
+      "id": "harness-event-log-integrity",
+      "title": "Verify lifecycle event log integrity",
+      "acceptanceCriteria": [
+        "New lifecycle events carry a chained SHA-256 digest bound to the preceding event.",
+        "Reading or explicitly verifying a log detects tampering, reordering, and mixed legacy/hashed records.",
+        "Legacy logs remain readable but are reported as legacy rather than as cryptographically verified."
+      ]
+    }
+  ],
+  "observations": []
+}

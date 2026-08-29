@@ -50,7 +50,18 @@ it('records an ordered append-only lifecycle log bound to a real verification ru
   expect(verified.state).toBe('AWAITING_HUMAN_APPROVAL')
   expect(events.map((event) => event.type)).toEqual(['run.created', 'state.transitioned', 'state.transitioned', 'state.transitioned', 'state.transitioned'])
   expect(events.map((event) => event.sequence)).toEqual([1, 2, 3, 4, 5])
+  expect(new FileEventStore(join(root, '.codex', 'verification')).verify(planned.runId)).toMatchObject({ status: 'verified', eventCount: 5 })
   expect(events.every((event) => event.runId === planned.runId && event.configHash === planned.configHash && event.sourceRevision === verified.sourceRevision)).toBe(true)
   const lines = readFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), 'utf8').trim().split('\n')
   expect(lines).toHaveLength(events.length)
+  writeFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), `${lines.slice().reverse().join('\n')}\n`)
+  expect(() => new FileEventStore(join(root, '.codex', 'verification')).verify(planned.runId)).toThrow(/invalid or out of order/)
+  const first = JSON.parse(lines[0] ?? '{}') as Record<string, unknown>
+  const { eventHash: _eventHash, previousHash: _previousHash, ...legacyFirst } = first
+  writeFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), `${JSON.stringify(legacyFirst)}\n${lines.slice(1).join('\n')}\n`)
+  expect(() => new FileEventStore(join(root, '.codex', 'verification')).verify(planned.runId)).toThrow(/mixes legacy/)
+  writeFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), `${JSON.stringify(legacyFirst)}\n`)
+  expect(new FileEventStore(join(root, '.codex', 'verification')).verify(planned.runId)).toMatchObject({ status: 'legacy', eventCount: 1 })
+  writeFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), `${JSON.stringify({ ...first, payload: { ...(first.payload as Record<string, unknown>), project: 'tampered' } })}\n${lines.slice(1).join('\n')}\n`)
+  expect(() => new FileEventStore(join(root, '.codex', 'verification')).verify(planned.runId)).toThrow(/hash chain is invalid/)
 })
