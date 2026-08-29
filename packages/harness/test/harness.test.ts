@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { approveRun, authorizeRun, loadConfig, loadLatestRun, planRun, retryRun, startRun, verifyRun } from '../src/index.js'
+import { approveRun, authorizeRun, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
 import type { TrackingConfig, VerificationCheck, VerificationConfig } from '../src/index.js'
 
 const quote = (value: string): string => `'${value.replaceAll("'", "'\"'\"'")}'`
@@ -75,4 +75,29 @@ it('blocks a human rejection instead of treating it as completion', async () => 
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
   await runToVerify(fixture)
   expect((await approveRun({ configPath: fixture.configPath, decision: 'rejected' })).state).toBe('BLOCKED')
+})
+
+it('blocks when a required check omits structured evidence', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: `${process.execPath} -e "process.stdout.write('done')"`, evidence: 'structured' }])
+  const blocked = await runToVerify(fixture)
+  expect(blocked.state).toBe('BLOCKED')
+  expect(blocked.checks[0].failures).toContain('missing final structured evidence')
+})
+
+it('blocks screenshot evidence that escapes the project root', async () => {
+  const fixture = project([{ id: 'ui', category: 'ui', execution: 'real', capabilities: ['real-browser', 'screenshot'], command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'], capability: 'real-browser', artifacts: [{ type: 'screenshot', path: '../outside.png', sha256: hash('outside'), viewport: { width: 1280, height: 720 } }] }), evidence: 'structured' }])
+  const blocked = await runToVerify(fixture)
+  expect(blocked.state).toBe('BLOCKED')
+  expect(blocked.checks[0].failures?.some((failure) => failure.includes('artifact path escapes project root'))).toBe(true)
+})
+
+it('blocks a check that exceeds its declared timeout', async () => {
+  const fixture = project([{ id: 'slow', category: 'logic', timeoutMs: 10, command: `${process.execPath} -e "setTimeout(() => {}, 100)"`, evidence: 'structured' }])
+  const blocked = await runToVerify(fixture)
+  expect(blocked.state).toBe('BLOCKED')
+  expect(blocked.checks[0].failures).toContain('check timed out')
+})
+
+it('rejects UI checks without real-browser and screenshot capabilities', () => {
+  expect(() => validateConfig({ schemaVersion: 1, project: 'invalid-ui', contract: { intent: 'test', scope: { inScope: ['fixture'], outOfScope: [] }, ambiguities: [], outcomes: [{ id: 'ui-outcome', statement: 'test', checks: ['ui'] }] }, checks: [{ id: 'ui', category: 'ui', execution: 'real', command: 'true', evidence: 'structured' }], surfaces: { logic: false, endpoint: false, database: false, cli: false, mcp: false, ui: true, docs: false }, tracking: { required: false, reason: 'test' } })).toThrow(/real-browser/)
 })
