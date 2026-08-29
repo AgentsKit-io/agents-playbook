@@ -7,11 +7,13 @@ ak-harness doctor --json
 ak-harness plan approved --by human
 ak-harness start
 ak-harness verify --json
+# alias compatível com o protocolo comum:
+ak-verify run --json
 ak-harness approve approved --by human --json
 ak-harness status --json
 ```
 
-Checks must print a final JSON line such as:
+Every configured check runs and must print a final JSON line such as:
 
 ```json
 {"status":"passed","criteria":["package"],"artifacts":[]}
