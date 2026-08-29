@@ -24,5 +24,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Phase 0 benchmark manifests, task identity bindings, and explicit baseline comparisons.
 - Typed agent session recorder with correlated turn/tool events and guarded ordering.
 - Adapter metadata and session event protocol that persists hashes instead of raw agent content.
+- Required deny-by-default Policy Gate with ordered rules and correlated blocked-tool events.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

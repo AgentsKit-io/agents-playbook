@@ -29,6 +29,7 @@
     "test:context-integrity": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts -t \"rejects\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context-integrity']}))\"",
     "test:metrics": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/metrics.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['metrics']}))\"",
     "test:agent-protocol": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['agent-protocol']}))\"",
+    "test:policy-gate": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/policy.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['policy-gate','agent-protocol']}))\"",
     "prepublishOnly": "pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {

@@ -124,6 +124,7 @@ const session = createSessionRecorder({
   stateDir: '.codex/verification',
   run: implementingRun,
   adapter: { id: 'my-agent', version: '1.0.0', capabilities: ['tool-calls'] },
+  policy,
 })
 const turn = session.startTurn(inputHash)
 const action = session.requestTool({ turnId: turn.payload.turnId, toolId: 'shell', argumentsHash })
@@ -135,6 +136,23 @@ The recorder enforces turn-before-tool, one terminal result per action, no
 pending actions at session end, and no calls after termination. It is an
 observation seam; tool execution and policy decisions remain separate kernel
 phases.
+
+Every session also requires a policy gate. The built-in gate is an ordered
+allow/block list with deny-by-default behavior:
+
+```ts
+import { createPolicyGate, createSessionRecorder } from '@agentskit/harness'
+
+const policy = createPolicyGate({
+  rules: [{ id: 'safe-shell', effect: 'allow', toolIds: ['shell'], reason: 'approved local tool' }],
+})
+const session = createSessionRecorder({ stateDir, run, adapter, policy })
+```
+
+The first matching rule wins. A blocked attempt writes `policy.evaluated` and
+`tool.blocked` events and raises `POLICY_BLOCKED`; it never becomes a pending
+tool action. Custom policy gates can implement the same typed `PolicyGate`
+interface without coupling the harness to a runtime or provider.
 
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
@@ -156,7 +174,7 @@ Attach a task to a benchmark suite in the verification contract:
 }
 ```
 
-The manifest format is available at `benchmarks/harness-phase-1.json`. Baseline
+The manifest format is available at `benchmarks/harness-phase-2.json`. Baseline
 observations are explicit records with a source and timestamp. An empty or
 `not-run` baseline is reported as non-comparable rather than treated as success.
 
