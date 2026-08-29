@@ -32,6 +32,7 @@
     "test:policy-gate": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/policy.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['policy-gate','agent-protocol']}))\"",
     "test:runtime": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['runtime','agent-protocol']}))\"",
     "test:process-runtime": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['process-runtime','runtime']}))\"",
+    "test:docker-runtime": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts -t \"Docker sandbox\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docker-runtime']}))\"",
     "prepublishOnly": "pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {

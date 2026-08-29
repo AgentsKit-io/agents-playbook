@@ -188,6 +188,33 @@ const runtime = createProcessToolRuntime({
 This is a process boundary with bounded I/O, not a container or operating
 system security boundary. Use an isolated provider runtime for untrusted code.
 
+For an optional Docker boundary, register fixed image commands with
+`createDockerToolRuntime`. The default is fail-closed for image supply: it
+uses cached images only, disables network access, makes the container root
+filesystem read-only, drops capabilities, runs without privilege escalation,
+and applies resource limits:
+
+```ts
+import { createDockerToolRuntime } from '@agentskit/harness'
+
+const runtime = createDockerToolRuntime({
+  tools: [{
+    toolId: 'worker',
+    image: 'node:22.13.0-bookworm-slim',
+    command: ['node', 'worker.mjs'],
+    mounts: [{ source: process.cwd(), target: '/workspace', readOnly: true }],
+    cwd: '/workspace',
+  }],
+  memoryLimit: '512m',
+  cpus: 1,
+  pidsLimit: 128,
+})
+```
+
+The provider does not add Docker as a package dependency and is not a VM or a
+compromised-daemon boundary. Pin images for reproducibility; set `pull` to
+`missing` or `always` only when image acquisition is explicitly authorized.
+
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
 and average/median verification duration. With `--manifest`, it also compares
@@ -201,14 +228,14 @@ Attach a task to a benchmark suite in the verification contract:
 ```json
 {
   "benchmark": {
-    "suiteId": "agentskit-harness-phase-4",
-    "taskId": "harness-process-sandbox",
+    "suiteId": "agentskit-harness-phase-5",
+    "taskId": "harness-docker-sandbox",
     "mode": "harness"
   }
 }
 ```
 
-The manifest format is available at `benchmarks/harness-phase-4.json`. Baseline
+The manifest format is available at `benchmarks/harness-phase-5.json`. Baseline
 observations are explicit records with a source and timestamp. An empty or
 `not-run` baseline is reported as non-comparable rather than treated as success.
 

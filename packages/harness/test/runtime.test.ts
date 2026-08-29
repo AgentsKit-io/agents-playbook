@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest'
-import { createProcessToolRuntime, createToolRuntime } from '../src/index.js'
+import { createDockerToolRuntime, createProcessToolRuntime, createToolRuntime } from '../src/index.js'
 
 const request = { actionId: 'action', turnId: 'turn', toolId: 'shell', argumentsHash: 'hash', arguments: { command: 'echo ok' } } as const
 
@@ -41,4 +41,23 @@ it('kills timed-out and oversized child processes with recoverable evidence', as
 it('returns structured failures for non-zero child exits', async () => {
   const runtime = createProcessToolRuntime({ tools: [{ toolId: 'fail', command: process.execPath, args: ['-e', 'process.exit(3)'] }] })
   await expect(runtime.execute({ ...request, toolId: 'fail' })).resolves.toMatchObject({ status: 'failed', errorCode: 'PROCESS_EXIT', retryable: false })
+})
+
+it('executes a real tool inside the default Docker sandbox', async () => {
+  const script = "import('node:fs').then(async ({writeFileSync}) => { if (process.getuid?.() !== 65532) process.exit(2); try { writeFileSync('/agentskit-harness-write-test', 'blocked'); process.exit(3) } catch {} try { await fetch('http://example.com'); process.exit(4) } catch { process.stdout.write('docker-sandbox-ok') } })"
+  const runtime = createDockerToolRuntime({
+    timeoutMs: 30_000,
+    maxOutputBytes: 1024,
+    tools: [{ toolId: 'docker-node', image: 'node:22.13.0-bookworm-slim', command: ['node', '-e', script] }],
+  })
+  const result = await runtime.execute({ ...request, toolId: 'docker-node' })
+  expect(result.status).toBe('completed')
+  expect(result).not.toHaveProperty('stdout')
+  expect(result).not.toHaveProperty('result')
+})
+
+it('rejects unsafe or incomplete Docker definitions', () => {
+  expect(() => createDockerToolRuntime({ tools: [{ toolId: 'empty', image: 'alpine:3.21', command: [] }] })).toThrow(/non-empty string array/)
+  expect(() => createDockerToolRuntime({ tools: [{ toolId: 'mount', image: 'alpine:3.21', command: ['/bin/true'], mounts: [{ source: 'relative', target: '/work' }] }] })).toThrow(/absolute path/)
+  expect(() => createDockerToolRuntime({ tools: [{ toolId: 'bad-mounts', image: 'alpine:3.21', command: ['/bin/true'], mounts: {} as never }] })).toThrow(/mounts must be an array/)
 })

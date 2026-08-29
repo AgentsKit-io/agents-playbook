@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-5",
+  "name": "AgentsKit Harness Phase 5",
+  "tasks": [
+    {
+      "id": "harness-docker-sandbox",
+      "title": "Execute tool actions through an optional Docker sandbox",
+      "acceptanceCriteria": [
+        "Allowed tools run from fixed argv in a cached Docker image without shell interpolation.",
+        "The default container profile disables network access and privilege escalation, drops capabilities, and runs as an unprivileged user.",
+        "The default container profile makes the root filesystem read-only and enforces PID, memory, CPU, timeout, and output limits.",
+        "The provider remains optional and returns structured failures when Docker or an image is unavailable."
+      ],
+      "observations": []
+    }
+  ]
+}

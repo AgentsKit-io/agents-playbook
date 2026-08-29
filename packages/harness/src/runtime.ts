@@ -28,6 +28,22 @@ export interface ProcessToolDefinition {
   readonly env?: Readonly<Record<string, string>>
 }
 
+export interface DockerMount {
+  readonly source: string
+  readonly target: string
+  readonly readOnly?: boolean
+}
+
+export interface DockerToolDefinition {
+  readonly toolId: string
+  readonly image: string
+  readonly command: readonly string[]
+  readonly args?: readonly string[]
+  readonly cwd?: string
+  readonly env?: Readonly<Record<string, string>>
+  readonly mounts?: readonly DockerMount[]
+}
+
 export type ToolExecutionResult =
   | { readonly status: 'completed'; readonly resultHash: string; readonly durationMs: number }
   | { readonly status: 'failed'; readonly errorCode: string; readonly retryable: boolean; readonly durationMs: number }
@@ -40,6 +56,27 @@ const required = (value: string, label: string): string => {
 const duration = (value: number): number => {
   if (!Number.isFinite(value) || value < 0) fail('Tool durationMs must be a non-negative number.', 'INVALID_INPUT')
   return value
+}
+
+const positiveNumber = (value: number | string, label: string): string => {
+  const normalized = String(value).trim()
+  if (!normalized || !/^(?:\d+(?:\.\d+)?|\.\d+)$/.test(normalized) || Number(normalized) <= 0) fail(`${label} must be positive.`, 'INVALID_INPUT')
+  return normalized
+}
+
+const absolutePath = (value: string, label: string): string => {
+  const normalized = required(value, label)
+  if (!normalized.startsWith('/') || normalized.includes(',')) fail(`${label} must be an absolute path without commas.`, 'INVALID_INPUT')
+  return normalized
+}
+
+const dockerEnvironment = (env: Readonly<Record<string, string>> | undefined, label: string): readonly string[] => {
+  if (env === undefined) return []
+  if (typeof env !== 'object' || env === null || Array.isArray(env)) fail(`${label} must be an object.`, 'INVALID_INPUT')
+  return Object.entries(env).map(([key, value]) => {
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key) || typeof value !== 'string') fail(`${label} must contain valid string environment entries.`, 'INVALID_INPUT')
+    return `${key}=${value}`
+  })
 }
 
 export const createToolRuntime = ({ tools, timeoutMs = 30_000 }: { readonly tools: readonly ToolDefinition[]; readonly timeoutMs?: number }): ToolRuntime => {
@@ -128,4 +165,67 @@ export const createProcessToolRuntime = ({ tools, timeoutMs = 30_000, maxOutputB
       })
     },
   }
+}
+
+export const createDockerToolRuntime = ({
+  tools,
+  timeoutMs = 30_000,
+  maxOutputBytes = 1_048_576,
+  dockerCommand = 'docker',
+  memoryLimit = '512m',
+  cpus = 1,
+  pidsLimit = 128,
+  user = '65532:65532',
+  pull = 'never',
+}: {
+  readonly tools: readonly DockerToolDefinition[]
+  readonly timeoutMs?: number
+  readonly maxOutputBytes?: number
+  readonly dockerCommand?: string
+  readonly memoryLimit?: string
+  readonly cpus?: number | string
+  readonly pidsLimit?: number
+  readonly user?: string
+  readonly pull?: 'never' | 'missing' | 'always'
+}): ToolRuntime => {
+  if (!Array.isArray(tools)) fail('Docker runtime tools must be an array.', 'INVALID_INPUT')
+  const command = required(dockerCommand, 'dockerCommand')
+  const memory = required(memoryLimit, 'memoryLimit')
+  const cpu = positiveNumber(cpus, 'cpus')
+  if (!Number.isInteger(pidsLimit) || pidsLimit < 1) fail('pidsLimit must be a positive integer.', 'INVALID_INPUT')
+  const normalizedUser = required(user, 'user')
+  if (normalizedUser.includes(' ')) fail('user must not contain spaces.', 'INVALID_INPUT')
+  if (pull !== 'never' && pull !== 'missing' && pull !== 'always') fail('pull must be never, missing, or always.', 'INVALID_INPUT')
+  const normalized = tools.map((tool, index) => {
+    if (typeof tool !== 'object' || tool === null || Array.isArray(tool)) fail(`tools[${index}] must be an object.`, 'INVALID_INPUT')
+    const toolId = required(tool.toolId, `tools[${index}].toolId`)
+    const image = required(tool.image, `tools[${index}].image`)
+    if (!Array.isArray(tool.command) || tool.command.length === 0 || tool.command.some((part) => typeof part !== 'string' || !part.trim())) fail(`tools[${index}].command must be a non-empty string array.`, 'INVALID_INPUT')
+    if (tool.args !== undefined && (!Array.isArray(tool.args) || tool.args.some((arg) => typeof arg !== 'string'))) fail(`tools[${index}].args must contain strings.`, 'INVALID_INPUT')
+    const env = dockerEnvironment(tool.env, `tools[${index}].env`)
+    if (tool.mounts !== undefined && !Array.isArray(tool.mounts)) fail(`tools[${index}].mounts must be an array.`, 'INVALID_INPUT')
+    const mounts = (tool.mounts ?? []).map((mount, mountIndex) => {
+      if (typeof mount !== 'object' || mount === null || Array.isArray(mount)) fail(`tools[${index}].mounts[${mountIndex}] must be an object.`, 'INVALID_INPUT')
+      const source = absolutePath(mount.source, `tools[${index}].mounts[${mountIndex}].source`)
+      const target = absolutePath(mount.target, `tools[${index}].mounts[${mountIndex}].target`)
+      if (mount.readOnly !== undefined && typeof mount.readOnly !== 'boolean') fail(`tools[${index}].mounts[${mountIndex}].readOnly must be boolean.`, 'INVALID_INPUT')
+      return `type=bind,src=${source},dst=${target}${mount.readOnly === false ? '' : ',readonly'}`
+    })
+    return {
+      toolId,
+      command,
+      args: [
+        'run', '--rm', '--init', '--pull', pull, '--network', 'none', '--read-only', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
+        '--pids-limit', String(pidsLimit), '--memory', memory, '--cpus', cpu, '--user', normalizedUser,
+        ...(tool.cwd ? ['--workdir', absolutePath(tool.cwd, `tools[${index}].cwd`)] : []),
+        ...env.flatMap((entry) => ['--env', entry]),
+        ...mounts.flatMap((mount) => ['--mount', mount]),
+        image,
+        ...tool.command,
+        ...(tool.args ?? []),
+      ],
+    }
+  })
+  if (new Set(normalized.map((tool) => tool.toolId)).size !== normalized.length) fail('Docker runtime tools must have unique ids.', 'INVALID_INPUT')
+  return createProcessToolRuntime({ tools: normalized, timeoutMs, maxOutputBytes })
 }
