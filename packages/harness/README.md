@@ -19,6 +19,7 @@ ak-harness start
 ak-verify run --json
 ak-verify approve <run-id> approved --by human --json
 ak-harness cancel <run-id> --by human --reason "Requirements changed"
+ak-harness benchmark --json
 ```
 
 `plan` rejects unresolved ambiguities and unauthorized dirty worktrees. After `start`, the contract is frozen. Any source, configuration, or contract change invalidates evidence and moves the run to `STALE`. A human can cancel an active run; retrying a blocked, stale, or cancelled run marks the previous run `SUPERSEDED`.
@@ -112,6 +113,12 @@ The snapshot stores the Doc Bridge `contentHash`, reference hashes, and a
 stable `contextHash`; resolution time is metadata and does not change the
 reproducibility hash. Context is resolved before planning and is frozen with
 the run, so later index changes cannot silently change its evidence.
+
+`benchmark` aggregates the local run history into a versioned JSON report. It
+includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
+and average/median verification duration. These are execution metrics, not a
+claim of productivity improvement; compare reports over a controlled task corpus
+to measure that outcome.
 
 ## Development
 

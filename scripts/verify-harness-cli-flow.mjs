@@ -41,7 +41,9 @@ try {
   if (cancelled.state !== 'CANCELLED') throw new Error(`expected CANCELLED, got ${cancelled.state}`)
   const retried = runCli(['retry'])
   if (retried.state !== 'IMPLEMENTING' || retried.supersedes !== verified.runId) throw new Error('retry did not supersede the cancelled run')
-  console.log(JSON.stringify({ status: 'passed', criteria: ['package'], finalState: retried.state, supersededRunId: verified.runId }))
+  const benchmark = runCli(['benchmark'])
+  if (benchmark.type !== 'agentskit-harness-benchmark' || benchmark.summary.totalRuns !== 2 || benchmark.summary.retriedRuns !== 1 || benchmark.summary.evidenceCoverageRate !== 0.5) throw new Error('benchmark did not aggregate the CLI lifecycle history')
+  console.log(JSON.stringify({ status: 'passed', criteria: ['package', 'metrics'], finalState: retried.state, supersededRunId: verified.runId, benchmark: benchmark.summary }))
 } catch (error) {
   console.log(JSON.stringify({ status: 'failed', criteria: ['package'], failures: [error instanceof Error ? error.message : String(error)] }))
   process.exitCode = 1

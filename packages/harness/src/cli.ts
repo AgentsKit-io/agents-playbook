@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs'
 import { Command } from 'commander'
-import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, createDocBridgeContextProvider, loadConfig, loadLatestRun, planRun, readContextSnapshots, retryRun, startRun, verifyRun } from './index.js'
+import { approveRun, authorizeRun, benchmarkRuns, cancelRun, cleanTaskArtifacts, createDocBridgeContextProvider, loadConfig, loadLatestRun, planRun, readContextSnapshots, retryRun, startRun, verifyRun } from './index.js'
 import { fail } from './errors.js'
 
 interface CliOptions { readonly config: string; readonly json: boolean }
@@ -30,6 +30,7 @@ program.command('authorize <run-id-or-decision> [decision-or-run-id]').descripti
 program.command('retry').description('Create a new implementation attempt after a blocked or stale run.').action(async () => print(await retryRun({ configPath: options().config })))
 program.command('cancel [run-id]').description('Cancel an active run.').option('--by <actor>', 'cancellation actor', 'human').option('--reason <reason>', 'cancellation reason', 'Run cancelled by a human.').action(async (runId: string | undefined, command: { readonly by: string; readonly reason: string }) => print(await cancelRun({ configPath: options().config, runId, reason: command.reason, actor: command.by })))
 program.command('status').description('Show the latest run.').action(() => { const loaded = loadConfig(options().config); print(loadLatestRun(loaded.stateDir) ?? { state: 'CLARIFYING', message: 'No run exists.' }) })
+program.command('benchmark').description('Aggregate reproducible metrics from historical runs.').action(() => { const loaded = loadConfig(options().config); print(benchmarkRuns(loaded.stateDir)) })
 program.command('clean').description('Remove only configured task-owned temporary artifacts.').action(() => print(cleanTaskArtifacts(options().config)))
 process.on('SIGINT', () => { process.stderr.write('Cancelled.\n'); process.exitCode = 130 })
 try { await program.parseAsync(process.argv) } catch (error) { const value = error instanceof Error ? error : new Error(String(error)); process.stderr.write(`${'code' in value ? String(value.code) : 'HARNESS_ERROR'}: ${value.message}\n`); process.exitCode = 'code' in value && value.code === 'INVALID_INPUT' ? 2 : 1 }
