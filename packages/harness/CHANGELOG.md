@@ -11,5 +11,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Strict TypeScript modular core with generated declarations and source maps.
 - Contract-frozen lifecycle, structured evidence, stale detection, human approval, retry, and cleanup.
 - Explicit human cancellation and superseded retry history.
+- Typed dependency-aware plugin lifecycle with deterministic cleanup.
+- Append-only, source- and contract-bound lifecycle event log per run.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

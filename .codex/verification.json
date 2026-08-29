@@ -14,6 +14,8 @@
     "outcomes": [
       { "id": "package", "statement": "The typed harness library builds, exposes a usable CLI lifecycle, and installs correctly in a clean consumer project.", "checks": ["harness-tests", "harness-build", "harness-cli", "harness-cli-flow", "harness-consumer"] },
       { "id": "protocol", "statement": "The contract, state machine, evidence, stale detection, and approval protocol are enforced.", "checks": ["harness-contract"] },
+      { "id": "extensibility", "statement": "The public harness API exposes a typed, dependency-aware plugin lifecycle with deterministic cleanup and contribution isolation.", "checks": ["harness-extensibility"] },
+      { "id": "event-log", "statement": "Every verification run records an append-only lifecycle event log that is ordered and bound to the run source and contract.", "checks": ["harness-event-log"] },
       { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] }
     ]
   },
@@ -33,6 +35,8 @@
     { "id": "harness-cli-flow", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-cli-flow.mjs", "evidence": "structured", "timeoutMs": 60000 },
     { "id": "harness-consumer", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-consumer.mjs", "evidence": "structured", "timeoutMs": 180000 },
     { "id": "harness-contract", "category": "logic", "command": "pnpm --filter @agentskit/harness test:contract", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-extensibility", "category": "logic", "command": "pnpm --filter @agentskit/harness test:extensibility", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-event-log", "category": "logic", "command": "pnpm --filter @agentskit/harness test:event-log", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "package-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs", "evidence": "structured", "timeoutMs": 120000 }
   ],

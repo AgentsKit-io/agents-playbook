@@ -37,6 +37,32 @@ Endpoint, database, CLI, MCP, and UI checks must declare `execution: "real"`. UI
 
 The public TypeScript API is exported from `src/index.ts` and includes configuration loading, lifecycle operations, state transitions, evidence verification, approvals, cancellation, retries, and task-owned cleanup. Internal modules are not part of the supported API.
 
+## Extensibility
+
+The kernel stays responsible for contracts, state transitions, evidence, source
+binding, stale detection, and human decisions. Optional integrations use the
+typed plugin registry instead of changing those guarantees:
+
+```ts
+import { createPluginRegistry, createPluginSlot } from '@agentskit/harness'
+
+const providers = createPluginSlot<{ readonly resolve: (query: string) => Promise<string> }>('context.provider')
+const registry = createPluginRegistry()
+registry.register({
+  id: 'my-context', version: '1.0.0', apiVersion: 1,
+  apply: (context) => {
+    context.register(providers, 'local', { resolve: async (query) => `context:${query}` })
+  },
+})
+registry.mount()
+// registry.contributions(providers) is deterministic and typed.
+registry.dispose()
+```
+
+Each run also writes an append-only `events.ndjson` containing lifecycle facts
+bound to its source revision and contract hash. The stable `run.json` remains
+the CLI projection and evidence index.
+
 ## Development
 
 ```bash
