@@ -231,19 +231,19 @@ Attach a task to a benchmark suite in the verification contract:
 ```json
 {
   "benchmark": {
-    "suiteId": "agentskit-harness-phase-7",
-    "taskId": "harness-benchmark-observation",
+    "suiteId": "agentskit-harness-phase-8",
+    "taskId": "harness-benchmark-comparability",
     "mode": "harness"
   }
 }
 ```
 
-The manifest format is available at `benchmarks/harness-phase-7.json`. Record a
+The manifest format is available at `benchmarks/harness-phase-8.json`. Record a
 controlled baseline through the public CLI instead of editing JSON by hand:
 
 ```bash
-ak-harness benchmark baseline harness-benchmark-observation \
-  --manifest benchmarks/harness-phase-7.json \
+ak-harness benchmark baseline harness-benchmark-comparability \
+  --manifest benchmarks/harness-phase-8.json \
   --status passed \
   --source manual-run-2026-08-29 \
   --attempts 1 --duration-ms 900000 \
@@ -254,6 +254,12 @@ The command validates the task and values, rejects duplicate observations, and
 atomically updates the manifest. Baseline observations are explicit records
 with a source and timestamp. An empty or `not-run` baseline is reported as
 non-comparable rather than treated as success.
+
+A comparison is considered comparable only when the task has an explicit
+baseline and its latest bound harness run is `COMPLETE`. Blocked, incomplete,
+missing, or `not-run` inputs expose a non-comparability reason. Comparable
+reports include check, outcome, evidence, duration, attempt, and human-review
+metrics; they do not establish causality or productivity improvement alone.
 
 ## Development
 

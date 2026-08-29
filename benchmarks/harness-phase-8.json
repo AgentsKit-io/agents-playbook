@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-8",
+  "name": "AgentsKit Harness Phase 8",
+  "tasks": [
+    {
+      "id": "harness-benchmark-comparability",
+      "title": "Require completed harness evidence for comparison",
+      "acceptanceCriteria": [
+        "A comparison is comparable only with an explicit baseline and a completed harness run.",
+        "Incomplete, blocked, or missing runs expose an honest non-comparable reason.",
+        "The report exposes check, outcome, evidence, duration, attempts, and review metrics for the harness run."
+      ]
+    }
+  ],
+  "observations": []
+}
