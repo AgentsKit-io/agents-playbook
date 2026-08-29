@@ -2,7 +2,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { createPolicyGate, createSessionRecorder, FileEventStore, loadConfig, planRun, startRun } from '../src/index.js'
+import { createPolicyGate, createSessionRecorder, createToolRuntime, FileEventStore, loadConfig, planRun, startRun } from '../src/index.js'
 
 const fixture = async (): Promise<{ readonly root: string; readonly run: Awaited<ReturnType<typeof startRun>> }> => {
   const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-agent-test-'))
@@ -20,17 +20,18 @@ const fixture = async (): Promise<{ readonly root: string; readonly run: Awaited
 
 const adapter = { id: 'fixture-agent', version: '1.0.0', capabilities: ['tool-calls'] } as const
 const policy = createPolicyGate({ rules: [{ id: 'allow-shell', effect: 'allow', toolIds: ['shell'], reason: 'fixture allows shell' }] })
+const runtime = createToolRuntime({ tools: [{ toolId: 'shell', execute: async ({ arguments: input }) => ({ echoed: input }) }] })
 
 it('records a privacy-preserving, correlated session and tool lifecycle', async () => {
   const { root, run } = await fixture()
   const stateDir = join(root, '.codex', 'verification')
-  const recorder = createSessionRecorder({ stateDir, run, adapter, policy, sessionId: 'session-1' })
+  const recorder = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: 'session-1' })
   recorder.startTurn('input-hash', 'turn-1')
   recorder.requestTool({ turnId: 'turn-1', actionId: 'action-1', toolId: 'shell', argumentsHash: 'arguments-hash' })
-  recorder.completeTool({ actionId: 'action-1', resultHash: 'result-hash', durationMs: 12 })
+  await expect(recorder.executeTool({ actionId: 'action-1', arguments: { command: 'echo secret' } })).resolves.toMatchObject({ status: 'completed' })
   recorder.startTurn('input-hash-2', 'turn-2')
   recorder.requestTool({ turnId: 'turn-2', actionId: 'action-2', toolId: 'shell', argumentsHash: 'arguments-hash-2' })
-  recorder.failTool({ actionId: 'action-2', errorCode: 'TIMEOUT', retryable: true })
+  recorder.failTool({ actionId: 'action-2', errorCode: 'TIMEOUT', retryable: true, durationMs: 12 })
   recorder.end('completed')
   const events = new FileEventStore(stateDir).read(run.runId)
   expect(events.map((event) => event.type)).toEqual(['run.created', 'state.transitioned', 'state.transitioned', 'session.started', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.completed', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.failed', 'session.ended'])
@@ -40,7 +41,7 @@ it('records a privacy-preserving, correlated session and tool lifecycle', async 
 
 it('rejects invalid ordering, duplicate actions, pending completion, and post-end calls', async () => {
   const { root, run } = await fixture()
-  const recorder = createSessionRecorder({ stateDir: join(root, '.codex', 'verification'), run, adapter, policy })
+  const recorder = createSessionRecorder({ stateDir: join(root, '.codex', 'verification'), run, adapter, policy, runtime })
   expect(() => recorder.requestTool({ turnId: 'missing', toolId: 'shell', argumentsHash: 'hash' })).toThrow(/Turn does not exist/)
   recorder.startTurn('input', 'turn')
   recorder.requestTool({ turnId: 'turn', actionId: 'action', toolId: 'shell', argumentsHash: 'hash' })
@@ -50,7 +51,7 @@ it('rejects invalid ordering, duplicate actions, pending completion, and post-en
   expect(() => recorder.completeTool({ actionId: 'action', resultHash: 'result', durationMs: 0 })).toThrow(/not pending/)
   recorder.end('completed')
   expect(() => recorder.startTurn('input-2')).toThrow(/already ended/)
-  const blocked = createSessionRecorder({ stateDir: join(root, '.codex', 'verification'), run, adapter, policy: createPolicyGate({ rules: [] }), sessionId: 'blocked-session' })
+  const blocked = createSessionRecorder({ stateDir: join(root, '.codex', 'verification'), run, adapter, policy: createPolicyGate({ rules: [] }), runtime, sessionId: 'blocked-session' })
   blocked.startTurn('blocked-input', 'blocked-turn')
   expect(() => blocked.requestTool({ turnId: 'blocked-turn', actionId: 'blocked-action', toolId: 'network', argumentsHash: 'hash' })).toThrow(/blocked by policy/)
   blocked.end('failed')
@@ -62,7 +63,7 @@ it('rejects invalid ordering, duplicate actions, pending completion, and post-en
 it('requires implementation state and validates adapter metadata', async () => {
   const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-agent-state-test-'))
   const run = { runId: 'planned', state: 'PLANNED', sourceRevision: 'revision', configHash: 'config' } as const
-  expect(() => createSessionRecorder({ stateDir: root, run: run as never, adapter, policy })).toThrow(/IMPLEMENTING/)
+  expect(() => createSessionRecorder({ stateDir: root, run: run as never, adapter, policy, runtime })).toThrow(/IMPLEMENTING/)
   const implementing = { ...run, state: 'IMPLEMENTING' } as const
-  expect(() => createSessionRecorder({ stateDir: root, run: implementing as never, adapter: { ...adapter, capabilities: [''] }, policy })).toThrow(/capabilities/)
+  expect(() => createSessionRecorder({ stateDir: root, run: implementing as never, adapter: { ...adapter, capabilities: [''] }, policy, runtime })).toThrow(/capabilities/)
 })

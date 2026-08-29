@@ -19,7 +19,7 @@ export interface HarnessEventPayloads {
   readonly 'tool.requested': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string }
   readonly 'tool.blocked': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly policyId: string; readonly reason: string }
   readonly 'tool.completed': { readonly actionId: string; readonly resultHash: string; readonly durationMs: number }
-  readonly 'tool.failed': { readonly actionId: string; readonly errorCode: string; readonly retryable: boolean }
+  readonly 'tool.failed': { readonly actionId: string; readonly errorCode: string; readonly retryable: boolean; readonly durationMs: number }
   readonly 'session.ended': { readonly status: 'completed' | 'failed' | 'cancelled' }
 }
 

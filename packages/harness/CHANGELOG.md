@@ -25,5 +25,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Typed agent session recorder with correlated turn/tool events and guarded ordering.
 - Adapter metadata and session event protocol that persists hashes instead of raw agent content.
 - Required deny-by-default Policy Gate with ordered rules and correlated blocked-tool events.
+- Bounded in-process tool runtime with timeout, abort signal, hashed results, and structured failures.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

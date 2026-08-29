@@ -125,10 +125,11 @@ const session = createSessionRecorder({
   run: implementingRun,
   adapter: { id: 'my-agent', version: '1.0.0', capabilities: ['tool-calls'] },
   policy,
+  runtime,
 })
 const turn = session.startTurn(inputHash)
 const action = session.requestTool({ turnId: turn.payload.turnId, toolId: 'shell', argumentsHash })
-session.completeTool({ actionId: action.payload.actionId, resultHash, durationMs: 42 })
+await session.executeTool({ actionId: action.payload.actionId, arguments: { command: 'echo ok' } })
 session.end('completed')
 ```
 
@@ -154,6 +155,22 @@ The first matching rule wins. A blocked attempt writes `policy.evaluated` and
 tool action. Custom policy gates can implement the same typed `PolicyGate`
 interface without coupling the harness to a runtime or provider.
 
+The built-in runtime executes registered handlers in memory, passes an
+`AbortSignal`, enforces a timeout, and records only a result hash and duration:
+
+```ts
+import { createToolRuntime } from '@agentskit/harness'
+
+const runtime = createToolRuntime({
+  timeoutMs: 30_000,
+  tools: [{ toolId: 'shell', execute: async ({ arguments: input }) => runShell(input) }],
+})
+```
+
+Missing tools, handler errors, and timeouts become structured failures. This is
+an execution boundary, not a process/container security sandbox; use a
+provider-specific isolated runtime when hard isolation is required.
+
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
 and average/median verification duration. With `--manifest`, it also compares
@@ -167,8 +184,8 @@ Attach a task to a benchmark suite in the verification contract:
 ```json
 {
   "benchmark": {
-    "suiteId": "agentskit-harness-phase-1",
-    "taskId": "harness-agent-protocol",
+    "suiteId": "agentskit-harness-phase-3",
+    "taskId": "harness-runtime-executor",
     "mode": "harness"
   }
 }
