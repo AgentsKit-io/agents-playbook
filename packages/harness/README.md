@@ -18,9 +18,10 @@ ak-harness plan approved --by human
 ak-harness start
 ak-verify run --json
 ak-verify approve <run-id> approved --by human --json
+ak-harness cancel <run-id> --by human --reason "Requirements changed"
 ```
 
-`plan` rejects unresolved ambiguities and unauthorized dirty worktrees. After `start`, the contract is frozen. Any source, configuration, or contract change invalidates evidence and moves the run to `STALE`.
+`plan` rejects unresolved ambiguities and unauthorized dirty worktrees. After `start`, the contract is frozen. Any source, configuration, or contract change invalidates evidence and moves the run to `STALE`. A human can cancel an active run; retrying a blocked, stale, or cancelled run marks the previous run `SUPERSEDED`.
 
 ## Contract
 
@@ -34,7 +35,7 @@ Endpoint, database, CLI, MCP, and UI checks must declare `execution: "real"`. UI
 
 ## API
 
-The public TypeScript API is exported from `src/index.ts` and includes configuration loading, lifecycle operations, state transitions, evidence verification, approvals, retries, and task-owned cleanup. Internal modules are not part of the supported API.
+The public TypeScript API is exported from `src/index.ts` and includes configuration loading, lifecycle operations, state transitions, evidence verification, approvals, cancellation, retries, and task-owned cleanup. Internal modules are not part of the supported API.
 
 ## Development
 

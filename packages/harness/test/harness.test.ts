@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { approveRun, authorizeRun, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
+import { approveRun, authorizeRun, cancelRun, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
 import type { TrackingConfig, VerificationCheck, VerificationConfig } from '../src/index.js'
 
 const quote = (value: string): string => `'${value.replaceAll("'", "'\"'\"'")}'`
@@ -75,6 +75,17 @@ it('blocks a human rejection instead of treating it as completion', async () => 
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
   await runToVerify(fixture)
   expect((await approveRun({ configPath: fixture.configPath, decision: 'rejected' })).state).toBe('BLOCKED')
+})
+
+it('cancels an active run and supersedes it on retry', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  await planRun({ configPath: fixture.configPath, decision: 'approved' })
+  const cancelled = await cancelRun({ configPath: fixture.configPath, reason: 'Fixture cancellation.' })
+  expect(cancelled.state).toBe('CANCELLED')
+  const retried = await retryRun({ configPath: fixture.configPath })
+  expect(retried.state).toBe('IMPLEMENTING')
+  const superseded = JSON.parse(readFileSync(join(fixture.stateDir, 'runs', cancelled.runId, 'run.json'), 'utf8')) as { state: string }
+  expect(superseded.state).toBe('SUPERSEDED')
 })
 
 it('blocks when a required check omits structured evidence', async () => {

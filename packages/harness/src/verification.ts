@@ -60,6 +60,14 @@ export const startRun = (loaded: LoadedConfig): VerificationRun => {
   saveRun(loaded.stateDir, next); setLatest(loaded.stateDir, next); return next
 }
 
+export const cancelRun = async ({ configPath, runId, reason = 'Run cancelled by a human.', actor = 'human' }: { readonly configPath: string; readonly runId?: string; readonly reason?: string; readonly actor?: string }): Promise<VerificationRun> => {
+  assertHuman(actor)
+  const loaded = loadConfig(configPath)
+  const run = requireRun(runId ? readRun(loaded.stateDir, runId) : loadLatestRun(loaded.stateDir))
+  const next = transition(run, 'CANCELLED', reason, 'human') as VerificationRun
+  saveRun(loaded.stateDir, next); setLatest(loaded.stateDir, next); return next
+}
+
 export const verifyRun = async ({ configPath }: { readonly configPath: string }): Promise<VerificationRun> => {
   const loaded = loadConfig(configPath)
   const run = requireRun(loadLatestRun(loaded.stateDir))
@@ -125,6 +133,8 @@ export const retryRun = async ({ configPath }: { readonly configPath: string }):
   const previousRun = requireRun(previous)
   if (!['BLOCKED', 'STALE', 'CANCELLED'].includes(previousRun.state)) fail(`Cannot retry from ${previousRun.state}.`, 'INVALID_STATE')
   const baseline = await sourceSnapshot(loaded.root, loaded.stateDir)
+  const superseded = transition(previousRun, 'SUPERSEDED', 'Retry superseded the previous run.', 'harness') as VerificationRun
+  saveRun(loaded.stateDir, superseded)
   const run = await createRun({ loaded, baseline, supersedes: previousRun.runId, dirtyBaselineAuthorized: previousRun.dirtyBaselineAuthorized })
   const next = transition(run, 'IMPLEMENTING', 'Retry started after a previous attempt.', 'agent') as VerificationRun
   saveRun(loaded.stateDir, next); setLatest(loaded.stateDir, next); return next

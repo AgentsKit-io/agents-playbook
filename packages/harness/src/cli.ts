@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync } from 'node:fs'
 import { Command } from 'commander'
-import { approveRun, authorizeRun, cleanTaskArtifacts, loadConfig, loadLatestRun, planRun, retryRun, startRun, verifyRun } from './index.js'
+import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, loadConfig, loadLatestRun, planRun, retryRun, startRun, verifyRun } from './index.js'
 
 interface CliOptions { readonly config: string; readonly json: boolean }
 const packageJson = JSON.parse(readFileSync(new URL('../package.json', import.meta.url), 'utf8')) as { readonly version: string }
@@ -21,6 +21,7 @@ program.command('run').description('Alias for verify, compatible with the common
 program.command('approve <run-id-or-decision> [decision-or-run-id]').description('Record human approval or rejection. Accepts <run-id> <decision> or <decision> <run-id>.').option('--by <actor>', 'approval actor', 'human').action(async (first: string, second: string | undefined, command: { readonly by: string }) => { const args = decisionArgs(first, second); print(await approveRun({ configPath: options().config, ...args, actor: command.by })) })
 program.command('authorize <run-id-or-decision> [decision-or-run-id]').description('Authorize or reject declared external tracking. Accepts <run-id> <decision> or <decision> <run-id>.').option('--by <actor>', 'approval actor', 'human').action(async (first: string, second: string | undefined, command: { readonly by: string }) => { const args = decisionArgs(first, second); print(await authorizeRun({ configPath: options().config, ...args, actor: command.by })) })
 program.command('retry').description('Create a new implementation attempt after a blocked or stale run.').action(async () => print(await retryRun({ configPath: options().config })))
+program.command('cancel [run-id]').description('Cancel an active run.').option('--by <actor>', 'cancellation actor', 'human').option('--reason <reason>', 'cancellation reason', 'Run cancelled by a human.').action(async (runId: string | undefined, command: { readonly by: string; readonly reason: string }) => print(await cancelRun({ configPath: options().config, runId, reason: command.reason, actor: command.by })))
 program.command('status').description('Show the latest run.').action(() => { const loaded = loadConfig(options().config); print(loadLatestRun(loaded.stateDir) ?? { state: 'CLARIFYING', message: 'No run exists.' }) })
 program.command('clean').description('Remove only configured task-owned temporary artifacts.').action(() => print(cleanTaskArtifacts(options().config)))
 process.on('SIGINT', () => { process.stderr.write('Cancelled.\n'); process.exitCode = 130 })
