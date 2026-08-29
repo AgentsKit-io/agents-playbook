@@ -1,0 +1,19 @@
+{
+  "name": "@agentskit/harness",
+  "version": "0.1.0",
+  "description": "Portable, evidence-backed development harness for coding agents.",
+  "type": "module",
+  "bin": { "ak-harness": "bin/ak-harness.js", "ak-verify": "bin/ak-harness.js" },
+  "exports": {
+    ".": "./lib/index.js"
+  },
+  "files": ["bin", "lib", "README.md"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test test/harness.test.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\""
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "license": "MIT"
+}

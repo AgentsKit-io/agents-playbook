@@ -67,3 +67,4 @@ How to know the code works without manually reviewing every agent-produced diff.
 | [`contract-testing-pattern.md`](/docs/pillars/quality/contract-testing-pattern) | Pact + schema-first; consumer-driven contracts; broker; can-i-deploy |
 | [`product-analytics-experimentation-pattern.md`](/docs/pillars/quality/product-analytics-experimentation-pattern) | Event tracking; funnels + cohorts; A/B experiments; holdouts |
 | [`agent-eval-framework-pattern.md`](/docs/pillars/quality/agent-eval-framework-pattern) | Measuring AI agent quality: deterministic graders + LLM-as-judge + production monitoring; eval set as a versioned asset |
+| [`agent-harness-pattern.md`](/docs/pillars/quality/agent-harness-pattern) | Freeze task context, execute applicable checks, bind evidence to a revision, and require human approval |

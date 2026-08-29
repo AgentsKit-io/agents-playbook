@@ -14,6 +14,8 @@
     "postinstall": "fumadocs-mdx",
     "build:bundle": "node scripts/build-bundle.mjs",
     "build:discovery": "node scripts/build-discovery.mjs",
+    "harness:test": "pnpm --filter @agentskit/harness test",
+    "harness:cli": "node packages/harness/bin/ak-harness.js --help",
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
@@ -26,7 +28,7 @@
     "docs:bridge:index": "node scripts/generate-doc-bridge-config.mjs && ak-docs index",
     "docs:bridge:query": "ak-docs query",
     "docs:bridge:gate": "ak-docs gate run",
-    "check:all": "pnpm check:okf-type && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:readme-standard && pnpm test && pnpm lint && pnpm build"
+    "check:all": "pnpm check:okf-type && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:readme-standard && pnpm harness:test && pnpm test && pnpm lint && pnpm build"
   },
   "dependencies": {
     "@agentskit/chat": "0.4.0",
@@ -43,6 +45,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@agentskit/harness": "workspace:*",
     "@agentskit/doc-bridge": "1.1.1",
     "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4.0.0",

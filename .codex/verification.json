@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "project": "agents-playbook-harness",
+  "root": "..",
+  "stateDir": ".codex/verification/harness",
+  "profile": "strict",
+  "contract": {
+    "intent": "Implement and validate the portable AgentsKit Harness package and its CLI.",
+    "scope": {
+      "inScope": ["packages/harness", "scripts/harness", ".codex/verification.json"],
+      "outOfScope": ["marketing redesign", "provider-specific agent adapters", "automatic git push or PR creation"]
+    },
+    "ambiguities": [],
+    "outcomes": [
+      { "id": "package", "statement": "The harness library and CLI are usable from a clean checkout.", "checks": ["harness-tests", "harness-cli"] },
+      { "id": "protocol", "statement": "The contract, state machine, evidence, stale detection, and approval protocol are enforced.", "checks": ["harness-contract"] },
+      { "id": "docs", "statement": "The Playbook documents the portable protocol and dogfood workflow.", "checks": ["playbook-docs"] }
+    ]
+  },
+  "surfaces": {
+    "logic": true,
+    "endpoint": { "required": false, "reason": "The initial vertical slice is a local library and CLI." },
+    "database": { "required": false, "reason": "The initial vertical slice has no database-backed behavior." },
+    "cli": true,
+    "mcp": { "required": false, "reason": "MCP is an optional integration, not part of the initial CLI slice." },
+    "ui": { "required": false, "reason": "The initial vertical slice has no shipped UI." },
+    "docs": true
+  },
+  "checks": [
+    { "id": "harness-tests", "category": "logic", "command": "pnpm --filter @agentskit/harness test", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-cli", "category": "cli", "execution": "real", "command": "node packages/harness/bin/ak-harness.js --version && node packages/harness/bin/ak-harness.js --help >/dev/null && node packages/harness/bin/ak-harness.js doctor --json", "evidence": "structured", "timeoutMs": 30000 },
+    { "id": "harness-contract", "category": "logic", "command": "node packages/harness/test/contract-check.mjs", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 }
+  ],
+  "tracking": {
+    "required": false,
+    "reason": "Local-first development; external tracking is conditional per task contract."
+  },
+  "budget": { "maxDurationMs": 900000 },
+  "cleanup": { "roots": [".codex/verification/tmp"] }
+}
