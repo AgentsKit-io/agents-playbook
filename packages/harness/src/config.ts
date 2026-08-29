@@ -1,5 +1,6 @@
 import { dirname, resolve } from 'node:path'
 import { REAL_CATEGORIES } from './constants.js'
+import { resolveProfile } from './profiles.js'
 import { fail } from './errors.js'
 import { hashJson } from './hash.js'
 import { pathInside, readJson } from './files.js'
@@ -11,7 +12,7 @@ interface RawScope extends RawRecord { readonly inScope?: unknown; readonly outO
 interface RawContract extends RawRecord { readonly intent?: unknown; readonly scope?: unknown; readonly ambiguities?: unknown; readonly outcomes?: unknown }
 interface RawCheck extends RawRecord { readonly id?: unknown; readonly category?: unknown; readonly command?: unknown; readonly required?: unknown; readonly timeoutMs?: unknown; readonly execution?: unknown; readonly capabilities?: unknown; readonly evidence?: unknown }
 interface RawTracking extends RawRecord { readonly required?: unknown; readonly target?: unknown; readonly reason?: unknown }
-interface RawConfig extends RawRecord { readonly schemaVersion?: unknown; readonly project?: unknown; readonly root?: unknown; readonly stateDir?: unknown; readonly profile?: unknown; readonly contract?: unknown; readonly checks?: unknown; readonly surfaces?: unknown; readonly tracking?: unknown; readonly budget?: unknown; readonly cleanup?: unknown }
+interface RawConfig extends RawRecord { readonly schemaVersion?: unknown; readonly project?: unknown; readonly root?: unknown; readonly stateDir?: unknown; readonly profile?: unknown; readonly profiles?: unknown; readonly contract?: unknown; readonly checks?: unknown; readonly surfaces?: unknown; readonly tracking?: unknown; readonly budget?: unknown; readonly cleanup?: unknown }
 interface RawBudget extends RawRecord { readonly maxDurationMs?: unknown }
 interface RawCleanup extends RawRecord { readonly roots?: unknown }
 
@@ -67,7 +68,7 @@ const parseOutcome = (value: unknown, index: number, checks: readonly Verificati
 }
 
 export const validateConfig = (rawValue: unknown): VerificationConfig => {
-  const raw = asRecord(rawValue, 'verification config') as RawConfig
+  const raw = resolveProfile(asRecord(rawValue, 'verification config')) as RawConfig
   if (raw['schemaVersion'] !== 1) fail('verification config schemaVersion must be 1.', 'INVALID_CONFIG')
   const project = stringValue(raw['project'], 'verification config project')
   const contractRaw = asRecord(raw['contract'], 'contract') as RawContract

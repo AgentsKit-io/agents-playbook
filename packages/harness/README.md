@@ -63,6 +63,26 @@ Each run also writes an append-only `events.ndjson` containing lifecycle facts
 bound to its source revision and contract hash. The stable `run.json` remains
 the CLI projection and evidence index.
 
+Profiles are optional declarative overlays in `.codex/verification.json`. They
+inherit in order, override existing checks by ID, and are resolved before the
+contract is frozen:
+
+```json
+{
+  "profile": "ci",
+  "profiles": {
+    "ci": {
+      "checkOverrides": [{ "id": "unit", "timeoutMs": 120000 }],
+      "budget": { "maxDurationMs": 900000 }
+    }
+  }
+}
+```
+
+Doc Bridge and Playbook integrations can implement `ContextProvider` and
+register it through `CONTEXT_PROVIDER_SLOT`; the kernel records neither their
+credentials nor their transport and does not depend on either package.
+
 ## Development
 
 ```bash
