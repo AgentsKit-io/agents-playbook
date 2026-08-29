@@ -32,6 +32,7 @@ export interface ContextProvider {
   readonly resolve: (query: ContextQuery) => Promise<ContextSnapshot>
 }
 
+export const hashContextSnapshot = ({ providerId, query, references, sourceHash }: Pick<ContextSnapshot, 'providerId' | 'query' | 'references' | 'sourceHash'>): string => hashJson({ providerId, query, references, sourceHash })
 export const hashContextSnapshots = (snapshots: readonly ContextSnapshot[]): string => hashJson(snapshots.map(({ providerId, query, references, sourceHash, snapshotHash }) => ({ providerId, query, references, sourceHash, snapshotHash })))
 
 const record = (value: unknown, label: string): Record<string, unknown> => {
@@ -58,7 +59,7 @@ const contextSnapshot = (value: unknown, index: number): ContextSnapshot => {
     }
   })
   const scope = rawQuery['scope'] === undefined ? undefined : Array.isArray(rawQuery['scope']) && rawQuery['scope'].every((item) => typeof item === 'string') ? rawQuery['scope'] : fail(`context snapshot ${index}.query.scope must be an array of strings.`, 'INVALID_INPUT')
-  return {
+  const snapshot = {
     providerId: requiredString(raw['providerId'], `context snapshot ${index}.providerId`),
     query: { query: requiredString(rawQuery['query'], `context snapshot ${index}.query.query`), ...(scope ? { scope } : {}), ...(typeof rawQuery['sourceRevision'] === 'string' ? { sourceRevision: rawQuery['sourceRevision'] } : {}) },
     references,
@@ -66,6 +67,8 @@ const contextSnapshot = (value: unknown, index: number): ContextSnapshot => {
     snapshotHash: requiredString(raw['snapshotHash'], `context snapshot ${index}.snapshotHash`),
     resolvedAt: requiredString(raw['resolvedAt'], `context snapshot ${index}.resolvedAt`),
   }
+  if (snapshot.snapshotHash !== hashContextSnapshot(snapshot)) fail(`context snapshot ${index}.snapshotHash does not match its contents.`, 'INVALID_INPUT')
+  return snapshot
 }
 
 export const readContextSnapshots = (path: string): readonly ContextSnapshot[] => {

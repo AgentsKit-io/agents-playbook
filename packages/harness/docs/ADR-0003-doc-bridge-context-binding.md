@@ -20,6 +20,10 @@ Shell-based agents use the same wire boundary with `context resolve` and
 snapshots, allowing another provider to participate without a dynamic runtime
 loader.
 
+The file loader verifies the snapshot hash before planning. This makes the
+portable handoff tamper-evident while leaving provider-specific source
+provenance and authorization at the provider boundary.
+
 ## Boundaries
 
 The adapter does not install or import Doc Bridge, access remote services, or

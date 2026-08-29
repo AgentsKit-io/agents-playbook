@@ -17,5 +17,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Optional provenance-bearing context provider slot for Doc Bridge and Playbook adapters.
 - Dependency-free Doc Bridge index adapter with deterministic references and frozen context snapshots.
 - Context lifecycle events and stable context hashes that ignore resolution timestamps.
+- Portable CLI snapshot resolution and `plan --context-file` binding for shell-based agents.
+- Tamper-evident validation for imported context snapshots.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

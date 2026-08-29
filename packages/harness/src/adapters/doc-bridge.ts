@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 import { hashJson } from '../hash.js'
+import { hashContextSnapshot } from '../context.js'
 import type { ContextProvider, ContextQuery, ContextReference } from '../context.js'
 
 interface IndexEntry { readonly id?: unknown; readonly type?: unknown; readonly title?: unknown; readonly path?: unknown; readonly description?: unknown; readonly body?: unknown; readonly tags?: unknown }
@@ -29,6 +30,6 @@ export const createDocBridgeContextProvider = ({ root, indexPath = '.doc-bridge/
     const contentHash = sourceHash(document)
     const entries = Array.isArray(document.knowledge) ? document.knowledge.filter((value): value is IndexEntry => typeof value === 'object' && value !== null && !Array.isArray(value)).filter((entry) => matches(entry, query)).sort((left, right) => String(left.id ?? '').localeCompare(String(right.id ?? ''))).slice(0, 8) : []
     const references: ContextReference[] = entries.flatMap((entry) => typeof entry.id === 'string' && typeof entry.path === 'string' ? [{ id: entry.id, uri: `doc-bridge://${entry.path}`, ...(typeof entry.title === 'string' ? { title: entry.title } : {}), contentHash }] : [])
-    return { providerId: 'doc-bridge', query, references, sourceHash: contentHash, snapshotHash: hashJson({ providerId: 'doc-bridge', query, references, sourceHash: contentHash }), resolvedAt: new Date().toISOString() }
+    return { providerId: 'doc-bridge', query, references, sourceHash: contentHash, snapshotHash: hashContextSnapshot({ providerId: 'doc-bridge', query, references, sourceHash: contentHash }), resolvedAt: new Date().toISOString() }
   },
 })

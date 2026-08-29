@@ -1,7 +1,7 @@
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import { createPluginRegistry, CONTEXT_PROVIDER_SLOT, FileEventStore, loadConfig, planRun } from '../src/index.js'
+import { createPluginRegistry, CONTEXT_PROVIDER_SLOT, FileEventStore, hashContextSnapshot, loadConfig, planRun, readContextSnapshots } from '../src/index.js'
 import { hashContextSnapshots } from '../src/context.js'
 import type { ContextProvider } from '../src/index.js'
 import { expect, it } from 'vitest'
@@ -37,4 +37,15 @@ it('binds context snapshots to the planned run and lifecycle log', async () => {
 it('keeps the context hash stable when only resolution time changes', () => {
   const base = { providerId: 'fixture-context', query: { query: 'ownership' }, references: [], sourceHash: 'source-hash', snapshotHash: 'snapshot-hash' }
   expect(hashContextSnapshots([{ ...base, resolvedAt: '2026-08-29T00:00:00.000Z' }])).toBe(hashContextSnapshots([{ ...base, resolvedAt: '2026-08-29T01:00:00.000Z' }]))
+})
+
+it('rejects tampered context snapshots when reading the portable file format', () => {
+  const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-context-integrity-test-'))
+  const path = join(root, 'context.json')
+  const snapshot = { providerId: 'fixture-context', query: { query: 'ownership' }, references: [{ id: 'doc-1', uri: 'doc://fixture' }], sourceHash: 'source-hash', snapshotHash: '', resolvedAt: '2026-08-29T00:00:00.000Z' }
+  const valid = { ...snapshot, snapshotHash: hashContextSnapshot(snapshot) }
+  writeFileSync(path, JSON.stringify(valid))
+  expect(readContextSnapshots(path)).toEqual([valid])
+  writeFileSync(path, JSON.stringify({ ...valid, references: [{ id: 'tampered', uri: 'doc://fixture' }] }))
+  expect(() => readContextSnapshots(path)).toThrow(/snapshotHash does not match/)
 })

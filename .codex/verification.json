@@ -21,6 +21,7 @@
       { "id": "doc-bridge-adapter", "statement": "The optional Doc Bridge adapter resolves real indexed knowledge into deterministic provenance-bearing context snapshots.", "checks": ["harness-doc-bridge"] },
       { "id": "context-binding", "statement": "A resolved context snapshot is frozen into the planned run with a reproducible context hash and lifecycle event.", "checks": ["harness-context-binding"] },
       { "id": "context-cli", "statement": "The common CLI protocol can resolve a Doc Bridge snapshot and attach it to a planned run from a portable JSON file.", "checks": ["harness-context-cli"] },
+      { "id": "context-integrity", "statement": "Imported context snapshots reject tampering when their semantic contents no longer match their cryptographic snapshot hash.", "checks": ["harness-context-integrity"] },
       { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] }
     ]
   },
@@ -47,6 +48,7 @@
     { "id": "harness-doc-bridge", "category": "logic", "command": "pnpm --filter @agentskit/harness test:doc-bridge", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-context-binding", "category": "logic", "command": "pnpm --filter @agentskit/harness test:context-binding", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-context-cli", "category": "cli", "execution": "real", "command": "pnpm --filter @agentskit/harness test:context-cli", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-context-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:context-integrity", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "package-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs", "evidence": "structured", "timeoutMs": 120000 }
   ],

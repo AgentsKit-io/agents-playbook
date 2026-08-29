@@ -105,6 +105,8 @@ ak-harness plan approved --context-file context.json --json
 
 `context.json` may contain one snapshot or an array of snapshots, so providers
 outside this package can participate without a runtime plugin loader.
+The loader rejects a snapshot when its semantic contents no longer match its
+`snapshotHash`.
 
 The snapshot stores the Doc Bridge `contentHash`, reference hashes, and a
 stable `contextHash`; resolution time is metadata and does not change the
