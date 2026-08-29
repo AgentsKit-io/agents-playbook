@@ -221,8 +221,10 @@ action without storing raw output.
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
 and average/median verification duration. With `--manifest`, it also compares
-bound harness tasks with explicitly recorded baseline observations. Missing
-baselines remain non-comparable; the harness never invents a baseline. These are
+bound harness tasks with explicitly recorded baseline observations. A baseline
+must include evidence for every acceptance criterion; missing, duplicate, or
+unknown criterion evidence is rejected. Missing baselines and incomplete
+evidence remain non-comparable; the harness never invents a baseline. These are
 execution metrics, not a claim of productivity improvement; compare reports over
 a controlled task corpus to measure that outcome.
 
@@ -231,33 +233,35 @@ Attach a task to a benchmark suite in the verification contract:
 ```json
 {
   "benchmark": {
-    "suiteId": "agentskit-harness-phase-8",
-    "taskId": "harness-benchmark-comparability",
+    "suiteId": "agentskit-harness-phase-9",
+    "taskId": "harness-benchmark-evidence",
     "mode": "harness"
   }
 }
 ```
 
-The manifest format is available at `benchmarks/harness-phase-8.json`. Record a
+The manifest format is available at `benchmarks/harness-phase-9.json`. Record a
 controlled baseline through the public CLI instead of editing JSON by hand:
 
 ```bash
-ak-harness benchmark baseline harness-benchmark-comparability \
-  --manifest benchmarks/harness-phase-8.json \
+ak-harness benchmark baseline harness-benchmark-evidence \
+  --manifest benchmarks/harness-phase-9.json \
   --status passed \
   --source manual-run-2026-08-29 \
+  --evidence-file benchmarks/harness-phase-9-evidence.example.json \
   --attempts 1 --duration-ms 900000 \
   --review-minutes 20 --escaped-incomplete 0
 ```
 
 The command validates the task and values, rejects duplicate observations, and
 atomically updates the manifest. Baseline observations are explicit records
-with a source and timestamp. An empty or `not-run` baseline is reported as
+with a source, timestamp, and criterion-level evidence. An empty or `not-run` baseline is reported as
 non-comparable rather than treated as success.
 
 A comparison is considered comparable only when the task has an explicit
-baseline and its latest bound harness run is `COMPLETE`. Blocked, incomplete,
-missing, or `not-run` inputs expose a non-comparability reason. Comparable
+baseline with complete criterion-level evidence and its latest bound harness
+run is `COMPLETE`. Blocked, incomplete, missing, or `not-run` inputs expose a
+non-comparability reason. Comparable
 reports include check, outcome, evidence, duration, attempt, and human-review
 metrics; they do not establish causality or productivity improvement alone.
 

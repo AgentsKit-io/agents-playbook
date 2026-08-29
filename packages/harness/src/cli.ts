@@ -2,6 +2,7 @@
 import { readFileSync } from 'node:fs'
 import { Command } from 'commander'
 import { approveRun, authorizeRun, benchmarkRuns, cancelRun, cleanTaskArtifacts, createDocBridgeContextProvider, loadBenchmarkManifest, loadConfig, loadLatestRun, planRun, readContextSnapshots, recordBenchmarkObservation, retryRun, startRun, verifyRun } from './index.js'
+import type { BenchmarkObservationEvidence } from './metrics.js'
 import { fail } from './errors.js'
 
 interface CliOptions { readonly config: string; readonly json: boolean }
@@ -10,6 +11,16 @@ const program = new Command()
 program.name('ak-harness').description('Portable, evidence-backed development harness for coding agents.').version(packageJson.version).option('-c, --config <path>', 'verification contract path', '.codex/verification.json').option('--json', 'emit machine-readable output')
 const options = (): CliOptions => program.opts<CliOptions>()
 const print = (value: unknown): void => { if (options().json) console.log(JSON.stringify(value)); else console.log(typeof value === 'string' ? value : JSON.stringify(value, null, 2)) }
+const readBenchmarkEvidence = (path: string): readonly BenchmarkObservationEvidence[] => {
+  try {
+    const raw = JSON.parse(readFileSync(path, 'utf8')) as unknown
+    const evidence = Array.isArray(raw) ? raw : typeof raw === 'object' && raw !== null ? (raw as { readonly evidence?: unknown }).evidence : undefined
+    if (Array.isArray(evidence)) return evidence as BenchmarkObservationEvidence[]
+  } catch (error) {
+    fail(`Invalid benchmark evidence JSON: ${error instanceof Error ? error.message : String(error)}`, 'INVALID_INPUT')
+  }
+  return fail('benchmark evidence file must contain an array or an object with an evidence array.', 'INVALID_INPUT')
+}
 const decisionArgs = (first: string, second: string | undefined): { readonly decision: string; readonly runId?: string } => {
   const decisions = new Set(['approved', 'approve', 'yes', 'ok', 'rejected', 'reject', 'no'])
   return decisions.has(first) ? { decision: first, ...(second ? { runId: second } : {}) } : { decision: second ?? '', runId: first }
@@ -31,11 +42,11 @@ program.command('retry').description('Create a new implementation attempt after 
 program.command('cancel [run-id]').description('Cancel an active run.').option('--by <actor>', 'cancellation actor', 'human').option('--reason <reason>', 'cancellation reason', 'Run cancelled by a human.').action(async (runId: string | undefined, command: { readonly by: string; readonly reason: string }) => print(await cancelRun({ configPath: options().config, runId, reason: command.reason, actor: command.by })))
 program.command('status').description('Show the latest run.').action(() => { const loaded = loadConfig(options().config); print(loadLatestRun(loaded.stateDir) ?? { state: 'CLARIFYING', message: 'No run exists.' }) })
 const benchmark = program.command('benchmark').description('Aggregate reproducible metrics from historical runs.').option('--manifest <path>', 'benchmark manifest for baseline comparison').action((command: { readonly manifest?: string }) => { const loaded = loadConfig(options().config); print(benchmarkRuns(loaded.stateDir, command.manifest ? loadBenchmarkManifest(command.manifest) : undefined)) })
-benchmark.command('baseline <taskId>').description('Record one controlled baseline observation in a benchmark manifest.').option('--manifest <path>', 'benchmark manifest path').requiredOption('--status <status>', 'passed, failed, blocked, or not-run').requiredOption('--source <source>', 'baseline source or run reference').option('--recorded-at <timestamp>', 'ISO-8601 timestamp').option('--attempts <count>', 'attempt count', (value) => Number(value)).option('--duration-ms <milliseconds>', 'duration in milliseconds', (value) => Number(value)).option('--review-minutes <minutes>', 'human review time in minutes', (value) => Number(value)).option('--escaped-incomplete <count>', 'incomplete deliveries discovered after handoff', (value) => Number(value)).action((taskId: string, command: { readonly manifest?: string; readonly status: string; readonly source: string; readonly recordedAt?: string; readonly attempts?: number; readonly durationMs?: number; readonly reviewMinutes?: number; readonly escapedIncomplete?: number }, cliCommand: Command) => {
+benchmark.command('baseline <taskId>').description('Record one controlled baseline observation in a benchmark manifest.').option('--manifest <path>', 'benchmark manifest path').requiredOption('--status <status>', 'passed, failed, blocked, or not-run').requiredOption('--source <source>', 'baseline source or run reference').option('--evidence-file <path>', 'JSON file with criterion-level baseline evidence').option('--recorded-at <timestamp>', 'ISO-8601 timestamp').option('--attempts <count>', 'attempt count', (value) => Number(value)).option('--duration-ms <milliseconds>', 'duration in milliseconds', (value) => Number(value)).option('--review-minutes <minutes>', 'human review time in minutes', (value) => Number(value)).option('--escaped-incomplete <count>', 'incomplete deliveries discovered after handoff', (value) => Number(value)).action((taskId: string, command: { readonly manifest?: string; readonly status: string; readonly source: string; readonly evidenceFile?: string; readonly recordedAt?: string; readonly attempts?: number; readonly durationMs?: number; readonly reviewMinutes?: number; readonly escapedIncomplete?: number }, cliCommand: Command) => {
   const manifest = command.manifest ?? cliCommand.parent?.opts<{ readonly manifest?: string }>().manifest
   const manifestPath = manifest ?? fail('baseline requires --manifest <path>.', 'INVALID_INPUT')
   const status = ['passed', 'failed', 'blocked', 'not-run'].includes(command.status) ? command.status as 'passed' | 'failed' | 'blocked' | 'not-run' : fail('status must be passed, failed, blocked, or not-run.', 'INVALID_INPUT')
-  print(recordBenchmarkObservation(manifestPath, { taskId, status, source: command.source, ...(command.recordedAt ? { recordedAt: command.recordedAt } : {}), ...(command.attempts === undefined ? {} : { attempts: command.attempts }), ...(command.durationMs === undefined ? {} : { durationMs: command.durationMs }), ...(command.reviewMinutes === undefined ? {} : { reviewMinutes: command.reviewMinutes }), ...(command.escapedIncomplete === undefined ? {} : { escapedIncomplete: command.escapedIncomplete }) }))
+  print(recordBenchmarkObservation(manifestPath, { taskId, status, source: command.source, ...(command.evidenceFile ? { evidence: readBenchmarkEvidence(command.evidenceFile) } : {}), ...(command.recordedAt ? { recordedAt: command.recordedAt } : {}), ...(command.attempts === undefined ? {} : { attempts: command.attempts }), ...(command.durationMs === undefined ? {} : { durationMs: command.durationMs }), ...(command.reviewMinutes === undefined ? {} : { reviewMinutes: command.reviewMinutes }), ...(command.escapedIncomplete === undefined ? {} : { escapedIncomplete: command.escapedIncomplete }) }))
 })
 program.command('clean').description('Remove only configured task-owned temporary artifacts.').action(() => print(cleanTaskArtifacts(options().config)))
 process.on('SIGINT', () => { process.stderr.write('Cancelled.\n'); process.exitCode = 130 })

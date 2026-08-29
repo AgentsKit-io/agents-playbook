@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-9",
+  "name": "AgentsKit Harness Phase 9",
+  "tasks": [
+    {
+      "id": "harness-benchmark-evidence",
+      "title": "Require criterion-level baseline evidence",
+      "acceptanceCriteria": [
+        "A baseline observation covers every acceptance criterion with explicit evidence.",
+        "Missing, duplicate, or unknown criterion evidence is rejected.",
+        "A comparison is comparable only with complete baseline evidence and a completed harness run."
+      ]
+    }
+  ],
+  "observations": []
+}

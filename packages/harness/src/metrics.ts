@@ -26,6 +26,13 @@ export interface BenchmarkObservation {
   readonly durationMs?: number
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
+  readonly evidence?: readonly BenchmarkObservationEvidence[]
+}
+
+export interface BenchmarkObservationEvidence {
+  readonly criterion: string
+  readonly status: BenchmarkObservationStatus
+  readonly source: string
 }
 
 export interface BenchmarkManifest {
@@ -57,9 +64,10 @@ export interface BenchmarkRun {
 export interface BenchmarkComparison {
   readonly taskId: string
   readonly title: string
-  readonly comparability: 'comparable' | 'missing-baseline' | 'baseline-not-run' | 'harness-not-run' | 'harness-not-complete'
+  readonly comparability: 'comparable' | 'missing-baseline' | 'baseline-not-run' | 'baseline-evidence-missing' | 'harness-not-run' | 'harness-not-complete'
   readonly comparable: boolean
   readonly baseline?: BenchmarkObservation
+  readonly baselineEvidenceCoverageRate: number | null
   readonly harness: {
     readonly attempts: number
     readonly latestState: RunState | 'NOT_RUN'
@@ -115,6 +123,7 @@ export interface BenchmarkObservationInput {
   readonly durationMs?: number
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
+  readonly evidence?: readonly BenchmarkObservationEvidence[]
 }
 
 const percentage = (part: number, total: number): number | null => total ? Number((part / total).toFixed(4)) : null
@@ -233,11 +242,23 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
     if (!['passed', 'failed', 'blocked', 'not-run'].includes(String(status))) fail(`benchmark.observations[${index}].status is invalid.`, 'INVALID_CONFIG')
     const taskId = nonEmptyString(observation['taskId'], `benchmark.observations[${index}].taskId`)
     if (!taskIds.has(taskId)) fail(`benchmark observation references unknown task: ${taskId}.`, 'INVALID_CONFIG')
+    const task = tasks.find((candidate) => candidate.id === taskId) ?? fail(`benchmark observation references unknown task: ${taskId}.`, 'INVALID_CONFIG')
     const attempts = nonNegativeInteger(observation['attempts'], `benchmark.observations[${index}].attempts`)
     const durationMs = nonNegativeNumber(observation['durationMs'], `benchmark.observations[${index}].durationMs`)
     const reviewMinutes = nonNegativeNumber(observation['reviewMinutes'], `benchmark.observations[${index}].reviewMinutes`)
     const escapedIncomplete = nonNegativeInteger(observation['escapedIncomplete'], `benchmark.observations[${index}].escapedIncomplete`)
-    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }) }
+    const rawEvidence = observation['evidence'] === undefined ? undefined : Array.isArray(observation['evidence']) ? observation['evidence'] : fail(`benchmark.observations[${index}].evidence must be an array.`, 'INVALID_CONFIG')
+    const evidence = rawEvidence?.map((item, evidenceIndex) => {
+      if (typeof item !== 'object' || item === null || Array.isArray(item)) fail(`benchmark.observations[${index}].evidence[${evidenceIndex}] must be an object.`, 'INVALID_CONFIG')
+      const entry = item as Record<string, unknown>
+      const criterion = nonEmptyString(entry['criterion'], `benchmark.observations[${index}].evidence[${evidenceIndex}].criterion`)
+      if (!task.acceptanceCriteria.includes(criterion)) fail(`benchmark evidence references unknown criterion: ${criterion}.`, 'INVALID_CONFIG')
+      const evidenceStatus = entry['status']
+      if (!['passed', 'failed', 'blocked', 'not-run'].includes(String(evidenceStatus))) fail(`benchmark.observations[${index}].evidence[${evidenceIndex}].status is invalid.`, 'INVALID_CONFIG')
+      return { criterion, status: evidenceStatus as BenchmarkObservationStatus, source: nonEmptyString(entry['source'], `benchmark.observations[${index}].evidence[${evidenceIndex}].source`) }
+    })
+    if (evidence && new Set(evidence.map((entry) => entry.criterion)).size !== evidence.length) fail(`benchmark.observations[${index}].evidence criteria must be unique.`, 'INVALID_CONFIG')
+    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }) }
   })
   if (new Set(observations.map((observation) => observation.taskId)).size !== observations.length) fail('benchmark allows at most one baseline observation per task.', 'INVALID_CONFIG')
   return { type: 'agentskit-harness-benchmark-manifest', schemaVersion: BENCHMARK_SCHEMA_VERSION, suiteId: nonEmptyString(raw['suiteId'], 'benchmark.suiteId'), name: nonEmptyString(raw['name'], 'benchmark.name'), tasks, observations }
@@ -265,6 +286,7 @@ export const recordBenchmarkObservation = (path: string, input: BenchmarkObserva
       ...(input.durationMs === undefined ? {} : { durationMs: input.durationMs }),
       ...(input.reviewMinutes === undefined ? {} : { reviewMinutes: input.reviewMinutes }),
       ...(input.escapedIncomplete === undefined ? {} : { escapedIncomplete: input.escapedIncomplete }),
+      ...(input.evidence === undefined ? {} : { evidence: input.evidence }),
     }],
   })
   const temporaryRoot = mkdtempSync(join(tmpdir(), 'agentskit-harness-baseline-'))
@@ -283,9 +305,12 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest)
   const taskRuns = runs.filter((run) => run.benchmark?.suiteId === manifest.suiteId && run.benchmark.taskId === task.id)
   const latest = taskRuns.at(-1)
   const baseline = manifest.observations.find((observation) => observation.taskId === task.id)
-  const comparable = baseline !== undefined && baseline.status !== 'not-run' && latest?.state === 'COMPLETE'
-  const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : latest === undefined ? 'harness-not-run' : 'harness-not-complete'
-  return { taskId: task.id, title: task.title, comparability, comparable, ...(baseline ? { baseline } : {}), harness: { attempts: taskRuns.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, ...(comparable && baseline?.durationMs !== undefined && latest?.durationMs !== undefined ? { durationDeltaMs: latest.durationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: taskRuns.length - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}) }
+  const coveredCriteria = new Set((baseline?.evidence ?? []).map((entry) => entry.criterion))
+  const baselineEvidenceCoverageRate = baseline ? percentage(coveredCriteria.size, task.acceptanceCriteria.length) : null
+  const baselineEvidenceComplete = baselineEvidenceCoverageRate === 1
+  const comparable = baseline !== undefined && baseline.status !== 'not-run' && baselineEvidenceComplete && latest?.state === 'COMPLETE'
+  const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : !baselineEvidenceComplete ? 'baseline-evidence-missing' : latest === undefined ? 'harness-not-run' : 'harness-not-complete'
+  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, ...(baseline ? { baseline } : {}), harness: { attempts: taskRuns.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, ...(comparable && baseline?.durationMs !== undefined && latest?.durationMs !== undefined ? { durationDeltaMs: latest.durationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: taskRuns.length - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}) }
 })
 
 export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): BenchmarkReport => {

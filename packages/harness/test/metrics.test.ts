@@ -31,18 +31,26 @@ it('aggregates historical runs and exposes retry, stale, evidence, and duration 
 it('compares a bound harness task with an explicit baseline and does not invent missing baselines', () => {
   const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-comparison-'))
   writeRun(stateDir, '1-harness', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' }, transitions: [{ from: null, to: 'PLANNED', at: '2026-01-01T00:00:00.000Z' }, { from: 'VERIFYING', to: 'AWAITING_HUMAN_APPROVAL', at: '2026-01-01T00:00:00.000Z' }, { from: 'AWAITING_HUMAN_APPROVAL', to: 'COMPLETE', at: '2026-01-01T00:02:00.000Z' }], humanApproval: { actor: 'human', at: '2026-01-01T00:02:00.000Z', sourceRevision: 'revision', contractHash: 'contract' }, metrics: { totalDurationMs: 200, budgetExceeded: false } })
-  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z', attempts: 1, durationMs: 100, reviewMinutes: 1 }] })
+  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z', attempts: 1, durationMs: 100, reviewMinutes: 1, evidence: [{ criterion: 'criterion', status: 'passed', source: 'manual-fixture' }] }] })
   const report = benchmarkRuns(stateDir, manifest)
   expect(report.manifest).toEqual({ suiteId: 'suite', taskCount: 1, baselineCount: 1, comparableTaskCount: 1 })
-  expect(report.comparisons[0]).toMatchObject({ taskId: 'task', comparable: true, durationDeltaMs: 100, attemptDelta: 0, reviewDeltaMinutes: 1, harness: { checkPassRate: 1, outcomePassRate: 1, evidenceCoverageRate: 1, humanReviewMinutes: 2 } })
+  expect(report.comparisons[0]).toMatchObject({ taskId: 'task', comparable: true, baselineEvidenceCoverageRate: 1, durationDeltaMs: 100, attemptDelta: 0, reviewDeltaMinutes: 1, harness: { checkPassRate: 1, outcomePassRate: 1, evidenceCoverageRate: 1, humanReviewMinutes: 2 } })
 })
 
 it('does not compare an explicit baseline with an incomplete harness run', () => {
   const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-incomplete-comparison-'))
   writeRun(stateDir, '1-blocked', 'BLOCKED', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' } })
-  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z' }] })
+  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z', evidence: [{ criterion: 'criterion', status: 'passed', source: 'manual-fixture' }] }] })
   const comparison = benchmarkRuns(stateDir, manifest).comparisons[0]
   expect(comparison).toMatchObject({ comparable: false, comparability: 'harness-not-complete', harness: { latestState: 'BLOCKED', checkPassRate: 1 } })
+})
+
+it('requires complete criterion evidence before comparing a baseline', () => {
+  const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-evidence-comparison-'))
+  writeRun(stateDir, '1-harness', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' } })
+  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion', 'second'] }], observations: [{ taskId: 'task', status: 'passed', source: 'fixture', recordedAt: '2026-01-01T00:00:00.000Z', evidence: [{ criterion: 'criterion', status: 'passed', source: 'fixture' }] }] })
+  const comparison = benchmarkRuns(stateDir, manifest).comparisons[0]
+  expect(comparison).toMatchObject({ comparable: false, comparability: 'baseline-evidence-missing', baselineEvidenceCoverageRate: 0.5 })
 })
 
 it('returns an empty, typed report when no runs exist', () => {
@@ -66,4 +74,6 @@ it('records one atomic baseline observation and rejects duplicates', () => {
   expect(() => recordBenchmarkObservation(manifestPath, { taskId: 'task', status: 'passed', source: 'manual-run-2' })).toThrow(/already has an observation/)
   expect(() => validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', status: 'passed', source: 'fixture', recordedAt: 'not-a-timestamp' }] })).toThrow(/valid timestamp/)
   expect(() => validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', status: 'passed', source: 'fixture', recordedAt: '2026-01-01T00:00:00.000Z', attempts: 1.5 }] })).toThrow(/must be an integer/)
+  expect(() => validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', status: 'passed', source: 'fixture', recordedAt: '2026-01-01T00:00:00.000Z', evidence: [{ criterion: 'unknown', status: 'passed', source: 'fixture' }] }] })).toThrow(/unknown criterion/)
+  expect(() => validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', status: 'passed', source: 'fixture', recordedAt: '2026-01-01T00:00:00.000Z', evidence: [{ criterion: 'criterion', status: 'passed', source: 'fixture' }, { criterion: 'criterion', status: 'passed', source: 'fixture' }] }] })).toThrow(/must be unique/)
 })
