@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
+import { createHash } from 'node:crypto'
 import { spawnSync } from 'node:child_process'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
@@ -11,13 +12,14 @@ const manifest = join(fixture, 'manifest.json')
 const evidence = join(fixture, 'evidence.json')
 writeFileSync(manifest, JSON.stringify({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'cli-suite', name: 'CLI fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [] }))
 writeFileSync(evidence, JSON.stringify({ evidence: [{ criterion: 'criterion', status: 'passed', source: 'cli-fixture' }] }))
+const expectedDigest = createHash('sha256').update(readFileSync(evidence, 'utf8')).digest('hex')
 const record = spawnSync(process.execPath, [cli, 'benchmark', 'baseline', 'task', '--manifest', manifest, '--status', 'passed', '--source', 'cli-fixture', '--evidence-file', evidence, '--recorded-at', '2026-01-01T00:00:00.000Z', '--attempts', '1', '--duration-ms', '100', '--review-minutes', '3', '--escaped-incomplete', '0', '--json'], { cwd: root, encoding: 'utf8' })
 const duplicate = spawnSync(process.execPath, [cli, 'benchmark', 'baseline', 'task', '--manifest', manifest, '--status', 'passed', '--source', 'duplicate', '--json'], { cwd: root, encoding: 'utf8' })
 const failures = []
 if (record.status !== 0) failures.push(record.stderr || 'baseline record command failed')
 const updated = JSON.parse(readFileSync(manifest, 'utf8'))
-if (updated.observations?.length !== 1 || updated.observations[0]?.source !== 'cli-fixture' || updated.observations[0]?.evidence?.length !== 1) failures.push('baseline observation or criterion evidence was not persisted')
+if (updated.observations?.length !== 1 || updated.observations[0]?.source !== 'cli-fixture' || updated.observations[0]?.evidence?.length !== 1 || updated.observations[0]?.evidenceDigest !== expectedDigest) failures.push('baseline observation, criterion evidence, or content digest was not persisted')
 if (duplicate.status === 0) failures.push('duplicate baseline was accepted')
 rmSync(fixture, { recursive: true, force: true })
-console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['benchmark-outcomes'], failures } : { status: 'passed', criteria: ['benchmark-outcomes'], observationCount: updated.observations.length }))
+console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['benchmark-integrity'], failures } : { status: 'passed', criteria: ['benchmark-integrity'], observationCount: updated.observations.length }))
 process.exitCode = failures.length ? 1 : 0

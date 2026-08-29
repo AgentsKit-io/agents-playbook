@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { Command } from 'commander'
 import { approveRun, authorizeRun, benchmarkRuns, cancelRun, cleanTaskArtifacts, createDocBridgeContextProvider, loadBenchmarkManifest, loadConfig, loadLatestRun, planRun, readContextSnapshots, recordBenchmarkObservation, retryRun, startRun, verifyRun } from './index.js'
@@ -11,11 +12,12 @@ const program = new Command()
 program.name('ak-harness').description('Portable, evidence-backed development harness for coding agents.').version(packageJson.version).option('-c, --config <path>', 'verification contract path', '.codex/verification.json').option('--json', 'emit machine-readable output')
 const options = (): CliOptions => program.opts<CliOptions>()
 const print = (value: unknown): void => { if (options().json) console.log(JSON.stringify(value)); else console.log(typeof value === 'string' ? value : JSON.stringify(value, null, 2)) }
-const readBenchmarkEvidence = (path: string): readonly BenchmarkObservationEvidence[] => {
+const readBenchmarkEvidence = (path: string): { readonly evidence: readonly BenchmarkObservationEvidence[]; readonly digest: string } => {
   try {
-    const raw = JSON.parse(readFileSync(path, 'utf8')) as unknown
+    const content = readFileSync(path, 'utf8')
+    const raw = JSON.parse(content) as unknown
     const evidence = Array.isArray(raw) ? raw : typeof raw === 'object' && raw !== null ? (raw as { readonly evidence?: unknown }).evidence : undefined
-    if (Array.isArray(evidence)) return evidence as BenchmarkObservationEvidence[]
+    if (Array.isArray(evidence)) return { evidence: evidence as BenchmarkObservationEvidence[], digest: createHash('sha256').update(content).digest('hex') }
   } catch (error) {
     fail(`Invalid benchmark evidence JSON: ${error instanceof Error ? error.message : String(error)}`, 'INVALID_INPUT')
   }
@@ -46,7 +48,8 @@ benchmark.command('baseline <taskId>').description('Record one controlled baseli
   const manifest = command.manifest ?? cliCommand.parent?.opts<{ readonly manifest?: string }>().manifest
   const manifestPath = manifest ?? fail('baseline requires --manifest <path>.', 'INVALID_INPUT')
   const status = ['passed', 'failed', 'blocked', 'not-run'].includes(command.status) ? command.status as 'passed' | 'failed' | 'blocked' | 'not-run' : fail('status must be passed, failed, blocked, or not-run.', 'INVALID_INPUT')
-  print(recordBenchmarkObservation(manifestPath, { taskId, status, source: command.source, ...(command.evidenceFile ? { evidence: readBenchmarkEvidence(command.evidenceFile) } : {}), ...(command.recordedAt ? { recordedAt: command.recordedAt } : {}), ...(command.attempts === undefined ? {} : { attempts: command.attempts }), ...(command.durationMs === undefined ? {} : { durationMs: command.durationMs }), ...(command.reviewMinutes === undefined ? {} : { reviewMinutes: command.reviewMinutes }), ...(command.escapedIncomplete === undefined ? {} : { escapedIncomplete: command.escapedIncomplete }) }))
+  const evidence = command.evidenceFile ? readBenchmarkEvidence(command.evidenceFile) : undefined
+  print(recordBenchmarkObservation(manifestPath, { taskId, status, source: command.source, ...(evidence ? { evidence: evidence.evidence, evidenceDigest: evidence.digest } : {}), ...(command.recordedAt ? { recordedAt: command.recordedAt } : {}), ...(command.attempts === undefined ? {} : { attempts: command.attempts }), ...(command.durationMs === undefined ? {} : { durationMs: command.durationMs }), ...(command.reviewMinutes === undefined ? {} : { reviewMinutes: command.reviewMinutes }), ...(command.escapedIncomplete === undefined ? {} : { escapedIncomplete: command.escapedIncomplete }) }))
 })
 program.command('clean').description('Remove only configured task-owned temporary artifacts.').action(() => print(cleanTaskArtifacts(options().config)))
 process.on('SIGINT', () => { process.stderr.write('Cancelled.\n'); process.exitCode = 130 })

@@ -258,6 +258,11 @@ atomically updates the manifest. Baseline observations are explicit records
 with a source, timestamp, and criterion-level evidence. An empty or `not-run` baseline is reported as
 non-comparable rather than treated as success.
 
+When evidence is supplied through `--evidence-file`, the manifest also stores
+the file's lowercase SHA-256 digest as `evidenceDigest`. This binds the
+recorded JSON input to the observation; it does not independently validate a
+manual, remote, or external source named by an evidence entry.
+
 A comparison is considered comparable only when the task has an explicit
 baseline with complete criterion-level evidence and its latest bound harness
 run is `COMPLETE`. Blocked, incomplete, missing, or `not-run` inputs expose a

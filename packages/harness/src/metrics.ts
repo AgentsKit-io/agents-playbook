@@ -28,6 +28,7 @@ export interface BenchmarkObservation {
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
   readonly evidence?: readonly BenchmarkObservationEvidence[]
+  readonly evidenceDigest?: string
 }
 
 export interface BenchmarkObservationEvidence {
@@ -133,6 +134,7 @@ export interface BenchmarkObservationInput {
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
   readonly evidence?: readonly BenchmarkObservationEvidence[]
+  readonly evidenceDigest?: string
 }
 
 const percentage = (part: number, total: number): number | null => total ? Number((part / total).toFixed(4)) : null
@@ -206,6 +208,13 @@ const nonEmptyString = (value: unknown, label: string): string => {
   return result
 }
 
+const sha256 = (value: unknown, label: string): string | undefined => {
+  if (value === undefined) return undefined
+  const result = nonEmptyString(value, label)
+  if (!/^[a-f0-9]{64}$/.test(result)) return fail(`${label} must be a lowercase SHA-256 digest.`, 'INVALID_CONFIG')
+  return result
+}
+
 const stringList = (value: unknown, label: string): string[] => {
   if (!Array.isArray(value)) return fail(`${label} must be a non-empty string array.`, 'INVALID_CONFIG')
   const items = value as unknown[]
@@ -258,6 +267,7 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
     const durationMs = nonNegativeNumber(observation['durationMs'], `benchmark.observations[${index}].durationMs`)
     const reviewMinutes = nonNegativeNumber(observation['reviewMinutes'], `benchmark.observations[${index}].reviewMinutes`)
     const escapedIncomplete = nonNegativeInteger(observation['escapedIncomplete'], `benchmark.observations[${index}].escapedIncomplete`)
+    const evidenceDigest = sha256(observation['evidenceDigest'], `benchmark.observations[${index}].evidenceDigest`)
     const rawEvidence = observation['evidence'] === undefined ? undefined : Array.isArray(observation['evidence']) ? observation['evidence'] : fail(`benchmark.observations[${index}].evidence must be an array.`, 'INVALID_CONFIG')
     const evidence = rawEvidence?.map((item, evidenceIndex) => {
       if (typeof item !== 'object' || item === null || Array.isArray(item)) fail(`benchmark.observations[${index}].evidence[${evidenceIndex}] must be an object.`, 'INVALID_CONFIG')
@@ -269,7 +279,7 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
       return { criterion, status: evidenceStatus as BenchmarkObservationStatus, source: nonEmptyString(entry['source'], `benchmark.observations[${index}].evidence[${evidenceIndex}].source`) }
     })
     if (evidence && new Set(evidence.map((entry) => entry.criterion)).size !== evidence.length) fail(`benchmark.observations[${index}].evidence criteria must be unique.`, 'INVALID_CONFIG')
-    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }) }
+    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }), ...(evidenceDigest === undefined ? {} : { evidenceDigest }) }
   })
   if (new Set(observations.map((observation) => observation.taskId)).size !== observations.length) fail('benchmark allows at most one baseline observation per task.', 'INVALID_CONFIG')
   return { type: 'agentskit-harness-benchmark-manifest', schemaVersion: BENCHMARK_SCHEMA_VERSION, suiteId: nonEmptyString(raw['suiteId'], 'benchmark.suiteId'), name: nonEmptyString(raw['name'], 'benchmark.name'), tasks, observations }
@@ -298,6 +308,7 @@ export const recordBenchmarkObservation = (path: string, input: BenchmarkObserva
       ...(input.reviewMinutes === undefined ? {} : { reviewMinutes: input.reviewMinutes }),
       ...(input.escapedIncomplete === undefined ? {} : { escapedIncomplete: input.escapedIncomplete }),
       ...(input.evidence === undefined ? {} : { evidence: input.evidence }),
+      ...(input.evidenceDigest === undefined ? {} : { evidenceDigest: input.evidenceDigest }),
     }],
   })
   const temporaryRoot = mkdtempSync(join(tmpdir(), 'agentskit-harness-baseline-'))
