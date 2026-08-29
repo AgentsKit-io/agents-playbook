@@ -25,7 +25,8 @@ it('binds context snapshots to the planned run and lifecycle log', async () => {
   mkdirSync(join(root, '.codex'), { recursive: true })
   const configPath = join(root, '.codex', 'verification.json')
   writeFileSync(configPath, JSON.stringify({ schemaVersion: 1, project: 'context-fixture', root: '..', profile: 'strict', contract: { intent: 'Freeze context.', scope: { inScope: ['fixture'], outOfScope: ['production'] }, ambiguities: [], outcomes: [{ id: 'outcome', statement: 'The fixture is valid.', checks: ['logic'] }] }, surfaces: { logic: true, endpoint: false, database: false, cli: false, mcp: false, ui: false, docs: false }, checks: [{ id: 'logic', category: 'logic', command: 'true', evidence: 'structured' }], tracking: { required: false, reason: 'fixture' } }))
-  const snapshot = { providerId: 'fixture-context', query: { query: 'ownership', scope: ['playbook'] }, references: [{ id: 'doc-1', uri: 'doc://fixture', contentHash: 'hash' }], sourceHash: 'source-hash', snapshotHash: 'snapshot-hash', resolvedAt: '2026-08-29T00:00:00.000Z' }
+  const snapshot = { providerId: 'fixture-context', query: { query: 'ownership', scope: ['playbook'] }, references: [{ id: 'doc-1', uri: 'doc://fixture', contentHash: 'hash' }], sourceHash: 'source-hash', snapshotHash: '', resolvedAt: '2026-08-29T00:00:00.000Z' }
+  snapshot.snapshotHash = hashContextSnapshot(snapshot)
   const run = await planRun({ configPath, decision: 'approved', contextSnapshots: [snapshot] })
   expect(run.contextSnapshots).toEqual([snapshot])
   expect(run.contextHash).toMatch(/^[a-f0-9]{64}$/)
@@ -48,4 +49,13 @@ it('rejects tampered context snapshots when reading the portable file format', (
   expect(readContextSnapshots(path)).toEqual([valid])
   writeFileSync(path, JSON.stringify({ ...valid, references: [{ id: 'tampered', uri: 'doc://fixture' }] }))
   expect(() => readContextSnapshots(path)).toThrow(/snapshotHash does not match/)
+})
+
+it('rejects invalid context snapshots at the plan API boundary', async () => {
+  const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-context-api-integrity-test-'))
+  mkdirSync(join(root, '.codex'), { recursive: true })
+  const configPath = join(root, '.codex', 'verification.json')
+  writeFileSync(configPath, JSON.stringify({ schemaVersion: 1, project: 'context-api-fixture', root: '..', profile: 'strict', contract: { intent: 'Reject invalid context.', scope: { inScope: ['fixture'], outOfScope: ['production'] }, ambiguities: [], outcomes: [{ id: 'outcome', statement: 'The fixture is valid.', checks: ['logic'] }] }, surfaces: { logic: true, endpoint: false, database: false, cli: false, mcp: false, ui: false, docs: false }, checks: [{ id: 'logic', category: 'logic', command: 'true', evidence: 'structured' }], tracking: { required: false, reason: 'fixture' } }))
+  const snapshot = { providerId: 'fixture-context', query: { query: 'ownership' }, references: [], sourceHash: 'source-hash', snapshotHash: 'wrong', resolvedAt: '2026-08-29T00:00:00.000Z' }
+  await expect(planRun({ configPath, decision: 'approved', contextSnapshots: [snapshot] })).rejects.toThrow(/snapshotHash does not match/)
 })

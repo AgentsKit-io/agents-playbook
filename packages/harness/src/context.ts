@@ -43,7 +43,7 @@ const requiredString = (value: unknown, label: string): string => {
   if (typeof value !== 'string' || !value.trim()) fail(`${label} must be a non-empty string.`, 'INVALID_INPUT')
   return value as string
 }
-const contextSnapshot = (value: unknown, index: number): ContextSnapshot => {
+export const validateContextSnapshot = (value: unknown, index = 0): ContextSnapshot => {
   const raw = record(value, `context snapshot ${index}`)
   const rawQuery = record(raw['query'], `context snapshot ${index}.query`)
   const rawReferences = raw['references']
@@ -73,7 +73,9 @@ const contextSnapshot = (value: unknown, index: number): ContextSnapshot => {
 
 export const readContextSnapshots = (path: string): readonly ContextSnapshot[] => {
   const value = JSON.parse(readFileSync(path, 'utf8')) as unknown
-  return (Array.isArray(value) ? value : [value]).map(contextSnapshot)
+  return (Array.isArray(value) ? value : [value]).map((snapshot, index) => validateContextSnapshot(snapshot, index))
 }
+
+export const validateContextSnapshots = (snapshots: readonly ContextSnapshot[]): readonly ContextSnapshot[] => snapshots.map((snapshot, index) => validateContextSnapshot(snapshot, index))
 
 export const CONTEXT_PROVIDER_SLOT = createPluginSlot<ContextProvider>('context.provider')

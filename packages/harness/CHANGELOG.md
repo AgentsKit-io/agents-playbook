@@ -19,5 +19,6 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Context lifecycle events and stable context hashes that ignore resolution timestamps.
 - Portable CLI snapshot resolution and `plan --context-file` binding for shell-based agents.
 - Tamper-evident validation for imported context snapshots.
+- Direct API callers now receive the same tamper-evident context validation as CLI callers.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

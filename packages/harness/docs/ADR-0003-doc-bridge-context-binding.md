@@ -24,6 +24,9 @@ The file loader verifies the snapshot hash before planning. This makes the
 portable handoff tamper-evident while leaving provider-specific source
 provenance and authorization at the provider boundary.
 
+The kernel applies the same verification to snapshots supplied directly to
+`planRun`, so typed callers cannot bypass the integrity boundary.
+
 ## Boundaries
 
 The adapter does not install or import Doc Bridge, access remote services, or

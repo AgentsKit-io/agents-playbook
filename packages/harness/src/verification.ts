@@ -8,6 +8,7 @@ import { parseStructuredEvidence, validateEvidence } from './evidence.js'
 import { assertHuman, approvedDecision, transition } from './state-machine.js'
 import { sourceSnapshot } from './source.js'
 import { cleanConfiguredArtifacts, loadLatestRun, readRun } from './files.js'
+import { validateContextSnapshots } from './context.js'
 import type { ContextSnapshot } from './context.js'
 import type { CheckResult, LoadedConfig, VerificationCheck, VerificationRun } from './types.js'
 
@@ -46,13 +47,14 @@ export const planRun = async ({ configPath, decision, actor = 'human', allowDirt
   if (!approvedDecision(decision)) fail('Contract was not approved.', 'CLARIFYING')
   const loaded = loadConfig(configPath)
   if (loaded.config.contract.ambiguities.length) fail(`Unresolved ambiguities remain: ${loaded.config.contract.ambiguities.join(' | ')}`, 'CLARIFYING')
+  const validatedContextSnapshots = validateContextSnapshots(contextSnapshots)
   const baseline = await sourceSnapshot(loaded.root, loaded.stateDir)
   const configRelative = relative(loaded.root, loaded.absolute)
   const meaningful = baseline.status.split('\n').filter(Boolean).filter((line) => !line.endsWith(` ${configRelative}`) && !line.endsWith(` ${configRelative.replaceAll('/', '\\')}`))
   if (meaningful.length && !allowDirty) fail(`Worktree is dirty before planning:\n${meaningful.join('\n')}\nUse --allow-dirty only with explicit human authorization.`, 'WORKTREE_DIRTY')
   const previous = loadLatestRun(loaded.stateDir)
   if (previous && !['STALE', 'SUPERSEDED'].includes(previous.state)) fail(`An active run already exists: ${previous.runId} (${previous.state}).`, 'ACTIVE_RUN')
-  return createRun({ loaded, baseline, supersedes: previous?.runId, dirtyBaselineAuthorized: allowDirty, contextSnapshots })
+  return createRun({ loaded, baseline, supersedes: previous?.runId, dirtyBaselineAuthorized: allowDirty, contextSnapshots: validatedContextSnapshots })
 }
 
 export const startRun = (loaded: LoadedConfig): VerificationRun => {
