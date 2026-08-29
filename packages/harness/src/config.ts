@@ -15,6 +15,7 @@ interface RawTracking extends RawRecord { readonly required?: unknown; readonly 
 interface RawConfig extends RawRecord { readonly schemaVersion?: unknown; readonly project?: unknown; readonly root?: unknown; readonly stateDir?: unknown; readonly profile?: unknown; readonly profiles?: unknown; readonly contract?: unknown; readonly checks?: unknown; readonly surfaces?: unknown; readonly tracking?: unknown; readonly budget?: unknown; readonly cleanup?: unknown }
 interface RawBudget extends RawRecord { readonly maxDurationMs?: unknown }
 interface RawCleanup extends RawRecord { readonly roots?: unknown }
+interface RawBenchmark extends RawRecord { readonly suiteId?: unknown; readonly taskId?: unknown; readonly mode?: unknown }
 
 const isRecord = (value: unknown): value is RawRecord => typeof value === 'object' && value !== null && !Array.isArray(value)
 const stringValue = (value: unknown, label: string): string => {
@@ -93,9 +94,11 @@ export const validateConfig = (rawValue: unknown): VerificationConfig => {
   if (budgetRaw && budgetRaw['maxDurationMs'] !== undefined && (!Number.isInteger(budgetRaw['maxDurationMs']) || typeof budgetRaw['maxDurationMs'] !== 'number' || budgetRaw['maxDurationMs'] < 1)) fail('budget.maxDurationMs must be positive.', 'INVALID_CONFIG')
   const cleanupRaw = raw['cleanup'] === undefined ? undefined : asRecord(raw['cleanup'], 'cleanup') as RawCleanup
   const cleanup = cleanupRaw ? { roots: cleanupRaw['roots'] === undefined ? undefined : stringArray(cleanupRaw['roots'], 'cleanup.roots') } : undefined
+  const benchmarkRaw = raw['benchmark'] === undefined ? undefined : asRecord(raw['benchmark'], 'benchmark') as RawBenchmark
+  const benchmark = benchmarkRaw ? { suiteId: stringValue(benchmarkRaw['suiteId'], 'benchmark.suiteId'), taskId: stringValue(benchmarkRaw['taskId'], 'benchmark.taskId'), mode: benchmarkRaw['mode'] === 'harness' ? 'harness' as const : fail('benchmark.mode must be harness.', 'INVALID_CONFIG') } : undefined
   const contract: TaskContract = { intent: stringValue(contractRaw['intent'], 'contract.intent'), scope, ambiguities, outcomes }
   const tracking: TrackingConfig = { required: trackingRaw['required'] === true, ...(typeof trackingRaw['target'] === 'string' ? { target: trackingRaw['target'] } : {}), ...(typeof trackingRaw['reason'] === 'string' ? { reason: trackingRaw['reason'] } : {}) }
-  return { schemaVersion: 1, project, ...(typeof raw['root'] === 'string' ? { root: raw['root'] } : {}), ...(typeof raw['stateDir'] === 'string' ? { stateDir: raw['stateDir'] } : {}), profile: typeof raw['profile'] === 'string' ? raw['profile'] : 'strict', contract, surfaces, checks, tracking, ...(budgetRaw ? { budget: { maxDurationMs: budgetRaw['maxDurationMs'] as number | undefined } } : {}), ...(cleanup ? { cleanup } : {}) }
+  return { schemaVersion: 1, project, ...(typeof raw['root'] === 'string' ? { root: raw['root'] } : {}), ...(typeof raw['stateDir'] === 'string' ? { stateDir: raw['stateDir'] } : {}), profile: typeof raw['profile'] === 'string' ? raw['profile'] : 'strict', contract, surfaces, checks, tracking, ...(budgetRaw ? { budget: { maxDurationMs: budgetRaw['maxDurationMs'] as number | undefined } } : {}), ...(cleanup ? { cleanup } : {}), ...(benchmark ? { benchmark } : {}) }
 }
 
 export const loadConfig = (configPath = '.codex/verification.json'): LoadedConfig => {

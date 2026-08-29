@@ -1,0 +1,47 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-0",
+  "name": "AgentsKit Harness Phase 0",
+  "tasks": [
+    {
+      "id": "harness-benchmark",
+      "title": "Add reproducible harness benchmark metrics",
+      "acceptanceCriteria": [
+        "The public API and CLI aggregate historical runs.",
+        "The report preserves run, source, contract, and evidence provenance.",
+        "An explicit baseline can be compared without inventing missing data."
+      ]
+    },
+    {
+      "id": "harness-cli-lifecycle",
+      "title": "Exercise the portable CLI lifecycle",
+      "acceptanceCriteria": [
+        "The CLI plans, starts, verifies, retries, and records human approval gates."
+      ]
+    },
+    {
+      "id": "harness-context-integrity",
+      "title": "Reject tampered context snapshots",
+      "acceptanceCriteria": [
+        "Context provenance is bound to its semantic snapshot hash.",
+        "The API and CLI reject modified context."
+      ]
+    },
+    {
+      "id": "harness-api-db-proof",
+      "title": "Validate an API through persistence",
+      "acceptanceCriteria": [
+        "A real request reaches the database and the result is independently verified."
+      ]
+    },
+    {
+      "id": "harness-ui-proof",
+      "title": "Validate a responsive UI journey",
+      "acceptanceCriteria": [
+        "A real browser proves the journey, responsive layouts, accessibility, and visual evidence."
+      ]
+    }
+  ],
+  "observations": []
+}

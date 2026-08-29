@@ -30,7 +30,7 @@ export const createRun = async ({ loaded, baseline, supersedes, dirtyBaselineAut
   const run: VerificationRun = {
     type: 'agentskit-harness-run', schemaVersion: 1, runId: newRunId(), project: loaded.config.project, state: 'PLANNED', configHash: loaded.configHash, contractHash: hashJson(loaded.config.contract), sourceRevision: baseline.revision, sourceStatusHash: baseline.statusHash, baseline,
     contractApproval: { actor: 'human', at: now(), contractHash: hashJson(loaded.config.contract) },
-    checks: loaded.config.checks.map(({ id, category }) => ({ id, category, status: 'pending' })), contextSnapshots, ...(contextSnapshots.length ? { contextHash: hashContextSnapshots(contextSnapshots) } : {}),
+    checks: loaded.config.checks.map(({ id, category }) => ({ id, category, status: 'pending' })), contextSnapshots, ...(contextSnapshots.length ? { contextHash: hashContextSnapshots(contextSnapshots) } : {}), ...(loaded.config.benchmark ? { benchmark: loaded.config.benchmark } : {}),
     outcomes: loaded.config.contract.outcomes.map(({ id, statement, checks }) => ({ id, statement, checks, status: 'pending' })),
     transitions: [{ from: null, to: 'PLANNED', at: now(), actor: 'human' }], evidenceReferences: [],
     ...(supersedes ? { supersedes } : {}), ...(dirtyBaselineAuthorized ? { dirtyBaselineAuthorized: true } : {}),

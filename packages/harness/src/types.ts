@@ -53,6 +53,12 @@ export interface TrackingConfig {
   readonly reason?: string
 }
 
+export interface BenchmarkBinding {
+  readonly suiteId: string
+  readonly taskId: string
+  readonly mode: 'harness'
+}
+
 export interface VerificationConfig {
   readonly schemaVersion: 1
   readonly project: string
@@ -65,6 +71,7 @@ export interface VerificationConfig {
   readonly tracking: TrackingConfig
   readonly budget?: { readonly maxDurationMs?: number }
   readonly cleanup?: { readonly roots?: readonly string[] }
+  readonly benchmark?: BenchmarkBinding
 }
 
 export interface LoadedConfig {
@@ -134,6 +141,7 @@ export interface VerificationRun {
   readonly evidenceReferences: readonly EvidenceReference[]
   readonly contextSnapshots: readonly ContextSnapshot[]
   readonly contextHash?: string
+  readonly benchmark?: BenchmarkBinding
   readonly supersedes?: string
   readonly dirtyBaselineAuthorized?: boolean
   readonly metrics?: { readonly totalDurationMs: number; readonly budgetExceeded: boolean }

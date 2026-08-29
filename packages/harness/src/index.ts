@@ -8,7 +8,7 @@ export { FileEventStore, HARNESS_EVENT_SCHEMA_VERSION, HARNESS_EVENT_TYPES } fro
 export { createPluginRegistry, createPluginSlot, HARNESS_PLUGIN_API_VERSION } from './plugins.js'
 export { CONTEXT_PROVIDER_SLOT, hashContextSnapshot, hashContextSnapshots, readContextSnapshots, validateContextSnapshot, validateContextSnapshots } from './context.js'
 export { createDocBridgeContextProvider } from './adapters/doc-bridge.js'
-export { BENCHMARK_SCHEMA_VERSION, benchmarkRuns } from './metrics.js'
+export { BENCHMARK_SCHEMA_VERSION, benchmarkRuns, loadBenchmarkManifest, validateBenchmarkManifest } from './metrics.js'
 export type * from './types.js'
 export type * from './events.js'
 export type * from './plugins.js'

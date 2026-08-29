@@ -19,7 +19,7 @@ ak-harness start
 ak-verify run --json
 ak-verify approve <run-id> approved --by human --json
 ak-harness cancel <run-id> --by human --reason "Requirements changed"
-ak-harness benchmark --json
+ak-harness benchmark --manifest benchmarks/harness-phase-0.json --json
 ```
 
 `plan` rejects unresolved ambiguities and unauthorized dirty worktrees. After `start`, the contract is frozen. Any source, configuration, or contract change invalidates evidence and moves the run to `STALE`. A human can cancel an active run; retrying a blocked, stale, or cancelled run marks the previous run `SUPERSEDED`.
@@ -116,9 +116,27 @@ the run, so later index changes cannot silently change its evidence.
 
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
-and average/median verification duration. These are execution metrics, not a
-claim of productivity improvement; compare reports over a controlled task corpus
-to measure that outcome.
+and average/median verification duration. With `--manifest`, it also compares
+bound harness tasks with explicitly recorded baseline observations. Missing
+baselines remain non-comparable; the harness never invents a baseline. These are
+execution metrics, not a claim of productivity improvement; compare reports over
+a controlled task corpus to measure that outcome.
+
+Attach a task to a benchmark suite in the verification contract:
+
+```json
+{
+  "benchmark": {
+    "suiteId": "agentskit-harness-phase-0",
+    "taskId": "harness-benchmark",
+    "mode": "harness"
+  }
+}
+```
+
+The manifest format is available at `benchmarks/harness-phase-0.json`. Baseline
+observations are explicit records with a source and timestamp. An empty or
+`not-run` baseline is reported as non-comparable rather than treated as success.
 
 ## Development
 
