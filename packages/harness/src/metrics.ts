@@ -9,6 +9,7 @@ import type { BenchmarkBinding, RunState, VerificationRun } from './types.js'
 export const BENCHMARK_SCHEMA_VERSION = 1 as const
 
 export type BenchmarkObservationStatus = 'passed' | 'failed' | 'blocked' | 'not-run'
+export type BenchmarkImprovementDirection = 'improved' | 'regressed' | 'unchanged' | 'unavailable'
 
 export interface BenchmarkTask {
   readonly id: string
@@ -68,6 +69,14 @@ export interface BenchmarkComparison {
   readonly comparable: boolean
   readonly baseline?: BenchmarkObservation
   readonly baselineEvidenceCoverageRate: number | null
+  readonly improvement: {
+    readonly durationRate: number | null
+    readonly duration: BenchmarkImprovementDirection
+    readonly attemptsRate: number | null
+    readonly attempts: BenchmarkImprovementDirection
+    readonly reviewRate: number | null
+    readonly review: BenchmarkImprovementDirection
+  }
   readonly harness: {
     readonly attempts: number
     readonly latestState: RunState | 'NOT_RUN'
@@ -127,6 +136,8 @@ export interface BenchmarkObservationInput {
 }
 
 const percentage = (part: number, total: number): number | null => total ? Number((part / total).toFixed(4)) : null
+const improvementRate = (baseline: number | undefined, current: number | undefined): number | null => baseline === undefined || current === undefined || baseline === 0 ? null : Number(((baseline - current) / baseline).toFixed(4))
+const improvementDirection = (rate: number | null): BenchmarkImprovementDirection => rate === null ? 'unavailable' : rate > 0 ? 'improved' : rate < 0 ? 'regressed' : 'unchanged'
 const count = <T>(items: readonly T[], predicate: (item: T) => boolean): number => items.filter(predicate).length
 const median = (values: readonly number[]): number | null => {
   if (!values.length) return null
@@ -310,7 +321,10 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest)
   const baselineEvidenceComplete = baselineEvidenceCoverageRate === 1
   const comparable = baseline !== undefined && baseline.status !== 'not-run' && baselineEvidenceComplete && latest?.state === 'COMPLETE'
   const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : !baselineEvidenceComplete ? 'baseline-evidence-missing' : latest === undefined ? 'harness-not-run' : 'harness-not-complete'
-  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, ...(baseline ? { baseline } : {}), harness: { attempts: taskRuns.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, ...(comparable && baseline?.durationMs !== undefined && latest?.durationMs !== undefined ? { durationDeltaMs: latest.durationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: taskRuns.length - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}) }
+  const durationRate = comparable ? improvementRate(baseline?.durationMs, latest?.durationMs) : null
+  const attemptsRate = comparable ? improvementRate(baseline?.attempts, taskRuns.length) : null
+  const reviewRate = comparable ? improvementRate(baseline?.reviewMinutes, latest?.humanReviewMinutes) : null
+  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate) }, ...(baseline ? { baseline } : {}), harness: { attempts: taskRuns.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, ...(comparable && baseline?.durationMs !== undefined && latest?.durationMs !== undefined ? { durationDeltaMs: latest.durationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: taskRuns.length - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}) }
 })
 
 export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): BenchmarkReport => {

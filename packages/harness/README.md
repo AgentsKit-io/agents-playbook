@@ -261,9 +261,11 @@ non-comparable rather than treated as success.
 A comparison is considered comparable only when the task has an explicit
 baseline with complete criterion-level evidence and its latest bound harness
 run is `COMPLETE`. Blocked, incomplete, missing, or `not-run` inputs expose a
-non-comparability reason. Comparable
-reports include check, outcome, evidence, duration, attempt, and human-review
-metrics; they do not establish causality or productivity improvement alone.
+non-comparability reason and mark directional outcomes as `unavailable`.
+Comparable reports include check, outcome, evidence, duration, attempt, and
+human-review metrics plus directional outcomes. A positive improvement rate
+means the harness used less of that measured resource; these metrics do not
+establish causality or productivity improvement alone.
 
 ## Development
 

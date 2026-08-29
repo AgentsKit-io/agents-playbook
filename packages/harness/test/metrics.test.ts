@@ -34,7 +34,7 @@ it('compares a bound harness task with an explicit baseline and does not invent 
   const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z', attempts: 1, durationMs: 100, reviewMinutes: 1, evidence: [{ criterion: 'criterion', status: 'passed', source: 'manual-fixture' }] }] })
   const report = benchmarkRuns(stateDir, manifest)
   expect(report.manifest).toEqual({ suiteId: 'suite', taskCount: 1, baselineCount: 1, comparableTaskCount: 1 })
-  expect(report.comparisons[0]).toMatchObject({ taskId: 'task', comparable: true, baselineEvidenceCoverageRate: 1, durationDeltaMs: 100, attemptDelta: 0, reviewDeltaMinutes: 1, harness: { checkPassRate: 1, outcomePassRate: 1, evidenceCoverageRate: 1, humanReviewMinutes: 2 } })
+  expect(report.comparisons[0]).toMatchObject({ taskId: 'task', comparable: true, baselineEvidenceCoverageRate: 1, improvement: { durationRate: -1, duration: 'regressed', attemptsRate: 0, attempts: 'unchanged', reviewRate: -1, review: 'regressed' }, durationDeltaMs: 100, attemptDelta: 0, reviewDeltaMinutes: 1, harness: { checkPassRate: 1, outcomePassRate: 1, evidenceCoverageRate: 1, humanReviewMinutes: 2 } })
 })
 
 it('does not compare an explicit baseline with an incomplete harness run', () => {
@@ -50,7 +50,7 @@ it('requires complete criterion evidence before comparing a baseline', () => {
   writeRun(stateDir, '1-harness', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' } })
   const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion', 'second'] }], observations: [{ taskId: 'task', status: 'passed', source: 'fixture', recordedAt: '2026-01-01T00:00:00.000Z', evidence: [{ criterion: 'criterion', status: 'passed', source: 'fixture' }] }] })
   const comparison = benchmarkRuns(stateDir, manifest).comparisons[0]
-  expect(comparison).toMatchObject({ comparable: false, comparability: 'baseline-evidence-missing', baselineEvidenceCoverageRate: 0.5 })
+  expect(comparison).toMatchObject({ comparable: false, comparability: 'baseline-evidence-missing', baselineEvidenceCoverageRate: 0.5, improvement: { duration: 'unavailable', attempts: 'unavailable', review: 'unavailable' } })
 })
 
 it('returns an empty, typed report when no runs exist', () => {

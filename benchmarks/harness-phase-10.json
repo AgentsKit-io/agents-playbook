@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-10",
+  "name": "AgentsKit Harness Phase 10",
+  "tasks": [
+    {
+      "id": "harness-benchmark-outcomes",
+      "title": "Expose directional benchmark outcomes",
+      "acceptanceCriteria": [
+        "Comparable tasks expose directional duration, attempt, and review outcomes.",
+        "Improvement rates are positive only when the harness uses less of the measured resource.",
+        "Non-comparable tasks expose unavailable outcomes instead of inferred gains."
+      ]
+    }
+  ],
+  "observations": []
+}
