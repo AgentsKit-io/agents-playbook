@@ -1,0 +1,78 @@
+import { createHash } from 'node:crypto'
+import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { tmpdir } from 'node:os'
+import { join } from 'node:path'
+import { expect, it } from 'vitest'
+import { approveRun, authorizeRun, loadConfig, loadLatestRun, planRun, retryRun, startRun, verifyRun } from '../src/index.js'
+import type { TrackingConfig, VerificationCheck, VerificationConfig } from '../src/index.js'
+
+const quote = (value: string): string => `'${value.replaceAll("'", "'\"'\"'")}'`
+const evidenceCommand = (value: unknown, exitCode = 0): string => `${quote(process.execPath)} -e ${quote(`console.log(${JSON.stringify(JSON.stringify(value))}); process.exit(${exitCode})`)} `
+const hash = (value: string): string => createHash('sha256').update(value).digest('hex')
+
+const project = (checks: VerificationCheck[], ambiguities: string[] = [], tracking: TrackingConfig = { required: false, reason: 'fixture only' }): { root: string; configPath: string; stateDir: string; config: VerificationConfig } => {
+  const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-test-'))
+  mkdirSync(join(root, '.codex'), { recursive: true })
+  const configPath = join(root, '.codex', 'verification.json')
+  const hasLogic = checks.some((check) => check.category === 'logic')
+  const hasUi = checks.some((check) => check.category === 'ui')
+  const config = { schemaVersion: 1 as const, project: 'fixture', root: '..', profile: 'strict', contract: { intent: 'Validate fixture.', scope: { inScope: ['fixture'], outOfScope: ['production'] }, ambiguities, outcomes: checks.map((check, index) => ({ id: `outcome-${index}`, statement: `${String(check.id)} passes.`, checks: [check.id] })) }, surfaces: { logic: hasLogic, endpoint: { required: false, reason: 'fixture' }, database: { required: false, reason: 'fixture' }, cli: { required: false, reason: 'fixture' }, mcp: { required: false, reason: 'fixture' }, ui: hasUi, docs: { required: false, reason: 'fixture' } }, checks, tracking, cleanup: { roots: ['.codex/verification/tmp'] } }
+  writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`)
+  return { root, configPath, stateDir: join(root, '.codex', 'verification'), config: config as VerificationConfig }
+}
+
+const runToVerify = async (fixture: ReturnType<typeof project>) => {
+  await planRun({ configPath: fixture.configPath, decision: 'approved' })
+  startRun(loadConfig(fixture.configPath))
+  return verifyRun({ configPath: fixture.configPath })
+}
+
+it('runs a complete typed task through human approval', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  expect((await runToVerify(fixture)).state).toBe('AWAITING_HUMAN_APPROVAL')
+  expect((await approveRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('COMPLETE')
+})
+
+it('refuses to plan while ambiguities remain', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }], ['Which persistence boundary is in scope?'])
+  await expect(planRun({ configPath: fixture.configPath, decision: 'approved' })).rejects.toMatchObject({ code: 'CLARIFYING' })
+  expect(loadLatestRun(fixture.stateDir)).toBeNull()
+})
+
+it('executes every configured check and blocks on structured failure', async () => {
+  const fixture = project([{ id: 'first', category: 'logic', command: evidenceCommand({ status: 'failed', criteria: ['outcome-0'] }), evidence: 'structured' }, { id: 'second', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-1'] }), evidence: 'structured' }])
+  const blocked = await runToVerify(fixture)
+  expect(blocked.state).toBe('BLOCKED')
+  expect(blocked.checks.map((check) => check.status)).toEqual(['failed', 'passed'])
+  expect((await retryRun({ configPath: fixture.configPath })).state).toBe('IMPLEMENTING')
+})
+
+it('invalidates approval when the frozen contract changes', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  await runToVerify(fixture)
+  const changedConfig = { ...fixture.config, contract: { ...fixture.config.contract, intent: 'Changed after execution.' } }
+  writeFileSync(fixture.configPath, `${JSON.stringify(changedConfig, null, 2)}\n`)
+  await expect(approveRun({ configPath: fixture.configPath, decision: 'approved' })).rejects.toMatchObject({ code: 'STALE' })
+  expect(loadLatestRun(fixture.stateDir)?.state).toBe('STALE')
+})
+
+it('validates real-browser screenshot evidence and its hash', async () => {
+  const screenshot = 'deterministic screenshot fixture'
+  const fixture = project([{ id: 'ui', category: 'ui', execution: 'real', capabilities: ['real-browser', 'screenshot'], command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'], capability: 'real-browser', artifacts: [{ type: 'screenshot', path: 'artifacts/screen.txt', sha256: hash(screenshot), viewport: { width: 1280, height: 720 } }] }), evidence: 'structured' }])
+  mkdirSync(join(fixture.root, 'artifacts')); writeFileSync(join(fixture.root, 'artifacts/screen.txt'), screenshot)
+  expect((await runToVerify(fixture)).state).toBe('AWAITING_HUMAN_APPROVAL')
+  expect(loadLatestRun(fixture.stateDir)?.checks[0].evidence?.artifacts?.[0]?.sha256).toBe(hash(readFileSync(join(fixture.root, 'artifacts/screen.txt')).toString()))
+})
+
+it('requires authorization only when tracking is declared', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }], [], { required: true, target: 'github:fixture/repo#1' })
+  await runToVerify(fixture)
+  expect((await approveRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('AWAITING_AUTHORIZATION')
+  expect((await authorizeRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('COMPLETE')
+})
+
+it('blocks a human rejection instead of treating it as completion', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  await runToVerify(fixture)
+  expect((await approveRun({ configPath: fixture.configPath, decision: 'rejected' })).state).toBe('BLOCKED')
+})

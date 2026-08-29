@@ -12,9 +12,9 @@
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "package", "statement": "The harness library and CLI are usable from a clean checkout.", "checks": ["harness-tests", "harness-cli"] },
+      { "id": "package", "statement": "The typed harness library builds, tests, and exposes a usable CLI from a clean checkout.", "checks": ["harness-tests", "harness-build", "harness-cli"] },
       { "id": "protocol", "statement": "The contract, state machine, evidence, stale detection, and approval protocol are enforced.", "checks": ["harness-contract"] },
-      { "id": "docs", "statement": "The Playbook documents the portable protocol and dogfood workflow.", "checks": ["playbook-docs"] }
+      { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] }
     ]
   },
   "surfaces": {
@@ -28,9 +28,11 @@
   },
   "checks": [
     { "id": "harness-tests", "category": "logic", "command": "pnpm --filter @agentskit/harness test", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-cli", "category": "cli", "execution": "real", "command": "node packages/harness/bin/ak-harness.js --version && node packages/harness/bin/ak-harness.js --help >/dev/null && node packages/harness/bin/ak-harness.js doctor --json", "evidence": "structured", "timeoutMs": 30000 },
-    { "id": "harness-contract", "category": "logic", "command": "node packages/harness/test/contract-check.mjs", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 }
+    { "id": "harness-build", "category": "build", "command": "pnpm --filter @agentskit/harness build", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-cli", "category": "cli", "execution": "real", "command": "pnpm exec ak-harness --version && pnpm exec ak-harness --help >/dev/null && pnpm exec ak-harness doctor --json", "evidence": "structured", "timeoutMs": 30000 },
+    { "id": "harness-contract", "category": "logic", "command": "pnpm --filter @agentskit/harness test:contract", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "package-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": {
     "required": false,

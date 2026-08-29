@@ -3,17 +3,41 @@
   "version": "0.1.0",
   "description": "Portable, evidence-backed development harness for coding agents.",
   "type": "module",
-  "bin": { "ak-harness": "bin/ak-harness.js", "ak-verify": "bin/ak-harness.js" },
+  "bin": { "ak-harness": "dist/cli.js", "ak-verify": "dist/cli.js" },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./lib/index.js"
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
   },
-  "files": ["bin", "lib", "README.md"],
+  "files": ["dist", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "SECURITY.md", "LICENSE"],
   "engines": { "node": ">=22" },
   "scripts": {
-    "test": "node --test test/harness.test.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\""
+    "build": "tsup && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm typecheck && vitest run --config ../../vitest.config.ts test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\"",
+    "test:contract": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/contract.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['protocol']}))\"",
+    "prepublishOnly": "pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {
     "commander": "^14.0.0"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.10"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgentsKit-io/agents-playbook.git",
+    "directory": "packages/harness"
+  },
+  "bugs": { "url": "https://github.com/AgentsKit-io/agents-playbook/issues" },
+  "homepage": "https://github.com/AgentsKit-io/agents-playbook/tree/main/packages/harness",
+  "author": "AgentsKit Contributors",
+  "sideEffects": false
 }
