@@ -1,15 +1,17 @@
 import { appendFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { fail } from './errors.js'
+import type { ContextQuery } from './context.js'
 import type { RunState } from './types.js'
 
 export const HARNESS_EVENT_SCHEMA_VERSION = 1 as const
-export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned'] as const
+export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached'] as const
 export type HarnessEventType = typeof HARNESS_EVENT_TYPES[number]
 
 export interface HarnessEventPayloads {
   readonly 'run.created': { readonly project: string; readonly baselineRevision: string; readonly baselineStatusHash: string }
   readonly 'state.transitioned': { readonly from: RunState | null; readonly to: RunState; readonly actor: string; readonly reason?: string; readonly transitionIndex: number }
+  readonly 'context.attached': { readonly providerId: string; readonly sourceHash: string; readonly snapshotHash: string; readonly query: ContextQuery }
 }
 
 export type HarnessEvent<K extends HarnessEventType = HarnessEventType> = K extends HarnessEventType ? {

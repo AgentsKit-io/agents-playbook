@@ -15,5 +15,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Append-only, source- and contract-bound lifecycle event log per run.
 - Declarative profile inheritance with validated check overrides.
 - Optional provenance-bearing context provider slot for Doc Bridge and Playbook adapters.
+- Dependency-free Doc Bridge index adapter with deterministic references and frozen context snapshots.
+- Context lifecycle events and stable context hashes that ignore resolution timestamps.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

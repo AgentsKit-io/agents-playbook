@@ -1,0 +1,24 @@
+# ADR-0003: Bind optional Doc Bridge context to a run
+
+- Status: accepted
+- Date: 2026-08-29
+
+## Decision
+
+The harness provides a dependency-free `createDocBridgeContextProvider` adapter
+that reads the local `.doc-bridge/index.json` contract. It returns at most
+eight deterministic references, carries the index `contentHash` as source
+provenance, and computes a stable snapshot hash.
+
+`planRun` accepts resolved context snapshots and freezes them into `run.json`
+with a `contextHash`. The lifecycle log records one `context.attached` event per
+snapshot. Resolution timestamps remain audit metadata and are excluded from the
+reproducibility hash.
+
+## Boundaries
+
+The adapter does not install or import Doc Bridge, access remote services, or
+refresh context after planning. A caller owns query selection and must resolve
+context before the contract is verified. Index schema validation and richer
+semantic search remain responsibilities of Doc Bridge; malformed or missing
+indexes fail the adapter closed.

@@ -18,6 +18,8 @@
       { "id": "event-log", "statement": "Every verification run records an append-only lifecycle event log that is ordered and bound to the run source and contract.", "checks": ["harness-event-log"] },
       { "id": "profiles", "statement": "Named verification profiles compose deterministic, validated overlays without changing the kernel guarantees.", "checks": ["harness-profiles"] },
       { "id": "context", "statement": "Optional context providers expose a typed, provenance-bearing seam suitable for Doc Bridge and Playbook integrations.", "checks": ["harness-context"] },
+      { "id": "doc-bridge-adapter", "statement": "The optional Doc Bridge adapter resolves real indexed knowledge into deterministic provenance-bearing context snapshots.", "checks": ["harness-doc-bridge"] },
+      { "id": "context-binding", "statement": "A resolved context snapshot is frozen into the planned run with a reproducible context hash and lifecycle event.", "checks": ["harness-context-binding"] },
       { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] }
     ]
   },
@@ -41,6 +43,8 @@
     { "id": "harness-event-log", "category": "logic", "command": "pnpm --filter @agentskit/harness test:event-log", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-profiles", "category": "logic", "command": "pnpm --filter @agentskit/harness test:profiles", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-context", "category": "logic", "command": "pnpm --filter @agentskit/harness test:context", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-doc-bridge", "category": "logic", "command": "pnpm --filter @agentskit/harness test:doc-bridge", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-context-binding", "category": "logic", "command": "pnpm --filter @agentskit/harness test:context-binding", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "package-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs", "evidence": "structured", "timeoutMs": 120000 }
   ],

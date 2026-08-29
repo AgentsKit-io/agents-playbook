@@ -7,6 +7,7 @@ export { planRun, startRun, verifyRun, approveRun, authorizeRun, retryRun, cance
 export { FileEventStore, HARNESS_EVENT_SCHEMA_VERSION, HARNESS_EVENT_TYPES } from './events.js'
 export { createPluginRegistry, createPluginSlot, HARNESS_PLUGIN_API_VERSION } from './plugins.js'
 export { CONTEXT_PROVIDER_SLOT } from './context.js'
+export { createDocBridgeContextProvider } from './adapters/doc-bridge.js'
 export type * from './types.js'
 export type * from './events.js'
 export type * from './plugins.js'

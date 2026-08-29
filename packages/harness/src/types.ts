@@ -1,3 +1,5 @@
+import type { ContextSnapshot } from './context.js'
+
 export const SURFACE_NAMES = ['logic', 'endpoint', 'database', 'cli', 'mcp', 'ui', 'docs'] as const
 export type SurfaceName = typeof SURFACE_NAMES[number]
 
@@ -130,6 +132,8 @@ export interface VerificationRun {
   readonly outcomes: readonly RunOutcome[]
   readonly transitions: readonly StateTransition[]
   readonly evidenceReferences: readonly EvidenceReference[]
+  readonly contextSnapshots: readonly ContextSnapshot[]
+  readonly contextHash?: string
   readonly supersedes?: string
   readonly dirtyBaselineAuthorized?: boolean
   readonly metrics?: { readonly totalDurationMs: number; readonly budgetExceeded: boolean }

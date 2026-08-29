@@ -23,6 +23,8 @@
     "test:event-log": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/extensibility.test.ts -t \"ordered append-only lifecycle log\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['event-log']}))\"",
     "test:profiles": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/profiles.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['profiles']}))\"",
     "test:context": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context']}))\"",
+    "test:doc-bridge": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/doc-bridge.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['doc-bridge-adapter']}))\"",
+    "test:context-binding": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts -t \"binds context\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context-binding']}))\"",
     "prepublishOnly": "pnpm typecheck && pnpm build && pnpm test"
   },
   "dependencies": {

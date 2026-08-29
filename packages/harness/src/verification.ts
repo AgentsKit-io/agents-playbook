@@ -8,6 +8,7 @@ import { parseStructuredEvidence, validateEvidence } from './evidence.js'
 import { assertHuman, approvedDecision, transition } from './state-machine.js'
 import { sourceSnapshot } from './source.js'
 import { cleanConfiguredArtifacts, loadLatestRun, readRun } from './files.js'
+import type { ContextSnapshot } from './context.js'
 import type { CheckResult, LoadedConfig, VerificationCheck, VerificationRun } from './types.js'
 
 const now = (): string => new Date().toISOString()
@@ -40,7 +41,7 @@ const isFresh = async (loaded: LoadedConfig, run: VerificationRun): Promise<bool
   return current.configHash === run.configHash && current.source.revision === run.sourceRevision && current.source.statusHash === run.sourceStatusHash
 }
 
-export const planRun = async ({ configPath, decision, actor = 'human', allowDirty = false }: { readonly configPath: string; readonly decision: string; readonly actor?: string; readonly allowDirty?: boolean }): Promise<VerificationRun> => {
+export const planRun = async ({ configPath, decision, actor = 'human', allowDirty = false, contextSnapshots = [] }: { readonly configPath: string; readonly decision: string; readonly actor?: string; readonly allowDirty?: boolean; readonly contextSnapshots?: readonly ContextSnapshot[] }): Promise<VerificationRun> => {
   assertHuman(actor)
   if (!approvedDecision(decision)) fail('Contract was not approved.', 'CLARIFYING')
   const loaded = loadConfig(configPath)
@@ -51,7 +52,7 @@ export const planRun = async ({ configPath, decision, actor = 'human', allowDirt
   if (meaningful.length && !allowDirty) fail(`Worktree is dirty before planning:\n${meaningful.join('\n')}\nUse --allow-dirty only with explicit human authorization.`, 'WORKTREE_DIRTY')
   const previous = loadLatestRun(loaded.stateDir)
   if (previous && !['STALE', 'SUPERSEDED'].includes(previous.state)) fail(`An active run already exists: ${previous.runId} (${previous.state}).`, 'ACTIVE_RUN')
-  return createRun({ loaded, baseline, supersedes: previous?.runId, dirtyBaselineAuthorized: allowDirty })
+  return createRun({ loaded, baseline, supersedes: previous?.runId, dirtyBaselineAuthorized: allowDirty, contextSnapshots })
 }
 
 export const startRun = (loaded: LoadedConfig): VerificationRun => {

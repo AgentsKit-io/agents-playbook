@@ -81,7 +81,25 @@ contract is frozen:
 
 Doc Bridge and Playbook integrations can implement `ContextProvider` and
 register it through `CONTEXT_PROVIDER_SLOT`; the kernel records neither their
-credentials nor their transport and does not depend on either package.
+credentials nor their transport and does not depend on either package. The
+portable adapter reads a local Doc Bridge index without adding a dependency:
+
+```ts
+import { createDocBridgeContextProvider, planRun } from '@agentskit/harness'
+
+const provider = createDocBridgeContextProvider({ root: process.cwd() })
+const context = await provider.resolve({ query: 'harness', scope: ['playbook'] })
+const run = await planRun({
+  configPath: '.codex/verification.json',
+  decision: 'approved',
+  contextSnapshots: [context],
+})
+```
+
+The snapshot stores the Doc Bridge `contentHash`, reference hashes, and a
+stable `contextHash`; resolution time is metadata and does not change the
+reproducibility hash. Context is resolved before planning and is frozen with
+the run, so later index changes cannot silently change its evidence.
 
 ## Development
 
