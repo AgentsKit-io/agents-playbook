@@ -1,4 +1,5 @@
-import { spawn } from 'node:child_process'
+import { execFile, spawn } from 'node:child_process'
+import { promisify } from 'node:util'
 import { hashJson } from './hash.js'
 import { fail } from './errors.js'
 
@@ -44,9 +45,24 @@ export interface DockerToolDefinition {
   readonly mounts?: readonly DockerMount[]
 }
 
+export interface DockerRuntimeEvidence {
+  readonly provider: 'docker'
+  readonly profileHash: string
+  readonly image: string
+  readonly imageDigest?: string
+  readonly network: 'none'
+  readonly readOnlyRootFilesystem: true
+  readonly noNewPrivileges: true
+  readonly capabilities: 'drop-all'
+  readonly user: string
+  readonly memoryLimit: string
+  readonly cpus: string
+  readonly pidsLimit: number
+}
+
 export type ToolExecutionResult =
-  | { readonly status: 'completed'; readonly resultHash: string; readonly durationMs: number }
-  | { readonly status: 'failed'; readonly errorCode: string; readonly retryable: boolean; readonly durationMs: number }
+  | { readonly status: 'completed'; readonly resultHash: string; readonly durationMs: number; readonly runtimeEvidence?: DockerRuntimeEvidence }
+  | { readonly status: 'failed'; readonly errorCode: string; readonly retryable: boolean; readonly durationMs: number; readonly runtimeEvidence?: DockerRuntimeEvidence }
 
 const required = (value: string, label: string): string => {
   if (typeof value !== 'string' || !value.trim()) fail(`${label} is required.`, 'INVALID_INPUT')
@@ -78,6 +94,8 @@ const dockerEnvironment = (env: Readonly<Record<string, string>> | undefined, la
     return `${key}=${value}`
   })
 }
+
+const inspectImage = promisify(execFile)
 
 export const createToolRuntime = ({ tools, timeoutMs = 30_000 }: { readonly tools: readonly ToolDefinition[]; readonly timeoutMs?: number }): ToolRuntime => {
   if (!Array.isArray(tools)) fail('Runtime tools must be an array.', 'INVALID_INPUT')
@@ -211,9 +229,13 @@ export const createDockerToolRuntime = ({
       if (mount.readOnly !== undefined && typeof mount.readOnly !== 'boolean') fail(`tools[${index}].mounts[${mountIndex}].readOnly must be boolean.`, 'INVALID_INPUT')
       return `type=bind,src=${source},dst=${target}${mount.readOnly === false ? '' : ',readonly'}`
     })
+    const profileHash = hashJson({ provider: 'docker', toolId, image, command: [...tool.command], args: tool.args ?? [], cwd: tool.cwd ?? null, env, mounts, network: 'none', readOnlyRootFilesystem: true, noNewPrivileges: true, capabilities: 'drop-all', user: normalizedUser, memoryLimit: memory, cpus: cpu, pidsLimit, pull })
     return {
       toolId,
       command,
+      image,
+      profileHash,
+      evidence: { provider: 'docker' as const, profileHash, image, network: 'none' as const, readOnlyRootFilesystem: true as const, noNewPrivileges: true as const, capabilities: 'drop-all' as const, user: normalizedUser, memoryLimit: memory, cpus: cpu, pidsLimit },
       args: [
         'run', '--rm', '--init', '--pull', pull, '--network', 'none', '--read-only', '--cap-drop', 'ALL', '--security-opt', 'no-new-privileges',
         '--pids-limit', String(pidsLimit), '--memory', memory, '--cpus', cpu, '--user', normalizedUser,
@@ -227,5 +249,23 @@ export const createDockerToolRuntime = ({
     }
   })
   if (new Set(normalized.map((tool) => tool.toolId)).size !== normalized.length) fail('Docker runtime tools must have unique ids.', 'INVALID_INPUT')
-  return createProcessToolRuntime({ tools: normalized, timeoutMs, maxOutputBytes })
+  const processRuntime = createProcessToolRuntime({ tools: normalized, timeoutMs, maxOutputBytes })
+  return {
+    execute: async (request) => {
+      const tool = normalized.find((candidate) => candidate.toolId === request.toolId)
+      if (!tool) return processRuntime.execute(request)
+      const started = Date.now()
+      let imageDigest: string
+      try {
+        const inspected = await inspectImage(command, ['image', 'inspect', tool.image, '--format', '{{.Id}}'], { shell: false, encoding: 'utf8', maxBuffer: 64 * 1024, env: { PATH: process.env['PATH'] ?? '' } })
+        imageDigest = inspected.stdout.trim()
+        if (!/^sha256:[a-f0-9]{64}$/.test(imageDigest)) throw new Error('Docker image inspection did not return a digest.')
+      } catch {
+        return { status: 'failed', errorCode: 'IMAGE_UNAVAILABLE', retryable: true, durationMs: duration(Date.now() - started), runtimeEvidence: tool.evidence }
+      }
+      const runtimeEvidence = { ...tool.evidence, imageDigest, profileHash: hashJson({ ...tool.evidence, imageDigest }) }
+      const result = await processRuntime.execute(request)
+      return { ...result, runtimeEvidence }
+    },
+  }
 }

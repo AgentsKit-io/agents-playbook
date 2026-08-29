@@ -52,6 +52,7 @@ it('executes a real tool inside the default Docker sandbox', async () => {
   })
   const result = await runtime.execute({ ...request, toolId: 'docker-node' })
   expect(result.status).toBe('completed')
+  expect(result).toMatchObject({ runtimeEvidence: { provider: 'docker', imageDigest: expect.stringMatching(/^sha256:[a-f0-9]{64}$/), network: 'none', readOnlyRootFilesystem: true, noNewPrivileges: true, capabilities: 'drop-all', user: '65532:65532', memoryLimit: '512m', cpus: '1', pidsLimit: 128 } })
   expect(result).not.toHaveProperty('stdout')
   expect(result).not.toHaveProperty('result')
 })
@@ -60,4 +61,9 @@ it('rejects unsafe or incomplete Docker definitions', () => {
   expect(() => createDockerToolRuntime({ tools: [{ toolId: 'empty', image: 'alpine:3.21', command: [] }] })).toThrow(/non-empty string array/)
   expect(() => createDockerToolRuntime({ tools: [{ toolId: 'mount', image: 'alpine:3.21', command: ['/bin/true'], mounts: [{ source: 'relative', target: '/work' }] }] })).toThrow(/absolute path/)
   expect(() => createDockerToolRuntime({ tools: [{ toolId: 'bad-mounts', image: 'alpine:3.21', command: ['/bin/true'], mounts: {} as never }] })).toThrow(/mounts must be an array/)
+})
+
+it('fails closed when the cached Docker image is unavailable', async () => {
+  const runtime = createDockerToolRuntime({ tools: [{ toolId: 'missing-image', image: 'agentskit-harness:does-not-exist', command: ['/bin/true'] }] })
+  await expect(runtime.execute({ ...request, toolId: 'missing-image' })).resolves.toMatchObject({ status: 'failed', errorCode: 'IMAGE_UNAVAILABLE', retryable: true, runtimeEvidence: { provider: 'docker', image: 'agentskit-harness:does-not-exist' } })
 })

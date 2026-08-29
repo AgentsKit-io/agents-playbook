@@ -80,3 +80,35 @@ it('closes a failed execution and requires a fresh policy-approved action for re
   await expect(recorder.executeTool({ actionId: second.payload.actionId, arguments: { attempt: 2 } })).resolves.toMatchObject({ status: 'completed' })
   recorder.end('completed')
 })
+
+it('persists runtime attestation with the terminal tool event', async () => {
+  const { root, run } = await fixture()
+  const runtimeWithEvidence = {
+    execute: async () => ({
+      status: 'completed' as const,
+      resultHash: 'result-hash',
+      durationMs: 4,
+      runtimeEvidence: {
+        provider: 'docker' as const,
+        profileHash: 'profile-hash',
+        image: 'node:22.13.0-bookworm-slim',
+        imageDigest: `sha256:${'a'.repeat(64)}`,
+        network: 'none' as const,
+        readOnlyRootFilesystem: true as const,
+        noNewPrivileges: true as const,
+        capabilities: 'drop-all' as const,
+        user: '65532:65532',
+        memoryLimit: '512m',
+        cpus: '1',
+        pidsLimit: 128,
+      },
+    }),
+  }
+  const recorder = createSessionRecorder({ stateDir: join(root, '.codex', 'verification'), run, adapter, policy, runtime: runtimeWithEvidence, sessionId: 'attested-session' })
+  recorder.startTurn('attested-input', 'attested-turn')
+  const action = recorder.requestTool({ turnId: 'attested-turn', actionId: 'attested-action', toolId: 'shell', argumentsHash: 'attested-arguments' })
+  await recorder.executeTool({ actionId: action.payload.actionId, arguments: { fixture: true } })
+  recorder.end('completed')
+  const completed = new FileEventStore(join(root, '.codex', 'verification')).read(run.runId).find((event) => event.type === 'tool.completed')
+  expect(completed?.payload).toMatchObject({ actionId: 'attested-action', runtimeEvidence: { provider: 'docker', imageDigest: `sha256:${'a'.repeat(64)}` } })
+})

@@ -3,6 +3,7 @@ import { join } from 'node:path'
 import { fail } from './errors.js'
 import type { ContextQuery } from './context.js'
 import type { RunState } from './types.js'
+import type { DockerRuntimeEvidence } from './runtime.js'
 
 export const HARNESS_EVENT_SCHEMA_VERSION = 1 as const
 export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached', 'session.started', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'] as const
@@ -18,8 +19,8 @@ export interface HarnessEventPayloads {
   readonly 'policy.evaluated': { readonly actionId: string; readonly turnId: string; readonly toolId: string; readonly decision: 'allow' | 'block'; readonly policyId: string; readonly reason: string }
   readonly 'tool.requested': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string }
   readonly 'tool.blocked': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly policyId: string; readonly reason: string }
-  readonly 'tool.completed': { readonly actionId: string; readonly resultHash: string; readonly durationMs: number }
-  readonly 'tool.failed': { readonly actionId: string; readonly errorCode: string; readonly retryable: boolean; readonly durationMs: number }
+  readonly 'tool.completed': { readonly actionId: string; readonly resultHash: string; readonly durationMs: number; readonly runtimeEvidence?: DockerRuntimeEvidence }
+  readonly 'tool.failed': { readonly actionId: string; readonly errorCode: string; readonly retryable: boolean; readonly durationMs: number; readonly runtimeEvidence?: DockerRuntimeEvidence }
   readonly 'session.ended': { readonly status: 'completed' | 'failed' | 'cancelled' }
 }
 

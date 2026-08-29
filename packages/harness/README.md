@@ -214,6 +214,9 @@ const runtime = createDockerToolRuntime({
 The provider does not add Docker as a package dependency and is not a VM or a
 compromised-daemon boundary. Pin images for reproducibility; set `pull` to
 `missing` or `always` only when image acquisition is explicitly authorized.
+Completed and failed tool events carry the resolved image digest and an
+effective profile hash, so reviewers can identify the runtime used for each
+action without storing raw output.
 
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
