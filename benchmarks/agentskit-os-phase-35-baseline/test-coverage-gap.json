@@ -1,0 +1,161 @@
+{
+  "type": "agentskit-harness-baseline-observation",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-os-coding-phase-28",
+  "taskId": "test-coverage-gap",
+  "sourceRevision": "ca60d270d840f66ae429cb3b54593f15b33cf22b",
+  "providerIds": [
+    "codex"
+  ],
+  "recordedAt": "2026-08-30T19:24:05.718Z",
+  "attempts": 1,
+  "durationMs": 106678,
+  "durationSamplesMs": [
+    112736,
+    79875,
+    106678
+  ],
+  "status": "failed",
+  "escapedIncomplete": 3,
+  "providerReport": {
+    "repeats": 3,
+    "samples": [
+      {
+        "sample": 1,
+        "status": "failed",
+        "durationMs": 112736,
+        "escapedIncomplete": 1,
+        "providerReport": {
+          "kind": "add-test",
+          "prompt": "# test: coverage gap in `slidingWindow`\n\n`tests/slice-window.test.ts` covers the happy path only. The boundary cases below are untested.\n\n## Goal\n\n- Add tests in `tests/slice-window.test.ts` for:\n  - empty input (`[]`)\n  - `n` larger than the input length\n  - `n <= 0`\n  - input length exactly equal to `n`\n- Do **not** modify `src/slice-window.ts` as part of this task.\n- Use `vitest` style (`describe`, `it`, `expect`).\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+          "dryRun": false,
+          "isolateWorktrees": false,
+          "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-test-coverage-gap-sample-1-sHjRiE",
+          "rows": [
+            {
+              "providerId": "codex",
+              "status": "partial",
+              "durationMs": 112736,
+              "inputTokens": 0,
+              "outputTokens": 0,
+              "costUsd": 0,
+              "fileEditCount": 1,
+              "completenessScore": 56,
+              "errorCode": "TEST_FAILURE_AND_HARNESS_UNAVAILABLE",
+              "summary": "Added all four requested boundary tests without modifying src/slice-window.ts. Vitest: 5 passed, 1 failed because the existing implementation omits the exact-length window; ak-verify was unavailable.",
+              "editedPaths": [
+                "tests/slice-window.test.ts"
+              ]
+            }
+          ]
+        },
+        "validation": {
+          "status": "failed",
+          "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+          "exitCode": 1,
+          "failures": []
+        }
+      },
+      {
+        "sample": 2,
+        "status": "failed",
+        "durationMs": 79875,
+        "escapedIncomplete": 1,
+        "providerReport": {
+          "kind": "add-test",
+          "prompt": "# test: coverage gap in `slidingWindow`\n\n`tests/slice-window.test.ts` covers the happy path only. The boundary cases below are untested.\n\n## Goal\n\n- Add tests in `tests/slice-window.test.ts` for:\n  - empty input (`[]`)\n  - `n` larger than the input length\n  - `n <= 0`\n  - input length exactly equal to `n`\n- Do **not** modify `src/slice-window.ts` as part of this task.\n- Use `vitest` style (`describe`, `it`, `expect`).\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+          "dryRun": false,
+          "isolateWorktrees": false,
+          "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-test-coverage-gap-sample-2-YqlZUV",
+          "rows": [
+            {
+              "providerId": "codex",
+              "status": "partial",
+              "durationMs": 79875,
+              "inputTokens": 0,
+              "outputTokens": 0,
+              "costUsd": 0,
+              "fileEditCount": 1,
+              "completenessScore": 56,
+              "errorCode": "test_failed_existing_off_by_one",
+              "summary": "Added all requested Vitest boundary tests without modifying src/slice-window.ts. 5/6 tests pass; exact-length test exposes the existing off-by-one bug.",
+              "editedPaths": [
+                "tests/slice-window.test.ts"
+              ]
+            }
+          ]
+        },
+        "validation": {
+          "status": "failed",
+          "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+          "exitCode": 1,
+          "failures": []
+        }
+      },
+      {
+        "sample": 3,
+        "status": "failed",
+        "durationMs": 106678,
+        "escapedIncomplete": 1,
+        "providerReport": {
+          "kind": "add-test",
+          "prompt": "# test: coverage gap in `slidingWindow`\n\n`tests/slice-window.test.ts` covers the happy path only. The boundary cases below are untested.\n\n## Goal\n\n- Add tests in `tests/slice-window.test.ts` for:\n  - empty input (`[]`)\n  - `n` larger than the input length\n  - `n <= 0`\n  - input length exactly equal to `n`\n- Do **not** modify `src/slice-window.ts` as part of this task.\n- Use `vitest` style (`describe`, `it`, `expect`).\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+          "dryRun": false,
+          "isolateWorktrees": false,
+          "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-test-coverage-gap-sample-3-wFia43",
+          "rows": [
+            {
+              "providerId": "codex",
+              "status": "partial",
+              "durationMs": 106678,
+              "inputTokens": 0,
+              "outputTokens": 0,
+              "costUsd": 0,
+              "fileEditCount": 1,
+              "completenessScore": 56,
+              "errorCode": "VERIFICATION_HARNESS_UNAVAILABLE",
+              "summary": "Added all four requested boundary tests. Vitest passed 6/6 and diff checks passed; ak-verify is unavailable, so required verification is blocked.",
+              "editedPaths": [
+                "tests/slice-window.test.ts"
+              ]
+            }
+          ]
+        },
+        "validation": {
+          "status": "passed",
+          "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+          "exitCode": 0,
+          "failures": []
+        }
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "criterion": "Tests cover empty input.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-35-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "Tests cover n larger than the input length.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-35-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "Tests cover n <= 0.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-35-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "Tests cover input length exactly equal to n.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-35-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "The implementation is not modified.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-35-baseline/test-coverage-gap.json"
+    }
+  ],
+  "criteria": []
+}
