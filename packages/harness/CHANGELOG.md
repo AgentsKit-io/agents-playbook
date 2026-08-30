@@ -8,6 +8,9 @@
   harness check, while retaining provider-only duration for diagnosis.
 - Incomplete baselines no longer qualify for duration or resource comparisons;
   escape reduction remains visible as a separate outcome metric.
+- Baseline reports now expose artifact acceptance separately from protocol
+  completion, preserving useful outcome data without weakening fail-closed
+  comparison gates.
 
 All notable changes to `@agentskit/harness` are documented here.
 

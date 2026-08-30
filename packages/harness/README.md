@@ -327,7 +327,12 @@ not confused with the current delivery state. With `--manifest`, it also compare
 bound harness tasks with explicitly recorded baseline observations. A baseline
 must include evidence for every acceptance criterion; missing, duplicate, or
 unknown criterion evidence is rejected. Missing baselines and incomplete
-evidence remain non-comparable; the harness never invents a baseline. These are
+evidence remain non-comparable; the harness never invents a baseline. Baseline
+collectors also record `baselineArtifactAcceptanceRate`, the fraction of
+repeated samples whose real artifact validation passed. This is independent of
+protocol completion: a correct artifact with missing or incomplete protocol
+evidence is visible as an accepted artifact but remains non-comparable for
+duration and resource claims. These are
 execution metrics, not a claim of productivity improvement; compare reports over
 a controlled task corpus to measure that outcome.
 
