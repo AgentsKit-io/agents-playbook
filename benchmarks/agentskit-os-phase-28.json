@@ -1,0 +1,56 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-os-coding-phase-28",
+  "name": "AgentsKit OS coding benchmark bridge (seed corpus)",
+  "provenance": {
+    "repository": "AgentsKit-io/agentskit-os",
+    "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b",
+    "taskDefinition": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/benchmark-config.json"
+  },
+  "tasks": [
+    {
+      "id": "bug-off-by-one",
+      "title": "Fix slidingWindow final window",
+      "kind": "edit",
+      "prompt": { "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/bug-off-by-one.md", "sha256": "3bd58fcd22cc69f1fd6c94385bb9f21ae20d47a099e577b2128814c9e0870372" },
+      "source": { "repository": "AgentsKit-io/agentskit-os", "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/bug-off-by-one.md", "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b" },
+      "scope": { "read": ["src/**", "tests/**"], "write": ["src/**"] },
+      "acceptanceCriteria": [
+        "The final slidingWindow window is included.",
+        "A regression test asserts the expected output.",
+        "The public API is unchanged."
+      ]
+    },
+    {
+      "id": "test-coverage-gap",
+      "title": "Cover slidingWindow boundary cases",
+      "kind": "test",
+      "prompt": { "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/test-coverage-gap.md", "sha256": "d7bf9422c17c4d173862ef26e9a0101e21861f33ba22ae66f7dfcd32469defde" },
+      "source": { "repository": "AgentsKit-io/agentskit-os", "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/test-coverage-gap.md", "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b" },
+      "scope": { "read": ["src/**", "tests/**"], "write": ["tests/**"] },
+      "acceptanceCriteria": [
+        "Tests cover empty input.",
+        "Tests cover n larger than the input length.",
+        "Tests cover n <= 0.",
+        "Tests cover input length exactly equal to n.",
+        "The implementation is not modified."
+      ]
+    },
+    {
+      "id": "feat-formatter",
+      "title": "Add pretty mode to formatReport",
+      "kind": "free-form",
+      "prompt": { "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/feat-formatter.md", "sha256": "081ae4a40430f017d0ac4773a3b9d38956bf32aa098c3d573f001eaeeff97552" },
+      "source": { "repository": "AgentsKit-io/agentskit-os", "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/feat-formatter.md", "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b" },
+      "scope": { "read": ["src/**"], "write": ["src/**"] },
+      "acceptanceCriteria": [
+        "formatReport accepts an optional pretty mode.",
+        "Pretty mode returns provider, status, cost, and duration.",
+        "Compact JSON remains the default behavior.",
+        "Tests cover both modes."
+      ]
+    }
+  ],
+  "observations": []
+}

@@ -1,20 +1,21 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-27",
+  "project": "agents-playbook-harness-phase-28",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-27",
+  "stateDir": ".codex/verification/harness-phase-28",
   "profile": "strict",
   "contract": {
-    "intent": "Separate automated CI preparation from real human approval.",
+    "intent": "Define and validate a provenance-bearing bridge from the AgentsKit OS coding benchmark to honest harness evidence.",
     "scope": {
-      "inScope": ["packages/harness", "scripts/run-harness-ci-evidence.mjs", "scripts/verify-harness-ci.mjs", ".github/workflows/ci.yml", ".codex/verification.json"],
-      "outOfScope": ["real agentskit-os benchmark corpus", "browser, database, and MCP adapters", "central observability", "KMS and external identity integration"]
+      "inScope": ["packages/harness", "benchmarks/agentskit-os-phase-28.json", "scripts/verify-harness-agentskit-os-benchmark.mjs", ".codex/verification.json"],
+      "outOfScope": ["paid provider execution", "changing agentskit-os product code", "browser, database, and MCP adapters", "central observability", "KMS and external identity integration"]
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "ci-approval", "statement": "The API and CLI distinguish CI preparation from human contract approval, and only human approval can complete a verified run.", "checks": ["harness-ci-approval"] },
-      { "id": "ci-evidence", "statement": "The CI evidence flow uses automated preparation and ends at AWAITING_HUMAN_APPROVAL without fabricating a human actor.", "checks": ["harness-ci-evidence", "harness-ci-contract"] },
-      { "id": "docs", "statement": "The package documents the honest CI preparation protocol and records the architectural decision.", "checks": ["harness-docs"] }
+      { "id": "benchmark-corpus", "statement": "The manifest identifies a reproducible AgentsKit OS task corpus with immutable source and prompt provenance.", "checks": ["harness-benchmark-corpus"] },
+      { "id": "benchmark-integrity", "statement": "The harness validates manifest metadata and rejects malformed or non-comparable benchmark inputs.", "checks": ["harness-benchmark-integrity"] },
+      { "id": "agentskit-os-bridge", "statement": "A real AgentsKit OS benchmark configuration and report can be validated without converting heuristic provider output into human acceptance.", "checks": ["harness-agentskit-os-bridge"] },
+      { "id": "docs", "statement": "The package documents the portable benchmark bridge and its current measurement limits.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -27,9 +28,9 @@
     "docs": true
   },
   "checks": [
-    { "id": "harness-ci-approval", "category": "logic", "command": "pnpm --filter @agentskit/harness test:ci-approval", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-ci-evidence", "category": "cli", "execution": "real", "command": "node scripts/run-harness-ci-evidence.mjs --fixture", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-ci-contract", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-ci.mjs", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-benchmark-corpus", "category": "logic", "command": "node scripts/verify-harness-agentskit-os-benchmark.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-benchmark-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:benchmark-bridge", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-agentskit-os-bridge", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-agentskit-os-benchmark.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\" --report \"$AGENTSKIT_OS_BENCHMARK_REPORT\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },

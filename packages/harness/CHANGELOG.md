@@ -8,6 +8,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
+- Provenance-bearing benchmark tasks and a portable validator for AgentsKit OS coding benchmark reports; missing controlled observations remain explicitly non-comparable.
 - Playbook CI dogfooding for the package test suite, built CLI, and clean packed consumer.
 - Playbook CI now preserves the official harness run as an auditable artifact for human review.
 - Signed evidence flow now verifies a copied bundle from an isolated directory.

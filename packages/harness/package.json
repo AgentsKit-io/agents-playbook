@@ -37,6 +37,7 @@
     "test:metrics": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/metrics.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['metrics']}))\"",
     "test:ci-approval": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/harness.test.ts -t \"CI prepare|CI attempts|CI preparation across\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['ci-approval']}))\"",
     "test:benchmark-record": "pnpm typecheck && node ../../scripts/verify-harness-benchmark-record.mjs",
+    "test:benchmark-bridge": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/coding-benchmark.test.ts test/metrics.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['benchmark-integrity','benchmark-bridge']}))\"",
     "test:agent-protocol": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['agent-protocol']}))\"",
     "test:policy-gate": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/policy.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['policy-gate','agent-protocol']}))\"",
     "test:runtime": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['runtime','agent-protocol']}))\"",

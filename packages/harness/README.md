@@ -26,6 +26,25 @@ ak-harness benchmark --manifest benchmarks/harness-phase-0.json --json
 
 Automated CI may prepare a run with `ak-harness plan prepared --by ci`. This records a CI preparation, never a human approval; the run remains unable to become `COMPLETE` until a human approves the verified result.
 
+## External coding benchmark bridge
+
+The harness validates a provenance-bearing task manifest and the JSON report
+emitted by an external coding benchmark, including AgentsKit OS:
+
+```bash
+AGENTSKIT_OS_ROOT=/path/to/agentskit-os \
+AGENTSKIT_OS_BENCHMARK_REPORT=/path/to/report.json \
+node scripts/verify-harness-agentskit-os-benchmark.mjs \
+  --manifest benchmarks/agentskit-os-phase-28.json \
+  --target "$AGENTSKIT_OS_ROOT" \
+  --report "$AGENTSKIT_OS_BENCHMARK_REPORT"
+```
+
+The bridge checks the pinned source revision, task definition, prompt digests,
+scope, and provider report shape. Provider status and heuristic scores remain
+observations: they do not grant human acceptance. With no controlled baseline,
+improvement is reported as unavailable rather than inferred.
+
 ## Contract
 
 Every repository supplies `.codex/verification.json` with explicit scope, outcomes, applicable surfaces, and executable checks. Each check must declare `evidence: "structured"`; its final output line must be JSON and map to the outcome IDs it proves:

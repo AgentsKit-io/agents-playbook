@@ -15,6 +15,32 @@ export interface BenchmarkTask {
   readonly id: string
   readonly title: string
   readonly acceptanceCriteria: readonly string[]
+  readonly kind?: string
+  readonly prompt?: BenchmarkTaskFile
+  readonly source?: BenchmarkTaskSource
+  readonly scope?: BenchmarkTaskScope
+}
+
+export interface BenchmarkTaskFile {
+  readonly path: string
+  readonly sha256: string
+}
+
+export interface BenchmarkTaskSource {
+  readonly repository: string
+  readonly path: string
+  readonly revision: string
+}
+
+export interface BenchmarkSuiteSource {
+  readonly repository: string
+  readonly revision: string
+  readonly taskDefinition: string
+}
+
+export interface BenchmarkTaskScope {
+  readonly read: readonly string[]
+  readonly write: readonly string[]
 }
 
 export interface BenchmarkObservation {
@@ -42,6 +68,7 @@ export interface BenchmarkManifest {
   readonly schemaVersion: typeof BENCHMARK_SCHEMA_VERSION
   readonly suiteId: string
   readonly name: string
+  readonly provenance?: BenchmarkSuiteSource
   readonly tasks: readonly BenchmarkTask[]
   readonly observations: readonly BenchmarkObservation[]
 }
@@ -271,6 +298,40 @@ const timestamp = (value: unknown, label: string): string => {
   return result
 }
 
+const relativePath = (value: unknown, label: string): string => {
+  const result = nonEmptyString(value, label)
+  if (result.startsWith('/') || result.split('/').includes('..')) return fail(`${label} must be a repository-relative path.`, 'INVALID_CONFIG')
+  return result
+}
+
+const taskFile = (value: unknown, label: string): BenchmarkTaskFile | undefined => {
+  if (value === undefined) return undefined
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return fail(`${label} must be an object.`, 'INVALID_CONFIG')
+  const raw = value as Record<string, unknown>
+  return { path: relativePath(raw['path'], `${label}.path`), sha256: sha256(raw['sha256'], `${label}.sha256`) ?? fail(`${label}.sha256 is required.`, 'INVALID_CONFIG') }
+}
+
+const taskSource = (value: unknown, label: string): BenchmarkTaskSource | undefined => {
+  if (value === undefined) return undefined
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return fail(`${label} must be an object.`, 'INVALID_CONFIG')
+  const raw = value as Record<string, unknown>
+  return { repository: nonEmptyString(raw['repository'], `${label}.repository`), path: relativePath(raw['path'], `${label}.path`), revision: nonEmptyString(raw['revision'], `${label}.revision`) }
+}
+
+const suiteSource = (value: unknown, label: string): BenchmarkSuiteSource | undefined => {
+  if (value === undefined) return undefined
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return fail(`${label} must be an object.`, 'INVALID_CONFIG')
+  const raw = value as Record<string, unknown>
+  return { repository: nonEmptyString(raw['repository'], `${label}.repository`), revision: nonEmptyString(raw['revision'], `${label}.revision`), taskDefinition: relativePath(raw['taskDefinition'], `${label}.taskDefinition`) }
+}
+
+const taskScope = (value: unknown, label: string): BenchmarkTaskScope | undefined => {
+  if (value === undefined) return undefined
+  if (typeof value !== 'object' || value === null || Array.isArray(value)) return fail(`${label} must be an object.`, 'INVALID_CONFIG')
+  const raw = value as Record<string, unknown>
+  return { read: stringList(raw['read'], `${label}.read`), write: stringList(raw['write'], `${label}.write`) }
+}
+
 export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => {
   if (typeof value !== 'object' || value === null || Array.isArray(value)) fail('benchmark manifest must be an object.', 'INVALID_CONFIG')
   const raw = value as Record<string, unknown>
@@ -279,7 +340,11 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
   const tasks = rawTasks.map((item, index) => {
     if (typeof item !== 'object' || item === null || Array.isArray(item)) fail(`benchmark.tasks[${index}] must be an object.`, 'INVALID_CONFIG')
     const task = item as Record<string, unknown>
-    return { id: nonEmptyString(task['id'], `benchmark.tasks[${index}].id`), title: nonEmptyString(task['title'], `benchmark.tasks[${index}].title`), acceptanceCriteria: stringList(task['acceptanceCriteria'], `benchmark.tasks[${index}].acceptanceCriteria`) }
+    const kind = task['kind'] === undefined ? undefined : nonEmptyString(task['kind'], `benchmark.tasks[${index}].kind`)
+    const prompt = taskFile(task['prompt'], `benchmark.tasks[${index}].prompt`)
+    const source = taskSource(task['source'], `benchmark.tasks[${index}].source`)
+    const scope = taskScope(task['scope'], `benchmark.tasks[${index}].scope`)
+    return { id: nonEmptyString(task['id'], `benchmark.tasks[${index}].id`), title: nonEmptyString(task['title'], `benchmark.tasks[${index}].title`), acceptanceCriteria: stringList(task['acceptanceCriteria'], `benchmark.tasks[${index}].acceptanceCriteria`), ...(kind === undefined ? {} : { kind }), ...(prompt === undefined ? {} : { prompt }), ...(source === undefined ? {} : { source }), ...(scope === undefined ? {} : { scope }) }
   })
   if (new Set(tasks.map((task) => task.id)).size !== tasks.length) fail('benchmark task ids must be unique.', 'INVALID_CONFIG')
   const taskIds = new Set(tasks.map((task) => task.id))
@@ -311,7 +376,8 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
     return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }), ...(evidenceDigest === undefined ? {} : { evidenceDigest }) }
   })
   if (new Set(observations.map((observation) => observation.taskId)).size !== observations.length) fail('benchmark allows at most one baseline observation per task.', 'INVALID_CONFIG')
-  return { type: 'agentskit-harness-benchmark-manifest', schemaVersion: BENCHMARK_SCHEMA_VERSION, suiteId: nonEmptyString(raw['suiteId'], 'benchmark.suiteId'), name: nonEmptyString(raw['name'], 'benchmark.name'), tasks, observations }
+  const provenance = suiteSource(raw['provenance'], 'benchmark.provenance')
+  return { type: 'agentskit-harness-benchmark-manifest', schemaVersion: BENCHMARK_SCHEMA_VERSION, suiteId: nonEmptyString(raw['suiteId'], 'benchmark.suiteId'), name: nonEmptyString(raw['name'], 'benchmark.name'), ...(provenance === undefined ? {} : { provenance }), tasks, observations }
 }
 
 export const loadBenchmarkManifest = (path: string): BenchmarkManifest => {
