@@ -71,7 +71,7 @@ if (mode === 'self-test') {
     const env = { AGENTSKIT_OS_ROOT: process.env.AGENTSKIT_OS_ROOT ?? '' }
     let result
     try {
-      runCli({ config, command: ['plan', 'approved', '--by', 'human'] }, env)
+      runCli({ config, command: ['plan', 'approved', '--by', 'human', '--allow-dirty'] }, env)
       runCli({ config, command: ['start'] }, env)
       result = runCli({ config, command: ['verify'] }, env)
     } catch (error) {
