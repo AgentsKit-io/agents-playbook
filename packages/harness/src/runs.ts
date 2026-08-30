@@ -26,13 +26,14 @@ export const saveRun = (stateDir: string, run: VerificationRun): void => {
 }
 export { setLatest }
 
-export const createRun = async ({ loaded, baseline, supersedes, dirtyBaselineAuthorized, contextSnapshots = [] }: { readonly loaded: LoadedConfig; readonly baseline: SourceSnapshot; readonly supersedes?: string; readonly dirtyBaselineAuthorized?: boolean; readonly contextSnapshots?: readonly ContextSnapshot[] }): Promise<VerificationRun> => {
+export const createRun = async ({ loaded, baseline, supersedes, dirtyBaselineAuthorized, contextSnapshots = [], planner = 'human' }: { readonly loaded: LoadedConfig; readonly baseline: SourceSnapshot; readonly supersedes?: string; readonly dirtyBaselineAuthorized?: boolean; readonly contextSnapshots?: readonly ContextSnapshot[]; readonly planner?: 'human' | 'ci' }): Promise<VerificationRun> => {
+  const contractHash = hashJson(loaded.config.contract)
   const run: VerificationRun = {
-    type: 'agentskit-harness-run', schemaVersion: 1, runId: newRunId(), project: loaded.config.project, state: 'PLANNED', configHash: loaded.configHash, contractHash: hashJson(loaded.config.contract), sourceRevision: baseline.revision, sourceStatusHash: baseline.statusHash, baseline,
-    contractApproval: { actor: 'human', at: now(), contractHash: hashJson(loaded.config.contract) },
+    type: 'agentskit-harness-run', schemaVersion: 1, runId: newRunId(), project: loaded.config.project, state: 'PLANNED', configHash: loaded.configHash, contractHash, sourceRevision: baseline.revision, sourceStatusHash: baseline.statusHash, baseline,
+    ...(planner === 'human' ? { contractApproval: { actor: 'human' as const, at: now(), contractHash } } : { contractPreparation: { actor: 'ci' as const, at: now(), contractHash } }),
     checks: loaded.config.checks.map(({ id, category }) => ({ id, category, status: 'pending' })), contextSnapshots, ...(contextSnapshots.length ? { contextHash: hashContextSnapshots(contextSnapshots) } : {}), ...(loaded.config.benchmark ? { benchmark: loaded.config.benchmark } : {}),
     outcomes: loaded.config.contract.outcomes.map(({ id, statement, checks }) => ({ id, statement, checks, status: 'pending' })),
-    transitions: [{ from: null, to: 'PLANNED', at: now(), actor: 'human' }], evidenceReferences: [],
+    transitions: [{ from: null, to: 'PLANNED', at: now(), actor: planner }], evidenceReferences: [],
     ...(supersedes ? { supersedes } : {}), ...(dirtyBaselineAuthorized ? { dirtyBaselineAuthorized: true } : {}),
   }
   saveRun(loaded.stateDir, run); setLatest(loaded.stateDir, run); return run

@@ -24,6 +24,8 @@ ak-harness benchmark --manifest benchmarks/harness-phase-0.json --json
 
 `plan` rejects unresolved ambiguities and unauthorized dirty worktrees. After `start`, the contract is frozen. Any source, configuration, or contract change invalidates evidence and moves the run to `STALE`. A human can cancel an active run; retrying a blocked, stale, or cancelled run marks the previous run `SUPERSEDED`.
 
+Automated CI may prepare a run with `ak-harness plan prepared --by ci`. This records a CI preparation, never a human approval; the run remains unable to become `COMPLETE` until a human approves the verified result.
+
 ## Contract
 
 Every repository supplies `.codex/verification.json` with explicit scope, outcomes, applicable surfaces, and executable checks. Each check must declare `evidence: "structured"`; its final output line must be JSON and map to the outcome IDs it proves:

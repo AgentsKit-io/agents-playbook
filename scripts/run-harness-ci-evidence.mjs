@@ -32,9 +32,9 @@ try {
   if (fixture) {
     mkdirSync(join(fixtureRoot, '.codex'), { recursive: true })
     writeFileSync(configPath, `${JSON.stringify(fixtureConfig, null, 2)}\n`, { encoding: 'utf8' })
-    run(['plan', 'approved', '--by', 'human'])
+    run(['plan', 'prepared', '--by', 'ci'])
   } else {
-    run(['plan', 'approved', '--by', 'human'])
+    run(['plan', 'prepared', '--by', 'ci'])
   }
   run(['start'])
   const verified = run(['run'])

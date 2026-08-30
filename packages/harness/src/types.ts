@@ -134,7 +134,10 @@ export interface VerificationRun {
   readonly sourceRevision: string
   readonly sourceStatusHash: string
   readonly baseline: SourceSnapshot
-  readonly contractApproval: { readonly actor: 'human'; readonly at: string; readonly contractHash: string }
+  /** A human-approved plan, retained for backwards compatibility with v1 runs. */
+  readonly contractApproval?: { readonly actor: 'human'; readonly at: string; readonly contractHash: string }
+  /** An automated preparation is never an approval and cannot complete a run. */
+  readonly contractPreparation?: { readonly actor: 'ci'; readonly at: string; readonly contractHash: string }
   readonly checks: readonly CheckResult[]
   readonly outcomes: readonly RunOutcome[]
   readonly transitions: readonly StateTransition[]

@@ -47,8 +47,11 @@ const isFresh = async (loaded: LoadedConfig, run: VerificationRun): Promise<bool
 }
 
 export const planRun = async ({ configPath, decision, actor = 'human', allowDirty = false, contextSnapshots = [] }: { readonly configPath: string; readonly decision: string; readonly actor?: string; readonly allowDirty?: boolean; readonly contextSnapshots?: readonly ContextSnapshot[] }): Promise<VerificationRun> => {
-  assertHuman(actor)
-  if (!approvedDecision(decision)) fail('Contract was not approved.', 'CLARIFYING')
+  const automatedPreparation = actor === 'ci' && decision === 'prepared'
+  if (!automatedPreparation) {
+    assertHuman(actor)
+    if (!approvedDecision(decision)) fail('Contract was not approved.', 'CLARIFYING')
+  }
   const loaded = loadConfig(configPath)
   if (loaded.config.contract.ambiguities.length) fail(`Unresolved ambiguities remain: ${loaded.config.contract.ambiguities.join(' | ')}`, 'CLARIFYING')
   const validatedContextSnapshots = validateContextSnapshots(contextSnapshots)
@@ -58,7 +61,7 @@ export const planRun = async ({ configPath, decision, actor = 'human', allowDirt
   if (meaningful.length && !allowDirty) fail(`Worktree is dirty before planning:\n${meaningful.join('\n')}\nUse --allow-dirty only with explicit human authorization.`, 'WORKTREE_DIRTY')
   const previous = loadLatestRun(loaded.stateDir)
   if (previous && !['STALE', 'SUPERSEDED'].includes(previous.state)) fail(`An active run already exists: ${previous.runId} (${previous.state}).`, 'ACTIVE_RUN')
-  return createRun({ loaded, baseline, supersedes: previous?.runId, dirtyBaselineAuthorized: allowDirty, contextSnapshots: validatedContextSnapshots })
+  return createRun({ loaded, baseline, supersedes: previous?.runId, dirtyBaselineAuthorized: allowDirty, contextSnapshots: validatedContextSnapshots, planner: automatedPreparation ? 'ci' : 'human' })
 }
 
 export const startRun = (loaded: LoadedConfig): VerificationRun => {

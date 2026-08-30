@@ -36,6 +36,23 @@ it('runs a complete typed task through human approval', async () => {
   expect(new FileEventStore(fixture.stateDir).read(verified.runId).at(-1)).toMatchObject({ type: 'approval.recorded', payload: { decision: 'approved', resultingState: 'COMPLETE', verificationDigest: verified.verificationDigest, sourceRevision: verified.sourceRevision, contractHash: verified.contractHash } })
 })
 
+it('lets CI prepare verification without impersonating human approval', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  const prepared = await planRun({ configPath: fixture.configPath, decision: 'prepared', actor: 'ci' })
+  expect(prepared.state).toBe('PLANNED')
+  expect(prepared.contractApproval).toBeUndefined()
+  expect(prepared.contractPreparation).toMatchObject({ actor: 'ci', contractHash: prepared.contractHash })
+  startRun(loadConfig(fixture.configPath))
+  const verified = await verifyRun({ configPath: fixture.configPath })
+  expect(verified.state).toBe('AWAITING_HUMAN_APPROVAL')
+  expect((await approveRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('COMPLETE')
+})
+
+it('rejects CI attempts to approve a contract', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  await expect(planRun({ configPath: fixture.configPath, decision: 'approved', actor: 'ci' })).rejects.toMatchObject({ code: 'HUMAN_APPROVAL_REQUIRED' })
+})
+
 it('rejects approval when the verification projection is tampered with', async () => {
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
   const verified = await runToVerify(fixture)

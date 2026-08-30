@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs'
 import { resolve } from 'node:path'
 
 const workflow = readFileSync(resolve(import.meta.dirname, '../.github/workflows/ci.yml'), 'utf8')
+const evidenceScript = readFileSync(resolve(import.meta.dirname, 'run-harness-ci-evidence.mjs'), 'utf8')
 const required = [
   'node-version: 22',
   '- run: pnpm install --frozen-lockfile',
@@ -13,5 +14,7 @@ const required = [
   'path: .codex/verification/harness-phase-24',
 ]
 const failures = required.filter((entry) => !workflow.includes(entry)).map((entry) => `missing CI step: ${entry}`)
+if (!evidenceScript.includes("run(['plan', 'prepared', '--by', 'ci'])")) failures.push('CI evidence must use automated preparation')
+if (evidenceScript.includes("run(['plan', 'approved', '--by', 'human'])")) failures.push('CI evidence must not impersonate human approval')
 console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['ci-dogfood'], failures } : { status: 'passed', criteria: ['ci-dogfood'] }))
 process.exitCode = failures.length ? 1 : 0

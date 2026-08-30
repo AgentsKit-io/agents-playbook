@@ -12,6 +12,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Playbook CI now preserves the official harness run as an auditable artifact for human review.
 - Signed evidence flow now verifies a copied bundle from an isolated directory.
 - Benchmark reports now separate effective non-superseded delivery metrics from attempt history.
+- CI evidence now records automated preparation separately from human contract approval.
 - Strict TypeScript modular core with generated declarations and source maps.
 - Contract-frozen lifecycle, structured evidence, stale detection, human approval, retry, and cleanup.
 - Explicit human cancellation and superseded retry history.
