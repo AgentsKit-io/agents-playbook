@@ -126,7 +126,7 @@ for (const task of tasks) {
   const deliveryComplete = artifactValidated && (row?.status === 'ok' || delegatedApprovalReady)
   const evidenceSource = relative(root, join(outputDir, `${task.id}.json`)).replaceAll('\\', '/')
   const evidence = task.acceptanceCriteria.map((criterion) => ({ criterion, status: artifactValidated ? 'passed' : 'failed', source: evidenceSource }))
-  const observation = { type: 'agentskit-harness-baseline-observation', schemaVersion: 1, suiteId: manifest.suiteId, taskId: task.id, sourceRevision: manifest.provenance?.revision, providerIds, recordedAt: new Date().toISOString(), attempts: 1, durationMs: row?.durationMs ?? Date.now() - startedAt, status: deliveryComplete ? 'passed' : 'failed', escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, ...(harnessVerification ? { harnessVerification } : {}), validation, evidence }
+  const observation = { type: 'agentskit-harness-baseline-observation', schemaVersion: 1, suiteId: manifest.suiteId, taskId: task.id, sourceRevision: manifest.provenance?.revision, providerIds, recordedAt: new Date().toISOString(), attempts: 1, durationMs: row?.durationMs ?? Date.now() - startedAt, status: deliveryComplete ? 'passed' : 'failed', escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, ...(harnessVerification ? { harnessVerification } : {}), validation, evidence, criteria: deliveryComplete ? ['task-delivery'] : [] }
   writeFileSync(join(outputDir, `${task.id}.json`), `${JSON.stringify(observation, null, 2)}\n`)
   reports.push({ taskId: task.id, status: observation.status, durationMs: observation.durationMs, escapedIncomplete: observation.escapedIncomplete })
 }
