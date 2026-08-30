@@ -24,7 +24,7 @@
     "cli": true,
     "mcp": { "required": false, "reason": "No MCP behavior is changed." },
     "ui": { "required": false, "reason": "No UI is changed." },
-    "docs": true
+    "docs": { "required": false, "reason": "No documentation behavior is changed in this data-collection phase." }
   },
   "checks": [
     { "id": "replicated-baseline", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node scripts/verify-agentskit-os-baseline.mjs --target \"$AGENTSKIT_OS_ROOT\" --manifest benchmarks/agentskit-os-phase-28.json --reports benchmarks/agentskit-os-phase-37-baseline --require-validation", "evidence": "structured", "timeoutMs": 120000 },
