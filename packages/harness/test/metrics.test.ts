@@ -31,10 +31,10 @@ it('aggregates historical runs and exposes retry, stale, evidence, and duration 
 it('compares a bound harness task with an explicit baseline and does not invent missing baselines', () => {
   const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-comparison-'))
   writeRun(stateDir, '1-harness', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' }, transitions: [{ from: null, to: 'PLANNED', at: '2026-01-01T00:00:00.000Z' }, { from: 'VERIFYING', to: 'AWAITING_HUMAN_APPROVAL', at: '2026-01-01T00:00:00.000Z' }, { from: 'AWAITING_HUMAN_APPROVAL', to: 'COMPLETE', at: '2026-01-01T00:02:00.000Z' }], humanApproval: { actor: 'human', at: '2026-01-01T00:02:00.000Z', sourceRevision: 'revision', contractHash: 'contract' }, metrics: { totalDurationMs: 200, budgetExceeded: false } })
-  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z', attempts: 1, durationMs: 100, reviewMinutes: 1, evidence: [{ criterion: 'criterion', status: 'passed', source: 'manual-fixture' }] }] })
+  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z', attempts: 1, durationMs: 100, reviewMinutes: 1, escapedIncomplete: 1, evidence: [{ criterion: 'criterion', status: 'passed', source: 'manual-fixture' }] }] })
   const report = benchmarkRuns(stateDir, manifest)
   expect(report.manifest).toEqual({ suiteId: 'suite', taskCount: 1, baselineCount: 1, comparableTaskCount: 1 })
-  expect(report.comparisons[0]).toMatchObject({ taskId: 'task', comparable: true, baselineEvidenceCoverageRate: 1, improvement: { durationRate: -1, duration: 'regressed', attemptsRate: 0, attempts: 'unchanged', reviewRate: -1, review: 'regressed' }, durationDeltaMs: 100, attemptDelta: 0, reviewDeltaMinutes: 1, harness: { checkPassRate: 1, outcomePassRate: 1, evidenceCoverageRate: 1, humanReviewMinutes: 2 } })
+  expect(report.comparisons[0]).toMatchObject({ taskId: 'task', comparable: true, baselineEvidenceCoverageRate: 1, improvement: { durationRate: -1, duration: 'regressed', attemptsRate: 0, attempts: 'unchanged', reviewRate: -1, review: 'regressed', escapedIncompleteRate: 1, escapedIncomplete: 'improved' }, durationDeltaMs: 100, attemptDelta: 0, reviewDeltaMinutes: 1, escapedIncompleteDelta: -1, harness: { checkPassRate: 1, outcomePassRate: 1, evidenceCoverageRate: 1, escapedIncomplete: 0, humanReviewMinutes: 2 } })
 })
 
 it('does not compare an explicit baseline with an incomplete harness run', () => {
@@ -58,6 +58,14 @@ it('returns an empty, typed report when no runs exist', () => {
   expect(report.summary.totalRuns).toBe(0)
   expect(report.summary.checkPassRate).toBeNull()
   expect(report.summary.stateCounts.COMPLETE).toBe(0)
+})
+
+it('ignores verification runs written by the outer Doc Bridge harness', () => {
+  const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-foreign-run-'))
+  mkdirSync(join(stateDir, 'runs', 'outer-run'), { recursive: true })
+  writeFileSync(join(stateDir, 'runs', 'outer-run', 'run.json'), JSON.stringify({ type: 'verification-run', state: 'VERIFYING' }))
+  const report = benchmarkRuns(stateDir)
+  expect(report.runs).toHaveLength(0)
 })
 
 it('validates a benchmark manifest task identity', () => {

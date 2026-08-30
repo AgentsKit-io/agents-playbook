@@ -40,6 +40,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 - Policy rules can require explicit human approval before sensitive tool actions enter the runtime; unresolved and rejected approvals remain fail-closed and auditable.
 - Agent sessions can be resumed from their hash-chained event log, preserving pending approvals without replaying completed tools.
 - Ambiguous resumed tool actions now require an explicit human retry or abandonment decision after `tool.execution.started`.
+- Benchmark comparisons now expose controlled `escapedIncomplete` deltas for measuring incomplete deliveries that escaped validation.
 - Verification results now carry a projection digest in `run.json` and a matching `verification.completed` event; approval rejects projection tampering.
 - `ak-harness` CLI and `ak-verify` common-protocol alias.
 - Public package documentation and community policy files.

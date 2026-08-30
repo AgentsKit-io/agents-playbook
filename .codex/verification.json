@@ -4,11 +4,11 @@
   "root": "..",
   "stateDir": ".codex/verification/harness",
   "profile": "strict",
-  "benchmark": { "suiteId": "agentskit-harness-phase-21", "taskId": "harness-safe-action-recovery", "mode": "harness" },
+  "benchmark": { "suiteId": "agentskit-harness-phase-22", "taskId": "harness-completion-integrity", "mode": "harness" },
   "contract": {
     "intent": "Implement and validate the portable AgentsKit Harness package and its CLI.",
     "scope": {
-    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "benchmarks/harness-phase-21.json", ".codex/verification.json"],
+    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "scripts/verify-harness-controlled-benchmark.mjs", "benchmarks/harness-phase-22.json", ".codex/verification.json"],
       "outOfScope": ["marketing redesign", "provider-specific agent adapters", "automatic git push or PR creation"]
     },
     "ambiguities": [],
@@ -26,6 +26,7 @@
       { "id": "human-tool-approval", "statement": "Sensitive tool actions pause before execution and enter the runtime only after an explicit human approval; rejection and unresolved approval remain fail-closed and auditable.", "checks": ["harness-human-tool-approval"] },
       { "id": "session-recovery", "statement": "An interrupted agent session can be resumed from its hash-chained event log, preserving pending approvals and actions without replaying completed tools or bypassing human approval.", "checks": ["harness-session-recovery"] },
       { "id": "safe-action-recovery", "statement": "A session never silently reexecutes an action whose runtime may have started before interruption; retry or abandonment requires an explicit human recovery decision.", "checks": ["harness-safe-action-recovery"] },
+      { "id": "completion-integrity", "statement": "The benchmark report compares a controlled baseline with the completed harness and exposes escaped-incomplete improvement without inventing unavailable data.", "checks": ["harness-controlled-benchmark", "harness-benchmark"] },
       { "id": "profiles", "statement": "Named verification profiles compose deterministic, validated overlays without changing the kernel guarantees.", "checks": ["harness-profiles"] },
       { "id": "context", "statement": "Optional context providers expose a typed, provenance-bearing seam suitable for Doc Bridge and Playbook integrations.", "checks": ["harness-context"] },
       { "id": "doc-bridge-adapter", "statement": "The optional Doc Bridge adapter resolves real indexed knowledge into deterministic provenance-bearing context snapshots.", "checks": ["harness-doc-bridge"] },
@@ -68,6 +69,7 @@
     { "id": "harness-human-tool-approval", "category": "logic", "command": "pnpm --filter @agentskit/harness test:human-tool-approval", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-session-recovery", "category": "logic", "command": "pnpm --filter @agentskit/harness test:session-recovery", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-safe-action-recovery", "category": "logic", "command": "pnpm --filter @agentskit/harness test:safe-action-recovery", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-controlled-benchmark", "category": "logic", "command": "node scripts/verify-harness-controlled-benchmark.mjs", "evidence": "structured", "timeoutMs": 60000 },
     { "id": "harness-profiles", "category": "logic", "command": "pnpm --filter @agentskit/harness test:profiles", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-context", "category": "logic", "command": "pnpm --filter @agentskit/harness test:context", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-doc-bridge", "category": "logic", "command": "pnpm --filter @agentskit/harness test:doc-bridge", "evidence": "structured", "timeoutMs": 120000 },

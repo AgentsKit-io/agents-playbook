@@ -2,7 +2,7 @@ import { existsSync, mkdtempSync, readFileSync, readdirSync, renameSync, rmSync,
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fail } from './errors.js'
-import { readRun } from './files.js'
+import { readJson, readRun } from './files.js'
 import { RUN_STATES } from './types.js'
 import type { BenchmarkBinding, RunState, VerificationRun } from './types.js'
 
@@ -57,6 +57,7 @@ export interface BenchmarkRun {
   readonly checks: { readonly total: number; readonly passed: number; readonly failed: number }
   readonly outcomes: { readonly total: number; readonly passed: number; readonly failed: number }
   readonly evidence: { readonly total: number; readonly attached: number }
+  readonly escapedIncomplete?: number
   readonly humanApproved: boolean
   readonly humanReviewMinutes?: number
   readonly authorized: boolean
@@ -77,6 +78,8 @@ export interface BenchmarkComparison {
     readonly attempts: BenchmarkImprovementDirection
     readonly reviewRate: number | null
     readonly review: BenchmarkImprovementDirection
+    readonly escapedIncompleteRate: number | null
+    readonly escapedIncomplete: BenchmarkImprovementDirection
   }
   readonly harness: {
     readonly attempts: number
@@ -87,11 +90,13 @@ export interface BenchmarkComparison {
     readonly outcomePassRate: number | null
     readonly evidenceCoverageRate: number | null
     readonly humanApproved: boolean
+    readonly escapedIncomplete?: number
     readonly humanReviewMinutes?: number
   }
   readonly durationDeltaMs?: number
   readonly attemptDelta?: number
   readonly reviewDeltaMinutes?: number
+  readonly escapedIncompleteDelta?: number
 }
 
 export interface BenchmarkSummary {
@@ -160,7 +165,8 @@ const projectRun = (run: VerificationRun): BenchmarkRun => {
   const outcomes = { total: run.outcomes.length, passed: count(run.outcomes, (outcome) => outcome.status === 'passed'), failed: count(run.outcomes, (outcome) => outcome.status === 'failed') }
   const evidence = { total: run.checks.length, attached: count(run.checks, (check) => check.evidence !== undefined) }
   const humanReviewMinutes = reviewMinutes(run)
-  return { runId: run.runId, state: run.state, sourceRevision: run.sourceRevision, configHash: run.configHash, contractHash: run.contractHash, ...(run.supersedes ? { supersedes: run.supersedes } : {}), ...(run.metrics ? { durationMs: run.metrics.totalDurationMs } : {}), checks, outcomes, evidence, humanApproved: run.humanApproval !== undefined, ...(humanReviewMinutes === undefined ? {} : { humanReviewMinutes }), authorized: run.authorization !== undefined, ...(run.benchmark ? { benchmark: run.benchmark } : {}) }
+  const escapedIncomplete = run.state === 'COMPLETE' && checks.failed === 0 && outcomes.failed === 0 && evidence.attached === evidence.total ? 0 : undefined
+  return { runId: run.runId, state: run.state, sourceRevision: run.sourceRevision, configHash: run.configHash, contractHash: run.contractHash, ...(run.supersedes ? { supersedes: run.supersedes } : {}), ...(run.metrics ? { durationMs: run.metrics.totalDurationMs } : {}), checks, outcomes, evidence, ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), humanApproved: run.humanApproval !== undefined, ...(humanReviewMinutes === undefined ? {} : { humanReviewMinutes }), authorized: run.authorization !== undefined, ...(run.benchmark ? { benchmark: run.benchmark } : {}) }
 }
 
 const summarize = (runs: readonly BenchmarkRun[]): BenchmarkSummary => {
@@ -197,8 +203,11 @@ const readRuns = (stateDir: string): VerificationRun[] => {
   const runsDir = join(stateDir, 'runs')
   if (!existsSync(runsDir)) return []
   return readdirSync(runsDir, { withFileTypes: true }).filter((entry) => entry.isDirectory()).map((entry) => {
-    try { return readRun(stateDir, entry.name) } catch (error) { return fail(`Benchmark could not read run ${entry.name}: ${error instanceof Error ? error.message : String(error)}`, 'HARNESS_ERROR') }
-  })
+    try {
+      const candidate = readJson(join(runsDir, entry.name, 'run.json')) as { readonly type?: unknown }
+      return candidate.type === 'agentskit-harness-run' ? readRun(stateDir, entry.name) : undefined
+    } catch (error) { return fail(`Benchmark could not read run ${entry.name}: ${error instanceof Error ? error.message : String(error)}`, 'HARNESS_ERROR') }
+  }).filter((run): run is VerificationRun => run !== undefined)
 }
 
 const nonEmptyString = (value: unknown, label: string): string => {
@@ -335,7 +344,8 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest)
   const durationRate = comparable ? improvementRate(baseline?.durationMs, latest?.durationMs) : null
   const attemptsRate = comparable ? improvementRate(baseline?.attempts, taskRuns.length) : null
   const reviewRate = comparable ? improvementRate(baseline?.reviewMinutes, latest?.humanReviewMinutes) : null
-  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate) }, ...(baseline ? { baseline } : {}), harness: { attempts: taskRuns.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, ...(comparable && baseline?.durationMs !== undefined && latest?.durationMs !== undefined ? { durationDeltaMs: latest.durationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: taskRuns.length - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}) }
+  const escapedIncompleteRate = comparable ? improvementRate(baseline?.escapedIncomplete, latest?.escapedIncomplete) : null
+  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts: taskRuns.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, ...(comparable && baseline?.durationMs !== undefined && latest?.durationMs !== undefined ? { durationDeltaMs: latest.durationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: taskRuns.length - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(comparable && baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
 })
 
 export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): BenchmarkReport => {

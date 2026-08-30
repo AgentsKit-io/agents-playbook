@@ -5,7 +5,7 @@ import { resolve } from 'node:path'
 
 const root = resolve(import.meta.dirname, '..')
 const cli = resolve(root, 'packages/harness/dist/cli.js')
-const manifest = resolve(root, process.env.HARNESS_BENCHMARK_MANIFEST ?? 'benchmarks/harness-phase-21.json')
+const manifest = resolve(root, process.env.HARNESS_BENCHMARK_MANIFEST ?? 'benchmarks/harness-phase-22.json')
 const manifestInput = JSON.parse(readFileSync(manifest, 'utf8'))
 const result = spawnSync(process.execPath, [cli, 'benchmark', '--manifest', manifest, '--config', resolve(root, '.codex/verification.json'), '--json'], { cwd: root, encoding: 'utf8' })
 const output = result.stdout.trim().split(/\r?\n/).at(-1)
@@ -16,6 +16,7 @@ const taskCount = JSON.parse(readFileSync(manifest, 'utf8')).tasks.length
 if (report?.manifest?.suiteId !== manifestInput.suiteId) failures.push('benchmark manifest was not loaded')
 if (report?.manifest?.taskCount !== taskCount) failures.push('benchmark task corpus was not preserved')
 if (!Array.isArray(report?.comparisons) || report.comparisons.length !== taskCount) failures.push('benchmark comparisons do not cover the corpus')
-if (report?.comparisons?.some((comparison) => comparison.comparability !== 'missing-baseline' || comparison.improvement?.duration !== 'unavailable' || comparison.improvement?.attempts !== 'unavailable' || comparison.improvement?.review !== 'unavailable')) failures.push('missing baseline outcome was not reported honestly')
+const expectedNonComparable = manifestInput.observations?.length ? 'harness-not-complete' : 'missing-baseline'
+if (report?.comparisons?.some((comparison) => comparison.comparability !== expectedNonComparable || comparison.improvement?.duration !== 'unavailable' || comparison.improvement?.attempts !== 'unavailable' || comparison.improvement?.review !== 'unavailable' || comparison.improvement?.escapedIncomplete !== 'unavailable')) failures.push('benchmark outcome was not reported honestly before harness completion')
 console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['benchmark-integrity'], failures } : { status: 'passed', criteria: ['benchmark-integrity'], taskCount, comparableTaskCount: report.manifest.comparableTaskCount }))
 process.exitCode = failures.length ? 1 : 0

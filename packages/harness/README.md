@@ -309,7 +309,10 @@ baseline with complete criterion-level evidence and its latest bound harness
 run is `COMPLETE`. Blocked, incomplete, missing, or `not-run` inputs expose a
 non-comparability reason and mark directional outcomes as `unavailable`.
 Comparable reports include check, outcome, evidence, duration, attempt, and
-human-review metrics plus directional outcomes. A positive improvement rate
+human-review metrics plus directional outcomes. Completed runs with every
+check, outcome, and evidence slot passing are projected as
+`escapedIncomplete: 0`; a controlled baseline can record observed escapes and
+the report exposes their delta and direction. A positive improvement rate
 means the harness used less of that measured resource; these metrics do not
 establish causality or productivity improvement alone.
 
