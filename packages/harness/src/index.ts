@@ -12,7 +12,7 @@ export { BENCHMARK_SCHEMA_VERSION, benchmarkRuns, loadBenchmarkManifest, recordB
 export { createSessionRecorder } from './agent.js'
 export { createPolicyGate } from './policy.js'
 export { createDockerToolRuntime, createProcessToolRuntime, createToolRuntime } from './runtime.js'
-export { EVIDENCE_BUNDLE_SCHEMA_VERSION, exportEvidenceBundle, verifyEvidenceBundle } from './bundle.js'
+export { EVIDENCE_BUNDLE_SCHEMA_VERSION, exportEvidenceBundle, readEvidenceTrustStore, verifyEvidenceBundle } from './bundle.js'
 export type * from './types.js'
 export type * from './events.js'
 export type * from './plugins.js'

@@ -10,9 +10,11 @@ provenance can be checked outside the originating workspace.
 
 `exportEvidenceBundle` packages a reconciled `COMPLETE` run, its projection,
 event log, and referenced check outputs. Each file is hashed with SHA-256 and
-the canonical bundle payload is signed with an Ed25519 private key. The public
-key and signature travel with the bundle; `verifyEvidenceBundle` independently
-validates every file hash, the payload hash, and the signature.
+the canonical bundle payload is signed with an Ed25519 private key. The key ID
+and signature travel with the bundle; `verifyEvidenceBundle` independently
+validates every file hash, the payload hash, and the signature. Callers can
+additionally provide an explicit trust store to require an active key with the
+expected identity instead of trusting the embedded public key.
 
 The bundle contains check outputs as captured, so operators must treat it as a
 potentially sensitive artifact and apply their existing retention controls.
@@ -22,4 +24,4 @@ potentially sensitive artifact and apply their existing retention controls.
 Evidence can cross machine and CI boundaries without adding a remote service.
 Key custody remains an operator responsibility; this is a signed artifact, not
 a replacement for an enterprise KMS, certificate authority, or notarization
-service.
+service. Trust-store entries support explicit rotation and revocation.

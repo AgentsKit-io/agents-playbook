@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-18",
+  "name": "AgentsKit Harness Phase 18",
+  "tasks": [
+    {
+      "id": "harness-key-trust-policy",
+      "title": "Verify signed evidence against explicit key trust",
+      "acceptanceCriteria": [
+        "Every signed bundle identifies a stable key ID.",
+        "Verification can require an explicit active trusted key and rejects unknown or mismatched keys.",
+        "Revoked keys are rejected and a rotated active key is accepted."
+      ]
+    }
+  ],
+  "observations": []
+}

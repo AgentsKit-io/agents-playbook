@@ -20,14 +20,22 @@ export interface EvidenceBundleFile {
 
 export interface EvidenceBundleSignature {
   readonly algorithm: 'ed25519'
+  readonly keyId: string
   readonly publicKeyPem: string
   readonly signatureBase64: string
+}
+
+export interface TrustedEvidenceKey {
+  readonly keyId: string
+  readonly publicKeyPem: string
+  readonly status: 'active' | 'revoked'
 }
 
 export interface EvidenceBundle {
   readonly type: 'agentskit-harness-evidence-bundle'
   readonly schemaVersion: typeof EVIDENCE_BUNDLE_SCHEMA_VERSION
   readonly runId: string
+  readonly signerKeyId: string
   readonly sourceRevision: string
   readonly configHash: string
   readonly contractHash: string
@@ -54,6 +62,7 @@ const parseBundle = (path: string): EvidenceBundle => {
   try { return JSON.parse(fileContents(path)) as EvidenceBundle } catch (error) { return fail(`Invalid evidence bundle JSON: ${error instanceof Error ? error.message : String(error)}`, 'INVALID_INPUT') }
 }
 const validDigest = (value: unknown): value is string => typeof value === 'string' && /^[a-f0-9]{64}$/.test(value)
+const validKeyId = (value: unknown): value is string => typeof value === 'string' && /^[A-Za-z0-9._:-]{1,128}$/.test(value)
 const requireRun = (run: VerificationRun | null): VerificationRun => run ?? fail('No verification run exists.', 'NO_RUN')
 const bundleFile = (stateDir: string, path: string): EvidenceBundleFile => {
   const absolute = resolve(stateDir, path)
@@ -62,7 +71,8 @@ const bundleFile = (stateDir: string, path: string): EvidenceBundleFile => {
   return { path: relative(stateDir, absolute).split(sep).join('/'), sha256: sha256(content), contentBase64: content.toString('base64') }
 }
 
-export const exportEvidenceBundle = async ({ configPath, runId, outputPath, privateKeyPath }: { readonly configPath: string; readonly runId?: string; readonly outputPath: string; readonly privateKeyPath: string }): Promise<EvidenceBundle> => {
+export const exportEvidenceBundle = async ({ configPath, runId, outputPath, privateKeyPath, keyId }: { readonly configPath: string; readonly runId?: string; readonly outputPath: string; readonly privateKeyPath: string; readonly keyId: string }): Promise<EvidenceBundle> => {
+  if (!validKeyId(keyId)) fail('keyId must contain only letters, numbers, dot, underscore, colon, or hyphen.', 'INVALID_INPUT')
   const loaded = loadConfig(configPath)
   const run = requireRun((runId ? readJson(join(loaded.stateDir, 'runs', runId, 'run.json')) : loadLatestRun(loaded.stateDir)) as VerificationRun | null)
   const reconciliation = await reconcileRun({ configPath, runId: run.runId })
@@ -78,17 +88,23 @@ export const exportEvidenceBundle = async ({ configPath, runId, outputPath, priv
     return bundleFile(loaded.stateDir, path)
   })
   const privateKey = createPrivateKey(readFileSync(privateKeyPath))
-  const unsigned = { type: 'agentskit-harness-evidence-bundle' as const, schemaVersion: EVIDENCE_BUNDLE_SCHEMA_VERSION, runId: run.runId, sourceRevision: run.sourceRevision, configHash: run.configHash, contractHash: run.contractHash, verificationDigest: digest, eventLog: eventVerification, files }
+  const unsigned = { type: 'agentskit-harness-evidence-bundle' as const, schemaVersion: EVIDENCE_BUNDLE_SCHEMA_VERSION, runId: run.runId, signerKeyId: keyId, sourceRevision: run.sourceRevision, configHash: run.configHash, contractHash: run.contractHash, verificationDigest: digest, eventLog: eventVerification, files }
   const payloadHash = sha256(JSON.stringify(unsigned))
   const publicKeyPem = createPublicKey(privateKey).export({ type: 'spki', format: 'pem' }).toString()
-  const bundle = { ...unsigned, payloadHash, signature: { algorithm: 'ed25519' as const, publicKeyPem, signatureBase64: sign(null, Buffer.from(payloadHash), privateKey).toString('base64') } }
+  const bundle = { ...unsigned, payloadHash, signature: { algorithm: 'ed25519' as const, keyId, publicKeyPem, signatureBase64: sign(null, Buffer.from(payloadHash), privateKey).toString('base64') } }
   writeFileSync(outputPath, `${JSON.stringify(bundle, null, 2)}\n`, 'utf8')
   return bundle
 }
 
-export const verifyEvidenceBundle = (path: string): EvidenceBundleVerification => {
+export const verifyEvidenceBundle = (path: string, { trustedKeys = [] }: { readonly trustedKeys?: readonly TrustedEvidenceKey[] } = {}): EvidenceBundleVerification => {
   const bundle = parseBundle(path)
-  if (bundle.type !== 'agentskit-harness-evidence-bundle' || bundle.schemaVersion !== EVIDENCE_BUNDLE_SCHEMA_VERSION || !bundle.runId || !validDigest(bundle.payloadHash) || bundle.signature?.algorithm !== 'ed25519' || typeof bundle.signature.publicKeyPem !== 'string' || typeof bundle.signature.signatureBase64 !== 'string' || !Array.isArray(bundle.files)) fail('Evidence bundle metadata is invalid.', 'HARNESS_ERROR')
+  if (bundle.type !== 'agentskit-harness-evidence-bundle' || bundle.schemaVersion !== EVIDENCE_BUNDLE_SCHEMA_VERSION || !bundle.runId || !validKeyId(bundle.signerKeyId) || !validDigest(bundle.payloadHash) || bundle.signature?.algorithm !== 'ed25519' || bundle.signature.keyId !== bundle.signerKeyId || typeof bundle.signature.publicKeyPem !== 'string' || typeof bundle.signature.signatureBase64 !== 'string' || !Array.isArray(bundle.files)) fail('Evidence bundle metadata is invalid.', 'HARNESS_ERROR')
+  if (trustedKeys.length) {
+    const trusted = trustedKeys.find((key) => key.keyId === bundle.signerKeyId)
+    if (!trusted) return fail(`Evidence bundle key is not trusted: ${bundle.signerKeyId}`, 'HARNESS_ERROR')
+    if (trusted.status === 'revoked') fail(`Evidence bundle key is revoked: ${bundle.signerKeyId}`, 'HARNESS_ERROR')
+    if (trusted.publicKeyPem !== bundle.signature.publicKeyPem) fail(`Evidence bundle key does not match trust store: ${bundle.signerKeyId}`, 'HARNESS_ERROR')
+  }
   const paths = new Set<string>()
   for (const file of bundle.files) {
     if (!file || typeof file.path !== 'string' || paths.has(file.path) || !validDigest(file.sha256) || typeof file.contentBase64 !== 'string') fail('Evidence bundle file metadata is invalid.', 'HARNESS_ERROR')
@@ -102,4 +118,13 @@ export const verifyEvidenceBundle = (path: string): EvidenceBundleVerification =
   try { valid = verify(null, Buffer.from(bundle.payloadHash), createPublicKey(bundle.signature.publicKeyPem), Buffer.from(bundle.signature.signatureBase64, 'base64')) } catch { valid = false }
   if (!valid) fail('Evidence bundle signature is invalid.', 'HARNESS_ERROR')
   return { status: 'verified', runId: bundle.runId, payloadHash: bundle.payloadHash, fileCount: bundle.files.length, signed: true }
+}
+
+export const readEvidenceTrustStore = (path: string): readonly TrustedEvidenceKey[] => {
+  const value = readJson(path) as { readonly schemaVersion?: unknown; readonly keys?: unknown }
+  if (value.schemaVersion !== 1 || !Array.isArray(value.keys)) fail('Evidence trust store must contain schemaVersion 1 and a keys array.', 'INVALID_INPUT')
+  return (value.keys as readonly unknown[]).map((key: unknown, index: number) => {
+    if (typeof key !== 'object' || key === null || Array.isArray(key) || !validKeyId((key as Record<string, unknown>)['keyId']) || typeof (key as Record<string, unknown>)['publicKeyPem'] !== 'string' || ((key as Record<string, unknown>)['status'] !== 'active' && (key as Record<string, unknown>)['status'] !== 'revoked')) fail(`Invalid evidence trust store key at index ${index}.`, 'INVALID_INPUT')
+    return key as TrustedEvidenceKey
+  })
 }
