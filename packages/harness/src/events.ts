@@ -1,4 +1,4 @@
-import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, unlinkSync } from 'node:fs'
+import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, unlinkSync, writeSync } from 'node:fs'
 import { join } from 'node:path'
 import { fail } from './errors.js'
 import { sha256 } from './hash.js'
@@ -58,8 +58,39 @@ export interface EventLogVerification {
   readonly headHash?: string
 }
 
+export interface EventLogLock {
+  readonly pid: number
+  readonly at: string
+}
+
+export interface EventLogLockStatus {
+  readonly status: 'locked' | 'unlocked'
+  readonly path: string
+  readonly lock?: EventLogLock
+}
+
+export interface EventLogLockRecovery {
+  readonly status: 'recovered' | 'unlocked'
+  readonly path: string
+  readonly lock?: EventLogLock
+}
+
 const eventPath = (stateDir: string, runId: string): string => join(stateDir, 'runs', runId, 'events.ndjson')
 const lockPath = (stateDir: string, runId: string): string => `${eventPath(stateDir, runId)}.lock`
+const parseLock = (value: string): EventLogLock => {
+  try {
+    const record = JSON.parse(value) as Record<string, unknown>
+    if (!Number.isInteger(record['pid']) || (record['pid'] as number) <= 0 || typeof record['at'] !== 'string' || !Number.isFinite(Date.parse(record['at']))) fail('Event log lock metadata is invalid.', 'HARNESS_ERROR')
+    return { pid: record['pid'] as number, at: record['at'] as string }
+  } catch (error) {
+    if (error instanceof SyntaxError) fail('Event log lock metadata is invalid.', 'HARNESS_ERROR')
+    throw error
+  }
+}
+const readLock = (stateDir: string, runId: string): EventLogLock | null => {
+  const path = lockPath(stateDir, runId)
+  return existsSync(path) ? parseLock(readFileSync(path, 'utf8')) : null
+}
 const isEventType = (value: unknown): value is HarnessEventType => typeof value === 'string' && (HARNESS_EVENT_TYPES as readonly string[]).includes(value)
 const digest = (value: string): boolean => /^[a-f0-9]{64}$/.test(value)
 const eventBody = (event: HarnessEvent): Omit<HarnessEvent, 'eventHash'> => {
@@ -104,7 +135,7 @@ export class FileEventStore implements EventStore {
     const lock = lockPath(this.stateDir, event.runId)
     mkdirSync(join(this.stateDir, 'runs', event.runId), { recursive: true })
     let lockFd: number
-    try { lockFd = openSync(lock, 'wx') } catch (error) { if ((error as NodeJS.ErrnoException).code === 'EEXIST') fail('Event log is busy; retry the operation.', 'HARNESS_ERROR'); throw error }
+    try { lockFd = openSync(lock, 'wx'); writeSync(lockFd, JSON.stringify({ pid: process.pid, at: new Date().toISOString() })) } catch (error) { if ((error as NodeJS.ErrnoException).code === 'EEXIST') fail('Event log is busy; retry the operation.', 'HARNESS_ERROR'); throw error }
     try {
       const events = this.readUnlocked(event.runId)
       const previous = events.at(-1)
@@ -136,4 +167,26 @@ export class FileEventStore implements EventStore {
   public verify(runId: string): EventLogVerification {
     return validateChain(this.read(runId))
   }
+}
+
+export const inspectEventLogLock = (stateDir: string, runId: string): EventLogLockStatus => {
+  const path = lockPath(stateDir, runId)
+  const lock = readLock(stateDir, runId)
+  return lock ? { status: 'locked', path, lock } : { status: 'unlocked', path }
+}
+
+export const recoverEventLogLock = ({ stateDir, runId, actor, maxAgeMs = 300_000 }: { readonly stateDir: string; readonly runId: string; readonly actor: string; readonly maxAgeMs?: number }): EventLogLockRecovery => {
+  if (actor !== 'human') fail('Event log lock recovery requires a human actor.', 'HUMAN_APPROVAL_REQUIRED')
+  if (!Number.isInteger(maxAgeMs) || maxAgeMs < 0) fail('maxAgeMs must be a non-negative integer.', 'INVALID_INPUT')
+  const path = lockPath(stateDir, runId)
+  const lock = readLock(stateDir, runId)
+  if (!lock) return { status: 'unlocked', path }
+  const ageMs = Date.now() - Date.parse(lock.at)
+  if (ageMs < maxAgeMs) fail('Event log lock is not old enough to recover.', 'HARNESS_ERROR')
+  try { process.kill(lock.pid, 0) } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== 'ESRCH') fail('Event log lock owner cannot be proven dead.', 'HARNESS_ERROR')
+    unlinkSync(path)
+    return { status: 'recovered', path, lock }
+  }
+  return fail('Event log lock owner is still alive.', 'HARNESS_ERROR')
 }

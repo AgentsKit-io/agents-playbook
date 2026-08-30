@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-16",
+  "name": "AgentsKit Harness Phase 16",
+  "tasks": [
+    {
+      "id": "harness-event-lock-recovery",
+      "title": "Recover orphaned event-log locks safely",
+      "acceptanceCriteria": [
+        "An interrupted writer leaves a structured lock and blocks readers and writers.",
+        "Live and malformed locks remain protected and cannot be removed by recovery.",
+        "An old lock owned by a dead process can be removed only with explicit human authorization.",
+        "The recovery result is inspectable through the public API and CLI."
+      ]
+    }
+  ],
+  "observations": []
+}

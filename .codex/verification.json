@@ -4,11 +4,11 @@
   "root": "..",
   "stateDir": ".codex/verification/harness",
   "profile": "strict",
-  "benchmark": { "suiteId": "agentskit-harness-phase-15", "taskId": "harness-terminal-reconciliation", "mode": "harness" },
+  "benchmark": { "suiteId": "agentskit-harness-phase-16", "taskId": "harness-event-lock-recovery", "mode": "harness" },
   "contract": {
     "intent": "Implement and validate the portable AgentsKit Harness package and its CLI.",
     "scope": {
-    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "benchmarks/harness-phase-15.json", ".codex/verification.json"],
+    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "benchmarks/harness-phase-16.json", ".codex/verification.json"],
       "outOfScope": ["marketing redesign", "provider-specific agent adapters", "automatic git push or PR creation"]
     },
     "ambiguities": [],
@@ -20,6 +20,7 @@
       { "id": "verification-attestation", "statement": "The verification result is attested in the lifecycle log and human approval rejects a tampered run projection.", "checks": ["harness-event-log"] },
       { "id": "approval-attestation", "statement": "Human approval and tracking authorization decisions are recorded in the lifecycle log with the exact verified digest, source revision, and contract binding.", "checks": ["harness-event-log"] },
       { "id": "terminal-reconciliation", "statement": "A terminal run is accepted only when its projection, verification event, human decision event, source, and contract are semantically consistent, through both the public API and status CLI.", "checks": ["harness-reconciliation", "harness-cli-flow"] },
+      { "id": "lock-recovery", "statement": "An interrupted writer leaves a fail-closed lock that can be inspected and recovered only through explicit human-authorized stale-lock recovery, without deleting live or malformed locks.", "checks": ["harness-lock-recovery", "harness-cli-flow"] },
       { "id": "profiles", "statement": "Named verification profiles compose deterministic, validated overlays without changing the kernel guarantees.", "checks": ["harness-profiles"] },
       { "id": "context", "statement": "Optional context providers expose a typed, provenance-bearing seam suitable for Doc Bridge and Playbook integrations.", "checks": ["harness-context"] },
       { "id": "doc-bridge-adapter", "statement": "The optional Doc Bridge adapter resolves real indexed knowledge into deterministic provenance-bearing context snapshots.", "checks": ["harness-doc-bridge"] },
@@ -56,6 +57,7 @@
     { "id": "harness-extensibility", "category": "logic", "command": "pnpm --filter @agentskit/harness test:extensibility", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-event-log", "category": "logic", "command": "pnpm --filter @agentskit/harness test:event-log", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-reconciliation", "category": "logic", "command": "pnpm --filter @agentskit/harness test:reconciliation", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-lock-recovery", "category": "logic", "command": "pnpm --filter @agentskit/harness test:lock-recovery", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-profiles", "category": "logic", "command": "pnpm --filter @agentskit/harness test:profiles", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-context", "category": "logic", "command": "pnpm --filter @agentskit/harness test:context", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-doc-bridge", "category": "logic", "command": "pnpm --filter @agentskit/harness test:doc-bridge", "evidence": "structured", "timeoutMs": 120000 },
