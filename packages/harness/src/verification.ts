@@ -190,7 +190,7 @@ export const retryRun = async ({ configPath }: { readonly configPath: string }):
   const baseline = await sourceSnapshot(loaded.root, loaded.stateDir)
   const superseded = transition(previousRun, 'SUPERSEDED', 'Retry superseded the previous run.', 'harness') as VerificationRun
   saveRun(loaded.stateDir, superseded)
-  const run = await createRun({ loaded, baseline, supersedes: previousRun.runId, dirtyBaselineAuthorized: previousRun.dirtyBaselineAuthorized })
+  const run = await createRun({ loaded, baseline, supersedes: previousRun.runId, dirtyBaselineAuthorized: previousRun.dirtyBaselineAuthorized, planner: previousRun.contractPreparation ? 'ci' : 'human' })
   const next = transition(run, 'IMPLEMENTING', 'Retry started after a previous attempt.', 'agent') as VerificationRun
   saveRun(loaded.stateDir, next); setLatest(loaded.stateDir, next); return next
 }

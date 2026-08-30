@@ -53,6 +53,16 @@ it('rejects CI attempts to approve a contract', async () => {
   await expect(planRun({ configPath: fixture.configPath, decision: 'approved', actor: 'ci' })).rejects.toMatchObject({ code: 'HUMAN_APPROVAL_REQUIRED' })
 })
 
+it('preserves CI preparation across retries', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'failed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  await planRun({ configPath: fixture.configPath, decision: 'prepared', actor: 'ci' })
+  startRun(loadConfig(fixture.configPath))
+  expect((await verifyRun({ configPath: fixture.configPath })).state).toBe('BLOCKED')
+  const retry = await retryRun({ configPath: fixture.configPath })
+  expect(retry.contractApproval).toBeUndefined()
+  expect(retry.contractPreparation?.actor).toBe('ci')
+})
+
 it('rejects approval when the verification projection is tampered with', async () => {
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
   const verified = await runToVerify(fixture)
