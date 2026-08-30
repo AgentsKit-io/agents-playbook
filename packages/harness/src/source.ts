@@ -1,5 +1,5 @@
 import { execFile } from 'node:child_process'
-import { readFileSync } from 'node:fs'
+import { lstatSync, readFileSync } from 'node:fs'
 import { relative, resolve } from 'node:path'
 import { promisify } from 'node:util'
 import { hashJson, sha256 } from './hash.js'
@@ -18,7 +18,10 @@ export const sourceSnapshot = async (root: string, stateDir: string): Promise<So
   const status = await git(root, ['status', '--porcelain=v1', '--untracked-files=all', ...pathspec])
   const diff = await git(root, ['diff', '--no-ext-diff', '--binary', 'HEAD', ...pathspec])
   const untrackedPaths = (await git(root, ['ls-files', '--others', '--exclude-standard', '-z'])).split('\0').filter(Boolean).filter((path) => !stateRelative || (path !== stateRelative && !path.startsWith(`${stateRelative}/`)))
-  const untracked = untrackedPaths.map((path) => ({ path, hash: sha256(readFileSync(resolve(root, path))) }))
+  const untracked = untrackedPaths.flatMap((path) => {
+    const absolute = resolve(root, path)
+    try { return lstatSync(absolute).isFile() ? [{ path, hash: sha256(readFileSync(absolute)) }] : [] } catch { return [] }
+  })
   const fingerprint = { revision, status, diff, untracked }
   return { revision: revision || `content:${hashJson(fingerprint)}`, status, statusHash: hashJson(fingerprint) }
 }

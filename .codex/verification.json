@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-29",
+  "project": "agents-playbook-harness-phase-30",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-29",
+  "stateDir": ".codex/verification/harness-phase-30",
   "profile": "strict",
   "contract": {
-    "intent": "Collect and validate the first repeatable real-provider baseline for the AgentsKit OS coding benchmark.",
+    "intent": "Implement and validate the first harness-equivalent benchmark runner for the frozen AgentsKit OS corpus.",
     "scope": {
-      "inScope": ["benchmarks/agentskit-os-phase-28.json", "benchmarks/agentskit-os-phase-29-baseline", "scripts/run-agentskit-os-baseline.mjs", "scripts/verify-agentskit-os-baseline.mjs", ".codex/verification.json"],
-      "outOfScope": ["harness-equivalent runs", "human review-time comparison", "changing agentskit-os product code", "browser, database, and MCP adapters", "central observability", "KMS and external identity integration"]
+      "inScope": ["packages/harness/src/source.ts", "packages/harness/test/source.test.ts", "scripts/run-agentskit-os-harness-benchmark.mjs", "scripts/verify-agentskit-os-harness-benchmark.mjs", ".codex/verification.json", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0032-harness-equivalent-benchmark.md"],
+      "outOfScope": ["agentskit-os product code", "UI and real-browser validation", "database and MCP adapters", "external tracking", "provider model changes", "enterprise release claim"]
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "baseline-corpus", "statement": "The baseline covers every manifest task against the pinned AgentsKit OS source and records no fabricated observation.", "checks": ["harness-baseline-corpus"] },
-      { "id": "baseline-evidence", "statement": "Each baseline task has reproducible provider and acceptance evidence, including the validation command result.", "checks": ["harness-baseline-evidence"] },
-      { "id": "baseline-integrity", "statement": "Baseline reports are rejected when task identity, source revision, provider result, or criterion evidence is incomplete.", "checks": ["harness-baseline-integrity"] },
-      { "id": "docs", "statement": "The package documents baseline scope, provider limitations, and why improvement remains unclaimed until a harness-equivalent run exists.", "checks": ["harness-docs"] }
+      { "id": "snapshot-resilience", "statement": "Source snapshots do not crash when temporary untracked directories are present.", "checks": ["harness-snapshot-resilience"] },
+      { "id": "harness-runner", "statement": "The runner prepares one real harness-bound execution contract per benchmark task and preserves the frozen task identity.", "checks": ["harness-runner-contract"] },
+      { "id": "measurement-integrity", "statement": "The measurement report distinguishes comparable completed runs from blocked or pending runs and never invents improvement values.", "checks": ["harness-measurement-integrity"] },
+      { "id": "docs", "statement": "The package documents the paired-run protocol, human approval gate, and current measurement limits.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -28,9 +28,9 @@
     "docs": true
   },
   "checks": [
-    { "id": "harness-baseline-corpus", "category": "logic", "command": "node scripts/verify-agentskit-os-baseline.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\" --reports benchmarks/agentskit-os-phase-29-baseline", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-baseline-evidence", "category": "cli", "execution": "real", "command": "node scripts/verify-agentskit-os-baseline.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\" --reports benchmarks/agentskit-os-phase-29-baseline --require-validation", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-baseline-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:benchmark-bridge && node -e \"console.log(JSON.stringify({status:'passed',criteria:['baseline-integrity']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-snapshot-resilience", "category": "logic", "command": "pnpm --filter @agentskit/harness typecheck && pnpm exec vitest run --config vitest.config.ts packages/harness/test/source.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['snapshot-resilience']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-runner-contract", "category": "cli", "execution": "real", "command": "node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-measurement-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },

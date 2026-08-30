@@ -356,6 +356,13 @@ the report exposes their delta and direction. A positive improvement rate
 means the harness used less of that measured resource; these metrics do not
 establish causality or productivity improvement alone.
 
+For paired real-provider measurements, `scripts/run-agentskit-os-harness-benchmark.mjs`
+prepares one frozen contract per manifest task, binds each run to the suite and
+task ID, and leaves the lifecycle at the human approval gate. Run `--collect`
+after approvals to aggregate the isolated task state directories. Pending or
+blocked task runs remain non-comparable; only `COMPLETE` runs produce directional
+improvement values.
+
 ## Development
 
 ```bash

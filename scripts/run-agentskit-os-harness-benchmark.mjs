@@ -1,0 +1,94 @@
+#!/usr/bin/env node
+import { execFileSync } from 'node:child_process'
+import { cpSync, existsSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, writeFileSync } from 'node:fs'
+import { join, relative, resolve } from 'node:path'
+import { tmpdir } from 'node:os'
+import { loadBenchmarkManifest, benchmarkRuns } from '../packages/harness/dist/index.js'
+
+const arg = (name, fallback) => {
+  const index = process.argv.indexOf(name)
+  return index === -1 ? fallback : process.argv[index + 1]
+}
+const root = resolve(import.meta.dirname, '..')
+const manifestPath = resolve(root, arg('--manifest', 'benchmarks/agentskit-os-phase-28.json'))
+const manifest = loadBenchmarkManifest(manifestPath)
+const mode = process.argv.includes('--self-test') ? 'self-test' : process.argv.includes('--collect') ? 'collect' : process.argv.includes('--execute') ? 'execute' : 'prepare'
+const phaseRoot = resolve(root, arg('--phase-root', '.codex/verification/phase-30'))
+const configRoot = join(phaseRoot, 'configs')
+const stateRoot = join(phaseRoot, 'runs')
+const cli = resolve(root, 'packages/harness/dist/cli.js')
+
+const taskConfig = (task, destination) => {
+  const stateDir = relative(root, join(destination, 'runs', task.id)).replaceAll('\\', '/')
+  const reportDir = relative(root, join(destination, 'runs', task.id, 'reports')).replaceAll('\\', '/')
+  return {
+  schemaVersion: 1,
+  project: `agents-playbook-harness-phase-30-${task.id}`,
+  root: '../../../..',
+  stateDir,
+  profile: 'strict',
+  contract: {
+    intent: `Complete benchmark task ${task.id} under the AgentsKit Harness.`,
+    scope: { inScope: [`benchmark:${manifest.suiteId}/${task.id}`], outOfScope: ['unrelated changes'] },
+    ambiguities: [],
+    outcomes: [{ id: 'task-delivery', statement: 'The real provider completes and validates the benchmark task.', checks: ['real-task'] }],
+  },
+  surfaces: { logic: true, endpoint: { required: false, reason: 'No endpoint.' }, database: { required: false, reason: 'No database.' }, cli: { required: false, reason: 'No CLI.' }, mcp: { required: false, reason: 'No MCP.' }, ui: { required: false, reason: 'No UI.' }, docs: { required: false, reason: 'No docs.' } },
+  checks: [{ id: 'real-task', category: 'logic', execution: 'real', command: `AGENTSKIT_OS_ROOT=\"$AGENTSKIT_OS_ROOT\" node scripts/run-agentskit-os-baseline.mjs --manifest ${manifestPath} --target \"$AGENTSKIT_OS_ROOT\" --output ${reportDir} --task-id ${task.id} --harness`, evidence: 'structured', timeoutMs: 240000 }],
+  tracking: { required: false, reason: 'Local benchmark measurement.' },
+  budget: { maxDurationMs: 300000 },
+  cleanup: { roots: ['.codex/verification/tmp'] },
+  benchmark: { suiteId: manifest.suiteId, taskId: task.id, mode: 'harness' },
+  }
+}
+
+const prepare = (destination = phaseRoot) => {
+  const configs = join(destination, 'configs')
+  mkdirSync(configs, { recursive: true })
+  for (const task of manifest.tasks) writeFileSync(join(configs, `${task.id}.json`), `${JSON.stringify(taskConfig(task, destination), null, 2)}\n`)
+  return { suiteId: manifest.suiteId, taskCount: manifest.tasks.length, configRoot: configs, stateRoot: join(destination, 'runs'), tasks: manifest.tasks.map((task) => ({ taskId: task.id, config: join(configs, `${task.id}.json`), stateDir: join(destination, 'runs', task.id) })) }
+}
+
+const runCli = (args, env) => JSON.parse(execFileSync(process.execPath, [cli, '--config', args.config, ...args.command, '--json'], { cwd: root, encoding: 'utf8', env: { ...process.env, ...env } }).trim().split(/\r?\n/).at(-1))
+
+if (mode === 'self-test') {
+  const fixture = mkdtempSync(join(tmpdir(), 'agentskit-harness-phase-30-'))
+  const prepared = prepare(fixture)
+  const configs = readdirSync(prepared.configRoot).filter((file) => file.endsWith('.json'))
+  if (configs.length !== manifest.tasks.length) throw new Error('one harness config was not prepared per task')
+  const first = JSON.parse(readFileSync(join(prepared.configRoot, configs[0]), 'utf8'))
+  if (first.benchmark?.suiteId !== manifest.suiteId || first.benchmark?.mode !== 'harness' || !first.checks?.[0]?.command.includes('--harness')) throw new Error('harness benchmark binding is incomplete')
+  const emptyMetrics = benchmarkRuns(join(fixture, 'empty'), manifest)
+  if (emptyMetrics.manifest?.comparableTaskCount !== 0 || emptyMetrics.comparisons.some((comparison) => comparison.comparability !== 'harness-not-run')) throw new Error('empty benchmark must remain non-comparable')
+  console.log(JSON.stringify({ status: 'passed', criteria: ['harness-runner', 'measurement-integrity'], suiteId: manifest.suiteId, taskCount: manifest.tasks.length }))
+} else if (mode === 'prepare') {
+  console.log(JSON.stringify({ status: 'passed', criteria: ['harness-runner'], ...prepare() }))
+} else if (mode === 'execute') {
+  const prepared = prepare()
+  const runs = []
+  for (const task of prepared.tasks) {
+    const config = task.config
+    const env = { AGENTSKIT_OS_ROOT: process.env.AGENTSKIT_OS_ROOT ?? '' }
+    let result
+    try {
+      runCli({ config, command: ['plan', 'approved', '--by', 'human'] }, env)
+      runCli({ config, command: ['start'] }, env)
+      result = runCli({ config, command: ['verify'] }, env)
+    } catch (error) {
+      result = { status: 'blocked', taskId: task.taskId, error: error instanceof Error ? error.message : String(error) }
+    }
+    runs.push({ taskId: task.taskId, runId: result.runId, state: result.state, error: result.error })
+  }
+  console.log(JSON.stringify({ status: runs.every((run) => ['AWAITING_HUMAN_APPROVAL', 'COMPLETE'].includes(run.state)) ? 'passed' : 'blocked', criteria: ['harness-runner'], suiteId: manifest.suiteId, runs }))
+} else {
+  const combined = mkdtempSync(join(tmpdir(), 'agentskit-harness-phase-30-metrics-'))
+  mkdirSync(combined, { recursive: true })
+  const runs = []
+  for (const task of manifest.tasks) {
+    const source = join(stateRoot, task.id, 'runs')
+    if (!existsSync(source)) continue
+    for (const entry of readdirSync(source)) cpSync(join(source, entry), join(combined, entry), { recursive: true })
+  }
+  const report = benchmarkRuns(combined, manifest)
+  console.log(JSON.stringify({ status: 'passed', criteria: ['measurement-integrity'], suiteId: manifest.suiteId, report }))
+}

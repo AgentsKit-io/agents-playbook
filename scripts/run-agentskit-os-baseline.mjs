@@ -2,7 +2,7 @@
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
-import { join, resolve } from 'node:path'
+import { join, relative, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { pathToFileURL } from 'node:url'
 import { loadBenchmarkManifest } from '../packages/harness/dist/index.js'
@@ -14,7 +14,11 @@ const arg = (name, fallback) => {
 const root = resolve(import.meta.dirname, '..')
 const osRoot = resolve(arg('--target', process.env.AGENTSKIT_OS_ROOT ?? ''))
 const manifest = loadBenchmarkManifest(resolve(root, arg('--manifest', 'benchmarks/agentskit-os-phase-28.json')))
+const taskId = arg('--task-id')
+const tasks = taskId ? manifest.tasks.filter((task) => task.id === taskId) : manifest.tasks
+if (taskId && tasks.length !== 1) throw new Error(`unknown benchmark task: ${taskId}`)
 const outputDir = resolve(root, arg('--output', 'benchmarks/agentskit-os-phase-29-baseline'))
+const harnessMode = process.argv.includes('--harness')
 const providerIds = (arg('--provider', process.env.AGENTSKIT_OS_PROVIDER ?? 'codex') ?? 'codex').split(',').map((value) => value.trim()).filter(Boolean)
 if (!process.env.AGENTSKIT_OS_ROOT && !arg('--target')) throw new Error('--target or AGENTSKIT_OS_ROOT is required.')
 if (!providerIds.length) throw new Error('at least one provider is required.')
@@ -76,7 +80,7 @@ const validateTask = (task, runRoot, beforeSourceHash, testResult) => {
 }
 
 const reports = []
-for (const task of manifest.tasks) {
+for (const task of tasks) {
   const runRoot = mkdtempSync(join(tmpdir(), `agentskit-os-phase-29-${task.id}-`))
   cpSync(join(fixture, 'src'), join(runRoot, 'src'), { recursive: true })
   writeFixtureTests(runRoot)
@@ -84,7 +88,8 @@ for (const task of manifest.tasks) {
   writeBaselineContract(runRoot, task)
   gitInit(runRoot)
   const beforeSourceHash = hashFile(join(runRoot, 'src/slice-window.ts'))
-  const prompt = readFileSync(join(osRoot, task.prompt.path), 'utf8')
+  const basePrompt = readFileSync(join(osRoot, task.prompt.path), 'utf8')
+  const prompt = harnessMode ? `${basePrompt}\n\nAgentsKit Harness requirements:\n- inspect the task and its acceptance criteria before editing;\n- implement the complete task, including required tests;\n- run the relevant real validation commands before reporting completion;\n- if any criterion is not proven, report the delivery as incomplete and continue resolving it.\n\nAcceptance criteria:\n${task.acceptanceCriteria.map((criterion) => `- ${criterion}`).join('\n')}` : basePrompt
   const startedAt = Date.now()
   const report = await orchestratorModule.runCodingAgentBenchmark({ repoRoot: runRoot, providers, kind: taskKind(task.kind), prompt, dryRun: false, isolateWorktrees: false, timeoutMs: 180_000 })
   const row = report.rows[0]
@@ -93,7 +98,8 @@ for (const task of manifest.tasks) {
   const validation = validateTask(task, runRoot, beforeSourceHash, testResult)
   const artifactValidated = validation.status === 'passed'
   const deliveryComplete = row?.status === 'ok' && artifactValidated
-  const evidence = task.acceptanceCriteria.map((criterion) => ({ criterion, status: artifactValidated ? 'passed' : 'failed', source: `benchmarks/agentskit-os-phase-29-baseline/${task.id}.json` }))
+  const evidenceSource = relative(root, join(outputDir, `${task.id}.json`)).replaceAll('\\', '/')
+  const evidence = task.acceptanceCriteria.map((criterion) => ({ criterion, status: artifactValidated ? 'passed' : 'failed', source: evidenceSource }))
   const observation = { type: 'agentskit-harness-baseline-observation', schemaVersion: 1, suiteId: manifest.suiteId, taskId: task.id, sourceRevision: manifest.provenance?.revision, providerIds, recordedAt: new Date().toISOString(), attempts: 1, durationMs: row?.durationMs ?? Date.now() - startedAt, status: deliveryComplete ? 'passed' : 'failed', escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, validation, evidence }
   writeFileSync(join(outputDir, `${task.id}.json`), `${JSON.stringify(observation, null, 2)}\n`)
   reports.push({ taskId: task.id, status: observation.status, durationMs: observation.durationMs, escapedIncomplete: observation.escapedIncomplete })

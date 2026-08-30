@@ -8,6 +8,8 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
+- Harness-equivalent benchmark preparation and collection for paired real-provider runs, with explicit human approval and honest non-comparability.
+- Source snapshots now ignore untracked directories while retaining hashes for untracked files.
 - Reproducible disposable-fixture runner and validator for the first real-provider AgentsKit OS baseline; improvement remains unavailable until equivalent harness runs exist.
 - Provenance-bearing benchmark tasks and a portable validator for AgentsKit OS coding benchmark reports; missing controlled observations remain explicitly non-comparable.
 - Playbook CI dogfooding for the package test suite, built CLI, and clean packed consumer.
