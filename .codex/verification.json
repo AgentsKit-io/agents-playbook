@@ -1,21 +1,20 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-25",
+  "project": "agents-playbook-harness-phase-26",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-25",
+  "stateDir": ".codex/verification/harness-phase-26",
   "profile": "strict",
   "contract": {
-    "intent": "Prove that signed harness evidence is portable outside the source workspace.",
+    "intent": "Separate effective delivery metrics from superseded attempt history.",
     "scope": {
-      "inScope": ["scripts/verify-harness-cli-flow.mjs", "packages/harness", ".codex/verification.json"],
-      "outOfScope": ["new evidence formats", "remote artifact storage", "provider-specific adapters"]
+      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "scripts/verify-harness-cli-flow.mjs", "packages/harness", ".codex/verification.json"],
+      "outOfScope": ["new telemetry services", "remote metric storage", "changes to historical run records"]
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "package", "statement": "The public CLI flow remains valid.", "checks": ["harness-cli-flow"] },
-      { "id": "signed-evidence", "statement": "The signed evidence bundle test suite remains valid.", "checks": ["harness-tests"] },
-      { "id": "evidence-portability", "statement": "A signed evidence bundle verifies after being copied to an isolated directory with its trusted public key.", "checks": ["harness-cli-flow"] },
-      { "id": "docs", "statement": "The package documents the portability guarantee and records the structural decision.", "checks": ["harness-docs"] }
+      { "id": "package", "statement": "The public CLI lifecycle remains valid and exposes the effective metrics without breaking package behavior.", "checks": ["harness-cli-flow"] },
+      { "id": "metrics", "statement": "The metrics API reports effective non-superseded run count, completion, check, outcome, and evidence rates separately from attempt history.", "checks": ["harness-metrics", "harness-cli-flow"] },
+      { "id": "docs", "statement": "The package documents the distinction between attempt and effective delivery metrics and records the decision.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -28,11 +27,11 @@
     "docs": true
   },
   "checks": [
-    { "id": "harness-tests", "category": "logic", "command": "pnpm --filter @agentskit/harness test:signed-bundle", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-metrics", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-cli-flow", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-cli-flow.mjs", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard", "evidence": "structured", "timeoutMs": 120000 }
   ],
-  "tracking": { "required": false, "reason": "Local deterministic portability validation." },
+  "tracking": { "required": false, "reason": "Local deterministic metric validation." },
   "budget": { "maxDurationMs": 300000 },
   "cleanup": { "roots": [".codex/verification/tmp"] }
 }

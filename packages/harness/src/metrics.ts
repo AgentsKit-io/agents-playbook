@@ -108,6 +108,12 @@ export interface BenchmarkSummary {
   readonly firstAttemptRuns: number
   readonly humanApprovedRuns: number
   readonly authorizedRuns: number
+  readonly effectiveRunCount: number
+  readonly effectiveCompleteRuns: number
+  readonly effectiveCompletionRate: number | null
+  readonly effectiveCheckPassRate: number | null
+  readonly effectiveOutcomePassRate: number | null
+  readonly effectiveEvidenceCoverageRate: number | null
   readonly checkPassRate: number | null
   readonly outcomePassRate: number | null
   readonly evidenceCoverageRate: number | null
@@ -178,6 +184,14 @@ const summarize = (runs: readonly BenchmarkRun[]): BenchmarkSummary => {
   const evidenceTotal = runs.reduce((total, run) => total + run.evidence.total, 0)
   const evidenceAttached = runs.reduce((total, run) => total + run.evidence.attached, 0)
   const firstAttempts = runs.filter((run) => !run.supersedes)
+  const superseded = new Set(runs.flatMap((run) => run.supersedes ? [run.supersedes] : []))
+  const effectiveRuns = runs.filter((run) => !superseded.has(run.runId))
+  const effectiveChecksTotal = effectiveRuns.reduce((total, run) => total + run.checks.total, 0)
+  const effectiveChecksPassed = effectiveRuns.reduce((total, run) => total + run.checks.passed, 0)
+  const effectiveOutcomesTotal = effectiveRuns.reduce((total, run) => total + run.outcomes.total, 0)
+  const effectiveOutcomesPassed = effectiveRuns.reduce((total, run) => total + run.outcomes.passed, 0)
+  const effectiveEvidenceTotal = effectiveRuns.reduce((total, run) => total + run.evidence.total, 0)
+  const effectiveEvidenceAttached = effectiveRuns.reduce((total, run) => total + run.evidence.attached, 0)
   const durations = runs.flatMap((run) => run.durationMs === undefined ? [] : [run.durationMs])
   return {
     totalRuns: runs.length,
@@ -188,6 +202,12 @@ const summarize = (runs: readonly BenchmarkRun[]): BenchmarkSummary => {
     firstAttemptRuns: firstAttempts.length,
     humanApprovedRuns: count(runs, (run) => run.humanApproved),
     authorizedRuns: count(runs, (run) => run.authorized),
+    effectiveRunCount: effectiveRuns.length,
+    effectiveCompleteRuns: count(effectiveRuns, (run) => run.state === 'COMPLETE'),
+    effectiveCompletionRate: percentage(count(effectiveRuns, (run) => run.state === 'COMPLETE'), effectiveRuns.length),
+    effectiveCheckPassRate: percentage(effectiveChecksPassed, effectiveChecksTotal),
+    effectiveOutcomePassRate: percentage(effectiveOutcomesPassed, effectiveOutcomesTotal),
+    effectiveEvidenceCoverageRate: percentage(effectiveEvidenceAttached, effectiveEvidenceTotal),
     checkPassRate: percentage(checksPassed, checksTotal),
     outcomePassRate: percentage(outcomesPassed, outcomesTotal),
     evidenceCoverageRate: percentage(evidenceAttached, evidenceTotal),

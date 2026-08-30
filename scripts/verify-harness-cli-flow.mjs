@@ -70,7 +70,7 @@ try {
   const portableBundle = runPortableCli(['events', 'verify-bundle', portableBundlePath, '--trusted-key-store', portableTrustStorePath])
   if (approved.state !== 'COMPLETE' || exported.runId !== secondVerified.runId || bundle.status !== 'verified' || bundle.runId !== secondVerified.runId || portableBundle.status !== 'verified' || portableBundle.runId !== secondVerified.runId) throw new Error('signed evidence bundle CLI flow did not verify')
   const benchmark = runCli(['benchmark'])
-  if (benchmark.type !== 'agentskit-harness-benchmark' || benchmark.summary.totalRuns !== 2 || benchmark.summary.retriedRuns !== 1 || benchmark.summary.evidenceCoverageRate !== 1) throw new Error('benchmark did not aggregate the CLI lifecycle history')
+  if (benchmark.type !== 'agentskit-harness-benchmark' || benchmark.summary.totalRuns !== 2 || benchmark.summary.retriedRuns !== 1 || benchmark.summary.evidenceCoverageRate !== 1 || benchmark.summary.effectiveRunCount !== 1 || benchmark.summary.effectiveCompleteRuns !== 1 || benchmark.summary.effectiveCompletionRate !== 1) throw new Error('benchmark did not aggregate the CLI lifecycle history')
   console.log(JSON.stringify({ status: 'passed', criteria: ['package', 'metrics', 'terminal-reconciliation', 'lock-recovery', 'signed-evidence', 'evidence-portability', 'key-trust'], finalState: approved.state, supersededRunId: verified.runId, benchmark: benchmark.summary }))
 } catch (error) {
   console.log(JSON.stringify({ status: 'failed', criteria: ['package'], failures: [error instanceof Error ? error.message : String(error)] }))

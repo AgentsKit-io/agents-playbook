@@ -264,7 +264,9 @@ action without storing raw output.
 
 `benchmark` aggregates the local run history into a versioned JSON report. It
 includes check/outcome/evidence pass rates, retries, stale runs, human approvals,
-and average/median verification duration. With `--manifest`, it also compares
+and average/median verification duration. It also reports `effective*` metrics
+over the latest non-superseded run in each retry lineage, so attempt history is
+not confused with the current delivery state. With `--manifest`, it also compares
 bound harness tasks with explicitly recorded baseline observations. A baseline
 must include evidence for every acceptance criterion; missing, duplicate, or
 unknown criterion evidence is rejected. Missing baselines and incomplete
