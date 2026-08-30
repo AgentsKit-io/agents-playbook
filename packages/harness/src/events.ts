@@ -8,9 +8,9 @@ import type { DockerRuntimeEvidence } from './runtime.js'
 
 export const HARNESS_EVENT_SCHEMA_VERSION = 1 as const
 export const EVENT_LOG_GENESIS = 'GENESIS' as const
-export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached', 'verification.completed', 'approval.recorded', 'authorization.recorded', 'session.started', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'] as const
+export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached', 'verification.completed', 'approval.recorded', 'authorization.recorded', 'session.started', 'agent.turn.started', 'policy.evaluated', 'tool.approval.requested', 'tool.approval.recorded', 'tool.requested', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'] as const
 export type HarnessEventType = typeof HARNESS_EVENT_TYPES[number]
-const SESSION_EVENT_TYPES = new Set<HarnessEventType>(['session.started', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'])
+const SESSION_EVENT_TYPES = new Set<HarnessEventType>(['session.started', 'agent.turn.started', 'policy.evaluated', 'tool.approval.requested', 'tool.approval.recorded', 'tool.requested', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'])
 
 export interface HarnessEventPayloads {
   readonly 'run.created': { readonly project: string; readonly baselineRevision: string; readonly baselineStatusHash: string }
@@ -21,7 +21,9 @@ export interface HarnessEventPayloads {
   readonly 'authorization.recorded': { readonly decision: 'approved' | 'rejected'; readonly resultingState: RunState; readonly verificationDigest: string; readonly actor: 'human'; readonly target: string; readonly sourceRevision: string; readonly contractHash: string }
   readonly 'session.started': { readonly adapterId: string; readonly adapterVersion: string; readonly capabilities: readonly string[] }
   readonly 'agent.turn.started': { readonly turnId: string; readonly inputHash: string }
-  readonly 'policy.evaluated': { readonly actionId: string; readonly turnId: string; readonly toolId: string; readonly decision: 'allow' | 'block'; readonly policyId: string; readonly reason: string }
+  readonly 'policy.evaluated': { readonly actionId: string; readonly turnId: string; readonly toolId: string; readonly decision: 'allow' | 'block' | 'approve'; readonly policyId: string; readonly reason: string }
+  readonly 'tool.approval.requested': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string; readonly policyId: string; readonly reason: string }
+  readonly 'tool.approval.recorded': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly decision: 'approved' | 'rejected'; readonly actor: 'human'; readonly policyId: string; readonly reason: string }
   readonly 'tool.requested': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string }
   readonly 'tool.blocked': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly policyId: string; readonly reason: string }
   readonly 'tool.completed': { readonly actionId: string; readonly resultHash: string; readonly durationMs: number; readonly runtimeEvidence?: DockerRuntimeEvidence }

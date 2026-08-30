@@ -81,6 +81,48 @@ it('closes a failed execution and requires a fresh policy-approved action for re
   recorder.end('completed')
 })
 
+it('requires human approval before sensitive tools execute and records rejection', async () => {
+  const { root, run } = await fixture()
+  let executions = 0
+  const recorder = createSessionRecorder({
+    stateDir: join(root, '.codex', 'verification'),
+    run,
+    adapter,
+    policy: createPolicyGate({ rules: [{ id: 'approve-sensitive', effect: 'approve', toolIds: ['sensitive'], reason: 'sensitive tool requires review' }] }),
+    runtime: { execute: async () => { executions += 1; return 'should not run' } },
+    sessionId: 'approval-session',
+  })
+  recorder.startTurn('approval-input', 'approval-turn')
+  const requested = recorder.requestTool({ turnId: 'approval-turn', actionId: 'sensitive-action', toolId: 'sensitive', argumentsHash: 'sensitive-arguments' })
+  expect(requested.type).toBe('tool.approval.requested')
+  await expect(recorder.executeTool({ actionId: 'sensitive-action', arguments: { secret: 'never persisted' } })).rejects.toThrow(/not pending/)
+  expect(() => recorder.end('completed')).toThrow(/approvals are pending/)
+  expect(recorder.approveTool({ actionId: 'sensitive-action', decision: 'rejected' }).type).toBe('tool.blocked')
+  recorder.end('failed')
+  expect(executions).toBe(0)
+  const events = new FileEventStore(join(root, '.codex', 'verification')).read(run.runId)
+  expect(events.some((event) => event.type === 'tool.approval.requested' && event.payload.actionId === 'sensitive-action')).toBe(true)
+  expect(events.some((event) => event.type === 'tool.approval.recorded' && event.payload.decision === 'rejected' && event.payload.actor === 'human')).toBe(true)
+  expect(readFileSync(join(root, '.codex', 'verification', 'runs', run.runId, 'events.ndjson'), 'utf8')).not.toContain('never persisted')
+
+  const approvedFixture = await fixture()
+  const approvedRecorder = createSessionRecorder({
+    stateDir: join(approvedFixture.root, '.codex', 'verification'),
+    run: approvedFixture.run,
+    adapter,
+    policy: createPolicyGate({ rules: [{ id: 'approve-sensitive', effect: 'approve', toolIds: ['sensitive'], reason: 'sensitive tool requires review' }] }),
+    runtime: createToolRuntime({ tools: [{ toolId: 'sensitive', execute: async () => { executions += 1; return 'approved' } }] }),
+    sessionId: 'approved-session',
+  })
+  approvedRecorder.startTurn('approved-input', 'approved-turn')
+  approvedRecorder.requestTool({ turnId: 'approved-turn', actionId: 'approved-action', toolId: 'sensitive', argumentsHash: 'approved-arguments' })
+  const released = approvedRecorder.approveTool({ actionId: 'approved-action', decision: 'approved' })
+  expect(released.type).toBe('tool.requested')
+  await expect(approvedRecorder.executeTool({ actionId: 'approved-action', arguments: { safe: true } })).resolves.toMatchObject({ status: 'completed' })
+  approvedRecorder.end('completed')
+  expect(executions).toBe(1)
+})
+
 it('persists runtime attestation with the terminal tool event', async () => {
   const { root, run } = await fixture()
   const runtimeWithEvidence = {

@@ -158,12 +158,12 @@ session.end('completed')
 ```
 
 The recorder enforces turn-before-tool, one terminal result per action, no
-pending actions at session end, and no calls after termination. It is an
-observation seam; tool execution and policy decisions remain separate kernel
-phases.
+pending actions or unresolved approvals at session end, and no calls after
+termination. It is an observation seam; tool execution and policy decisions
+remain separate kernel phases.
 
 Every session also requires a policy gate. The built-in gate is an ordered
-allow/block list with deny-by-default behavior:
+allow/block/approve list with deny-by-default behavior:
 
 ```ts
 import { createPolicyGate, createSessionRecorder } from '@agentskit/harness'
@@ -176,8 +176,12 @@ const session = createSessionRecorder({ stateDir, run, adapter, policy })
 
 The first matching rule wins. A blocked attempt writes `policy.evaluated` and
 `tool.blocked` events and raises `POLICY_BLOCKED`; it never becomes a pending
-tool action. Custom policy gates can implement the same typed `PolicyGate`
-interface without coupling the harness to a runtime or provider.
+tool action. An `approve` decision writes `tool.approval.requested` and keeps
+the action out of the runtime until `session.approveTool({ actionId,
+decision: 'approved' })` is called by a human. Rejection writes an auditable
+`tool.approval.recorded` and `tool.blocked` pair. Custom policy gates can
+implement the same typed `PolicyGate` interface without coupling the harness
+to a runtime or provider.
 
 The built-in runtime executes registered handlers in memory, passes an
 `AbortSignal`, enforces a timeout, and records only a result hash and duration:

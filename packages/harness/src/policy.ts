@@ -2,7 +2,7 @@ import { fail } from './errors.js'
 
 export interface PolicyRule {
   readonly id: string
-  readonly effect: 'allow' | 'block'
+  readonly effect: 'allow' | 'block' | 'approve'
   readonly toolIds: readonly string[]
   readonly reason: string
 }
@@ -15,7 +15,7 @@ export interface PolicyRequest {
 }
 
 export interface PolicyDecision {
-  readonly decision: 'allow' | 'block'
+  readonly decision: 'allow' | 'block' | 'approve'
   readonly policyId: string
   readonly reason: string
 }
@@ -34,7 +34,7 @@ export const createPolicyGate = ({ rules }: { readonly rules: readonly PolicyRul
   const normalized = rules.map((rule, index) => {
     if (typeof rule !== 'object' || rule === null || Array.isArray(rule)) fail(`rules[${index}] must be an object.`, 'INVALID_INPUT')
     const id = required(rule.id, `rules[${index}].id`)
-    if (rule.effect !== 'allow' && rule.effect !== 'block') fail(`rules[${index}].effect is invalid.`, 'INVALID_INPUT')
+    if (rule.effect !== 'allow' && rule.effect !== 'block' && rule.effect !== 'approve') fail(`rules[${index}].effect is invalid.`, 'INVALID_INPUT')
     if (!Array.isArray(rule.toolIds) || !rule.toolIds.length || rule.toolIds.some((toolId) => typeof toolId !== 'string' || !toolId.trim())) fail(`rules[${index}].toolIds must contain non-empty strings.`, 'INVALID_INPUT')
     return { id, effect: rule.effect, toolIds: rule.toolIds.map((toolId) => required(toolId, `rules[${index}].toolIds`)), reason: required(rule.reason, `rules[${index}].reason`) }
   })
