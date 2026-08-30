@@ -94,7 +94,11 @@ const validateTask = (task, runRoot, beforeSourceHash, testResult) => {
   if (task.id === 'bug-off-by-one' && !readFileSync(testsPath, 'utf8').includes('[3, 4]')) failures.push('regression test does not assert the final window')
   if (task.id === 'test-coverage-gap') {
     if (hashFile(sourcePath) !== beforeSourceHash) failures.push('source changed during test-only task')
-    for (const token of ['empty', 'larger', '<=', 'exactly']) if (!readFileSync(testsPath, 'utf8').toLowerCase().includes(token)) failures.push(`boundary test marker missing: ${token}`)
+    const tests = readFileSync(testsPath, 'utf8')
+    if (!/slidingWindow\(\s*\[\s*\]\s*,/.test(tests)) failures.push('empty-input boundary test missing')
+    if (!/slidingWindow\(\s*\[\s*1\s*,\s*2\s*\]\s*,\s*3\s*\)/.test(tests)) failures.push('larger-n boundary test missing')
+    if (!/slidingWindow\(\s*\[[^\]]+\]\s*,\s*(?:0|-\d+)\s*\)/.test(tests)) failures.push('non-positive-n boundary test missing')
+    if (!/slidingWindow\(\s*\[\s*1\s*,\s*2\s*(?:,\s*3\s*)?\]\s*,\s*(?:2|3)\s*\)/.test(tests)) failures.push('equal-length boundary test missing')
   }
   if (task.id === 'feat-formatter' && !/pretty/.test(readFileSync(formatterPath, 'utf8'))) failures.push('pretty mode implementation check failed')
   if (task.id === 'feat-formatter' && !/pretty/.test(readFileSync(join(runRoot, 'tests/format-report.test.ts'), 'utf8'))) failures.push('pretty mode test check failed')
