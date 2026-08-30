@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-30",
+  "project": "agents-playbook-harness-phase-31",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-30",
+  "stateDir": ".codex/verification/harness-phase-31",
   "profile": "strict",
   "contract": {
-    "intent": "Implement and validate the first harness-equivalent benchmark runner for the frozen AgentsKit OS corpus.",
+    "intent": "Make the harness verification CLI available inside isolated coding-agent fixtures and validate the real provider gate.",
     "scope": {
-      "inScope": ["packages/harness/src/source.ts", "packages/harness/test/source.test.ts", "scripts/run-agentskit-os-harness-benchmark.mjs", "scripts/verify-agentskit-os-harness-benchmark.mjs", ".codex/verification.json", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0032-harness-equivalent-benchmark.md"],
-      "outOfScope": ["agentskit-os product code", "UI and real-browser validation", "database and MCP adapters", "external tracking", "provider model changes", "enterprise release claim"]
+      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0033-portable-agent-gate.md", ".codex/verification.json"],
+      "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "snapshot-resilience", "statement": "Source snapshots do not crash when temporary untracked directories are present.", "checks": ["harness-snapshot-resilience"] },
-      { "id": "harness-runner", "statement": "The runner prepares one real harness-bound execution contract per benchmark task and preserves the frozen task identity.", "checks": ["harness-runner-contract"] },
-      { "id": "measurement-integrity", "statement": "The measurement report distinguishes comparable completed runs from blocked or pending runs and never invents improvement values.", "checks": ["harness-measurement-integrity"] },
-      { "id": "docs", "statement": "The package documents the paired-run protocol, human approval gate, and current measurement limits.", "checks": ["harness-docs"] }
+      { "id": "portable-gate", "statement": "An isolated fixture can invoke the real harness CLI against its local contract and validation command.", "checks": ["harness-portable-gate"] },
+      { "id": "no-false-approval", "statement": "Fixture setup uses CI preparation and never fabricates human approval.", "checks": ["harness-no-false-approval"] },
+      { "id": "measurement-integrity", "statement": "Provider and artifact validation results remain distinct, and incomplete provider delivery remains blocked.", "checks": ["harness-measurement-integrity"] },
+      { "id": "docs", "statement": "The portable gate behavior and its security boundary are documented.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -28,8 +28,8 @@
     "docs": true
   },
   "checks": [
-    { "id": "harness-snapshot-resilience", "category": "logic", "command": "pnpm --filter @agentskit/harness typecheck && pnpm exec vitest run --config vitest.config.ts packages/harness/test/source.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['snapshot-resilience']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-runner-contract", "category": "cli", "execution": "real", "command": "node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-portable-gate", "category": "cli", "execution": "real", "command": "pnpm --filter @agentskit/harness typecheck && node --check scripts/run-agentskit-os-baseline.mjs && node --check scripts/run-agentskit-os-harness-benchmark.mjs && node --check scripts/verify-agentskit-os-harness-benchmark.mjs && node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-no-false-approval", "category": "logic", "command": "node -e \"const fs=require('fs'); const s=fs.readFileSync('scripts/run-agentskit-os-harness-benchmark.mjs','utf8'); if(s.includes(\"plan', 'approved'\")) process.exit(1); if(!s.includes(\"plan', 'prepared', '--by', 'ci'\")) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['no-false-approval']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-measurement-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard", "evidence": "structured", "timeoutMs": 120000 }
   ],

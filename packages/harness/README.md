@@ -363,6 +363,12 @@ after approvals to aggregate the isolated task state directories. Pending or
 blocked task runs remain non-comparable; only `COMPLETE` runs produce directional
 improvement values.
 
+The AgentsKit OS benchmark runner can expose the built `ak-verify` CLI inside
+its disposable fixture. The fixture contract is prepared by CI, the provider
+inherits a fixture-local PATH entry, and human approval is never synthesized.
+This makes provider-side verification available without making the fixture a
+security boundary; the outer harness remains the authoritative evidence gate.
+
 ## Development
 
 ```bash

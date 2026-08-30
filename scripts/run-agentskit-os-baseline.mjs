@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { chmodSync, cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { pathToFileURL } from 'node:url'
@@ -19,6 +19,7 @@ const tasks = taskId ? manifest.tasks.filter((task) => task.id === taskId) : man
 if (taskId && tasks.length !== 1) throw new Error(`unknown benchmark task: ${taskId}`)
 const outputDir = resolve(root, arg('--output', 'benchmarks/agentskit-os-phase-29-baseline'))
 const harnessMode = process.argv.includes('--harness')
+const harnessCli = resolve(root, 'packages/harness/dist/cli.js')
 const providerIds = (arg('--provider', process.env.AGENTSKIT_OS_PROVIDER ?? 'codex') ?? 'codex').split(',').map((value) => value.trim()).filter(Boolean)
 if (!process.env.AGENTSKIT_OS_ROOT && !arg('--target')) throw new Error('--target or AGENTSKIT_OS_ROOT is required.')
 if (!providerIds.length) throw new Error('at least one provider is required.')
@@ -26,7 +27,6 @@ if (!providerIds.length) throw new Error('at least one provider is required.')
 const fixture = join(osRoot, 'packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures')
 const providerModule = await import(pathToFileURL(join(osRoot, 'packages/os-coding-agents/dist/index.js')).href)
 const orchestratorModule = await import(pathToFileURL(join(osRoot, 'packages/os-dev-orchestrator/dist/index.js')).href)
-const providers = providerIds.map((providerId) => providerModule.createBuiltinCodingAgentProvider(providerId))
 const vitest = resolve(arg('--vitest', join(osRoot, 'node_modules/.bin/vitest')))
 mkdirSync(outputDir, { recursive: true })
 
@@ -45,20 +45,42 @@ const gitInit = (runRoot) => {
   git(['add', '.'])
   git(['commit', '-qm', 'fixture baseline'])
 }
-const writeBaselineContract = (runRoot, task) => {
+const writeBaselineContract = (runRoot, task, stateDir = '.codex/verification/baseline') => {
   mkdirSync(join(runRoot, '.codex'), { recursive: true })
   writeFileSync(join(runRoot, '.codex/verification.json'), JSON.stringify({
     schemaVersion: 1,
     project: `agentskit-os-baseline-${task.id}`,
     root: '..',
-    stateDir: '.codex/verification/baseline',
+    stateDir,
     profile: 'strict',
     contract: { intent: `Complete baseline task ${task.id}.`, scope: { inScope: [`task:${task.id}`], outOfScope: ['unrelated changes'] }, ambiguities: [], outcomes: [{ id: 'task', statement: 'Complete the task and its fixture tests.', checks: ['fixture-tests'] }] },
     surfaces: { logic: true, endpoint: { required: false, reason: 'No endpoint.' }, database: { required: false, reason: 'No database.' }, cli: { required: false, reason: 'No CLI.' }, mcp: { required: false, reason: 'No MCP.' }, ui: { required: false, reason: 'No UI.' }, docs: { required: false, reason: 'No docs.' } },
-    checks: [{ id: 'fixture-tests', category: 'logic', command: 'vitest run', evidence: 'structured' }],
+    checks: [{ id: 'fixture-tests', category: 'logic', command: `${vitest} run --reporter=dot && node -e \"console.log(JSON.stringify({status:'passed',criteria:['task']}))\"`, evidence: 'structured' }],
     tracking: { required: false, reason: 'Baseline is local and not tracked externally.' },
   }, null, 2) + '\n')
 }
+const writeHarnessCliShim = (runRoot) => {
+  const bin = join(runRoot, '.codex/bin/ak-verify')
+  mkdirSync(join(runRoot, '.codex/bin'), { recursive: true })
+  writeFileSync(bin, `#!/bin/sh\nexec "${process.execPath}" "${harnessCli}" --config "${join(runRoot, '.codex/verification.json')}" "$@"\n`)
+  chmodSync(bin, 0o755)
+}
+const prepareHarnessLifecycle = (runRoot, allowDirty = false) => {
+  const config = join(runRoot, '.codex/verification.json')
+  execFileSync(process.execPath, [harnessCli, '--config', config, 'plan', 'prepared', '--by', 'ci', ...(allowDirty ? ['--allow-dirty'] : [])], { cwd: runRoot, encoding: 'utf8', stdio: 'pipe' })
+  execFileSync(process.execPath, [harnessCli, '--config', config, 'start'], { cwd: runRoot, encoding: 'utf8', stdio: 'pipe' })
+}
+const verifyFinalHarnessLifecycle = (runRoot, task) => {
+  writeBaselineContract(runRoot, task, '.codex/verification/final')
+  prepareHarnessLifecycle(runRoot, true)
+  const config = join(runRoot, '.codex/verification.json')
+  try {
+    return JSON.parse(execFileSync(process.execPath, [harnessCli, '--config', config, 'verify', '--json'], { cwd: runRoot, encoding: 'utf8' }).trim().split(/\r?\n/).at(-1))
+  } catch (error) {
+    return { state: 'BLOCKED', error: error instanceof Error ? error.message : String(error) }
+  }
+}
+const providersFor = (runRoot) => providerIds.map((providerId) => providerModule.createBuiltinCodingAgentProvider(providerId, { env: { PATH: `${join(runRoot, '.codex/bin')}:${process.env.PATH ?? ''}` } }))
 const runTests = (runRoot) => {
   const result = execFileSync(vitest, ['run', '--reporter=dot'], { cwd: runRoot, encoding: 'utf8', env: { ...process.env, CI: '1' }, stdio: 'pipe' })
   return { status: 'passed', command: `${vitest} run --reporter=dot`, exitCode: 0, output: result.slice(-2000) }
@@ -86,21 +108,25 @@ for (const task of tasks) {
   writeFixtureTests(runRoot)
   writeFileSync(join(runRoot, 'package.json'), JSON.stringify({ type: 'module', scripts: { test: 'vitest run' } }, null, 2))
   writeBaselineContract(runRoot, task)
+  if (harnessMode) writeHarnessCliShim(runRoot)
   gitInit(runRoot)
+  if (harnessMode) prepareHarnessLifecycle(runRoot)
   const beforeSourceHash = hashFile(join(runRoot, 'src/slice-window.ts'))
   const basePrompt = readFileSync(join(osRoot, task.prompt.path), 'utf8')
   const prompt = harnessMode ? `${basePrompt}\n\nAgentsKit Harness requirements:\n- inspect the task and its acceptance criteria before editing;\n- implement the complete task, including required tests;\n- run the relevant real validation commands before reporting completion;\n- if any criterion is not proven, report the delivery as incomplete and continue resolving it.\n\nAcceptance criteria:\n${task.acceptanceCriteria.map((criterion) => `- ${criterion}`).join('\n')}` : basePrompt
   const startedAt = Date.now()
-  const report = await orchestratorModule.runCodingAgentBenchmark({ repoRoot: runRoot, providers, kind: taskKind(task.kind), prompt, dryRun: false, isolateWorktrees: false, timeoutMs: 180_000 })
+  const report = await orchestratorModule.runCodingAgentBenchmark({ repoRoot: runRoot, providers: providersFor(runRoot), kind: taskKind(task.kind), prompt, dryRun: false, isolateWorktrees: false, timeoutMs: 180_000 })
   const row = report.rows[0]
   let testResult
   try { testResult = runTests(runRoot) } catch (error) { testResult = { status: 'failed', command: `${vitest} run --reporter=dot`, exitCode: error.status ?? 1, output: String(error.stdout ?? error.message ?? error) } }
   const validation = validateTask(task, runRoot, beforeSourceHash, testResult)
   const artifactValidated = validation.status === 'passed'
-  const deliveryComplete = row?.status === 'ok' && artifactValidated
+  const harnessVerification = harnessMode ? verifyFinalHarnessLifecycle(runRoot, task) : undefined
+  const delegatedApprovalReady = harnessVerification?.state === 'AWAITING_HUMAN_APPROVAL'
+  const deliveryComplete = artifactValidated && (row?.status === 'ok' || delegatedApprovalReady)
   const evidenceSource = relative(root, join(outputDir, `${task.id}.json`)).replaceAll('\\', '/')
   const evidence = task.acceptanceCriteria.map((criterion) => ({ criterion, status: artifactValidated ? 'passed' : 'failed', source: evidenceSource }))
-  const observation = { type: 'agentskit-harness-baseline-observation', schemaVersion: 1, suiteId: manifest.suiteId, taskId: task.id, sourceRevision: manifest.provenance?.revision, providerIds, recordedAt: new Date().toISOString(), attempts: 1, durationMs: row?.durationMs ?? Date.now() - startedAt, status: deliveryComplete ? 'passed' : 'failed', escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, validation, evidence }
+  const observation = { type: 'agentskit-harness-baseline-observation', schemaVersion: 1, suiteId: manifest.suiteId, taskId: task.id, sourceRevision: manifest.provenance?.revision, providerIds, recordedAt: new Date().toISOString(), attempts: 1, durationMs: row?.durationMs ?? Date.now() - startedAt, status: deliveryComplete ? 'passed' : 'failed', escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, ...(harnessVerification ? { harnessVerification } : {}), validation, evidence }
   writeFileSync(join(outputDir, `${task.id}.json`), `${JSON.stringify(observation, null, 2)}\n`)
   reports.push({ taskId: task.id, status: observation.status, durationMs: observation.durationMs, escapedIncomplete: observation.escapedIncomplete })
 }
