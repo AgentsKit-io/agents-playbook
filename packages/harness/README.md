@@ -67,7 +67,7 @@ node scripts/run-agentskit-os-baseline.mjs \
   --target /path/to/agentskit-os \
   --provider codex \
   --repeats 3 \
-  --output benchmarks/agentskit-os-phase-35-baseline \
+  --output benchmarks/agentskit-os-phase-36-baseline \
   --record-manifest benchmarks/agentskit-os-phase-28.json
 ```
 
@@ -77,8 +77,9 @@ duration of fixture setup, provider execution, validation, and cleanup in
 report. The manifest is replaced atomically through
 the typed observation recorder. `--record-manifest` requires the complete task
 set; omit it to inspect an uncommitted collection. Replicas are not retries,
-and a failed sample keeps the aggregate failed so the quality gate cannot turn
-an incomplete baseline into an improvement claim.
+and a failed sample keeps the aggregate failed. Escape reduction may remain
+visible as a separate outcome, but duration, attempt, and review improvements
+remain unavailable until the baseline proves complete delivery.
 
 ## Contract
 

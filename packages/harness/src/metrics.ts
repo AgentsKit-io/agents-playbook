@@ -115,8 +115,9 @@ export interface BenchmarkRun {
 export interface BenchmarkComparison {
   readonly taskId: string
   readonly title: string
-  readonly comparability: 'comparable' | 'missing-baseline' | 'baseline-not-run' | 'baseline-evidence-missing' | 'baseline-samples-insufficient' | 'harness-not-run' | 'harness-not-complete'
+  readonly comparability: 'comparable' | 'missing-baseline' | 'baseline-not-run' | 'baseline-evidence-missing' | 'baseline-incomplete' | 'baseline-samples-insufficient' | 'harness-not-run' | 'harness-not-complete'
   readonly comparable: boolean
+  readonly baselineDeliveryComplete: boolean
   readonly baseline?: BenchmarkObservation
   readonly baselineEvidenceCoverageRate: number | null
   readonly baselineSampleCount: number
@@ -477,11 +478,13 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest,
   const coveredCriteria = new Set((baseline?.evidence ?? []).map((entry) => entry.criterion))
   const baselineEvidenceCoverageRate = baseline ? percentage(coveredCriteria.size, task.acceptanceCriteria.length) : null
   const baselineEvidenceComplete = baselineEvidenceCoverageRate === 1
+  const baselineEvidencePassed = baselineEvidenceComplete && (baseline?.evidence?.every((entry) => entry.status === 'passed') ?? false)
+  const baselineDeliveryComplete = baseline?.status === 'passed' && baselineEvidencePassed
   const baselineDurationSamples = baseline?.durationSamplesMs ?? (baseline?.durationMs === undefined ? [] : [baseline.durationMs])
   const baselineMedianDurationMs = median(baselineDurationSamples)
   const baselineSamplesSufficient = baselineDurationSamples.length >= policy.minBaselineSamplesPerTask
-  const comparable = baseline !== undefined && baseline.status !== 'not-run' && baselineEvidenceComplete && baselineSamplesSufficient && latest?.state === 'COMPLETE'
-  const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : !baselineEvidenceComplete ? 'baseline-evidence-missing' : latest === undefined ? 'harness-not-run' : latest.state !== 'COMPLETE' ? 'harness-not-complete' : 'baseline-samples-insufficient'
+  const comparable = baseline !== undefined && baseline.status !== 'not-run' && baselineEvidenceComplete && baselineDeliveryComplete && baselineSamplesSufficient && latest?.state === 'COMPLETE'
+  const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : !baselineEvidenceComplete ? 'baseline-evidence-missing' : latest === undefined ? 'harness-not-run' : latest.state !== 'COMPLETE' ? 'harness-not-complete' : !baselineDeliveryComplete ? 'baseline-incomplete' : 'baseline-samples-insufficient'
   const completedTaskRuns = taskRuns.filter((run) => run.state === 'COMPLETE')
   const durationSamplesMs = completedTaskRuns.flatMap((run) => run.durationMs === undefined ? [] : [run.durationMs])
   const medianDurationMs = median(durationSamplesMs)
@@ -490,9 +493,9 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest,
   const durationRate = comparable ? improvementRate(baselineMedianDurationMs ?? undefined, medianDurationMs ?? undefined) : null
   const attemptsRate = comparable ? improvementRate(baseline?.attempts, attempts) : null
   const reviewRate = comparable ? improvementRate(baseline?.reviewMinutes, latest?.humanReviewMinutes) : null
-  const escapedIncompleteRate = comparable ? improvementRate(baseline?.escapedIncomplete, latest?.escapedIncomplete) : null
+  const escapedIncompleteRate = improvementRate(baseline?.escapedIncomplete, latest?.escapedIncomplete)
   const completedRuns = completedTaskRuns.length
-  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, baselineSampleCount: baselineDurationSamples.length, ...(baselineMedianDurationMs === null ? {} : { baselineMedianDurationMs }), improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts, retryCount, completedRuns, durationSamplesMs, ...(medianDurationMs === null ? {} : { medianDurationMs }), latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baselineMedianDurationMs !== null && medianDurationMs !== null ? { durationDeltaMs: medianDurationMs - baselineMedianDurationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: attempts - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(comparable && baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
+  return { taskId: task.id, title: task.title, comparability, comparable, baselineDeliveryComplete, baselineEvidenceCoverageRate, baselineSampleCount: baselineDurationSamples.length, ...(baselineMedianDurationMs === null ? {} : { baselineMedianDurationMs }), improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts, retryCount, completedRuns, durationSamplesMs, ...(medianDurationMs === null ? {} : { medianDurationMs }), latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baselineMedianDurationMs !== null && medianDurationMs !== null ? { durationDeltaMs: medianDurationMs - baselineMedianDurationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: attempts - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
 })
 
 export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): BenchmarkReport => {
@@ -504,6 +507,8 @@ export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): B
   const escapedIncompleteTaskIds = comparable.filter((comparison) => comparison.harness.escapedIncomplete !== 0).map((comparison) => comparison.taskId)
   const reasons = []
   if (comparable.length < policy.minComparableTasks) reasons.push(`requires at least ${policy.minComparableTasks} comparable tasks`)
+  const incompleteBaselineTaskIds = reportComparisons.filter((comparison) => comparison.comparability === 'baseline-incomplete').map((comparison) => comparison.taskId)
+  if (incompleteBaselineTaskIds.length) reasons.push(`baseline delivery incomplete: ${incompleteBaselineTaskIds.join(', ')}`)
   const baselineSampleGaps = reportComparisons.filter((comparison) => comparison.baselineSampleCount < policy.minBaselineSamplesPerTask).map((comparison) => `${comparison.taskId} (${comparison.baselineSampleCount}/${policy.minBaselineSamplesPerTask})`)
   if (baselineSampleGaps.length) reasons.push(`requires ${policy.minBaselineSamplesPerTask} baseline samples per task: ${baselineSampleGaps.join(', ')}`)
   if (durationRegressionTaskIds.length) reasons.push(`duration regression exceeds ${policy.maxDurationRegressionRate * 100}%: ${durationRegressionTaskIds.join(', ')}`)

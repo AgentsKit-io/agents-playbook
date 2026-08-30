@@ -6,6 +6,8 @@
   median duration recording, and atomic complete-manifest replacement.
 - Baseline samples now use the same end-to-end measurement boundary as the
   harness check, while retaining provider-only duration for diagnosis.
+- Incomplete baselines no longer qualify for duration or resource comparisons;
+  escape reduction remains visible as a separate outcome metric.
 
 All notable changes to `@agentskit/harness` are documented here.
 

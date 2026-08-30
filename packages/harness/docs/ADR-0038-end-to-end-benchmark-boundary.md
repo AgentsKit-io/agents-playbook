@@ -8,6 +8,11 @@ comparisons continue to use the elapsed duration of the configured real check.
 The provider-reported duration is retained as diagnostic data, not as the
 comparable duration.
 
+Baseline duration is comparable only when the baseline status is `passed` and
+every criterion evidence entry is `passed`. Escape reduction is reported
+independently, so an incomplete baseline cannot create a false duration or
+resource improvement while still exposing the observed delivery gap.
+
 ## Rationale
 
 Comparing provider-only baseline time with the harness check time mixes two

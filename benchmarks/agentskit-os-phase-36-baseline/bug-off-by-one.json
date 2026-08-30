@@ -1,0 +1,156 @@
+{
+  "type": "agentskit-harness-baseline-observation",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-os-coding-phase-28",
+  "taskId": "bug-off-by-one",
+  "sourceRevision": "ca60d270d840f66ae429cb3b54593f15b33cf22b",
+  "providerIds": [
+    "codex"
+  ],
+  "recordedAt": "2026-08-30T20:04:07.129Z",
+  "attempts": 1,
+  "durationMs": 110455,
+  "durationSamplesMs": [
+    19297,
+    146305,
+    110455
+  ],
+  "status": "failed",
+  "escapedIncomplete": 3,
+  "providerReport": {
+    "repeats": 3,
+    "samples": [
+      {
+        "sample": 1,
+        "status": "failed",
+        "durationMs": 19297,
+        "providerDurationMs": 17727,
+        "escapedIncomplete": 1,
+        "providerReport": {
+          "kind": "edit",
+          "prompt": "# bug: off-by-one in `slidingWindow`\n\n`src/slice-window.ts` exports a `slidingWindow(xs, n)` that drops the **last** window.\n\n## Repro\n\n```ts\nslidingWindow([1, 2, 3, 4], 2)\n// expected: [[1,2], [2,3], [3,4]]\n// actual:   [[1,2], [2,3]]\n```\n\n## Goal\n\n- Fix `slidingWindow` so it includes the final window when `xs.length >= n`.\n- Add or update a test in `tests/slice-window.test.ts` that asserts the expected output above.\n- Keep public API: `slidingWindow<T>(xs: readonly T[], n: number): readonly (readonly T[])[]`.\n- Out of scope: any other refactor.\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+          "dryRun": false,
+          "isolateWorktrees": false,
+          "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-bug-off-by-one-sample-1-stRTFp",
+          "rows": [
+            {
+              "providerId": "codex",
+              "status": "fail",
+              "durationMs": 17727,
+              "inputTokens": 0,
+              "outputTokens": 0,
+              "costUsd": 0,
+              "fileEditCount": 0,
+              "completenessScore": 0,
+              "errorCode": "missing_verification_contract",
+              "summary": "Missing project-local .codex/verification.json; implementation is blocked until the verification contract is provided or authorized."
+            }
+          ]
+        },
+        "validation": {
+          "status": "failed",
+          "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+          "exitCode": 1,
+          "failures": [
+            "final-window implementation check failed",
+            "regression test does not assert the final window"
+          ]
+        }
+      },
+      {
+        "sample": 2,
+        "status": "failed",
+        "durationMs": 146305,
+        "providerDurationMs": 145344,
+        "escapedIncomplete": 1,
+        "providerReport": {
+          "kind": "edit",
+          "prompt": "# bug: off-by-one in `slidingWindow`\n\n`src/slice-window.ts` exports a `slidingWindow(xs, n)` that drops the **last** window.\n\n## Repro\n\n```ts\nslidingWindow([1, 2, 3, 4], 2)\n// expected: [[1,2], [2,3], [3,4]]\n// actual:   [[1,2], [2,3]]\n```\n\n## Goal\n\n- Fix `slidingWindow` so it includes the final window when `xs.length >= n`.\n- Add or update a test in `tests/slice-window.test.ts` that asserts the expected output above.\n- Keep public API: `slidingWindow<T>(xs: readonly T[], n: number): readonly (readonly T[])[]`.\n- Out of scope: any other refactor.\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+          "dryRun": false,
+          "isolateWorktrees": false,
+          "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-bug-off-by-one-sample-2-tmCsqf",
+          "rows": [
+            {
+              "providerId": "codex",
+              "status": "partial",
+              "durationMs": 145344,
+              "inputTokens": 0,
+              "outputTokens": 0,
+              "costUsd": 0,
+              "fileEditCount": 2,
+              "completenessScore": 52,
+              "errorCode": "VERIFICATION_HARNESS_INCOMPATIBLE",
+              "summary": "Fixed the off-by-one and updated the test. Fixture tests passed; ak-verify was blocked because the available version rejects verification.json stateDir.",
+              "editedPaths": [
+                "src/slice-window.ts",
+                "tests/slice-window.test.ts"
+              ]
+            }
+          ]
+        },
+        "validation": {
+          "status": "passed",
+          "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+          "exitCode": 0,
+          "failures": []
+        }
+      },
+      {
+        "sample": 3,
+        "status": "failed",
+        "durationMs": 110455,
+        "providerDurationMs": 109653,
+        "escapedIncomplete": 1,
+        "providerReport": {
+          "kind": "edit",
+          "prompt": "# bug: off-by-one in `slidingWindow`\n\n`src/slice-window.ts` exports a `slidingWindow(xs, n)` that drops the **last** window.\n\n## Repro\n\n```ts\nslidingWindow([1, 2, 3, 4], 2)\n// expected: [[1,2], [2,3], [3,4]]\n// actual:   [[1,2], [2,3]]\n```\n\n## Goal\n\n- Fix `slidingWindow` so it includes the final window when `xs.length >= n`.\n- Add or update a test in `tests/slice-window.test.ts` that asserts the expected output above.\n- Keep public API: `slidingWindow<T>(xs: readonly T[], n: number): readonly (readonly T[])[]`.\n- Out of scope: any other refactor.\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+          "dryRun": false,
+          "isolateWorktrees": false,
+          "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-bug-off-by-one-sample-3-JmP5Jj",
+          "rows": [
+            {
+              "providerId": "codex",
+              "status": "partial",
+              "durationMs": 109653,
+              "inputTokens": 0,
+              "outputTokens": 0,
+              "costUsd": 0,
+              "fileEditCount": 2,
+              "completenessScore": 52,
+              "errorCode": "VERIFICATION_HARNESS_UNAVAILABLE",
+              "summary": "Fixed slidingWindow to include the final window and updated its test. Fixture tests pass; ak-verify is unavailable (command not found).",
+              "editedPaths": [
+                "src/slice-window.ts",
+                "tests/slice-window.test.ts"
+              ]
+            }
+          ]
+        },
+        "validation": {
+          "status": "passed",
+          "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+          "exitCode": 0,
+          "failures": []
+        }
+      }
+    ]
+  },
+  "evidence": [
+    {
+      "criterion": "The final slidingWindow window is included.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-36-baseline/bug-off-by-one.json"
+    },
+    {
+      "criterion": "A regression test asserts the expected output.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-36-baseline/bug-off-by-one.json"
+    },
+    {
+      "criterion": "The public API is unchanged.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-36-baseline/bug-off-by-one.json"
+    }
+  ],
+  "criteria": []
+}
