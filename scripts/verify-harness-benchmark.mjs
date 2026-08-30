@@ -18,5 +18,6 @@ if (report?.manifest?.taskCount !== taskCount) failures.push('benchmark task cor
 if (!Array.isArray(report?.comparisons) || report.comparisons.length !== taskCount) failures.push('benchmark comparisons do not cover the corpus')
 const expectedNonComparable = manifestInput.observations?.length ? 'harness-not-complete' : 'missing-baseline'
 if (report?.comparisons?.some((comparison) => comparison.comparability !== expectedNonComparable || comparison.improvement?.duration !== 'unavailable' || comparison.improvement?.attempts !== 'unavailable' || comparison.improvement?.review !== 'unavailable' || comparison.improvement?.escapedIncomplete !== 'unavailable')) failures.push('benchmark outcome was not reported honestly before harness completion')
-console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['benchmark-integrity'], failures } : { status: 'passed', criteria: ['benchmark-integrity'], taskCount, comparableTaskCount: report.manifest.comparableTaskCount }))
+const criteria = ['benchmark-integrity', ...(manifestInput.tasks.some((task) => task.id === 'harness-completion-integrity') ? ['completion-integrity'] : [])]
+console.log(JSON.stringify(failures.length ? { status: 'failed', criteria, failures } : { status: 'passed', criteria, taskCount, comparableTaskCount: report.manifest.comparableTaskCount }))
 process.exitCode = failures.length ? 1 : 0
