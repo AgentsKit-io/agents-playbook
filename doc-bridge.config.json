@@ -73,7 +73,7 @@
         },
         "playbook": {
           "path": "content/docs/index.mdx",
-          "purpose": "The gold-standard playbook for shipping production software with AI coding agents.",
+          "purpose": "The open engineering harness for coding agents — train repeatable behavior, not model weights.",
           "agentDoc": "content/docs/getting-started.mdx",
           "humanDoc": "https://playbook.agentskit.io/docs",
           "checks": [
@@ -553,6 +553,15 @@
           "purpose": "How to measure whether an AI agent is actually good — deterministic checks, LLM-as-judge, and production monitoring — so quality scales with the system instead of breaking as it grows.",
           "agentDoc": "content/docs/pillars/quality/agent-eval-framework-pattern.md",
           "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/agent-eval-framework-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "agent-harness-pattern": {
+          "path": "content/docs/pillars/quality/agent-harness-pattern.md",
+          "purpose": "How to make coding-agent delivery evidence-backed instead of trust-based.",
+          "agentDoc": "content/docs/pillars/quality/agent-harness-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/agent-harness-pattern",
           "checks": [
             "pnpm check:all"
           ]
@@ -1213,6 +1222,11 @@
   },
   "gates": {
     "preset": "standard"
+  },
+  "reconciliation": {
+    "scope": "package",
+    "requiredRelationKinds": ["depends-on"],
+    "requiredRelationTargets": "internal"
   },
   "surfaces": {
     "cli": {

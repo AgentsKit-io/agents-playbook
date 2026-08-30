@@ -67,7 +67,7 @@ export function EcosystemCrossRef({
       >
         Chat
       </EcosystemLink>
-      ,{" "}
+      {" and "}
       <EcosystemLink
         href="https://agentskit-io.github.io/doc-bridge/"
         placement={placement}
@@ -75,15 +75,6 @@ export function EcosystemCrossRef({
         className={linkClassName}
       >
         Doc Bridge
-      </EcosystemLink>
-      , and{" "}
-      <EcosystemLink
-        href="https://github.com/AgentsKit-io/code-review-cli#readme"
-        placement={placement}
-        target="code-review"
-        className={linkClassName}
-      >
-        Code Review
       </EcosystemLink>
       .
     </p>

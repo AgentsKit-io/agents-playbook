@@ -41,7 +41,8 @@
       { "id": "docker-runtime", "statement": "Allowed actions can execute through an optional Docker sandbox with deny-by-default isolation and resource limits.", "checks": ["harness-docker-runtime"] },
       { "id": "runtime-attestation", "statement": "Terminal tool evidence identifies the actual sandbox image and effective security/resource profile used for each Docker action.", "checks": ["harness-runtime-attestation"] },
       { "id": "benchmark-integrity", "statement": "Baseline evidence records preserve a validated SHA-256 digest of the evidence file and reject malformed digests.", "checks": ["harness-benchmark-record", "harness-benchmark"] },
-      { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] }
+      { "id": "docs", "statement": "The Playbook and package distribution metadata document the portable protocol and contribution workflow.", "checks": ["playbook-docs", "package-docs"] },
+      { "id": "documentation-audit", "statement": "Documentation quality and documentation-to-structure gaps are measured with current evidence.", "checks": ["documentation-audit"] }
     ]
   },
   "surfaces": {
@@ -86,7 +87,8 @@
     { "id": "harness-benchmark-record", "category": "cli", "execution": "real", "command": "pnpm --filter @agentskit/harness test:benchmark-record", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-benchmark", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-benchmark.mjs", "evidence": "structured", "timeoutMs": 60000 },
     { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "package-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs", "evidence": "structured", "timeoutMs": 120000 }
+    { "id": "package-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "documentation-audit", "category": "docs", "command": "node /Users/rebecabraun/workspace/EmersonBraun/doc-bridge/bin/ak-docs.js audit documentation --json --config doc-bridge.config.json", "evidence": "structured", "timeoutMs": 240000 }
   ],
   "tracking": {
     "required": false,

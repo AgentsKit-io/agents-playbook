@@ -21,7 +21,7 @@ const mono = JetBrains_Mono({
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 const TITLE = "Agents Playbook";
 const DESCRIPTION =
-  "The gold-standard playbook for shipping production software with AI coding agents — pillars, patterns, prompts, and gates earned from real production.";
+  "The open engineering harness for coding agents — rules, prompts, memory, evals, and executable gates that train repeatable behavior, not model weights.";
 
 const JSON_LD = {
   "@context": "https://schema.org",
@@ -50,6 +50,7 @@ export const metadata: Metadata = {
     "OpenAI Codex",
     "AGENTS.md",
     "playbook",
+    "open engineering harness",
     "guardrails",
     "ADR",
     "RFC",

@@ -2,7 +2,13 @@
 type: Index
 package: playbook
 title: Welcome
-description: The gold-standard playbook for shipping production software with AI coding agents.
+description: The open engineering harness for coding agents — train repeatable behavior, not model weights.
+docbridge:
+  relations:
+    - from: package:agents-playbook
+      to: package:@agentskit/harness
+      kind: depends-on
+      detection: static
 ---
 
 The **Agents Playbook** captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from AI coding agents like Claude, Cursor, and Copilot — distilled from a year of agent-driven development on a real production codebase.

@@ -83,7 +83,6 @@ function ecosystemBlock(): string {
     const sharedTools = [
       "- [AgentsKit Chat](https://chat.agentskit.io/docs) — Configurable, local-first chat framework used by Ask Playbook. llms.txt: https://chat.agentskit.io/llms.txt",
       "- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — Documentation ownership, health, routing, and MCP handoff. llms.txt: https://agentskit-io.github.io/doc-bridge/llms.txt",
-      "- [Code Review CLI](https://github.com/AgentsKit-io/code-review-cli#readme) — Automated review workflows for agent-authored changes. llms.txt: https://raw.githubusercontent.com/AgentsKit-io/code-review-cli/main/llms.txt",
     ];
     const lines = [...properties, ...sharedTools].join("\n");
     return `## The AgentsKit ecosystem\n\n${lines}\n\n`;
@@ -98,7 +97,7 @@ export async function GET() {
 
   const header = `# Agents Playbook
 
-> The gold-standard playbook for shipping production software with AI coding agents.
+> The open engineering harness for coding agents — train repeatable behavior, not model weights.
 > Pillars, patterns, prompts, and gates earned from real production.
 > Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
 

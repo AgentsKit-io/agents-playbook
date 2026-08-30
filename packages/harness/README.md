@@ -1,3 +1,9 @@
+---
+docbridge:
+  covers:
+    - package:@agentskit/harness
+---
+
 # @agentskit/harness
 
 Portable, evidence-backed development protocol for coding agents. The harness freezes a human-approved task contract, executes every configured check, binds evidence to the current source revision, detects stale results, and refuses completion without human approval.
