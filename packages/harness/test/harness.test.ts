@@ -9,14 +9,17 @@ import type { TrackingConfig, VerificationCheck, VerificationConfig } from '../s
 const quote = (value: string): string => `'${value.replaceAll("'", "'\"'\"'")}'`
 const evidenceCommand = (value: unknown, exitCode = 0): string => `${quote(process.execPath)} -e ${quote(`console.log(${JSON.stringify(JSON.stringify(value))}); process.exit(${exitCode})`)} `
 const hash = (value: string): string => createHash('sha256').update(value).digest('hex')
+type FixtureCheck = Omit<VerificationCheck, 'required' | 'timeoutMs'> & Partial<Pick<VerificationCheck, 'required' | 'timeoutMs'>>
 
-const project = (checks: VerificationCheck[], ambiguities: string[] = [], tracking: TrackingConfig = { required: false, reason: 'fixture only' }): { root: string; configPath: string; stateDir: string; config: VerificationConfig } => {
+const project = (checks: FixtureCheck[], ambiguities: string[] = [], tracking: TrackingConfig = { required: false, reason: 'fixture only' }): { root: string; configPath: string; stateDir: string; config: VerificationConfig } => {
   const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-test-'))
   mkdirSync(join(root, '.codex'), { recursive: true })
   const configPath = join(root, '.codex', 'verification.json')
-  const hasLogic = checks.some((check) => check.category === 'logic')
-  const hasUi = checks.some((check) => check.category === 'ui')
-  const config = { schemaVersion: 1 as const, project: 'fixture', root: '..', profile: 'strict', contract: { intent: 'Validate fixture.', scope: { inScope: ['fixture'], outOfScope: ['production'] }, ambiguities, outcomes: checks.map((check, index) => ({ id: `outcome-${index}`, statement: `${String(check.id)} passes.`, checks: [check.id] })) }, surfaces: { logic: hasLogic, endpoint: { required: false, reason: 'fixture' }, database: { required: false, reason: 'fixture' }, cli: { required: false, reason: 'fixture' }, mcp: { required: false, reason: 'fixture' }, ui: hasUi, docs: { required: false, reason: 'fixture' } }, checks, tracking, cleanup: { roots: ['.codex/verification/tmp'] } }
+  const normalizedChecks = checks.map((check) => ({ ...check, required: check.required ?? true, timeoutMs: check.timeoutMs ?? 5_000 }))
+  const hasLogic = normalizedChecks.some((check) => check.category === 'logic')
+  const hasUi = normalizedChecks.some((check) => check.category === 'ui')
+  const optionalSurface = { required: false, reason: 'fixture' }
+  const config = { schemaVersion: 1 as const, project: 'fixture', root: '..', profile: 'strict', contract: { intent: 'Validate fixture.', scope: { inScope: ['fixture'], outOfScope: ['production'] }, ambiguities, outcomes: normalizedChecks.map((check, index) => ({ id: `outcome-${index}`, statement: `${String(check.id)} passes.`, checks: [check.id] })) }, surfaces: { logic: { required: hasLogic, reason: 'fixture' }, endpoint: optionalSurface, database: optionalSurface, cli: optionalSurface, mcp: optionalSurface, ui: { required: hasUi, reason: 'fixture' }, docs: optionalSurface }, checks: normalizedChecks, tracking, cleanup: { roots: ['.codex/verification/tmp'] } }
   writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`)
   return { root, configPath, stateDir: join(root, '.codex', 'verification'), config: config as VerificationConfig }
 }

@@ -1,4 +1,4 @@
-import { execFile, spawn } from 'node:child_process'
+import { execFile, spawn, type ChildProcessWithoutNullStreams } from 'node:child_process'
 import { promisify } from 'node:util'
 import { hashJson } from './hash.js'
 import { fail } from './errors.js'
@@ -144,7 +144,7 @@ export const createProcessToolRuntime = ({ tools, timeoutMs = 30_000, maxOutputB
     const command = required(tool.command, `tools[${index}].command`)
     if (tool.args !== undefined && (!Array.isArray(tool.args) || tool.args.some((arg) => typeof arg !== 'string'))) fail(`tools[${index}].args must contain strings.`, 'INVALID_INPUT')
     if (tool.env !== undefined && (typeof tool.env !== 'object' || tool.env === null || Array.isArray(tool.env) || Object.values(tool.env).some((value) => typeof value !== 'string'))) fail(`tools[${index}].env must contain string values.`, 'INVALID_INPUT')
-    return { toolId, command, args: tool.args ? [...tool.args] : [], ...(tool.cwd ? { cwd: tool.cwd } : {}), env: tool.env ? { ...tool.env } : { PATH: process.env['PATH'] ?? '' } }
+    return { toolId, command, args: tool.args ? [...tool.args] : [], ...(tool.cwd ? { cwd: tool.cwd } : {}), env: (tool.env ? { ...tool.env } : { PATH: process.env['PATH'] ?? '' }) as NodeJS.ProcessEnv }
   })
   if (new Set(normalized.map((tool) => tool.toolId)).size !== normalized.length) fail('Process runtime tools must have unique ids.', 'INVALID_INPUT')
   return {
@@ -159,7 +159,7 @@ export const createProcessToolRuntime = ({ tools, timeoutMs = 30_000, maxOutputB
       let input: string
       try { input = JSON.stringify({ actionId, turnId, toolId, argumentsHash, arguments: request.arguments }) } catch { return { status: 'failed', errorCode: 'SERIALIZATION_ERROR', retryable: false, durationMs: Date.now() - started } }
       return new Promise((resolve) => {
-        const child = spawn(tool.command, tool.args, { cwd: tool.cwd, env: tool.env, shell: false, stdio: ['pipe', 'pipe', 'pipe'] })
+        const child = spawn(tool.command, [...tool.args], { cwd: tool.cwd, env: tool.env, shell: false, stdio: ['pipe', 'pipe', 'pipe'] }) as ChildProcessWithoutNullStreams
         let stdout = ''
         let timedOut = false
         let outputLimit = false
@@ -257,7 +257,7 @@ export const createDockerToolRuntime = ({
       const started = Date.now()
       let imageDigest: string
       try {
-        const inspected = await inspectImage(command, ['image', 'inspect', tool.image, '--format', '{{.Id}}'], { shell: false, encoding: 'utf8', maxBuffer: 64 * 1024, env: { PATH: process.env['PATH'] ?? '' } })
+        const inspected = await inspectImage(command, ['image', 'inspect', tool.image, '--format', '{{.Id}}'], { shell: false, encoding: 'utf8', maxBuffer: 64 * 1024, env: { PATH: process.env['PATH'] ?? '' } as unknown as NodeJS.ProcessEnv })
         imageDigest = inspected.stdout.trim()
         if (!/^sha256:[a-f0-9]{64}$/.test(imageDigest)) throw new Error('Docker image inspection did not return a digest.')
       } catch {

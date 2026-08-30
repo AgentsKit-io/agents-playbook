@@ -98,6 +98,8 @@ importers:
         specifier: ^4.1.10
         version: 4.1.10(@types/node@22.19.20)(vite@8.1.4(@types/node@22.19.20)(esbuild@0.27.7)(jiti@2.7.0))
 
+  packages/playbook: {}
+
 packages:
 
   '@agentskit/chat@0.4.0':

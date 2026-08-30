@@ -12,7 +12,7 @@ describe('README Standard v1', () => {
   })
 
   it('runs the primary verification example', () => {
-    expect(execFileSync(process.execPath, ['examples/verify-playbook.mjs'], { cwd: root, encoding: 'utf8' })).toMatch(/^Verified 154 local Playbook answers\./)
+    expect(execFileSync(process.execPath, ['examples/verify-playbook.mjs'], { cwd: root, encoding: 'utf8' })).toMatch(/^Verified 155 local Playbook answers\./)
   })
 
   it('keeps generated guide claims aligned and volatile counts out of the visual', () => {

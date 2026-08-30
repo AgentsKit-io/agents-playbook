@@ -89,7 +89,7 @@ it('requires human approval before sensitive tools execute and records rejection
     run,
     adapter,
     policy: createPolicyGate({ rules: [{ id: 'approve-sensitive', effect: 'approve', toolIds: ['sensitive'], reason: 'sensitive tool requires review' }] }),
-    runtime: { execute: async () => { executions += 1; return 'should not run' } },
+    runtime: { execute: async () => { executions += 1; return { status: 'completed' as const, resultHash: 'should-not-run', durationMs: 0 } } },
     sessionId: 'approval-session',
   })
   recorder.startTurn('approval-input', 'approval-turn')
@@ -162,7 +162,7 @@ it('requires an explicit human decision before recovering a possibly started act
   expect(executions).toBe(1)
   const events = new FileEventStore(stateDir).read(run.runId)
   expect(events.some((event) => event.type === 'tool.recovery.recorded' && event.payload.actionId === 'started-action' && event.payload.decision === 'retry' && event.payload.actor === 'human')).toBe(true)
-  expect(events.filter((event) => event.type === 'tool.execution.started' && event.payload.actionId === 'started-action').map((event) => event.payload.attempt)).toEqual([1, 2])
+  expect(events.filter((event) => event.type === 'tool.execution.started' && event.payload.actionId === 'started-action').map((event) => (event.payload as { readonly attempt: number }).attempt)).toEqual([1, 2])
 })
 
 it('can abandon a possibly started action without entering the runtime', async () => {
