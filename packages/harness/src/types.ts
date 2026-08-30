@@ -146,8 +146,8 @@ export interface VerificationRun {
   readonly supersedes?: string
   readonly dirtyBaselineAuthorized?: boolean
   readonly metrics?: { readonly totalDurationMs: number; readonly budgetExceeded: boolean }
-  readonly humanApproval?: { readonly actor: 'human'; readonly at: string; readonly sourceRevision: string; readonly contractHash: string }
-  readonly authorization?: { readonly actor: 'human'; readonly at: string; readonly target: string; readonly sourceRevision: string; readonly contractHash: string }
+  readonly humanApproval?: { readonly actor: 'human'; readonly at: string; readonly sourceRevision: string; readonly contractHash: string; readonly verificationDigest?: string }
+  readonly authorization?: { readonly actor: 'human'; readonly at: string; readonly target: string; readonly sourceRevision: string; readonly contractHash: string; readonly verificationDigest?: string }
 }
 
 export interface StateTransition {

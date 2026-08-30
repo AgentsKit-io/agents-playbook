@@ -65,8 +65,10 @@ bound to its source revision and contract hash. New event logs carry a chained
 SHA-256 digest; verify one with `ak-harness events verify [run-id]`. Logs from
 older harness versions remain readable but are reported as `legacy`, not as
 verified. After verification, `run.json` also carries a `verificationDigest`
-that must match the `verification.completed` event before human approval. The
-stable `run.json` remains
+that must match the `verification.completed` event before human approval. Human
+approvals, rejections, and tracking authorizations are then recorded as
+hash-chained `approval.recorded` or `authorization.recorded` events bound to
+that digest, source revision, and contract hash. The stable `run.json` remains
 the CLI projection and evidence index.
 
 Profiles are optional declarative overlays in `.codex/verification.json`. They

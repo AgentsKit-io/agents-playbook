@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
+import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, FileEventStore, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
 import type { TrackingConfig, VerificationCheck, VerificationConfig } from '../src/index.js'
 
 const quote = (value: string): string => `'${value.replaceAll("'", "'\"'\"'")}'`
@@ -29,8 +29,11 @@ const runToVerify = async (fixture: ReturnType<typeof project>) => {
 
 it('runs a complete typed task through human approval', async () => {
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
-  expect((await runToVerify(fixture)).state).toBe('AWAITING_HUMAN_APPROVAL')
-  expect((await approveRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('COMPLETE')
+  const verified = await runToVerify(fixture)
+  const approved = await approveRun({ configPath: fixture.configPath, decision: 'approved' })
+  expect(approved.state).toBe('COMPLETE')
+  expect(approved.humanApproval?.verificationDigest).toBe(verified.verificationDigest)
+  expect(new FileEventStore(fixture.stateDir).read(verified.runId).at(-1)).toMatchObject({ type: 'approval.recorded', payload: { decision: 'approved', resultingState: 'COMPLETE', verificationDigest: verified.verificationDigest, sourceRevision: verified.sourceRevision, contractHash: verified.contractHash } })
 })
 
 it('rejects approval when the verification projection is tampered with', async () => {
@@ -75,13 +78,17 @@ it('requires authorization only when tracking is declared', async () => {
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }], [], { required: true, target: 'github:fixture/repo#1' })
   await runToVerify(fixture)
   expect((await approveRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('AWAITING_AUTHORIZATION')
-  expect((await authorizeRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('COMPLETE')
+  const authorized = await authorizeRun({ configPath: fixture.configPath, decision: 'approved' })
+  expect(authorized.state).toBe('COMPLETE')
+  expect(authorized.authorization?.verificationDigest).toBe(authorized.humanApproval?.verificationDigest)
+  expect(new FileEventStore(fixture.stateDir).read(authorized.runId).at(-1)).toMatchObject({ type: 'authorization.recorded', payload: { decision: 'approved', resultingState: 'COMPLETE', verificationDigest: authorized.verificationDigest, target: 'github:fixture/repo#1' } })
 })
 
 it('blocks a human rejection instead of treating it as completion', async () => {
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
-  await runToVerify(fixture)
+  const verified = await runToVerify(fixture)
   expect((await approveRun({ configPath: fixture.configPath, decision: 'rejected' })).state).toBe('BLOCKED')
+  expect(new FileEventStore(fixture.stateDir).read(verified.runId).at(-1)).toMatchObject({ type: 'approval.recorded', payload: { decision: 'rejected', resultingState: 'BLOCKED', verificationDigest: verified.verificationDigest } })
 })
 
 it('cancels an active run and supersedes it on retry', async () => {

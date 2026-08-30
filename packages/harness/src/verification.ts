@@ -126,24 +126,28 @@ const assertVerificationAttestation = (loaded: LoadedConfig, run: VerificationRu
   if (!event || event.payload.verificationDigest !== expected) fail('Verification projection attestation is missing from the event log.', 'HARNESS_ERROR')
 }
 
+const recordDecision = (loaded: LoadedConfig, run: VerificationRun, type: 'approval.recorded' | 'authorization.recorded', payload: { readonly decision: 'approved' | 'rejected'; readonly resultingState: VerificationRun['state']; readonly verificationDigest: string; readonly actor: 'human'; readonly sourceRevision: string; readonly contractHash: string; readonly target?: string }): void => {
+  new FileEventStore(loaded.stateDir).append({ runId: run.runId, sourceRevision: run.sourceRevision, configHash: run.configHash, type, payload: type === 'authorization.recorded' ? { ...payload, target: payload.target ?? fail('tracking.target is required when authorizing.', 'INVALID_CONFIG') } : payload })
+}
+
 export const approveRun = async ({ configPath, runId, decision, actor = 'human' }: { readonly configPath: string; readonly runId?: string; readonly decision: string; readonly actor?: string }): Promise<VerificationRun> => {
   assertHuman(actor); const loaded = loadConfig(configPath); const run = requireRun(runId ? readRun(loaded.stateDir, runId) : loadLatestRun(loaded.stateDir))
   if (run.state !== 'AWAITING_HUMAN_APPROVAL') fail(`Cannot approve from ${run.state}.`, 'INVALID_STATE')
   await assertFresh(loaded, run); assertVerificationAttestation(loaded, run)
-  if (!approvedDecision(decision)) { const blocked = transition(run, 'BLOCKED', 'Human rejected the verification result.', 'human') as VerificationRun; saveRun(loaded.stateDir, blocked); setLatest(loaded.stateDir, blocked); return blocked }
+  if (!approvedDecision(decision)) { const blocked = transition(run, 'BLOCKED', 'Human rejected the verification result.', 'human') as VerificationRun; saveRun(loaded.stateDir, blocked); recordDecision(loaded, run, 'approval.recorded', { decision: 'rejected', resultingState: blocked.state, verificationDigest: run.verificationDigest!, actor: 'human', sourceRevision: run.sourceRevision, contractHash: run.contractHash }); setLatest(loaded.stateDir, blocked); return blocked }
   const nextState = loaded.config.tracking.required ? 'AWAITING_AUTHORIZATION' : 'COMPLETE'
-  const next = { ...transition(run, nextState, 'Human approved the verification result.', 'human'), humanApproval: { actor: 'human', at: now(), sourceRevision: run.sourceRevision, contractHash: run.contractHash } } as VerificationRun
-  saveRun(loaded.stateDir, next); setLatest(loaded.stateDir, next); return next
+  const next = { ...transition(run, nextState, 'Human approved the verification result.', 'human'), humanApproval: { actor: 'human', at: now(), sourceRevision: run.sourceRevision, contractHash: run.contractHash, verificationDigest: run.verificationDigest } } as VerificationRun
+  saveRun(loaded.stateDir, next); recordDecision(loaded, run, 'approval.recorded', { decision: 'approved', resultingState: nextState, verificationDigest: run.verificationDigest!, actor: 'human', sourceRevision: run.sourceRevision, contractHash: run.contractHash }); setLatest(loaded.stateDir, next); return next
 }
 
 export const authorizeRun = async ({ configPath, runId, decision, actor = 'human' }: { readonly configPath: string; readonly runId?: string; readonly decision: string; readonly actor?: string }): Promise<VerificationRun> => {
   assertHuman(actor); const loaded = loadConfig(configPath); const run = requireRun(runId ? readRun(loaded.stateDir, runId) : loadLatestRun(loaded.stateDir))
   if (run.state !== 'AWAITING_AUTHORIZATION') fail(`Cannot authorize from ${run.state}.`, 'INVALID_STATE')
-  await assertFresh(loaded, run)
-  if (!approvedDecision(decision)) { const blocked = transition(run, 'BLOCKED', 'Human rejected external tracking authorization.', 'human') as VerificationRun; saveRun(loaded.stateDir, blocked); setLatest(loaded.stateDir, blocked); return blocked }
+  await assertFresh(loaded, run); assertVerificationAttestation(loaded, run)
+  if (!approvedDecision(decision)) { const blocked = transition(run, 'BLOCKED', 'Human rejected external tracking authorization.', 'human') as VerificationRun; saveRun(loaded.stateDir, blocked); recordDecision(loaded, run, 'authorization.recorded', { decision: 'rejected', resultingState: blocked.state, verificationDigest: run.verificationDigest!, actor: 'human', target: loaded.config.tracking.target ?? '', sourceRevision: run.sourceRevision, contractHash: run.contractHash }); setLatest(loaded.stateDir, blocked); return blocked }
   if (!loaded.config.tracking.target) fail('tracking.target is required when authorizing.', 'INVALID_CONFIG')
-  const next = { ...transition(run, 'COMPLETE', 'External tracking was authorized.', 'human'), authorization: { actor: 'human', at: now(), target: loaded.config.tracking.target, sourceRevision: run.sourceRevision, contractHash: run.contractHash } } as VerificationRun
-  saveRun(loaded.stateDir, next); setLatest(loaded.stateDir, next); return next
+  const next = { ...transition(run, 'COMPLETE', 'External tracking was authorized.', 'human'), authorization: { actor: 'human', at: now(), target: loaded.config.tracking.target, sourceRevision: run.sourceRevision, contractHash: run.contractHash, verificationDigest: run.verificationDigest } } as VerificationRun
+  saveRun(loaded.stateDir, next); recordDecision(loaded, run, 'authorization.recorded', { decision: 'approved', resultingState: 'COMPLETE', verificationDigest: run.verificationDigest!, actor: 'human', target: loaded.config.tracking.target, sourceRevision: run.sourceRevision, contractHash: run.contractHash }); setLatest(loaded.stateDir, next); return next
 }
 
 export const retryRun = async ({ configPath }: { readonly configPath: string }): Promise<VerificationRun> => {

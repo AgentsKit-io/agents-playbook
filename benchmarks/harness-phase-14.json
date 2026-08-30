@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-14",
+  "name": "AgentsKit Harness Phase 14",
+  "tasks": [
+    {
+      "id": "harness-human-decision-attestation",
+      "title": "Bind human decisions to verified evidence",
+      "acceptanceCriteria": [
+        "Human approval and rejection decisions are recorded as hash-chained lifecycle events.",
+        "Approval events bind the decision to the verification digest, source revision, and contract hash.",
+        "Tracking authorization is recorded separately and the dogfood consumer exercises the public API."
+      ]
+    }
+  ],
+  "observations": []
+}
