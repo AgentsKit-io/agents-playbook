@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-37",
+  "project": "agents-playbook-harness-phase-38",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-37",
+  "stateDir": ".codex/verification/harness-phase-38",
   "profile": "strict",
   "contract": {
-    "intent": "Separate artifact acceptance from protocol completion in benchmark evidence without weakening fail-closed comparisons.",
+    "intent": "Collect a fresh replicated real-provider baseline with separate artifact-acceptance and protocol-completion evidence.",
     "scope": {
-      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0039-artifact-and-protocol-metrics.md", ".codex/verification.json"],
+      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "benchmarks/agentskit-os-phase-28.json", "benchmarks/agentskit-os-phase-37-baseline/*.json", "packages/harness/src/metrics.ts", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
       "outcomes": [
-      { "id": "artifact-protocol-separation", "statement": "Baseline evidence records artifact acceptance independently from protocol completion.", "checks": ["artifact-protocol-separation"] },
-      { "id": "comparison-integrity", "statement": "The benchmark report exposes artifact acceptance while keeping incomplete-baseline duration claims unavailable.", "checks": ["comparison-integrity"] },
-      { "id": "docs", "statement": "The two measurement dimensions and their limitations are documented.", "checks": ["harness-docs"] }
+      { "id": "replicated-baseline", "statement": "The fresh corpus contains three independent real-provider samples per task with artifact acceptance rates.", "checks": ["replicated-baseline"] },
+      { "id": "baseline-integrity", "statement": "The refreshed manifest atomically binds each observation to the corpus and its evidence files.", "checks": ["baseline-integrity"] },
+      { "id": "comparison-integrity", "statement": "The fresh data reports artifact acceptance while preserving unavailable duration claims for protocol-incomplete baselines.", "checks": ["comparison-integrity"] }
     ]
   },
   "surfaces": {
@@ -27,9 +27,9 @@
     "docs": true
   },
   "checks": [
-    { "id": "artifact-protocol-separation", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node scripts/verify-harness-benchmark-record.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['artifact-protocol-separation']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "comparison-integrity", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness build && pnpm --filter @agentskit/harness test:metrics && node -e \"const {spawnSync}=require('child_process'); const r=spawnSync(process.execPath,['scripts/run-agentskit-os-harness-benchmark.mjs','--collect','--repeats','3','--phase-root','.codex/verification/phase-37/benchmark'],{encoding:'utf8'}); const x=JSON.parse(r.stdout.trim().split(/\\r?\\n/).at(-1)); const ok=x.report.qualityGate.status==='insufficient-data' && x.report.comparisons.every(c=>['baseline-incomplete','harness-not-run'].includes(c.comparability) && c.improvement.duration==='unavailable' && c.baselineArtifactAcceptanceRate===null); if(!ok) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['comparison-integrity'],qualityGate:x.report.qualityGate.status}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && test -f packages/harness/docs/ADR-0039-artifact-and-protocol-metrics.md && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured" }
+    { "id": "replicated-baseline", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node scripts/verify-agentskit-os-baseline.mjs --target \"$AGENTSKIT_OS_ROOT\" --manifest benchmarks/agentskit-os-phase-28.json --reports benchmarks/agentskit-os-phase-37-baseline --require-validation", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "baseline-integrity", "category": "logic", "execution": "real", "command": "node -e \"const fs=require('fs'); const m=JSON.parse(fs.readFileSync('benchmarks/agentskit-os-phase-28.json')); const ok=m.observations.length===3 && m.observations.every(o=>o.durationSamplesMs?.length===3 && o.durationMs===[...o.durationSamplesMs].sort((a,b)=>a-b)[1] && o.artifactAcceptanceRate>=0 && o.artifactAcceptanceRate<=1 && o.source.startsWith('benchmarks/agentskit-os-phase-37-baseline/')); if(!ok) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['baseline-integrity'],taskCount:m.observations.length,samplesPerTask:3,artifactAcceptanceRates:m.observations.map(o=>o.artifactAcceptanceRate)}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "comparison-integrity", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness build && node -e \"const {spawnSync}=require('child_process'); const r=spawnSync(process.execPath,['scripts/run-agentskit-os-harness-benchmark.mjs','--collect','--repeats','3','--phase-root','.codex/verification/phase-38/benchmark'],{encoding:'utf8'}); const x=JSON.parse(r.stdout.trim().split(/\\r?\\n/).at(-1)); const ok=x.report.qualityGate.status==='insufficient-data' && x.report.comparisons.every(c=>['baseline-incomplete','harness-not-run'].includes(c.comparability) && c.improvement.duration==='unavailable' && c.baselineArtifactAcceptanceRate!==null); if(!ok) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['comparison-integrity'],qualityGate:x.report.qualityGate.status,artifactAcceptanceRates:x.report.comparisons.map(c=>c.baselineArtifactAcceptanceRate)}))\"", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },
   "budget": { "maxDurationMs": 300000 },
