@@ -130,4 +130,5 @@ for (const task of tasks) {
   writeFileSync(join(outputDir, `${task.id}.json`), `${JSON.stringify(observation, null, 2)}\n`)
   reports.push({ taskId: task.id, status: observation.status, durationMs: observation.durationMs, escapedIncomplete: observation.escapedIncomplete })
 }
-console.log(JSON.stringify({ status: reports.every((report) => report.status === 'passed') ? 'passed' : 'failed', suiteId: manifest.suiteId, providerIds, reports, outputDir }))
+const allPassed = reports.every((report) => report.status === 'passed')
+console.log(JSON.stringify({ status: allPassed ? 'passed' : 'failed', criteria: allPassed ? ['task-delivery'] : [], suiteId: manifest.suiteId, providerIds, reports, outputDir }))
