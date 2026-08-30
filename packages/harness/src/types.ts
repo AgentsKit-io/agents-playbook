@@ -141,6 +141,7 @@ export interface VerificationRun {
   readonly evidenceReferences: readonly EvidenceReference[]
   readonly contextSnapshots: readonly ContextSnapshot[]
   readonly contextHash?: string
+  readonly verificationDigest?: string
   readonly benchmark?: BenchmarkBinding
   readonly supersedes?: string
   readonly dirtyBaselineAuthorized?: boolean

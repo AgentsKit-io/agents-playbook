@@ -9,11 +9,15 @@ import { assertHuman, approvedDecision, transition } from './state-machine.js'
 import { sourceSnapshot } from './source.js'
 import { cleanConfiguredArtifacts, loadLatestRun, readRun } from './files.js'
 import { validateContextSnapshots } from './context.js'
+import { hashJson } from './hash.js'
 import type { ContextSnapshot } from './context.js'
 import type { CheckResult, LoadedConfig, VerificationCheck, VerificationRun } from './types.js'
+import { FileEventStore } from './events.js'
 
 const now = (): string => new Date().toISOString()
 const requireRun = (run: VerificationRun | null): VerificationRun => run ?? fail('No verification run exists.', 'NO_RUN')
+const verificationProjection = (run: Pick<VerificationRun, 'checks' | 'outcomes' | 'metrics'>): { readonly checks: VerificationRun['checks']; readonly outcomes: VerificationRun['outcomes']; readonly metrics: VerificationRun['metrics'] } => ({ checks: run.checks, outcomes: run.outcomes, metrics: run.metrics })
+const verificationDigest = (run: Pick<VerificationRun, 'checks' | 'outcomes' | 'metrics'>): string => hashJson(verificationProjection(run))
 
 interface CommandResult { readonly exitCode: number; readonly timedOut: boolean; readonly stdout: string; readonly stderr: string; readonly durationMs: number }
 
@@ -102,6 +106,10 @@ export const verifyRun = async ({ configPath }: { readonly configPath: string })
   const budgetExceeded = loaded.config.budget?.maxDurationMs !== undefined && totalDurationMs > loaded.config.budget.maxDurationMs
   const allPassed = loaded.config.checks.every((check) => statuses.get(check.id) === 'passed') && !budgetExceeded
   current = { ...current, outcomes: current.outcomes.map((outcome) => ({ ...outcome, status: outcome.checks.every((id) => statuses.get(id) === 'passed') ? 'passed' : 'failed' })), metrics: { totalDurationMs, budgetExceeded } } as VerificationRun
+  const digest = verificationDigest(current)
+  current = { ...current, verificationDigest: digest }
+  saveRun(loaded.stateDir, current)
+  new FileEventStore(loaded.stateDir).append({ runId: current.runId, sourceRevision: current.sourceRevision, configHash: current.configHash, type: 'verification.completed', payload: { verificationDigest: digest, checkCount: current.checks.length, outcomeCount: current.outcomes.length, totalDurationMs, budgetExceeded } })
   const nextState = allPassed ? 'AWAITING_HUMAN_APPROVAL' : 'BLOCKED'
   current = { ...transition(current, nextState, allPassed ? 'All configured checks passed; human approval is required.' : budgetExceeded ? 'Verification budget was exceeded.' : 'A configured check failed or lacked structured evidence.', 'harness') } as VerificationRun
   saveRun(loaded.stateDir, current); setLatest(loaded.stateDir, current); return current
@@ -111,10 +119,17 @@ const assertFresh = async (loaded: LoadedConfig, run: VerificationRun): Promise<
   if (!(await isFresh(loaded, run))) staleRun(loaded, run, 'Run is stale because source or worktree changed after verification.')
 }
 
+const assertVerificationAttestation = (loaded: LoadedConfig, run: VerificationRun): void => {
+  const expected = verificationDigest(run)
+  if (run.verificationDigest !== expected) fail('Verification projection attestation does not match run.json.', 'HARNESS_ERROR')
+  const event = new FileEventStore(loaded.stateDir).read(run.runId).filter((item) => item.type === 'verification.completed').at(-1)
+  if (!event || event.payload.verificationDigest !== expected) fail('Verification projection attestation is missing from the event log.', 'HARNESS_ERROR')
+}
+
 export const approveRun = async ({ configPath, runId, decision, actor = 'human' }: { readonly configPath: string; readonly runId?: string; readonly decision: string; readonly actor?: string }): Promise<VerificationRun> => {
   assertHuman(actor); const loaded = loadConfig(configPath); const run = requireRun(runId ? readRun(loaded.stateDir, runId) : loadLatestRun(loaded.stateDir))
   if (run.state !== 'AWAITING_HUMAN_APPROVAL') fail(`Cannot approve from ${run.state}.`, 'INVALID_STATE')
-  await assertFresh(loaded, run)
+  await assertFresh(loaded, run); assertVerificationAttestation(loaded, run)
   if (!approvedDecision(decision)) { const blocked = transition(run, 'BLOCKED', 'Human rejected the verification result.', 'human') as VerificationRun; saveRun(loaded.stateDir, blocked); setLatest(loaded.stateDir, blocked); return blocked }
   const nextState = loaded.config.tracking.required ? 'AWAITING_AUTHORIZATION' : 'COMPLETE'
   const next = { ...transition(run, nextState, 'Human approved the verification result.', 'human'), humanApproval: { actor: 'human', at: now(), sourceRevision: run.sourceRevision, contractHash: run.contractHash } } as VerificationRun

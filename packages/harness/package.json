@@ -20,7 +20,7 @@
     "test": "pnpm typecheck && vitest run --config ../../vitest.config.ts test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\"",
     "test:contract": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/contract.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['protocol']}))\"",
     "test:extensibility": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/extensibility.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['extensibility']}))\"",
-    "test:event-log": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/extensibility.test.ts -t \"ordered append-only lifecycle log\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['event-log']}))\"",
+    "test:event-log": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/extensibility.test.ts -t \"ordered append-only lifecycle log\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['event-log','verification-attestation']}))\"",
     "test:profiles": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/profiles.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['profiles']}))\"",
     "test:context": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context']}))\"",
     "test:doc-bridge": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/doc-bridge.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['doc-bridge-adapter']}))\"",

@@ -33,6 +33,13 @@ it('runs a complete typed task through human approval', async () => {
   expect((await approveRun({ configPath: fixture.configPath, decision: 'approved' })).state).toBe('COMPLETE')
 })
 
+it('rejects approval when the verification projection is tampered with', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  const verified = await runToVerify(fixture)
+  writeFileSync(join(fixture.stateDir, 'runs', verified.runId, 'run.json'), `${JSON.stringify({ ...verified, outcomes: verified.outcomes.map((outcome) => ({ ...outcome, statement: 'tampered' })) }, null, 2)}\n`)
+  await expect(approveRun({ configPath: fixture.configPath, decision: 'approved' })).rejects.toThrow(/attestation/)
+})
+
 it('refuses to plan while ambiguities remain', async () => {
   const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }], ['Which persistence boundary is in scope?'])
   await expect(planRun({ configPath: fixture.configPath, decision: 'approved' })).rejects.toMatchObject({ code: 'CLARIFYING' })

@@ -64,7 +64,9 @@ Each run also writes an append-only `events.ndjson` containing lifecycle facts
 bound to its source revision and contract hash. New event logs carry a chained
 SHA-256 digest; verify one with `ak-harness events verify [run-id]`. Logs from
 older harness versions remain readable but are reported as `legacy`, not as
-verified. The stable `run.json` remains
+verified. After verification, `run.json` also carries a `verificationDigest`
+that must match the `verification.completed` event before human approval. The
+stable `run.json` remains
 the CLI projection and evidence index.
 
 Profiles are optional declarative overlays in `.codex/verification.json`. They
