@@ -27,6 +27,7 @@
     "test:key-trust": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/bundle.test.ts -t \"trust store|revoked|rotation\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['key-trust']}))\"",
     "test:human-tool-approval": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts -t \"human approval|approval\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['human-tool-approval']}))\"",
     "test:session-recovery": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts -t \"resume|recovery\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['session-recovery']}))\"",
+    "test:safe-action-recovery": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts -t \"possibly started action\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['safe-action-recovery']}))\"",
     "test:profiles": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/profiles.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['profiles']}))\"",
     "test:context": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context']}))\"",
     "test:doc-bridge": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/doc-bridge.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['doc-bridge-adapter']}))\"",

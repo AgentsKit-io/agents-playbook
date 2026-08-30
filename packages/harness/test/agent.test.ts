@@ -34,7 +34,7 @@ it('records a privacy-preserving, correlated session and tool lifecycle', async 
   recorder.failTool({ actionId: 'action-2', errorCode: 'TIMEOUT', retryable: true, durationMs: 12 })
   recorder.end('completed')
   const events = new FileEventStore(stateDir).read(run.runId)
-  expect(events.map((event) => event.type)).toEqual(['run.created', 'state.transitioned', 'state.transitioned', 'session.started', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.completed', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.failed', 'session.ended'])
+  expect(events.map((event) => event.type)).toEqual(['run.created', 'state.transitioned', 'state.transitioned', 'session.started', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.execution.started', 'tool.completed', 'agent.turn.started', 'policy.evaluated', 'tool.requested', 'tool.failed', 'session.ended'])
   expect(events.slice(3).every((event) => event.sessionId === 'session-1')).toBe(true)
   expect(readFileSync(join(stateDir, 'runs', run.runId, 'events.ndjson'), 'utf8')).not.toContain('raw prompt or tool arguments')
 })
@@ -142,6 +142,44 @@ it('resumes pending approvals from the event log without replaying completed too
   const events = new FileEventStore(stateDir).read(run.runId)
   expect(events.some((event) => event.type === 'session.resumed' && event.sessionId === 'recoverable-session')).toBe(true)
   expect(events.filter((event) => event.type === 'tool.completed' && event.payload.actionId === 'recoverable-action')).toHaveLength(1)
+})
+
+it('requires an explicit human decision before recovering a possibly started action', async () => {
+  const { root, run } = await fixture()
+  let executions = 0
+  const stateDir = join(root, '.codex', 'verification')
+  const runtime = createToolRuntime({ tools: [{ toolId: 'shell', execute: async () => { executions += 1; return 'recovered' } }] })
+  const interrupted = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: 'started-action-session' })
+  const turn = interrupted.startTurn('input', 'started-action-turn')
+  interrupted.requestTool({ turnId: turn.payload.turnId, actionId: 'started-action', toolId: 'shell', argumentsHash: 'arguments' })
+  new FileEventStore(stateDir).append({ runId: run.runId, sourceRevision: run.sourceRevision, configHash: run.configHash, sessionId: 'started-action-session', type: 'tool.execution.started', payload: { turnId: turn.payload.turnId, actionId: 'started-action', toolId: 'shell', attempt: 1 } })
+
+  const resumed = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: 'started-action-session', resume: true })
+  await expect(resumed.executeTool({ actionId: 'started-action', arguments: { retry: false } })).rejects.toThrow(/requires human recovery decision/)
+  expect(() => resumed.recoverTool({ actionId: 'started-action', decision: 'retry', actor: 'human' })).not.toThrow()
+  await expect(resumed.executeTool({ actionId: 'started-action', arguments: { retry: true } })).resolves.toMatchObject({ status: 'completed' })
+  resumed.end('completed')
+  expect(executions).toBe(1)
+  const events = new FileEventStore(stateDir).read(run.runId)
+  expect(events.some((event) => event.type === 'tool.recovery.recorded' && event.payload.actionId === 'started-action' && event.payload.decision === 'retry' && event.payload.actor === 'human')).toBe(true)
+  expect(events.filter((event) => event.type === 'tool.execution.started' && event.payload.actionId === 'started-action').map((event) => event.payload.attempt)).toEqual([1, 2])
+})
+
+it('can abandon a possibly started action without entering the runtime', async () => {
+  const { root, run } = await fixture()
+  let executions = 0
+  const stateDir = join(root, '.codex', 'verification')
+  const runtime = createToolRuntime({ tools: [{ toolId: 'shell', execute: async () => { executions += 1; return 'must-not-run' } }] })
+  const interrupted = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: 'abandoned-action-session' })
+  const turn = interrupted.startTurn('input', 'abandoned-action-turn')
+  interrupted.requestTool({ turnId: turn.payload.turnId, actionId: 'abandoned-action', toolId: 'shell', argumentsHash: 'arguments' })
+  new FileEventStore(stateDir).append({ runId: run.runId, sourceRevision: run.sourceRevision, configHash: run.configHash, sessionId: 'abandoned-action-session', type: 'tool.execution.started', payload: { turnId: turn.payload.turnId, actionId: 'abandoned-action', toolId: 'shell', attempt: 1 } })
+
+  const resumed = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: 'abandoned-action-session', resume: true })
+  expect(resumed.recoverTool({ actionId: 'abandoned-action', decision: 'abandon' }).type).toBe('tool.blocked')
+  await expect(resumed.executeTool({ actionId: 'abandoned-action', arguments: {} })).rejects.toThrow(/not pending/)
+  resumed.end('failed')
+  expect(executions).toBe(0)
 })
 
 it('persists runtime attestation with the terminal tool event', async () => {

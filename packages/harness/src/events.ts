@@ -8,9 +8,9 @@ import type { DockerRuntimeEvidence } from './runtime.js'
 
 export const HARNESS_EVENT_SCHEMA_VERSION = 1 as const
 export const EVENT_LOG_GENESIS = 'GENESIS' as const
-export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached', 'verification.completed', 'approval.recorded', 'authorization.recorded', 'session.started', 'session.resumed', 'agent.turn.started', 'policy.evaluated', 'tool.approval.requested', 'tool.approval.recorded', 'tool.requested', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'] as const
+export const HARNESS_EVENT_TYPES = ['run.created', 'state.transitioned', 'context.attached', 'verification.completed', 'approval.recorded', 'authorization.recorded', 'session.started', 'session.resumed', 'agent.turn.started', 'policy.evaluated', 'tool.approval.requested', 'tool.approval.recorded', 'tool.requested', 'tool.execution.started', 'tool.recovery.recorded', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'] as const
 export type HarnessEventType = typeof HARNESS_EVENT_TYPES[number]
-const SESSION_EVENT_TYPES = new Set<HarnessEventType>(['session.started', 'session.resumed', 'agent.turn.started', 'policy.evaluated', 'tool.approval.requested', 'tool.approval.recorded', 'tool.requested', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'])
+const SESSION_EVENT_TYPES = new Set<HarnessEventType>(['session.started', 'session.resumed', 'agent.turn.started', 'policy.evaluated', 'tool.approval.requested', 'tool.approval.recorded', 'tool.requested', 'tool.execution.started', 'tool.recovery.recorded', 'tool.blocked', 'tool.completed', 'tool.failed', 'session.ended'])
 
 export interface HarnessEventPayloads {
   readonly 'run.created': { readonly project: string; readonly baselineRevision: string; readonly baselineStatusHash: string }
@@ -26,6 +26,8 @@ export interface HarnessEventPayloads {
   readonly 'tool.approval.requested': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string; readonly policyId: string; readonly reason: string }
   readonly 'tool.approval.recorded': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string; readonly decision: 'approved' | 'rejected'; readonly actor: 'human'; readonly policyId: string; readonly reason: string }
   readonly 'tool.requested': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly argumentsHash: string }
+  readonly 'tool.execution.started': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly attempt: number }
+  readonly 'tool.recovery.recorded': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly decision: 'retry' | 'abandon'; readonly actor: 'human'; readonly reason: string }
   readonly 'tool.blocked': { readonly turnId: string; readonly actionId: string; readonly toolId: string; readonly policyId: string; readonly reason: string }
   readonly 'tool.completed': { readonly actionId: string; readonly resultHash: string; readonly durationMs: number; readonly runtimeEvidence?: DockerRuntimeEvidence }
   readonly 'tool.failed': { readonly actionId: string; readonly errorCode: string; readonly retryable: boolean; readonly durationMs: number; readonly runtimeEvidence?: DockerRuntimeEvidence }

@@ -188,6 +188,14 @@ decision: 'approved' })` is called by a human. Rejection writes an auditable
 implement the same typed `PolicyGate` interface without coupling the harness
 to a runtime or provider.
 
+When resuming, an action with a persisted `tool.execution.started` event is
+ambiguous: its runtime may have produced an external side effect before the
+process stopped. The harness refuses to execute it until a human calls
+`session.recoverTool({ actionId, decision: 'retry', actor: 'human' })` or
+`session.recoverTool({ actionId, decision: 'abandon', actor: 'human' })`.
+Actions that were requested but never started remain safe to execute after
+recovery. Completed actions are never replayed.
+
 The built-in runtime executes registered handlers in memory, passes an
 `AbortSignal`, enforces a timeout, and records only a result hash and duration:
 
