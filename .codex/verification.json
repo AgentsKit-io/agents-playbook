@@ -12,7 +12,8 @@
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "package", "statement": "The harness package test suite and public CLI flow remain valid.", "checks": ["harness-tests", "harness-cli-flow"] },
+      { "id": "package", "statement": "The public CLI flow remains valid.", "checks": ["harness-cli-flow"] },
+      { "id": "signed-evidence", "statement": "The signed evidence bundle test suite remains valid.", "checks": ["harness-tests"] },
       { "id": "evidence-portability", "statement": "A signed evidence bundle verifies after being copied to an isolated directory with its trusted public key.", "checks": ["harness-cli-flow"] },
       { "id": "docs", "statement": "The package documents the portability guarantee and records the structural decision.", "checks": ["harness-docs"] }
     ]
