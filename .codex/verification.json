@@ -28,7 +28,7 @@
     "docs": true
   },
   "checks": [
-    { "id": "baseline-collection", "category": "logic", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node scripts/verify-harness-benchmark-record.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['baseline-collection']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "baseline-collection", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node scripts/verify-harness-benchmark-record.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['baseline-collection']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "atomic-recording", "category": "logic", "execution": "real", "command": "node scripts/verify-harness-benchmark-record.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['atomic-recording']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "measurement-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node scripts/verify-agentskit-os-harness-benchmark.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['measurement-integrity']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured", "timeoutMs": 120000 }
