@@ -129,6 +129,12 @@ const assertVerificationAttestation = (loaded: LoadedConfig, run: VerificationRu
   if (!event || event.payload.verificationDigest !== expected || event.sourceRevision !== run.sourceRevision || event.configHash !== run.configHash) fail('Verification projection attestation is missing from the event log.', 'HARNESS_ERROR')
 }
 
+const plannerForRetry = (loaded: LoadedConfig, run: VerificationRun): 'human' | 'ci' => {
+  if (run.contractPreparation) return 'ci'
+  if (!run.supersedes) return 'human'
+  return plannerForRetry(loaded, readRun(loaded.stateDir, run.supersedes))
+}
+
 const recordDecision = (loaded: LoadedConfig, run: VerificationRun, type: 'approval.recorded' | 'authorization.recorded', payload: { readonly decision: 'approved' | 'rejected'; readonly resultingState: VerificationRun['state']; readonly verificationDigest: string; readonly actor: 'human'; readonly sourceRevision: string; readonly contractHash: string; readonly target?: string }): void => {
   new FileEventStore(loaded.stateDir).append({ runId: run.runId, sourceRevision: run.sourceRevision, configHash: run.configHash, type, payload: type === 'authorization.recorded' ? { ...payload, target: payload.target ?? fail('tracking.target is required when authorizing.', 'INVALID_CONFIG') } : payload })
 }
@@ -190,7 +196,7 @@ export const retryRun = async ({ configPath }: { readonly configPath: string }):
   const baseline = await sourceSnapshot(loaded.root, loaded.stateDir)
   const superseded = transition(previousRun, 'SUPERSEDED', 'Retry superseded the previous run.', 'harness') as VerificationRun
   saveRun(loaded.stateDir, superseded)
-  const run = await createRun({ loaded, baseline, supersedes: previousRun.runId, dirtyBaselineAuthorized: previousRun.dirtyBaselineAuthorized, planner: previousRun.contractPreparation ? 'ci' : 'human' })
+  const run = await createRun({ loaded, baseline, supersedes: previousRun.runId, dirtyBaselineAuthorized: previousRun.dirtyBaselineAuthorized, planner: plannerForRetry(loaded, previousRun) })
   const next = transition(run, 'IMPLEMENTING', 'Retry started after a previous attempt.', 'agent') as VerificationRun
   saveRun(loaded.stateDir, next); setLatest(loaded.stateDir, next); return next
 }
