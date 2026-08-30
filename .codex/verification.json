@@ -8,7 +8,7 @@
   "contract": {
     "intent": "Implement and validate the portable AgentsKit Harness package and its CLI.",
     "scope": {
-    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "scripts/verify-harness-controlled-benchmark.mjs", "benchmarks/harness-phase-22.json", "doc-bridge.config.json", ".codex/verification.json"],
+    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "scripts/verify-harness-controlled-benchmark.mjs", "benchmarks/harness-phase-22.json", "doc-bridge.config.json", "readme-standard-v1.json", ".codex/verification.json"],
       "outOfScope": ["marketing redesign", "provider-specific agent adapters", "automatic git push or PR creation"]
     },
     "ambiguities": [],
