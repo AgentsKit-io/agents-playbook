@@ -119,6 +119,7 @@ const observations = []
 for (const task of tasks) {
   const samples = []
   for (let sample = 1; sample <= repeatCount; sample += 1) {
+    const startedAt = Date.now()
     const runRoot = mkdtempSync(join(tmpdir(), `agentskit-os-phase-29-${task.id}-sample-${sample}-`))
     cpSync(join(fixture, 'src'), join(runRoot, 'src'), { recursive: true })
     writeFixtureTests(runRoot)
@@ -130,7 +131,6 @@ for (const task of tasks) {
     const beforeSourceHash = hashFile(join(runRoot, 'src/slice-window.ts'))
     const basePrompt = readFileSync(join(osRoot, task.prompt.path), 'utf8')
     const prompt = harnessMode ? `${basePrompt}\n\nAgentsKit Harness requirements:\n- inspect the task and its acceptance criteria before editing;\n- implement the complete task, including required tests;\n- run the relevant real validation commands before reporting completion;\n- if any criterion is not proven, report the delivery as incomplete and continue resolving it.\n\nAcceptance criteria:\n${task.acceptanceCriteria.map((criterion) => `- ${criterion}`).join('\n')}` : basePrompt
-    const startedAt = Date.now()
     const report = await orchestratorModule.runCodingAgentBenchmark({ repoRoot: runRoot, providers: providersFor(runRoot), kind: taskKind(task.kind), prompt, dryRun: false, isolateWorktrees: false, timeoutMs: 180_000 })
     const row = report.rows[0]
     let testResult
@@ -140,7 +140,7 @@ for (const task of tasks) {
     const harnessVerification = harnessMode ? verifyFinalHarnessLifecycle(runRoot, task) : undefined
     const delegatedApprovalReady = harnessVerification?.state === 'AWAITING_HUMAN_APPROVAL'
     const deliveryComplete = artifactValidated && (row?.status === 'ok' || delegatedApprovalReady)
-    samples.push({ sample, status: deliveryComplete ? 'passed' : 'failed', durationMs: row?.durationMs ?? Date.now() - startedAt, escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, ...(harnessVerification ? { harnessVerification } : {}), validation })
+    samples.push({ sample, status: deliveryComplete ? 'passed' : 'failed', durationMs: Date.now() - startedAt, ...(row?.durationMs === undefined ? {} : { providerDurationMs: row.durationMs }), escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, ...(harnessVerification ? { harnessVerification } : {}), validation })
   }
   const evidenceSource = relative(root, join(outputDir, `${task.id}.json`)).replaceAll('\\', '/')
   const artifactValidated = samples.every((sample) => sample.validation.status === 'passed')

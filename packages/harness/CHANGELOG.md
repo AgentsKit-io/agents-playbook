@@ -4,6 +4,8 @@
 
 - Added replicated baseline collection with independent disposable samples,
   median duration recording, and atomic complete-manifest replacement.
+- Baseline samples now use the same end-to-end measurement boundary as the
+  harness check, while retaining provider-only duration for diagnosis.
 
 All notable changes to `@agentskit/harness` are documented here.
 

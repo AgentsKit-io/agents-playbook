@@ -71,8 +71,10 @@ node scripts/run-agentskit-os-baseline.mjs \
   --record-manifest benchmarks/agentskit-os-phase-28.json
 ```
 
-Each repeat uses a fresh disposable fixture. The report stores every measured
-duration in `durationSamplesMs` and the manifest is replaced atomically through
+Each repeat uses a fresh disposable fixture. The report stores the end-to-end
+duration of fixture setup, provider execution, validation, and cleanup in
+`durationSamplesMs`; the provider's own duration remains nested in the raw
+report. The manifest is replaced atomically through
 the typed observation recorder. `--record-manifest` requires the complete task
 set; omit it to inspect an uncommitted collection. Replicas are not retries,
 and a failed sample keeps the aggregate failed so the quality gate cannot turn
