@@ -1,4 +1,4 @@
-import { appendFileSync, existsSync, mkdirSync, readFileSync } from 'node:fs'
+import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, readFileSync, unlinkSync } from 'node:fs'
 import { join } from 'node:path'
 import { fail } from './errors.js'
 import { sha256 } from './hash.js'
@@ -59,6 +59,7 @@ export interface EventLogVerification {
 }
 
 const eventPath = (stateDir: string, runId: string): string => join(stateDir, 'runs', runId, 'events.ndjson')
+const lockPath = (stateDir: string, runId: string): string => `${eventPath(stateDir, runId)}.lock`
 const isEventType = (value: unknown): value is HarnessEventType => typeof value === 'string' && (HARNESS_EVENT_TYPES as readonly string[]).includes(value)
 const digest = (value: string): boolean => /^[a-f0-9]{64}$/.test(value)
 const eventBody = (event: HarnessEvent): Omit<HarnessEvent, 'eventHash'> => {
@@ -99,17 +100,25 @@ export class FileEventStore implements EventStore {
     if (!isEventType(event.type)) fail('Event type is invalid.', 'INVALID_INPUT')
     if (SESSION_EVENT_TYPES.has(event.type) && (!event.sessionId || !event.sessionId.trim())) fail('Session events require a sessionId.', 'INVALID_INPUT')
     if (event.sessionId !== undefined && !event.sessionId.trim()) fail('Event sessionId cannot be empty.', 'INVALID_INPUT')
-    const events = this.read(event.runId)
-    const previous = events.at(-1)
-    const body = { schemaVersion: HARNESS_EVENT_SCHEMA_VERSION, sequence: events.length + 1, at: new Date().toISOString(), runId: event.runId, sourceRevision: event.sourceRevision, configHash: event.configHash, ...(event.sessionId ? { sessionId: event.sessionId } : {}), ...(previous?.eventHash ? { previousHash: previous.eventHash } : events.length ? {} : { previousHash: EVENT_LOG_GENESIS }), type: event.type, payload: event.payload } as HarnessEvent<K>
-    const record = (events.length && !previous?.eventHash ? body : { ...body, eventHash: eventDigest(body) }) as HarnessEvent<K>
     const path = eventPath(this.stateDir, event.runId)
+    const lock = lockPath(this.stateDir, event.runId)
     mkdirSync(join(this.stateDir, 'runs', event.runId), { recursive: true })
-    appendFileSync(path, `${JSON.stringify(record)}\n`, 'utf8')
-    return record
+    let lockFd: number
+    try { lockFd = openSync(lock, 'wx') } catch (error) { if ((error as NodeJS.ErrnoException).code === 'EEXIST') fail('Event log is busy; retry the operation.', 'HARNESS_ERROR'); throw error }
+    try {
+      const events = this.readUnlocked(event.runId)
+      const previous = events.at(-1)
+      const body = { schemaVersion: HARNESS_EVENT_SCHEMA_VERSION, sequence: events.length + 1, at: new Date().toISOString(), runId: event.runId, sourceRevision: event.sourceRevision, configHash: event.configHash, ...(event.sessionId ? { sessionId: event.sessionId } : {}), ...(previous?.eventHash ? { previousHash: previous.eventHash } : events.length ? {} : { previousHash: EVENT_LOG_GENESIS }), type: event.type, payload: event.payload } as HarnessEvent<K>
+      const record = (events.length && !previous?.eventHash ? body : { ...body, eventHash: eventDigest(body) }) as HarnessEvent<K>
+      appendFileSync(path, `${JSON.stringify(record)}\n`, 'utf8')
+      return record
+    } finally {
+      closeSync(lockFd)
+      unlinkSync(lock)
+    }
   }
 
-  public read(runId: string): readonly HarnessEvent[] {
+  private readUnlocked(runId: string): readonly HarnessEvent[] {
     const path = eventPath(this.stateDir, runId)
     if (!existsSync(path)) return []
     const events = readFileSync(path, 'utf8').split(/\r?\n/).map((line) => line.trim()).filter(Boolean).map((line, index) => {
@@ -117,6 +126,11 @@ export class FileEventStore implements EventStore {
     })
     validateChain(events)
     return events
+  }
+
+  public read(runId: string): readonly HarnessEvent[] {
+    if (existsSync(lockPath(this.stateDir, runId))) fail('Event log is busy; retry the operation.', 'HARNESS_ERROR')
+    return this.readUnlocked(runId)
   }
 
   public verify(runId: string): EventLogVerification {

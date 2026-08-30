@@ -74,6 +74,8 @@ the CLI projection and evidence index.
 Use `ak-harness audit [run-id]` to reconcile a run projection with its verified
 events. `ak-harness status` performs the same reconciliation before reporting
 the current state, so a post-approval edit cannot appear as `COMPLETE`.
+Concurrent event writers are serialized by an atomic per-run lock and fail
+closed if the log is busy.
 
 Profiles are optional declarative overlays in `.codex/verification.json`. They
 inherit in order, override existing checks by ID, and are resolved before the

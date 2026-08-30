@@ -14,6 +14,10 @@ reconciliation verifies the event hash chain, event-to-run binding, current
 verification digest, and the required approval/authorization event and
 projection for terminal states. `ak-harness status` uses this same gate.
 
+Event appends use an atomic per-run lock and fail closed when another writer is
+active, preventing concurrent lifecycle operations from duplicating a sequence
+number or corrupting the append-only log.
+
 ## Consequences
 
 Post-approval projection tampering and removal of a decision event fail closed

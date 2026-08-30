@@ -1,4 +1,4 @@
-import { readFileSync, mkdirSync, mkdtempSync, writeFileSync } from 'node:fs'
+import { readFileSync, mkdirSync, mkdtempSync, unlinkSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
@@ -52,6 +52,12 @@ it('records an ordered append-only lifecycle log bound to a real verification ru
   expect(events.map((event) => event.sequence)).toEqual([1, 2, 3, 4, 5, 6])
   expect(new FileEventStore(join(root, '.codex', 'verification')).verify(planned.runId)).toMatchObject({ status: 'verified', eventCount: 6 })
   expect(events.every((event) => event.runId === planned.runId && event.configHash === planned.configHash && event.sourceRevision === verified.sourceRevision)).toBe(true)
+  const lockPath = join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson.lock')
+  writeFileSync(lockPath, 'busy')
+  const store = new FileEventStore(join(root, '.codex', 'verification'))
+  expect(() => store.read(planned.runId)).toThrow(/busy/)
+  expect(() => store.append({ runId: planned.runId, sourceRevision: verified.sourceRevision, configHash: verified.configHash, type: 'state.transitioned', payload: { from: 'VERIFYING', to: 'AWAITING_HUMAN_APPROVAL', actor: 'harness', transitionIndex: 4 } })).toThrow(/busy/)
+  unlinkSync(lockPath)
   const lines = readFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), 'utf8').trim().split('\n')
   expect(lines).toHaveLength(events.length)
   writeFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), `${lines.slice().reverse().join('\n')}\n`)
