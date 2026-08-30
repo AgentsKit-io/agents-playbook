@@ -12,6 +12,7 @@
     "minComparableTasks": 3,
     "maxDurationRegressionRate": 0.2,
     "minCompletedRunsPerTask": 3,
+    "minBaselineSamplesPerTask": 3,
     "requireZeroEscapedIncomplete": true
   },
   "tasks": [

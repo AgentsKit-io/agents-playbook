@@ -376,7 +376,10 @@ security boundary; the outer harness remains the authoritative evidence gate.
 Benchmark reports also expose a fail-closed `qualityGate`. It separates
 historical retries from effective delivery, reports duration regressions, and
 labels small samples as `insufficient-data` or `directional` instead of
-claiming enterprise-level improvement.
+claiming enterprise-level improvement. Configure
+`minBaselineSamplesPerTask` alongside `minCompletedRunsPerTask`: a single
+baseline observation is not comparable to replicated harness runs. Baseline
+observations may store `durationSamplesMs`; the report compares medians.
 
 ## Development
 

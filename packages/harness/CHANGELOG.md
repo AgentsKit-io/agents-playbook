@@ -8,6 +8,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
+- Fail-closed baseline sample policy and median baseline duration support for fair replicated comparisons.
 - Independent benchmark samples with median-duration comparisons and retry metrics that do not confuse replication with retries.
 - Configurable benchmark quality gates, confidence labels, and explicit retry metrics.
 - Portable `ak-verify` fixture gate for real coding-agent benchmark runs; provider delivery remains blocked until its result is complete and human approval is recorded.

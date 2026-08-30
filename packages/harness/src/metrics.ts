@@ -16,6 +16,7 @@ export interface BenchmarkPolicy {
   readonly minComparableTasks: number
   readonly maxDurationRegressionRate: number
   readonly minCompletedRunsPerTask: number
+  readonly minBaselineSamplesPerTask: number
   readonly requireZeroEscapedIncomplete: boolean
 }
 
@@ -69,6 +70,7 @@ export interface BenchmarkObservation {
   readonly recordedAt: string
   readonly attempts?: number
   readonly durationMs?: number
+  readonly durationSamplesMs?: readonly number[]
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
   readonly evidence?: readonly BenchmarkObservationEvidence[]
@@ -113,10 +115,12 @@ export interface BenchmarkRun {
 export interface BenchmarkComparison {
   readonly taskId: string
   readonly title: string
-  readonly comparability: 'comparable' | 'missing-baseline' | 'baseline-not-run' | 'baseline-evidence-missing' | 'harness-not-run' | 'harness-not-complete'
+  readonly comparability: 'comparable' | 'missing-baseline' | 'baseline-not-run' | 'baseline-evidence-missing' | 'baseline-samples-insufficient' | 'harness-not-run' | 'harness-not-complete'
   readonly comparable: boolean
   readonly baseline?: BenchmarkObservation
   readonly baselineEvidenceCoverageRate: number | null
+  readonly baselineSampleCount: number
+  readonly baselineMedianDurationMs?: number
   readonly improvement: {
     readonly durationRate: number | null
     readonly duration: BenchmarkImprovementDirection
@@ -194,6 +198,7 @@ export interface BenchmarkObservationInput {
   readonly recordedAt?: string
   readonly attempts?: number
   readonly durationMs?: number
+  readonly durationSamplesMs?: readonly number[]
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
   readonly evidence?: readonly BenchmarkObservationEvidence[]
@@ -201,7 +206,7 @@ export interface BenchmarkObservationInput {
 }
 
 const percentage = (part: number, total: number): number | null => total ? Number((part / total).toFixed(4)) : null
-const DEFAULT_POLICY: BenchmarkPolicy = { minComparableTasks: 3, maxDurationRegressionRate: 0.2, minCompletedRunsPerTask: 3, requireZeroEscapedIncomplete: true }
+const DEFAULT_POLICY: BenchmarkPolicy = { minComparableTasks: 3, maxDurationRegressionRate: 0.2, minCompletedRunsPerTask: 3, minBaselineSamplesPerTask: 3, requireZeroEscapedIncomplete: true }
 const improvementRate = (baseline: number | undefined, current: number | undefined): number | null => baseline === undefined || current === undefined || baseline === 0 ? null : Number(((baseline - current) / baseline).toFixed(4))
 const improvementDirection = (rate: number | null): BenchmarkImprovementDirection => rate === null ? 'unavailable' : rate > 0 ? 'improved' : rate < 0 ? 'regressed' : 'unchanged'
 const count = <T>(items: readonly T[], predicate: (item: T) => boolean): number => items.filter(predicate).length
@@ -366,11 +371,13 @@ const benchmarkPolicy = (value: unknown): BenchmarkPolicy | undefined => {
   const minComparableTasks = nonNegativeInteger(raw['minComparableTasks'], 'benchmark.policy.minComparableTasks')
   const maxDurationRegressionRate = nonNegativeNumber(raw['maxDurationRegressionRate'], 'benchmark.policy.maxDurationRegressionRate')
   const minCompletedRunsPerTask = nonNegativeInteger(raw['minCompletedRunsPerTask'], 'benchmark.policy.minCompletedRunsPerTask')
+  const minBaselineSamplesPerTask = nonNegativeInteger(raw['minBaselineSamplesPerTask'] ?? 1, 'benchmark.policy.minBaselineSamplesPerTask')
   if (minComparableTasks === undefined || minComparableTasks < 1) return fail('benchmark.policy.minComparableTasks must be at least 1.', 'INVALID_CONFIG')
   if (maxDurationRegressionRate === undefined || maxDurationRegressionRate > 1) return fail('benchmark.policy.maxDurationRegressionRate must be between 0 and 1.', 'INVALID_CONFIG')
   if (minCompletedRunsPerTask === undefined || minCompletedRunsPerTask < 1) return fail('benchmark.policy.minCompletedRunsPerTask must be at least 1.', 'INVALID_CONFIG')
+  if (minBaselineSamplesPerTask === undefined || minBaselineSamplesPerTask < 1) return fail('benchmark.policy.minBaselineSamplesPerTask must be at least 1.', 'INVALID_CONFIG')
   if (typeof raw['requireZeroEscapedIncomplete'] !== 'boolean') return fail('benchmark.policy.requireZeroEscapedIncomplete must be boolean.', 'INVALID_CONFIG')
-  return { minComparableTasks, maxDurationRegressionRate, minCompletedRunsPerTask, requireZeroEscapedIncomplete: raw['requireZeroEscapedIncomplete'] }
+  return { minComparableTasks, maxDurationRegressionRate, minCompletedRunsPerTask, minBaselineSamplesPerTask, requireZeroEscapedIncomplete: raw['requireZeroEscapedIncomplete'] }
 }
 
 export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => {
@@ -400,6 +407,8 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
     const task = tasks.find((candidate) => candidate.id === taskId) ?? fail(`benchmark observation references unknown task: ${taskId}.`, 'INVALID_CONFIG')
     const attempts = nonNegativeInteger(observation['attempts'], `benchmark.observations[${index}].attempts`)
     const durationMs = nonNegativeNumber(observation['durationMs'], `benchmark.observations[${index}].durationMs`)
+    const durationSamplesMs = observation['durationSamplesMs'] === undefined ? undefined : Array.isArray(observation['durationSamplesMs']) ? observation['durationSamplesMs'].map((sample, sampleIndex) => nonNegativeNumber(sample, `benchmark.observations[${index}].durationSamplesMs[${sampleIndex}]`) ?? fail(`benchmark.observations[${index}].durationSamplesMs must contain numbers.`, 'INVALID_CONFIG')) : fail(`benchmark.observations[${index}].durationSamplesMs must be an array.`, 'INVALID_CONFIG')
+    if (durationSamplesMs && !durationSamplesMs.length) fail(`benchmark.observations[${index}].durationSamplesMs must not be empty.`, 'INVALID_CONFIG')
     const reviewMinutes = nonNegativeNumber(observation['reviewMinutes'], `benchmark.observations[${index}].reviewMinutes`)
     const escapedIncomplete = nonNegativeInteger(observation['escapedIncomplete'], `benchmark.observations[${index}].escapedIncomplete`)
     const evidenceDigest = sha256(observation['evidenceDigest'], `benchmark.observations[${index}].evidenceDigest`)
@@ -414,7 +423,7 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
       return { criterion, status: evidenceStatus as BenchmarkObservationStatus, source: nonEmptyString(entry['source'], `benchmark.observations[${index}].evidence[${evidenceIndex}].source`) }
     })
     if (evidence && new Set(evidence.map((entry) => entry.criterion)).size !== evidence.length) fail(`benchmark.observations[${index}].evidence criteria must be unique.`, 'INVALID_CONFIG')
-    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }), ...(evidenceDigest === undefined ? {} : { evidenceDigest }) }
+    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(durationSamplesMs === undefined ? {} : { durationSamplesMs }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }), ...(evidenceDigest === undefined ? {} : { evidenceDigest }) }
   })
   if (new Set(observations.map((observation) => observation.taskId)).size !== observations.length) fail('benchmark allows at most one baseline observation per task.', 'INVALID_CONFIG')
   const provenance = suiteSource(raw['provenance'], 'benchmark.provenance')
@@ -442,6 +451,7 @@ export const recordBenchmarkObservation = (path: string, input: BenchmarkObserva
       recordedAt: input.recordedAt ?? new Date().toISOString(),
       ...(input.attempts === undefined ? {} : { attempts: input.attempts }),
       ...(input.durationMs === undefined ? {} : { durationMs: input.durationMs }),
+      ...(input.durationSamplesMs === undefined ? {} : { durationSamplesMs: input.durationSamplesMs }),
       ...(input.reviewMinutes === undefined ? {} : { reviewMinutes: input.reviewMinutes }),
       ...(input.escapedIncomplete === undefined ? {} : { escapedIncomplete: input.escapedIncomplete }),
       ...(input.evidence === undefined ? {} : { evidence: input.evidence }),
@@ -467,19 +477,22 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest,
   const coveredCriteria = new Set((baseline?.evidence ?? []).map((entry) => entry.criterion))
   const baselineEvidenceCoverageRate = baseline ? percentage(coveredCriteria.size, task.acceptanceCriteria.length) : null
   const baselineEvidenceComplete = baselineEvidenceCoverageRate === 1
-  const comparable = baseline !== undefined && baseline.status !== 'not-run' && baselineEvidenceComplete && latest?.state === 'COMPLETE'
-  const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : !baselineEvidenceComplete ? 'baseline-evidence-missing' : latest === undefined ? 'harness-not-run' : 'harness-not-complete'
+  const baselineDurationSamples = baseline?.durationSamplesMs ?? (baseline?.durationMs === undefined ? [] : [baseline.durationMs])
+  const baselineMedianDurationMs = median(baselineDurationSamples)
+  const baselineSamplesSufficient = baselineDurationSamples.length >= policy.minBaselineSamplesPerTask
+  const comparable = baseline !== undefined && baseline.status !== 'not-run' && baselineEvidenceComplete && baselineSamplesSufficient && latest?.state === 'COMPLETE'
+  const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : !baselineEvidenceComplete ? 'baseline-evidence-missing' : latest === undefined ? 'harness-not-run' : latest.state !== 'COMPLETE' ? 'harness-not-complete' : 'baseline-samples-insufficient'
   const completedTaskRuns = taskRuns.filter((run) => run.state === 'COMPLETE')
   const durationSamplesMs = completedTaskRuns.flatMap((run) => run.durationMs === undefined ? [] : [run.durationMs])
   const medianDurationMs = median(durationSamplesMs)
   const retryCount = count(taskRuns, (run) => run.supersedes !== undefined)
   const attempts = retryCount + (taskRuns.length ? 1 : 0)
-  const durationRate = comparable ? improvementRate(baseline?.durationMs, medianDurationMs ?? undefined) : null
+  const durationRate = comparable ? improvementRate(baselineMedianDurationMs ?? undefined, medianDurationMs ?? undefined) : null
   const attemptsRate = comparable ? improvementRate(baseline?.attempts, attempts) : null
   const reviewRate = comparable ? improvementRate(baseline?.reviewMinutes, latest?.humanReviewMinutes) : null
   const escapedIncompleteRate = comparable ? improvementRate(baseline?.escapedIncomplete, latest?.escapedIncomplete) : null
   const completedRuns = completedTaskRuns.length
-  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts, retryCount, completedRuns, durationSamplesMs, ...(medianDurationMs === null ? {} : { medianDurationMs }), latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baseline?.durationMs !== undefined && medianDurationMs !== null ? { durationDeltaMs: medianDurationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: attempts - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(comparable && baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
+  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, baselineSampleCount: baselineDurationSamples.length, ...(baselineMedianDurationMs === null ? {} : { baselineMedianDurationMs }), improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts, retryCount, completedRuns, durationSamplesMs, ...(medianDurationMs === null ? {} : { medianDurationMs }), latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baselineMedianDurationMs !== null && medianDurationMs !== null ? { durationDeltaMs: medianDurationMs - baselineMedianDurationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: attempts - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(comparable && baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
 })
 
 export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): BenchmarkReport => {
@@ -491,6 +504,8 @@ export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): B
   const escapedIncompleteTaskIds = comparable.filter((comparison) => comparison.harness.escapedIncomplete !== 0).map((comparison) => comparison.taskId)
   const reasons = []
   if (comparable.length < policy.minComparableTasks) reasons.push(`requires at least ${policy.minComparableTasks} comparable tasks`)
+  const baselineSampleGaps = reportComparisons.filter((comparison) => comparison.baselineSampleCount < policy.minBaselineSamplesPerTask).map((comparison) => `${comparison.taskId} (${comparison.baselineSampleCount}/${policy.minBaselineSamplesPerTask})`)
+  if (baselineSampleGaps.length) reasons.push(`requires ${policy.minBaselineSamplesPerTask} baseline samples per task: ${baselineSampleGaps.join(', ')}`)
   if (durationRegressionTaskIds.length) reasons.push(`duration regression exceeds ${policy.maxDurationRegressionRate * 100}%: ${durationRegressionTaskIds.join(', ')}`)
   if (policy.requireZeroEscapedIncomplete && escapedIncompleteTaskIds.length) reasons.push(`escaped incomplete delivery: ${escapedIncompleteTaskIds.join(', ')}`)
   const confidenceLevel: BenchmarkConfidence = comparable.length < policy.minComparableTasks ? 'insufficient' : comparable.every((comparison) => comparison.confidence === 'reliable') ? 'reliable' : 'directional'

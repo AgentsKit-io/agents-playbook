@@ -60,6 +60,15 @@ it('uses independent completed samples for confidence and median duration', () =
   expect(comparison).toMatchObject({ confidence: 'reliable', durationDeltaMs: 50, improvement: { durationRate: -0.3333, duration: 'regressed', attemptsRate: 0, attempts: 'unchanged' }, harness: { attempts: 1, retryCount: 0, completedRuns: 3, durationSamplesMs: [300, 100, 200], medianDurationMs: 200 } })
 })
 
+it('fails closed when the baseline has fewer samples than policy requires', () => {
+  const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-baseline-samples-'))
+  writeRun(stateDir, '1-sample', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' } })
+  const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', policy: { minComparableTasks: 1, maxDurationRegressionRate: 0.2, minCompletedRunsPerTask: 1, minBaselineSamplesPerTask: 3, requireZeroEscapedIncomplete: true }, tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', mode: 'baseline', status: 'passed', source: 'manual-fixture', recordedAt: '2026-01-01T00:00:00.000Z', durationMs: 100, evidence: [{ criterion: 'criterion', status: 'passed', source: 'manual-fixture' }] }] })
+  const report = benchmarkRuns(stateDir, manifest)
+  expect(report.comparisons[0]).toMatchObject({ comparable: false, comparability: 'baseline-samples-insufficient', baselineSampleCount: 1, confidence: 'insufficient' })
+  expect(report.qualityGate).toMatchObject({ status: 'insufficient-data', confidence: 'insufficient', reasons: ['requires at least 1 comparable tasks', 'requires 3 baseline samples per task: task (1/3)'] })
+})
+
 it('requires complete criterion evidence before comparing a baseline', () => {
   const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-evidence-comparison-'))
   writeRun(stateDir, '1-harness', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' } })

@@ -1,22 +1,21 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-33",
+  "project": "agents-playbook-harness-phase-34",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-33",
+  "stateDir": ".codex/verification/harness-phase-34",
   "profile": "strict",
   "contract": {
-    "intent": "Make benchmark measurements reproducible with independent samples, robust duration statistics, and separate retry cost.",
+    "intent": "Require statistically comparable baseline and harness samples before performance claims.",
     "scope": {
-      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "scripts/run-agentskit-os-harness-benchmark.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0034-measurement-quality-gates.md", "packages/harness/docs/ADR-0035-reproducible-benchmark-samples.md", ".codex/verification.json"],
+      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "benchmarks/agentskit-os-phase-28.json", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0036-comparable-baseline-samples.md", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
     "outcomes": [
       { "id": "measurement-model", "statement": "Benchmark reports distinguish independent samples, retries, robust duration, review time, and incomplete delivery.", "checks": ["harness-measurement-model"] },
-      { "id": "performance-policy", "statement": "Reports compare median completed samples and identify regressions without false improvement claims.", "checks": ["harness-performance-policy"] },
-      { "id": "confidence", "statement": "Reports expose whether independent completed samples are sufficient for a reliable improvement claim.", "checks": ["harness-confidence"] },
-      { "id": "runner", "statement": "The real benchmark runner can execute independent isolated samples per task and retain criterion-level evidence.", "checks": ["harness-runner"] },
-      { "id": "docs", "statement": "The sampling policy and its limitations are documented.", "checks": ["harness-docs"] }
+      { "id": "performance-policy", "statement": "Reports compare equivalent baseline and harness samples and identify regressions without false improvement claims.", "checks": ["harness-performance-policy"] },
+      { "id": "confidence", "statement": "Reports expose whether baseline and harness samples are sufficient for a reliable improvement claim.", "checks": ["harness-confidence"] },
+      { "id": "docs", "statement": "The comparable-sample policy and its limitations are documented.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -31,8 +30,7 @@
   "checks": [
     { "id": "harness-measurement-model", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['measurement-model']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-performance-policy", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['performance-policy']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-confidence", "category": "logic", "command": "pnpm --filter @agentskit/harness typecheck && node scripts/run-agentskit-os-harness-benchmark.mjs --self-test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['confidence']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-runner", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node --check scripts/run-agentskit-os-harness-benchmark.mjs && node scripts/run-agentskit-os-harness-benchmark.mjs --self-test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['runner']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-confidence", "category": "logic", "command": "pnpm --filter @agentskit/harness typecheck && pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['confidence']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },
