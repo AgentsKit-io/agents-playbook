@@ -16,5 +16,5 @@ const required = [
 const failures = required.filter((entry) => !workflow.includes(entry)).map((entry) => `missing CI step: ${entry}`)
 if (!evidenceScript.includes("run(['plan', 'prepared', '--by', 'ci'])")) failures.push('CI evidence must use automated preparation')
 if (evidenceScript.includes("run(['plan', 'approved', '--by', 'human'])")) failures.push('CI evidence must not impersonate human approval')
-console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['ci-dogfood'], failures } : { status: 'passed', criteria: ['ci-dogfood'] }))
+console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['ci-evidence'], failures } : { status: 'passed', criteria: ['ci-evidence'] }))
 process.exitCode = failures.length ? 1 : 0
