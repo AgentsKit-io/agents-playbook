@@ -18,13 +18,11 @@ import {
   GitBranch,
   FileWarning,
   Repeat,
-  Package,
-  Blocks,
-  Cpu,
   Star,
   MessageSquare,
   BookMarked,
 } from "lucide-react";
+import { EcosystemShowcase } from "@/components/ecosystem-showcase";
 import stats from "./stats.snapshot.json";
 import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
@@ -32,6 +30,7 @@ import { EcosystemStars } from "@/components/ecosystem-stars";
 import { EcosystemCrossRef } from "@/components/ecosystem-cross-ref";
 import { CopyPrompt } from "@/components/copy-prompt";
 import { AgentConvergence } from "@/components/agent-convergence";
+import { SiteSearchTrigger } from "@/components/site-search-trigger";
 
 // Counts are derived from content by scripts/compute-stats.mjs (single source).
 const C = stats.counts;
@@ -209,7 +208,7 @@ export default function HomePage() {
 
       <TrainYourAgent />
 
-      <EcosystemSection />
+      <EcosystemShowcase />
 
       <CTASection />
 
@@ -235,40 +234,64 @@ function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
 
 function SiteHeader() {
   return (
-    <header className="sticky top-0 z-30 border-b border-[color:var(--border)] glass">
-      <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3.5">
-      <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
-        <BrandMark className="h-6 w-6" />
-        <span>Agents Playbook</span>
-      </Link>
-      <nav className="flex items-center gap-6 text-sm">
-        <Link href="/docs" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Docs</Link>
-        <Link href="/docs/matrix" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Matrix</Link>
-        <Link href="/docs/glossary" className="text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]">Glossary</Link>
+    <header className="sticky top-0 z-30 h-14 border-b border-[color:var(--border)] glass">
+      <div className="mx-auto flex h-full w-full max-w-6xl items-center justify-between gap-3 px-4 sm:px-6">
         <Link
-          href="/llms.txt"
-          className="hidden md:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+          href="/"
+          className="inline-flex min-h-11 items-center gap-2 font-semibold tracking-tight"
         >
-          llms.txt
+          <BrandMark className="h-6 w-6" />
+          <span>Agents Playbook</span>
         </Link>
-        <EcosystemLink
-          href="https://www.agentskit.io/"
-          placement="header"
-          className="hidden sm:inline text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+        <nav
+          className="flex min-w-0 items-center gap-1 sm:gap-2"
+          aria-label="Playbook"
         >
-          AgentsKit ↗
-        </EcosystemLink>
-        <EcosystemStars repos={ecosystem.properties.map((p) => p.repo)} />
-        <EcosystemLink
-          href="https://github.com/AgentsKit-io/agents-playbook"
-          placement="header"
-          event="community_clicked"
-          className="hidden sm:inline-flex items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 py-1.5 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
-        >
-          <Github className="h-3.5 w-3.5" aria-hidden />
-          GitHub
-        </EcosystemLink>
-      </nav>
+          <Link
+            href="/docs"
+            className="inline-flex min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
+          >
+            Docs
+          </Link>
+          <Link
+            href="/docs/matrix"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] lg:inline-flex"
+          >
+            Matrix
+          </Link>
+          <Link
+            href="/docs/glossary"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] lg:inline-flex"
+          >
+            Glossary
+          </Link>
+          <Link
+            href="/llms.txt"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] xl:inline-flex"
+          >
+            llms.txt
+          </Link>
+          <EcosystemLink
+            href="https://www.agentskit.io/"
+            placement="header"
+            className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] xl:inline-flex"
+          >
+            AgentsKit ↗
+          </EcosystemLink>
+          <SiteSearchTrigger />
+          <div className="hidden xl:block">
+            <EcosystemStars repos={ecosystem.properties.map((p) => p.repo)} />
+          </div>
+          <EcosystemLink
+            href="https://github.com/AgentsKit-io/agents-playbook"
+            placement="header"
+            event="community_clicked"
+            className="hidden min-h-11 items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)] xl:inline-flex"
+          >
+            <Github className="h-3.5 w-3.5" aria-hidden />
+            GitHub
+          </EcosystemLink>
+        </nav>
       </div>
     </header>
   );
@@ -291,7 +314,7 @@ function Hero() {
             Open rules, prompts, memory, evals, and executable gates turn every
             correction into behavior your coding agents can repeat.
           </p>
-          <p className="mt-4 font-mono text-sm font-medium text-[color:var(--accent-strong)]">
+          <p className="mt-4 font-mono text-sm text-[color:var(--accent-strong)]">
             Train the behavior, not the model.
           </p>
           <EcosystemCrossRef
@@ -360,172 +383,11 @@ pnpm check:quality-gates
 pnpm check:all
 \`\`\``}
         </pre>
-        <div className="border-t border-[color:var(--border)] bg-[color:var(--surface-2)] px-5 py-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[color:var(--accent-strong)]">
+        <div className="border-t border-[color:var(--border)] px-5 py-3 font-mono text-[11px] text-[color:var(--accent-strong)]">
           Failure → rule → context → gate → mergeable code
         </div>
       </div>
     </div>
-  );
-}
-
-// Ecosystem product mesh — roles aligned to AgentsKit ecosystem.json.
-type EcosystemCard = {
-  id: string;
-  name: string;
-  kind: string;
-  icon: typeof Package;
-  role: string;
-  cta: string;
-  target: string;
-  url: string;
-  accent: string;
-  current?: boolean;
-};
-
-const ECOSYSTEM_CARDS: EcosystemCard[] = [
-  {
-    id: "agentskit",
-    name: "AgentsKit",
-    kind: "Foundation",
-    icon: Package,
-    role: "Build agents without gluing many libraries together — runtime, tools, memory, RAG, adapters, and headless UI bindings.",
-    cta: "Build on the foundation",
-    target: "agentskit",
-    url: "https://www.agentskit.io",
-    accent: "#2EA043",
-  },
-  {
-    id: "registry",
-    name: "AgentsKit Registry",
-    kind: "Starting point",
-    icon: Blocks,
-    role: "Copy ready-made agents and own the source — no registry runtime, no lock-in.",
-    cta: "Browse agents",
-    target: "registry",
-    url: "https://registry.agentskit.io",
-    accent: "#58A6FF",
-  },
-  {
-    id: "agentskit-chat",
-    name: "AgentsKit Chat",
-    kind: "Experience",
-    icon: MessageSquare,
-    role: "Define one agent experience and deliver it across web, terminal, and other chat surfaces. Playbook dogfoods Chat — see /docs/agentskit-chat.",
-    cta: "Chat docs · playbook dogfood",
-    target: "agentskit-chat",
-    url: "/docs/agentskit-chat",
-    accent: "#F59E0B",
-  },
-  {
-    id: "playbook",
-    name: "Agents Playbook",
-    kind: "Open harness",
-    icon: BookOpenCheck,
-    role: "You're here. Train coding-agent behavior with open rules, memory, evals, and executable gates.",
-    cta: "Explore the harness",
-    target: "playbook",
-    url: "https://playbook.agentskit.io",
-    accent: "#8B5CF6",
-    current: true,
-  },
-  {
-    id: "doc-bridge",
-    name: "Doc Bridge",
-    kind: "Understanding",
-    icon: BookMarked,
-    role: "Turn repository documentation into executable handoffs for coding agents.",
-    cta: "Make docs agent-ready",
-    target: "doc-bridge",
-    url: "https://agentskit-io.github.io/doc-bridge/",
-    accent: "#06B6D4",
-  },
-  {
-    id: "akos",
-    name: "AgentsKit OS",
-    kind: "Operation",
-    icon: Cpu,
-    role: "Run and govern agents in production — identity, audit, permissions, and cost control.",
-    cta: "Explore AKOS",
-    target: "akos",
-    url: "https://akos.agentskit.io",
-    accent: "#34D399",
-  },
-];
-
-function EcosystemSection() {
-  return (
-    <section className="relative z-10 mx-auto max-w-6xl px-6 py-20">
-      <SectionLabel>The ecosystem</SectionLabel>
-      <h2 className="mt-3 max-w-2xl text-balance text-3xl font-semibold tracking-tight sm:text-4xl">
-        One foundation. Useful next steps for every stage.
-      </h2>
-      <p className="mt-4 max-w-3xl text-pretty text-[color:var(--muted-foreground)]">
-        Contextual handoffs across the AgentsKit products — every product remains
-        optional. Same standards end to end.
-      </p>
-
-      <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-        {ECOSYSTEM_CARDS.map((meta) => {
-          const Icon = meta.icon;
-          const current = Boolean(meta.current);
-          const inner = (
-            <>
-              <div className="flex items-center justify-between">
-                <span
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-md"
-                  style={{
-                    backgroundColor: `${meta.accent}1a`,
-                    color: meta.accent,
-                  }}
-                >
-                  <Icon className="h-4 w-4" aria-hidden />
-                </span>
-                {current ? (
-                  <span className="rounded-full border border-[color:var(--accent-strong)] px-2 py-0.5 text-[10px] uppercase tracking-wider text-[color:var(--accent-strong)]">
-                    You are here
-                  </span>
-                ) : (
-                  <span className="text-[11px] uppercase tracking-wider text-[color:var(--subtle-foreground)]">
-                    {meta.kind}
-                  </span>
-                )}
-              </div>
-              <h3 className="mt-4 text-base font-semibold">{meta.name}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-[color:var(--muted-foreground)]">
-                {meta.role}
-              </p>
-              <div
-                className="mt-5 inline-flex items-center gap-1 text-sm font-medium"
-                style={{ color: current ? "var(--accent-strong)" : meta.accent }}
-              >
-                {meta.cta}
-                <ArrowRight className="h-3.5 w-3.5 transition group-hover:translate-x-0.5" aria-hidden />
-              </div>
-            </>
-          );
-          const cardClass = `card-lift group rounded-xl border p-6 ${
-            current
-              ? "border-[color:var(--accent-strong)] bg-[color:var(--surface-2)]"
-              : "border-[color:var(--border)] bg-[color:var(--surface-1)]"
-          }`;
-          return current ? (
-            <Link key={meta.id} href="/docs" className={cardClass}>
-              {inner}
-            </Link>
-          ) : (
-            <EcosystemLink
-              key={meta.id}
-              href={meta.url}
-              placement="ecosystem_grid"
-              target={meta.target}
-              className={cardClass}
-            >
-              {inner}
-            </EcosystemLink>
-          );
-        })}
-      </div>
-    </section>
   );
 }
 
@@ -722,7 +584,7 @@ function CTASection() {
               Star on GitHub
             </EcosystemLink>
             <Link
-              href="/docs/matrix"
+              href="/docs"
               className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
             >
               Explore the harness

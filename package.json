@@ -21,7 +21,11 @@
     "test": "vitest run",
     "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
     "test:onboarding": "vitest run scripts/onboarding-proof.test.mjs",
+    "test:playbook-package": "node --test packages/playbook/test/cli.test.mjs",
+    "test:pre-commit-hook": "node scripts/test-pre-commit-hook.mjs",
     "test:e2e": "playwright test",
+    "sync:playbook-package": "node scripts/sync-playbook-package.mjs",
+    "check:playbook-package": "node scripts/sync-playbook-package.mjs --check",
     "check:readme-standard": "node scripts/check-readme-standard.mjs",
     "readme:standard:refresh": "node scripts/refresh-readme-standard.mjs",
     "docs:bridge:config": "node scripts/generate-doc-bridge-config.mjs",
@@ -29,7 +33,10 @@
     "docs:bridge:index": "node scripts/generate-doc-bridge-config.mjs && ak-docs index",
     "docs:bridge:query": "ak-docs query",
     "docs:bridge:gate": "ak-docs gate run",
-    "check:all": "pnpm check:okf-type && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:readme-standard && pnpm harness:test && pnpm test && pnpm lint && pnpm build"
+    "docs:bridge:doctor": "ak-docs doctor",
+    "docs:bridge:conformance": "ak-docs conformance run documentation-standard-v1 --text",
+    "check:doc-bridge-score": "node scripts/check-doc-bridge-score.mjs",
+    "check:all": "pnpm check:okf-type && pnpm check:playbook-package && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:doc-bridge-score && pnpm check:readme-standard && pnpm harness:test && pnpm test && pnpm test:playbook-package && pnpm lint && pnpm build"
   },
   "dependencies": {
     "@agentskit/chat": "0.4.0",

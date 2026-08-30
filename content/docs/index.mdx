@@ -11,7 +11,7 @@ docbridge:
       detection: static
 ---
 
-The **Agents Playbook** captures the rules, guardrails, prompts, gates, and review patterns that consistently produce trustworthy, shippable code from AI coding agents like Claude, Cursor, and Copilot — distilled from a year of agent-driven development on a real production codebase.
+The **Agents Playbook** is an open engineering harness for coding agents. It turns rules, prompts, memory, evals, gates, and review patterns into repeatable repository behavior for agents like Claude, Cursor, Copilot, and Codex — without changing or fine-tuning the underlying model.
 
 ## How it's organized
 
@@ -47,6 +47,7 @@ Every doc has two layers:
 | Goal | Read |
 |---|---|
 | Adopt in a new project | [Getting started](/docs/getting-started) |
+| Review an agent-authored pull request | [Turn review rules into executable evidence](/docs/review-agent-authored-contributions) |
 | Set non-negotiables for agents | [CLAUDE.md template](/docs/templates/CLAUDE.md.template) |
 | Design a package boundary | [Architecture · Universal](/docs/pillars/architecture/universal) |
 | Add an ADR or RFC | [ADR template](/docs/templates/ADR.template) · [RFC template](/docs/templates/RFC.template) |
@@ -75,12 +76,13 @@ Playbook is the **discipline** product. Pair it with:
 
 - [AgentsKit](https://www.agentskit.io) — foundation library and runtime
 - [AgentsKit Chat](https://chat.agentskit.io) — product chat experience ([dogfood notes](/docs/agentskit-chat))
-- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — deterministic documentation handoffs
+- [Doc Bridge](https://doc-bridge.agentskit.io/) — deterministic documentation handoffs
 - [Registry](https://registry.agentskit.io) — copy-ready agent starting points
 - [AKOS](https://akos.agentskit.io) — enterprise operation
 
 ## For agents reading this
 
+- Start with the concise [For agents route](/for-agents) to choose the smallest useful surface.
 - The full bundle in one file: [`/llms-full.txt`](/llms-full.txt).
 - Site map: [`/llms.txt`](/llms.txt).
 - Raw markdown for any doc: replace `/docs/<path>` with `/raw/<path>.md`.

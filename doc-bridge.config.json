@@ -26,6 +26,78 @@
   "routing": {
     "options": {
       "ownership": {
+        "pre-commit-provider": {
+          "path": ".pre-commit-hooks.yaml",
+          "purpose": "Versioned pre-commit provider manifest.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "project-automation": {
+          "path": "scripts",
+          "purpose": "Repository automation, generators, and integration tests.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "continuous-integration": {
+          "path": ".github/workflows",
+          "purpose": "Continuous-integration workflows.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "project-manifest": {
+          "path": "package.json",
+          "purpose": "Project commands, dependencies, and runtime contract.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "project-readme": {
+          "path": "README.md",
+          "purpose": "Repository introduction and adoption path.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "changelog": {
+          "path": "CHANGELOG.md",
+          "purpose": "Release-facing project change history.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "readme-standard": {
+          "path": "readme-standard-v1.json",
+          "purpose": "README Standard evidence and freshness hashes.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "doc-bridge-config": {
+          "path": "doc-bridge.config.json",
+          "purpose": "Generated Doc Bridge routing configuration.",
+          "agentDoc": "content/docs/scripts/index.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/scripts",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
         "agentskit-chat": {
           "path": "content/docs/agentskit-chat.md",
           "purpose": "How Ask Playbook composes the public AgentsKit Chat framework without recreating chat state.",
@@ -49,6 +121,15 @@
           "purpose": "See which Playbook questions answer instantly in the browser and when repository-specific synthesis uses the backend.",
           "agentDoc": "content/docs/discovery.mdx",
           "humanDoc": "https://playbook.agentskit.io/docs/discovery",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "for-agents": {
+          "path": "content/docs/for-agents.mdx",
+          "purpose": "The shortest reliable path for an agent to retrieve, apply, and verify the Agents Playbook.",
+          "agentDoc": "content/docs/for-agents.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/for-agents",
           "checks": [
             "pnpm check:all"
           ]
@@ -1129,6 +1210,15 @@
           "purpose": "Inject as system prompt for security-focused review passes. Narrower than the general reviewer; deeper on the threat model.",
           "agentDoc": "content/docs/prompts/system-security.md",
           "humanDoc": "https://playbook.agentskit.io/docs/prompts/system-security",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
+        "review-agent-authored-contributions": {
+          "path": "content/docs/review-agent-authored-contributions.mdx",
+          "purpose": "Replace subjective instructions with a local quality gate, reproduce a failure, and require the same evidence in CI before approving an agent-authored change.",
+          "agentDoc": "content/docs/review-agent-authored-contributions.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/review-agent-authored-contributions",
           "checks": [
             "pnpm check:all"
           ]

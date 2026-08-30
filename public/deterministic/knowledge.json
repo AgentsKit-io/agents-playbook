@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:43e0461ac19ae8295e42a0d2af6568a7b14257c8b0cebc2678687015042cdd88",
+  "contentHash": "sha256:338a08daf4cd3151692952b8372441c9d652e375e502076f09d7d7e81a80e298",
   "generatedAt": "2026-07-14T00:00:00.000Z",
   "entries": [
     {
@@ -75,6 +75,30 @@
             "id": "doc:discovery",
             "title": "Local-first pattern discovery",
             "href": "https://playbook.agentskit.io/docs/discovery"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:for-agents",
+      "kind": "document",
+      "label": "For agents",
+      "match": {
+        "type": "exact",
+        "values": [
+          "for-agents",
+          "for-agents.mdx",
+          "For agents",
+          "playbook For agents"
+        ]
+      },
+      "answer": {
+        "markdown": "## For agents\n\nThe shortest reliable path for an agent to retrieve, apply, and verify the Agents Playbook.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/for-agents)\n[Read raw Markdown](https://playbook.agentskit.io/raw/for-agents.mdx)",
+        "citations": [
+          {
+            "id": "doc:for-agents",
+            "title": "For agents",
+            "href": "https://playbook.agentskit.io/docs/for-agents"
           }
         ]
       }
@@ -3123,6 +3147,30 @@
       }
     },
     {
+      "id": "doc:review-agent-authored-contributions",
+      "kind": "document",
+      "label": "Review agent-authored pull requests with executable evidence",
+      "match": {
+        "type": "exact",
+        "values": [
+          "review-agent-authored-contributions",
+          "review-agent-authored-contributions.mdx",
+          "Review agent-authored pull requests with executable evidence",
+          "playbook Review agent-authored pull requests with executable evidence"
+        ]
+      },
+      "answer": {
+        "markdown": "## Review agent-authored pull requests with executable evidence\n\nReplace subjective instructions with a local quality gate, reproduce a failure, and require the same evidence in CI before approving an agent-authored change.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/review-agent-authored-contributions)\n[Read raw Markdown](https://playbook.agentskit.io/raw/review-agent-authored-contributions.mdx)",
+        "citations": [
+          {
+            "id": "doc:review-agent-authored-contributions",
+            "title": "Review agent-authored pull requests with executable evidence",
+            "href": "https://playbook.agentskit.io/docs/review-agent-authored-contributions"
+          }
+        ]
+      }
+    },
+    {
       "id": "doc:scripts:check-adr.example.mjs",
       "kind": "command",
       "label": "check-adr.example.mjs",
@@ -3749,7 +3797,7 @@
           {
             "id": "ecosystem:registry",
             "title": "AgentsKit Registry",
-            "href": "https://registry.agentskit.io"
+            "href": "https://registry.agentskit.io/docs"
           }
         ]
       }
@@ -3771,7 +3819,7 @@
         "citations": [
           {
             "id": "ecosystem:chat",
-            "title": "AgentsKit Chat documentation",
+            "title": "AgentsKit Chat",
             "href": "https://chat.agentskit.io/docs"
           }
         ]
@@ -3794,8 +3842,55 @@
         "citations": [
           {
             "id": "ecosystem:doc-bridge",
-            "title": "Doc Bridge documentation",
-            "href": "https://agentskit-io.github.io/doc-bridge/"
+            "title": "Doc Bridge",
+            "href": "https://doc-bridge.agentskit.io/"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:code-review",
+      "kind": "ecosystem",
+      "label": "AgentsKit Code Review",
+      "match": {
+        "type": "exact",
+        "values": [
+          "agentskit code review",
+          "code review cli",
+          "review before merge"
+        ]
+      },
+      "answer": {
+        "markdown": "Use AgentsKit Code Review to run a focused, low-noise verification pass before an agent-authored change is merged.",
+        "citations": [
+          {
+            "id": "ecosystem:code-review",
+            "title": "AgentsKit Code Review",
+            "href": "https://github.com/AgentsKit-io/code-review-cli#readme"
+          }
+        ]
+      }
+    },
+    {
+      "id": "ecosystem:akos",
+      "kind": "ecosystem",
+      "label": "AKOS",
+      "match": {
+        "type": "exact",
+        "values": [
+          "akos",
+          "agentskit os",
+          "enterprise agents",
+          "production governance"
+        ]
+      },
+      "answer": {
+        "markdown": "Use AKOS when the system needs enterprise orchestration, governance, identity, audit, permissions, and production controls.",
+        "citations": [
+          {
+            "id": "ecosystem:akos",
+            "title": "AKOS documentation",
+            "href": "https://akos.agentskit.io/docs"
           }
         ]
       }

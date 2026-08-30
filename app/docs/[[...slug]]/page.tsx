@@ -11,6 +11,7 @@ import { CopyMarkdown } from "@/components/copy-markdown";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ExternalLink } from "lucide-react";
+import { DocsEcosystemHandoff } from "@/components/docs-ecosystem-handoff";
 
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
@@ -36,7 +37,7 @@ export default async function Page(props: {
 
   const MDX = page.data.body;
   const slug = params.slug ?? [];
-  const rawPath = `/raw/${slug.join("/")}.md`;
+  const rawPath = slug.length > 0 ? `/raw/${slug.join("/")}.md` : "/raw/index.md";
   const canonical = docUrl(slug);
 
   // Per-page structured data: a technical article + breadcrumb trail.
@@ -106,6 +107,7 @@ export default async function Page(props: {
       </div>
       <DocsBody>
         <MDX components={getMDXComponents()} />
+        <DocsEcosystemHandoff />
       </DocsBody>
     </DocsPage>
   );

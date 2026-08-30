@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import ecosystem from '@/ecosystem.json'
+import { ecosystemProducts } from '@/lib/ecosystem'
 
 export const revalidate = 21_600
 
@@ -21,7 +21,7 @@ const starCount = async (repo: string): Promise<number> => {
 }
 
 export async function GET() {
-  const counts = await Promise.all(ecosystem.properties.map((property) => starCount(property.repo)))
+  const counts = await Promise.all(ecosystemProducts.map((product) => starCount(product.repo)))
   return NextResponse.json(
     { total: counts.reduce((sum, count) => sum + count, 0) },
     { headers: { 'cache-control': 'public, s-maxage=21600, stale-while-revalidate=86400' } },

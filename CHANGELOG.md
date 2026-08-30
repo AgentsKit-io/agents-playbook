@@ -6,6 +6,7 @@ All notable changes to Agents Playbook are documented here. The format follows [
 
 ### Added
 
+- Versioned pre-commit provider for the published `@agentskit/playbook@0.1.0` gates, with staged-snapshot isolation and Linux, macOS, and Windows validation.
 - Local-first Ask Playbook discovery with 150 content-addressed answers, deterministic choices, safe fallback, retry, and truthful provenance.
 - Complete Doc Bridge ownership for 130 guides with a 100/100 A health grade.
 - README Standard v1 contract, synchronized runnable example, explanatory visual, freshness gate, and contribution journey.
@@ -19,6 +20,8 @@ All notable changes to Agents Playbook are documented here. The format follows [
 
 ### Changed
 
+- Prepared `@agentskit/playbook@0.1.1` with an explicit dual-license boundary:
+  CLI software under MIT and the Playbook content corpus under CC BY 4.0.
 - Updated Doc Bridge to 1.1.1.
 - Deferred the shared ecosystem bar until idle to protect the critical rendering path.
 - Expanded ecosystem cross-links across human and machine-readable surfaces.

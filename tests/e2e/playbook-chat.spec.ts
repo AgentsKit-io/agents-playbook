@@ -1,8 +1,13 @@
 import { expect, test } from '@playwright/test'
 
 const ask = async (page: import('@playwright/test').Page, question: string) => {
-  await page.getByRole('button', { name: 'Ask Playbook' }).click()
+  const trigger = page.getByRole('button', { name: 'Ask Playbook' })
   const input = page.getByRole('textbox', { name: 'Ask a question' })
+  await expect(trigger).toBeEnabled()
+  for (let attempt = 0; attempt < 3 && !(await input.isVisible()); attempt += 1) {
+    await trigger.click()
+    await page.waitForTimeout(300)
+  }
   await expect(input).toBeFocused()
   await input.fill(question)
   await input.press('Enter')

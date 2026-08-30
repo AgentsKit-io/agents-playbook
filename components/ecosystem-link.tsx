@@ -2,12 +2,12 @@
 
 import { track } from "@/lib/posthog-client";
 
-interface EcosystemLinkProps {
+interface EcosystemLinkProps
+  extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "href" | "onClick"> {
   href: string;
-  className?: string;
-  children: React.ReactNode;
   placement: string;
   event?: "ecosystem_clicked" | "community_clicked";
+  newTab?: boolean;
   /** Which ecosystem property this points at — drives cross-property funnel analytics. */
   target?: string;
 }
@@ -23,7 +23,9 @@ export function EcosystemLink({
   children,
   placement,
   event = "ecosystem_clicked",
+  newTab = true,
   target = "agentskit",
+  ...anchorProps
 }: EcosystemLinkProps) {
   const resolvedHref = href.includes("agentskit.io")
     ? `${href}${href.includes("?") ? "&" : "?"}utm_source=playbook&utm_medium=${encodeURIComponent(placement)}&utm_campaign=ecosystem`
@@ -39,9 +41,10 @@ export function EcosystemLink({
 
   return (
     <a
+      {...anchorProps}
       href={resolvedHref}
-      target="_blank"
-      rel="noreferrer"
+      target={newTab && !href.startsWith("/") ? "_blank" : undefined}
+      rel={newTab && !href.startsWith("/") ? "noreferrer" : undefined}
       className={className}
       onClick={handleClick}
     >

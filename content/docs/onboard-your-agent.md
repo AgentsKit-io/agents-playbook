@@ -53,7 +53,7 @@ go-ahead.
 | Endpoint | What it is | Use it for |
 |---|---|---|
 | [`/llms-full.txt`](/llms-full.txt) | Every doc concatenated into one file | One-shot context load / RAG indexing |
-| [`/llms.txt`](/llms.txt) | Site map of all docs with links | Letting the agent pick which docs to fetch |
+| [`/llms.txt`](/llms.txt) | Curated map of core entry points | Letting the agent pick which focused docs to fetch |
 | `/raw/<path>.md` | Raw Markdown for any single doc | Targeted reads (e.g. `/raw/pillars/security/rbac-pattern.md`) |
 | [`/playbook-bundle.zip`](/playbook-bundle.zip) | Zip of all docs | Local indexing / offline RAG |
 

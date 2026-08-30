@@ -63,21 +63,23 @@ One config file at repo root. Schema:
       "budgets": { ".tsx": 300, ".ts": 500, ".test.ts": 800 },
       "baseline": ".file-size-baseline.json"
     },
-    "no-any": { "enabled": true, "allowMatchRegex": "// allow-any:" },
+    "no-any": { "enabled": true, "allowHatch": "//\\s*allow-any:", "maxHatches": 0 },
     "named-exports": {
       "enabled": true,
       "exempt": [
-        "apps/web/app/**/{page,layout,loading,error}.tsx",
-        "**/{tailwind,next,vitest}.config.*"
+        "apps/web/app/.*/(page|layout|loading|error)\\.tsx$",
+        "/(tailwind|next|vitest)\\.config\\."
       ]
     },
-    "raw-error": {
+    "error-raw": {
       "enabled": true,
-      "boundaryPaths": ["packages/*/src/methods/**", "packages/*/src/handlers/**"]
+      "boundaryMarkers": ["/methods/", "/handlers/"]
     }
   }
 }
 ```
+
+Regex-valued fields use JavaScript regular-expression source strings because JSON cannot store `RegExp` objects. Paths are normalized to `/` before matching on every operating system.
 
 Why one file:
 

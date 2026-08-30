@@ -5,6 +5,7 @@ import { RootProvider } from "fumadocs-ui/provider";
 import Script from "next/script";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { AskWidget } from "@/components/ask-widget";
+import { SharedEcosystemBar } from "@/components/shared-ecosystem-bar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -19,14 +20,16 @@ const mono = JetBrains_Mono({
 });
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
-const TITLE = "Agents Playbook";
+const PRODUCT_NAME = "Agents Playbook";
+const SOCIAL_TITLE =
+  "Agents Playbook — Open Engineering Harness for Coding Agents";
 const DESCRIPTION =
   "The open engineering harness for coding agents — rules, prompts, memory, evals, and executable gates that train repeatable behavior, not model weights.";
 
 const JSON_LD = {
   "@context": "https://schema.org",
   "@type": "WebSite",
-  name: TITLE,
+  name: PRODUCT_NAME,
   url: SITE_URL,
   description: DESCRIPTION,
   inLanguage: "en",
@@ -35,14 +38,15 @@ const JSON_LD = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: TITLE,
+    default: SOCIAL_TITLE,
     template: "%s · Agents Playbook",
   },
   description: DESCRIPTION,
-  applicationName: TITLE,
+  applicationName: PRODUCT_NAME,
   authors: [{ name: "Agents Playbook contributors" }],
   keywords: [
     "AI coding agents",
+    "open engineering harness",
     "Claude Code",
     "Cursor",
     "Windsurf",
@@ -60,14 +64,14 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: SITE_URL,
-    title: TITLE,
+    title: SOCIAL_TITLE,
     description: DESCRIPTION,
-    siteName: TITLE,
+    siteName: PRODUCT_NAME,
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: TITLE,
+    title: SOCIAL_TITLE,
     description: DESCRIPTION,
     creator: "@agentskit",
   },
@@ -91,12 +95,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           {JSON.stringify(JSON_LD)}
         </Script>
-        {/* Shared ecosystem bar — single source on www.agentskit.io, embedded across all properties. */}
-        <Script src="https://www.agentskit.io/ecosystem-bar.js" strategy="lazyOnload" data-current="playbook" />
         <PostHogProvider>
           <RootProvider
             theme={{ defaultTheme: "dark", forcedTheme: "dark" }}
+            search={{ options: { api: "/api/search" } }}
           >
+            <SharedEcosystemBar />
             {children}
             <AskWidget
               corpus="playbook"

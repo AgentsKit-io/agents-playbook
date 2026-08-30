@@ -1,0 +1,9 @@
+- id: agentskit-playbook
+  name: AgentsKit Playbook quality gates
+  description: Run configurable structural quality gates from the Agents Playbook.
+  entry: scripts/run-pre-commit-hook.mjs
+  language: unsupported_script
+  minimum_pre_commit_version: 4.4.0
+  args: [--fast]
+  pass_filenames: false
+  always_run: true

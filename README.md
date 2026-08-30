@@ -5,17 +5,19 @@
 <h1 align="center">Agents Playbook</h1>
 
 <p align="center">
-  The open engineering harness for coding agents — production-earned rules, memory, evals, executable gates, and copy-ready templates.
+  The open engineering harness for coding agents — train repeatable behavior, not model weights.
 </p>
 
 <p align="center">
   <a href="https://playbook.agentskit.io"><img alt="Live documentation" src="https://img.shields.io/badge/docs-live-7c3aed" /></a>
-  <a href="./LICENSE"><img alt="CC BY 4.0 license" src="https://img.shields.io/badge/license-CC_BY_4.0-2563eb" /></a>
+  <a href="./LICENSE"><img alt="MIT software license" src="https://img.shields.io/badge/software-MIT-2563eb" /></a>
+  <a href="./LICENSE-CONTENT"><img alt="CC BY 4.0 content license" src="https://img.shields.io/badge/content-CC_BY_4.0-2563eb" /></a>
+  <a href="https://www.bestpractices.dev/projects/13878"><img alt="OpenSSF Best Practices" src="https://www.bestpractices.dev/projects/13878/baseline" /></a>
   <a href="./doc-bridge.config.json"><img alt="Doc Bridge grade A" src="https://img.shields.io/badge/Doc_Bridge-100%2F100_A-16a34a" /></a>
   <a href="./public/deterministic/knowledge.json"><img alt="Local-first answers" src="https://img.shields.io/badge/Ask-local--first-f59e0b" /></a>
 </p>
 
-Agents Playbook turns hard-won engineering lessons into repeatable coding-agent behavior that people can inspect and adapt. Use it to establish project rules, design package boundaries, review agent-authored changes, and enforce quality before merge—without training model weights or inventing a governance system from scratch.
+Agents Playbook turns hard-won engineering lessons into repeatable coding-agent behavior. Use its open rules, prompts, memory, evals, and executable gates to establish project standards, design package boundaries, review agent-authored changes, and enforce quality before merge—without fine-tuning model weights or inventing a governance system from scratch.
 
 It is intended for engineering teams adopting coding agents, maintainers standardizing many repositories, and agents that need structured, retrievable operational context.
 
@@ -32,8 +34,8 @@ The repository generates and checks its own claims from source:
 | SDLC phases | 6 |
 | Copy-ready templates | 6 |
 | Zero-dependency gate scripts | 13 |
-| Human and agent guides | 130 |
-| Deterministic local answers | 150 |
+| Human and agent guides | 132 |
+| Deterministic local answers | 154 |
 | Doc Bridge health | 100/100 · A |
 
 The source-of-truth counts live in [`app/stats.snapshot.json`](./app/stats.snapshot.json), the local answer catalog in [`public/deterministic/knowledge.json`](./public/deterministic/knowledge.json), and documentation ownership in [`doc-bridge.config.json`](./doc-bridge.config.json). CI rejects drift.
@@ -48,6 +50,8 @@ pnpm dev
 ```
 
 Open `http://localhost:3000`. If you are new to agent governance, follow [Getting started](https://playbook.agentskit.io/docs/getting-started), copy the [AGENTS.md template](https://playbook.agentskit.io/docs/templates/AGENTS.md.template), and add one relevant gate before expanding the policy set.
+
+Run the fast gates on every commit with the versioned [pre-commit provider](https://playbook.agentskit.io/docs/scripts), or select exact gates through its `args` configuration.
 
 For an LLM, use [`/llms.txt`](https://playbook.agentskit.io/llms.txt) for the map, [`/llms-full.txt`](https://playbook.agentskit.io/llms-full.txt) for the complete corpus, or replace `/docs/<path>` with `/raw/<path>.md` for a single source document.
 
@@ -80,7 +84,7 @@ console.log(`Verified ${verified.value.entries.length} local Playbook answers.`)
 Expected output:
 
 ```text
-Verified 150 local Playbook answers.
+Verified 154 local Playbook answers.
 ```
 
 ## How the system fits together
@@ -109,6 +113,7 @@ See [Discovery and Ask](https://playbook.agentskit.io/docs/discovery) for the de
 |---|---|
 | [`content/docs`](./content/docs) | Canonical guides, phases, prompts, and templates |
 | [`content/docs/scripts`](./content/docs/scripts) | Runnable, zero-dependency reference gates |
+| [`packages/playbook`](./packages/playbook) | Zero-dependency `@agentskit/playbook` CLI package |
 | [`components/ask-widget.tsx`](./components/ask-widget.tsx) | Local-first AgentsKit Chat integration |
 | [`scripts`](./scripts) | Generation and quality verification |
 | [`public/deterministic`](./public/deterministic) | Verified static knowledge and site configuration |
@@ -118,6 +123,8 @@ See [Discovery and Ask](https://playbook.agentskit.io/docs/discovery) for the de
 
 ```bash
 pnpm test
+pnpm test:playbook-package
+pnpm check:playbook-package
 pnpm check:okf-type
 pnpm check:doc-bridge-config
 pnpm docs:bridge:index
@@ -133,16 +140,22 @@ The corpus is usable as versioned documentation today. The web application is cu
 
 Contributions are welcome when a pattern is grounded in a real failure mode, explains its enforcement, and remains useful across tools. Read [`CONTRIBUTING.md`](./CONTRIBUTING.md), then use the [contribution guide](https://playbook.agentskit.io/docs/contributing) to validate structure, cross-links, machine retrieval, and gates.
 
-By contributing, you license the work under [CC BY 4.0](./LICENSE). Please report security concerns through the policy of the affected AgentsKit repository rather than a public issue.
+Software contributions are licensed under [MIT](./LICENSE). Contributions to
+the Playbook corpus—written patterns, prompts, templates, illustrations, and
+other editorial content—are licensed under
+[CC BY 4.0](./LICENSE-CONTENT). See [governance](./GOVERNANCE.md), the
+[Code of Conduct](./CODE_OF_CONDUCT.md), and the [security policy](./SECURITY.md)
+before contributing. Report vulnerabilities privately through the security
+policy rather than a public issue.
 
 ## AgentsKit ecosystem
 
 Agents Playbook is the open engineering harness in the AgentsKit ecosystem:
 
-- [AgentsKit](https://www.agentskit.io/docs/for-agents) — the parent framework and agent runtime.
-- [Registry](https://registry.agentskit.io) — 300+ ready-to-use agent definitions and local discovery.
-- [AgentsKit Chat](https://chat.agentskit.io/docs) — configurable chat UI and local-first answer protocol used here; [machine-readable docs](https://chat.agentskit.io/llms.txt).
-- [Doc Bridge](https://agentskit-io.github.io/doc-bridge/) — documentation ownership, routing, health, and MCP handoff; [machine-readable docs](https://agentskit-io.github.io/doc-bridge/llms.txt).
-- [AgentsKit OS](https://github.com/AgentsKit-io/agentskit-os) — the full agent operating environment.
+- [AgentsKit](https://www.agentskit.io/docs) — build agents without gluing many libraries together.
+- [Registry](https://registry.agentskit.io/docs) — copy ready-made agents and own the source.
+- [AgentsKit Chat](https://chat.agentskit.io/docs) — define one conversational experience across interfaces.
+- [Doc Bridge](https://doc-bridge.agentskit.io/) — turn repository docs into executable agent handoffs.
+- [AKOS](https://akos.agentskit.io/docs) — run and govern agents in production.
 
 **Topics:** `ai-agents` · `coding-agents` · `agent-governance` · `software-architecture` · `quality-gates` · `fumadocs` · `llms-txt` · `developer-experience`

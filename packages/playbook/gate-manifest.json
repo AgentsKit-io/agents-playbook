@@ -1,0 +1,14 @@
+[
+  { "name": "file-size", "fast": true, "description": "Enforce calibrated file-size budgets." },
+  { "name": "named-exports", "fast": false, "description": "Reject default exports outside configured exceptions." },
+  { "name": "no-any", "fast": false, "description": "Reject unapproved TypeScript any usage." },
+  { "name": "error-raw", "fast": true, "description": "Reject raw Error instances at configured boundaries." },
+  { "name": "tokens", "fast": false, "description": "Reject hardcoded colors outside the token system." },
+  { "name": "native-html", "fast": false, "description": "Reject configured native elements in shipped UI surfaces." },
+  { "name": "intl", "fast": false, "description": "Reject untranslated user-facing JSX strings." },
+  { "name": "secrets", "fast": true, "description": "Detect common credentials, PEM blocks, and high-entropy strings." },
+  { "name": "completeness", "fast": false, "description": "Detect unfinished shipped surfaces and placeholders." },
+  { "name": "adr", "fast": false, "description": "Validate ADR sequence, status, and supersession links." },
+  { "name": "rfc", "fast": false, "description": "Validate RFC indexes, review windows, and promotion links." },
+  { "name": "pr-intent", "fast": false, "description": "Validate the PR intent manifest against the diff." }
+]

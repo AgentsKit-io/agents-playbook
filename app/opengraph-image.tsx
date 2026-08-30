@@ -21,7 +21,7 @@ export default async function OGImage() {
           alignItems: "flex-start",
           padding: "80px",
           background:
-            "radial-gradient(ellipse at top left, rgba(139,92,246,0.30), transparent 55%), radial-gradient(ellipse at bottom right, rgba(109,40,217,0.18), transparent 50%), #0b0a13",
+            "radial-gradient(ellipse at top left, rgba(140,100,255,0.30), transparent 55%), radial-gradient(ellipse at bottom right, rgba(140,100,255,0.16), transparent 50%), #0b0a13",
           color: "white",
           fontFamily: "Inter, system-ui",
         }}
@@ -44,7 +44,7 @@ export default async function OGImage() {
               height: "12px",
               borderRadius: "9999px",
               background:
-                "linear-gradient(135deg, oklch(0.72 0.18 295), oklch(0.80 0.14 295))",
+                "linear-gradient(135deg, oklch(0.72 0.18 295), oklch(0.78 0.15 295))",
             }}
           />
           Agents Playbook
@@ -63,7 +63,7 @@ export default async function OGImage() {
           <span
             style={{
               background:
-                "linear-gradient(135deg, oklch(0.85 0.18 295), oklch(0.82 0.14 295))",
+                "linear-gradient(135deg, oklch(0.85 0.18 295), oklch(0.78 0.16 295))",
               backgroundClip: "text",
               color: "transparent",
               marginLeft: "12px",
