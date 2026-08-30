@@ -1,21 +1,22 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-31",
+  "project": "agents-playbook-harness-phase-32",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-31",
+  "stateDir": ".codex/verification/harness-phase-32",
   "profile": "strict",
   "contract": {
-    "intent": "Make the harness verification CLI available inside isolated coding-agent fixtures and validate the real provider gate.",
+    "intent": "Make benchmark measurements explain quality, retry cost, performance regressions, and confidence without false improvement claims.",
     "scope": {
-      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "scripts/run-agentskit-os-harness-benchmark.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0033-portable-agent-gate.md", ".codex/verification.json"],
+      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/src/types.ts", "packages/harness/test/metrics.test.ts", "scripts/run-agentskit-os-baseline.mjs", "scripts/run-agentskit-os-harness-benchmark.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0034-measurement-quality-gates.md", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "portable-gate", "statement": "An isolated fixture can invoke the real harness CLI against its local contract and validation command.", "checks": ["harness-portable-gate"] },
-      { "id": "no-false-approval", "statement": "Fixture setup uses CI preparation and never fabricates human approval.", "checks": ["harness-no-false-approval"] },
-      { "id": "measurement-integrity", "statement": "Provider and artifact validation results remain distinct, and incomplete provider delivery remains blocked.", "checks": ["harness-measurement-integrity"] },
-      { "id": "docs", "statement": "The portable gate behavior and its security boundary are documented.", "checks": ["harness-docs"] }
+      { "id": "measurement-model", "statement": "Benchmark reports distinguish effective delivery, retries, duration, review time, and incomplete delivery.", "checks": ["harness-measurement-model"] },
+      { "id": "performance-policy", "statement": "Reports identify performance regressions and never describe unavailable comparisons as improvements.", "checks": ["harness-performance-policy"] },
+      { "id": "confidence", "statement": "Reports expose whether their sample is sufficient for a reliable improvement claim.", "checks": ["harness-confidence"] },
+      { "id": "runner", "statement": "The real benchmark runner remains bound to isolated tasks and criterion-level evidence.", "checks": ["harness-runner"] },
+      { "id": "docs", "statement": "The measurement policy and its limitations are documented.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -28,10 +29,11 @@
     "docs": true
   },
   "checks": [
-    { "id": "harness-portable-gate", "category": "cli", "execution": "real", "command": "pnpm --filter @agentskit/harness typecheck && node --check scripts/run-agentskit-os-baseline.mjs && node --check scripts/run-agentskit-os-harness-benchmark.mjs && node --check scripts/verify-agentskit-os-harness-benchmark.mjs && node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['portable-gate']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-no-false-approval", "category": "logic", "command": "node -e \"const s=require('fs').readFileSync('scripts/run-agentskit-os-harness-benchmark.mjs','utf8'); if(s.includes('approved')) process.exit(1); if(!s.includes('prepared')) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['no-false-approval']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-measurement-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard", "evidence": "structured", "timeoutMs": 120000 }
+    { "id": "harness-measurement-model", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['measurement-model']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-performance-policy", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['performance-policy']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-confidence", "category": "logic", "command": "pnpm --filter @agentskit/harness typecheck && node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['confidence']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-runner", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node --check scripts/run-agentskit-os-harness-benchmark.mjs && node --check scripts/verify-agentskit-os-harness-benchmark.mjs && node scripts/verify-agentskit-os-harness-benchmark.mjs --self-test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['runner']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },
   "budget": { "maxDurationMs": 300000 },

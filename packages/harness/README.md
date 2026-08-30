@@ -369,6 +369,11 @@ inherits a fixture-local PATH entry, and human approval is never synthesized.
 This makes provider-side verification available without making the fixture a
 security boundary; the outer harness remains the authoritative evidence gate.
 
+Benchmark reports also expose a fail-closed `qualityGate`. It separates
+historical retries from effective delivery, reports duration regressions, and
+labels small samples as `insufficient-data` or `directional` instead of
+claiming enterprise-level improvement.
+
 ## Development
 
 ```bash

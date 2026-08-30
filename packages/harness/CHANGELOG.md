@@ -8,6 +8,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
+- Configurable benchmark quality gates, confidence labels, and explicit retry metrics.
 - Portable `ak-verify` fixture gate for real coding-agent benchmark runs; provider delivery remains blocked until its result is complete and human approval is recorded.
 - Harness-equivalent benchmark preparation and collection for paired real-provider runs, with explicit human approval and honest non-comparability.
 - Source snapshots now ignore untracked directories while retaining hashes for untracked files.

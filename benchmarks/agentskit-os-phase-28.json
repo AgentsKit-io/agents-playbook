@@ -8,6 +8,12 @@
     "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b",
     "taskDefinition": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/benchmark-config.json"
   },
+  "policy": {
+    "minComparableTasks": 3,
+    "maxDurationRegressionRate": 0.2,
+    "minCompletedRunsPerTask": 3,
+    "requireZeroEscapedIncomplete": true
+  },
   "tasks": [
     {
       "id": "bug-off-by-one",
