@@ -23,8 +23,8 @@ const taskConfig = (task, destination) => {
   const reportDir = relative(root, join(destination, 'runs', task.id, 'reports')).replaceAll('\\', '/')
   return {
   schemaVersion: 1,
-  project: `agents-playbook-harness-phase-30-${task.id}`,
-  root: '../../../..',
+  project: `agents-playbook-harness-phase-31-${task.id}`,
+  root: '../../../../../',
   stateDir,
   profile: 'strict',
   contract: {
@@ -57,7 +57,7 @@ if (mode === 'self-test') {
   const configs = readdirSync(prepared.configRoot).filter((file) => file.endsWith('.json'))
   if (configs.length !== manifest.tasks.length) throw new Error('one harness config was not prepared per task')
   const first = JSON.parse(readFileSync(join(prepared.configRoot, configs[0]), 'utf8'))
-  if (first.benchmark?.suiteId !== manifest.suiteId || first.benchmark?.mode !== 'harness' || !first.checks?.[0]?.command.includes('--harness')) throw new Error('harness benchmark binding is incomplete')
+  if (first.root !== '../../../../../' || first.benchmark?.suiteId !== manifest.suiteId || first.benchmark?.mode !== 'harness' || !first.checks?.[0]?.command.includes('--harness')) throw new Error('harness benchmark binding is incomplete')
   const emptyMetrics = benchmarkRuns(join(fixture, 'empty'), manifest)
   if (emptyMetrics.manifest?.comparableTaskCount !== 0 || emptyMetrics.comparisons.some((comparison) => comparison.comparability !== 'harness-not-run')) throw new Error('empty benchmark must remain non-comparable')
   console.log(JSON.stringify({ status: 'passed', criteria: ['harness-runner', 'measurement-integrity'], suiteId: manifest.suiteId, taskCount: manifest.tasks.length }))

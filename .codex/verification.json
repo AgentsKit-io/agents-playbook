@@ -7,7 +7,7 @@
   "contract": {
     "intent": "Make the harness verification CLI available inside isolated coding-agent fixtures and validate the real provider gate.",
     "scope": {
-      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0033-portable-agent-gate.md", ".codex/verification.json"],
+      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "scripts/run-agentskit-os-harness-benchmark.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0033-portable-agent-gate.md", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
