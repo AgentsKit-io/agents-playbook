@@ -22,7 +22,7 @@
     "logic": true,
     "endpoint": { "required": false, "reason": "No endpoint behavior is changed." },
     "database": { "required": false, "reason": "No database behavior is changed." },
-    "cli": true,
+    "cli": { "required": false, "reason": "No CLI behavior is changed." },
     "mcp": { "required": false, "reason": "No MCP behavior is changed." },
     "ui": { "required": false, "reason": "No UI is changed." },
     "docs": true
