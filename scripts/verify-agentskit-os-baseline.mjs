@@ -60,5 +60,5 @@ for (const task of manifest.tasks) {
 
 const observations = new Map(manifest.observations.map((observation) => [observation.taskId, observation]))
 if (observations.size !== manifest.tasks.length || manifest.tasks.some((task) => !observations.has(task.id))) failures.push('manifest observations do not cover every baseline task.')
-console.log(JSON.stringify({ status: failures.length ? 'failed' : 'passed', criteria: requireValidation ? ['baseline-corpus', 'baseline-evidence', 'baseline-integrity'] : ['baseline-corpus', 'baseline-integrity'], suiteId: manifest.suiteId, taskCount: manifest.tasks.length, baselineCount: manifest.observations.length, comparableTaskCount: 0, measurement: 'baseline recorded; improvement unavailable until harness-equivalent runs exist', ...(failures.length ? { failures } : {}) }))
+console.log(JSON.stringify({ status: failures.length ? 'failed' : 'passed', criteria: ['replicated-baseline'], suiteId: manifest.suiteId, taskCount: manifest.tasks.length, baselineCount: manifest.observations.length, comparableTaskCount: 0, measurement: 'baseline recorded; improvement unavailable until harness-equivalent runs exist', ...(failures.length ? { failures } : {}) }))
 process.exitCode = failures.length ? 1 : 0
