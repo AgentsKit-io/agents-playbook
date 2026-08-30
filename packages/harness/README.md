@@ -59,6 +59,25 @@ node scripts/run-agentskit-os-baseline.mjs \
 The observations are not an improvement claim until equivalent harness runs
 exist.
 
+To collect equivalent baseline samples, run the same corpus independently and
+record the aggregate only after every task has been sampled:
+
+```bash
+node scripts/run-agentskit-os-baseline.mjs \
+  --target /path/to/agentskit-os \
+  --provider codex \
+  --repeats 3 \
+  --output .codex/verification/phase-35/baseline \
+  --record-manifest benchmarks/agentskit-os-phase-28.json
+```
+
+Each repeat uses a fresh disposable fixture. The report stores every measured
+duration in `durationSamplesMs` and the manifest is replaced atomically through
+the typed observation recorder. `--record-manifest` requires the complete task
+set; omit it to inspect an uncommitted collection. Replicas are not retries,
+and a failed sample keeps the aggregate failed so the quality gate cannot turn
+an incomplete baseline into an improvement claim.
+
 ## Contract
 
 Every repository supplies `.codex/verification.json` with explicit scope, outcomes, applicable surfaces, and executable checks. Each check must declare `evidence: "structured"`; its final output line must be JSON and map to the outcome IDs it proves:

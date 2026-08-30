@@ -1,36 +1,36 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-34",
+  "project": "agents-playbook-harness-phase-35",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-34",
+  "stateDir": ".codex/verification/harness-phase-35",
   "profile": "strict",
   "contract": {
-    "intent": "Require statistically comparable baseline and harness samples before performance claims.",
+    "intent": "Collect independent real baseline samples and record them atomically for statistically comparable performance claims.",
     "scope": {
-      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "benchmarks/agentskit-os-phase-28.json", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0036-comparable-baseline-samples.md", ".codex/verification.json"],
+      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0037-replicated-baseline-collection.md", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
-    "outcomes": [
-      { "id": "measurement-model", "statement": "Benchmark reports distinguish independent samples, retries, robust duration, review time, and incomplete delivery.", "checks": ["harness-measurement-model"] },
-      { "id": "performance-policy", "statement": "Reports compare equivalent baseline and harness samples and identify regressions without false improvement claims.", "checks": ["harness-performance-policy"] },
-      { "id": "confidence", "statement": "Reports expose whether baseline and harness samples are sufficient for a reliable improvement claim.", "checks": ["harness-confidence"] },
-      { "id": "docs", "statement": "The comparable-sample policy and its limitations are documented.", "checks": ["harness-docs"] }
+      "outcomes": [
+      { "id": "baseline-collection", "statement": "The baseline runner can execute independent samples and emit durationSamplesMs without conflating replicas with retries.", "checks": ["baseline-collection"] },
+      { "id": "atomic-recording", "statement": "Replicated baseline observations can replace a complete manifest observation set atomically and remain schema-valid.", "checks": ["atomic-recording"] },
+      { "id": "measurement-integrity", "statement": "The existing benchmark report consumes replicated baseline samples and keeps incomplete measurements non-comparable.", "checks": ["measurement-integrity"] },
+      { "id": "docs", "statement": "The replicated baseline workflow, provenance, and limitations are documented.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
     "logic": true,
     "endpoint": { "required": false, "reason": "No endpoint behavior is changed." },
     "database": { "required": false, "reason": "No database behavior is changed." },
-    "cli": { "required": false, "reason": "No CLI behavior is changed." },
+    "cli": true,
     "mcp": { "required": false, "reason": "No MCP behavior is changed." },
     "ui": { "required": false, "reason": "No UI is changed." },
     "docs": true
   },
   "checks": [
-    { "id": "harness-measurement-model", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['measurement-model']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-performance-policy", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['performance-policy']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-confidence", "category": "logic", "command": "pnpm --filter @agentskit/harness typecheck && pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['confidence']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "baseline-collection", "category": "logic", "execution": "real", "command": "node --check scripts/run-agentskit-os-baseline.mjs && node scripts/verify-harness-benchmark-record.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['baseline-collection']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "atomic-recording", "category": "logic", "execution": "real", "command": "node scripts/verify-harness-benchmark-record.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['atomic-recording']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "measurement-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:metrics && node scripts/verify-agentskit-os-harness-benchmark.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['measurement-integrity']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },

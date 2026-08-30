@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 import { execFileSync } from 'node:child_process'
 import { createHash } from 'node:crypto'
-import { chmodSync, cpSync, mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
+import { chmodSync, cpSync, mkdirSync, mkdtempSync, readFileSync, renameSync, rmSync, writeFileSync } from 'node:fs'
 import { join, relative, resolve } from 'node:path'
 import { tmpdir } from 'node:os'
 import { pathToFileURL } from 'node:url'
-import { loadBenchmarkManifest } from '../packages/harness/dist/index.js'
+import { loadBenchmarkManifest, recordBenchmarkObservation } from '../packages/harness/dist/index.js'
 
 const arg = (name, fallback) => {
   const index = process.argv.indexOf(name)
@@ -18,11 +18,15 @@ const taskId = arg('--task-id')
 const tasks = taskId ? manifest.tasks.filter((task) => task.id === taskId) : manifest.tasks
 if (taskId && tasks.length !== 1) throw new Error(`unknown benchmark task: ${taskId}`)
 const outputDir = resolve(root, arg('--output', 'benchmarks/agentskit-os-phase-29-baseline'))
+const recordManifestPath = arg('--record-manifest') ? resolve(root, arg('--record-manifest')) : undefined
+const repeatCount = Number(arg('--repeats', '1'))
 const harnessMode = process.argv.includes('--harness')
 const harnessCli = resolve(root, 'packages/harness/dist/cli.js')
 const providerIds = (arg('--provider', process.env.AGENTSKIT_OS_PROVIDER ?? 'codex') ?? 'codex').split(',').map((value) => value.trim()).filter(Boolean)
 if (!process.env.AGENTSKIT_OS_ROOT && !arg('--target')) throw new Error('--target or AGENTSKIT_OS_ROOT is required.')
 if (!providerIds.length) throw new Error('at least one provider is required.')
+if (!Number.isInteger(repeatCount) || repeatCount < 1) throw new Error('--repeats must be a positive integer.')
+if (recordManifestPath && tasks.length !== manifest.tasks.length) throw new Error('--record-manifest requires all manifest tasks; remove --task-id.')
 
 const fixture = join(osRoot, 'packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures')
 const providerModule = await import(pathToFileURL(join(osRoot, 'packages/os-coding-agents/dist/index.js')).href)
@@ -31,6 +35,11 @@ const vitest = resolve(arg('--vitest', join(osRoot, 'node_modules/.bin/vitest'))
 mkdirSync(outputDir, { recursive: true })
 
 const hashFile = (path) => createHash('sha256').update(readFileSync(path)).digest('hex')
+const median = (values) => {
+  const sorted = [...values].sort((left, right) => left - right)
+  const middle = Math.floor(sorted.length / 2)
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2
+}
 const taskKind = (kind) => kind === 'test' ? 'add-test' : kind
 const writeFixtureTests = (runRoot) => {
   mkdirSync(join(runRoot, 'tests'), { recursive: true })
@@ -106,33 +115,48 @@ const validateTask = (task, runRoot, beforeSourceHash, testResult) => {
 }
 
 const reports = []
+const observations = []
 for (const task of tasks) {
-  const runRoot = mkdtempSync(join(tmpdir(), `agentskit-os-phase-29-${task.id}-`))
-  cpSync(join(fixture, 'src'), join(runRoot, 'src'), { recursive: true })
-  writeFixtureTests(runRoot)
-  writeFileSync(join(runRoot, 'package.json'), JSON.stringify({ type: 'module', scripts: { test: 'vitest run' } }, null, 2))
-  writeBaselineContract(runRoot, task)
-  if (harnessMode) writeHarnessCliShim(runRoot)
-  gitInit(runRoot)
-  if (harnessMode) prepareHarnessLifecycle(runRoot)
-  const beforeSourceHash = hashFile(join(runRoot, 'src/slice-window.ts'))
-  const basePrompt = readFileSync(join(osRoot, task.prompt.path), 'utf8')
-  const prompt = harnessMode ? `${basePrompt}\n\nAgentsKit Harness requirements:\n- inspect the task and its acceptance criteria before editing;\n- implement the complete task, including required tests;\n- run the relevant real validation commands before reporting completion;\n- if any criterion is not proven, report the delivery as incomplete and continue resolving it.\n\nAcceptance criteria:\n${task.acceptanceCriteria.map((criterion) => `- ${criterion}`).join('\n')}` : basePrompt
-  const startedAt = Date.now()
-  const report = await orchestratorModule.runCodingAgentBenchmark({ repoRoot: runRoot, providers: providersFor(runRoot), kind: taskKind(task.kind), prompt, dryRun: false, isolateWorktrees: false, timeoutMs: 180_000 })
-  const row = report.rows[0]
-  let testResult
-  try { testResult = runTests(runRoot) } catch (error) { testResult = { status: 'failed', command: `${vitest} run --reporter=dot`, exitCode: error.status ?? 1, output: String(error.stdout ?? error.message ?? error) } }
-  const validation = validateTask(task, runRoot, beforeSourceHash, testResult)
-  const artifactValidated = validation.status === 'passed'
-  const harnessVerification = harnessMode ? verifyFinalHarnessLifecycle(runRoot, task) : undefined
-  const delegatedApprovalReady = harnessVerification?.state === 'AWAITING_HUMAN_APPROVAL'
-  const deliveryComplete = artifactValidated && (row?.status === 'ok' || delegatedApprovalReady)
+  const samples = []
+  for (let sample = 1; sample <= repeatCount; sample += 1) {
+    const runRoot = mkdtempSync(join(tmpdir(), `agentskit-os-phase-29-${task.id}-sample-${sample}-`))
+    cpSync(join(fixture, 'src'), join(runRoot, 'src'), { recursive: true })
+    writeFixtureTests(runRoot)
+    writeFileSync(join(runRoot, 'package.json'), JSON.stringify({ type: 'module', scripts: { test: 'vitest run' } }, null, 2))
+    writeBaselineContract(runRoot, task)
+    if (harnessMode) writeHarnessCliShim(runRoot)
+    gitInit(runRoot)
+    if (harnessMode) prepareHarnessLifecycle(runRoot)
+    const beforeSourceHash = hashFile(join(runRoot, 'src/slice-window.ts'))
+    const basePrompt = readFileSync(join(osRoot, task.prompt.path), 'utf8')
+    const prompt = harnessMode ? `${basePrompt}\n\nAgentsKit Harness requirements:\n- inspect the task and its acceptance criteria before editing;\n- implement the complete task, including required tests;\n- run the relevant real validation commands before reporting completion;\n- if any criterion is not proven, report the delivery as incomplete and continue resolving it.\n\nAcceptance criteria:\n${task.acceptanceCriteria.map((criterion) => `- ${criterion}`).join('\n')}` : basePrompt
+    const startedAt = Date.now()
+    const report = await orchestratorModule.runCodingAgentBenchmark({ repoRoot: runRoot, providers: providersFor(runRoot), kind: taskKind(task.kind), prompt, dryRun: false, isolateWorktrees: false, timeoutMs: 180_000 })
+    const row = report.rows[0]
+    let testResult
+    try { testResult = runTests(runRoot) } catch (error) { testResult = { status: 'failed', command: `${vitest} run --reporter=dot`, exitCode: error.status ?? 1, output: String(error.stdout ?? error.message ?? error) } }
+    const validation = validateTask(task, runRoot, beforeSourceHash, testResult)
+    const artifactValidated = validation.status === 'passed'
+    const harnessVerification = harnessMode ? verifyFinalHarnessLifecycle(runRoot, task) : undefined
+    const delegatedApprovalReady = harnessVerification?.state === 'AWAITING_HUMAN_APPROVAL'
+    const deliveryComplete = artifactValidated && (row?.status === 'ok' || delegatedApprovalReady)
+    samples.push({ sample, status: deliveryComplete ? 'passed' : 'failed', durationMs: row?.durationMs ?? Date.now() - startedAt, escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, ...(harnessVerification ? { harnessVerification } : {}), validation })
+  }
   const evidenceSource = relative(root, join(outputDir, `${task.id}.json`)).replaceAll('\\', '/')
-  const evidence = task.acceptanceCriteria.map((criterion) => ({ criterion, status: artifactValidated ? 'passed' : 'failed', source: evidenceSource }))
-  const observation = { type: 'agentskit-harness-baseline-observation', schemaVersion: 1, suiteId: manifest.suiteId, taskId: task.id, sourceRevision: manifest.provenance?.revision, providerIds, recordedAt: new Date().toISOString(), attempts: 1, durationMs: row?.durationMs ?? Date.now() - startedAt, status: deliveryComplete ? 'passed' : 'failed', escapedIncomplete: deliveryComplete ? 0 : 1, providerReport: report, ...(harnessVerification ? { harnessVerification } : {}), validation, evidence, criteria: deliveryComplete ? ['task-delivery'] : [] }
+  const artifactValidated = samples.every((sample) => sample.validation.status === 'passed')
+  const observation = { type: 'agentskit-harness-baseline-observation', schemaVersion: 1, suiteId: manifest.suiteId, taskId: task.id, sourceRevision: manifest.provenance?.revision, providerIds, recordedAt: new Date().toISOString(), attempts: 1, durationMs: median(samples.map((sample) => sample.durationMs)), durationSamplesMs: samples.map((sample) => sample.durationMs), status: samples.every((sample) => sample.status === 'passed') ? 'passed' : 'failed', escapedIncomplete: samples.reduce((total, sample) => total + sample.escapedIncomplete, 0), providerReport: { repeats: repeatCount, samples }, evidence: task.acceptanceCriteria.map((criterion) => ({ criterion, status: artifactValidated ? 'passed' : 'failed', source: evidenceSource })), criteria: artifactValidated ? ['task-delivery'] : [] }
   writeFileSync(join(outputDir, `${task.id}.json`), `${JSON.stringify(observation, null, 2)}\n`)
-  reports.push({ taskId: task.id, status: observation.status, durationMs: observation.durationMs, escapedIncomplete: observation.escapedIncomplete })
+  observations.push({ taskId: task.id, status: observation.status, source: evidenceSource, recordedAt: observation.recordedAt, attempts: observation.attempts, durationMs: observation.durationMs, durationSamplesMs: observation.durationSamplesMs, escapedIncomplete: observation.escapedIncomplete, evidence: observation.evidence })
+  reports.push({ taskId: task.id, status: observation.status, durationMs: observation.durationMs, durationSamplesMs: observation.durationSamplesMs, escapedIncomplete: observation.escapedIncomplete })
+}
+if (recordManifestPath) {
+  const temporaryRoot = mkdtempSync(join(tmpdir(), 'agentskit-os-baseline-manifest-'))
+  const temporaryManifest = join(temporaryRoot, 'manifest.json')
+  try {
+    writeFileSync(temporaryManifest, `${JSON.stringify({ ...manifest, observations: [] }, null, 2)}\n`)
+    for (const observation of observations) recordBenchmarkObservation(temporaryManifest, observation)
+    renameSync(temporaryManifest, recordManifestPath)
+  } finally { rmSync(temporaryRoot, { recursive: true, force: true }) }
 }
 const allPassed = reports.every((report) => report.status === 'passed')
-console.log(JSON.stringify({ status: allPassed ? 'passed' : 'failed', criteria: allPassed ? ['task-delivery'] : [], suiteId: manifest.suiteId, providerIds, reports, outputDir }))
+console.log(JSON.stringify({ status: allPassed ? 'passed' : 'failed', criteria: allPassed ? ['task-delivery'] : [], suiteId: manifest.suiteId, providerIds, repeats: repeatCount, reports, outputDir, ...(recordManifestPath ? { recordManifestPath } : {}) }))

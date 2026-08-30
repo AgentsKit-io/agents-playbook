@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Added replicated baseline collection with independent disposable samples,
+  median duration recording, and atomic complete-manifest replacement.
+
 All notable changes to `@agentskit/harness` are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the package follows Semantic Versioning.
