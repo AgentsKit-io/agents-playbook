@@ -123,11 +123,41 @@ const assertVerificationAttestation = (loaded: LoadedConfig, run: VerificationRu
   const expected = verificationDigest(run)
   if (run.verificationDigest !== expected) fail('Verification projection attestation does not match run.json.', 'HARNESS_ERROR')
   const event = new FileEventStore(loaded.stateDir).read(run.runId).filter((item) => item.type === 'verification.completed').at(-1)
-  if (!event || event.payload.verificationDigest !== expected) fail('Verification projection attestation is missing from the event log.', 'HARNESS_ERROR')
+  if (!event || event.payload.verificationDigest !== expected || event.sourceRevision !== run.sourceRevision || event.configHash !== run.configHash) fail('Verification projection attestation is missing from the event log.', 'HARNESS_ERROR')
 }
 
 const recordDecision = (loaded: LoadedConfig, run: VerificationRun, type: 'approval.recorded' | 'authorization.recorded', payload: { readonly decision: 'approved' | 'rejected'; readonly resultingState: VerificationRun['state']; readonly verificationDigest: string; readonly actor: 'human'; readonly sourceRevision: string; readonly contractHash: string; readonly target?: string }): void => {
   new FileEventStore(loaded.stateDir).append({ runId: run.runId, sourceRevision: run.sourceRevision, configHash: run.configHash, type, payload: type === 'authorization.recorded' ? { ...payload, target: payload.target ?? fail('tracking.target is required when authorizing.', 'INVALID_CONFIG') } : payload })
+}
+
+const assertDecisionProjection = (run: VerificationRun, decision: { readonly decision: 'approved' | 'rejected'; readonly resultingState: VerificationRun['state']; readonly verificationDigest: string; readonly sourceRevision: string; readonly contractHash: string }, expectedState: VerificationRun['state']): void => {
+  if (decision.decision !== 'approved' || decision.resultingState !== expectedState || decision.verificationDigest !== run.verificationDigest || decision.sourceRevision !== run.sourceRevision || decision.contractHash !== run.contractHash) fail('Terminal decision attestation does not match the run projection.', 'HARNESS_ERROR')
+}
+
+export const reconcileRun = async ({ configPath, runId }: { readonly configPath: string; readonly runId?: string }): Promise<import('./types.js').RunReconciliation> => {
+  const loaded = loadConfig(configPath)
+  const run = requireRun(runId ? readRun(loaded.stateDir, runId) : loadLatestRun(loaded.stateDir))
+  await assertFresh(loaded, run)
+  const store = new FileEventStore(loaded.stateDir)
+  const eventLog = store.verify(run.runId)
+  const events = store.read(run.runId)
+  if (events.some((event) => event.runId !== run.runId || event.configHash !== run.configHash)) fail('Run event log is not bound to the current run projection.', 'HARNESS_ERROR')
+  const requiresVerification = ['AWAITING_HUMAN_APPROVAL', 'AWAITING_AUTHORIZATION', 'COMPLETE'].includes(run.state)
+  if (requiresVerification) {
+    if (eventLog.status !== 'verified') fail('Terminal run requires a verified event log.', 'HARNESS_ERROR')
+    assertVerificationAttestation(loaded, run)
+  }
+  if (run.state === 'AWAITING_AUTHORIZATION' || run.state === 'COMPLETE') {
+    const approval = events.filter((event) => event.type === 'approval.recorded').at(-1) ?? fail('Terminal run is missing its human approval event.', 'HARNESS_ERROR')
+    assertDecisionProjection(run, approval.payload, run.state === 'COMPLETE' && !loaded.config.tracking.required ? 'COMPLETE' : 'AWAITING_AUTHORIZATION')
+    if (!run.humanApproval || run.humanApproval.actor !== 'human' || run.humanApproval.verificationDigest !== run.verificationDigest || run.humanApproval.sourceRevision !== run.sourceRevision || run.humanApproval.contractHash !== run.contractHash) fail('Human approval projection is inconsistent with its audit event.', 'HARNESS_ERROR')
+  }
+  if (run.state === 'COMPLETE' && loaded.config.tracking.required) {
+    const authorization = events.filter((event) => event.type === 'authorization.recorded').at(-1) ?? fail('Complete tracked run is missing its authorization event.', 'HARNESS_ERROR')
+    assertDecisionProjection(run, authorization.payload, 'COMPLETE')
+    if (!run.authorization || run.authorization.actor !== 'human' || run.authorization.verificationDigest !== run.verificationDigest || run.authorization.target !== authorization.payload.target || run.authorization.sourceRevision !== run.sourceRevision || run.authorization.contractHash !== run.contractHash) fail('Authorization projection is inconsistent with its audit event.', 'HARNESS_ERROR')
+  }
+  return { status: 'verified', runId: run.runId, state: run.state, eventCount: eventLog.eventCount, ...(eventLog.headHash ? { headHash: eventLog.headHash } : {}), ...(run.verificationDigest ? { verificationDigest: run.verificationDigest } : {}) }
 }
 
 export const approveRun = async ({ configPath, runId, decision, actor = 'human' }: { readonly configPath: string; readonly runId?: string; readonly decision: string; readonly actor?: string }): Promise<VerificationRun> => {

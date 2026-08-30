@@ -2,7 +2,7 @@
 import { createHash } from 'node:crypto'
 import { readFileSync } from 'node:fs'
 import { Command } from 'commander'
-import { approveRun, authorizeRun, benchmarkRuns, cancelRun, cleanTaskArtifacts, createDocBridgeContextProvider, loadBenchmarkManifest, loadConfig, loadLatestRun, planRun, readContextSnapshots, recordBenchmarkObservation, retryRun, startRun, verifyRun } from './index.js'
+import { approveRun, authorizeRun, benchmarkRuns, cancelRun, cleanTaskArtifacts, createDocBridgeContextProvider, loadBenchmarkManifest, loadConfig, loadLatestRun, planRun, readContextSnapshots, reconcileRun, recordBenchmarkObservation, retryRun, startRun, verifyRun } from './index.js'
 import type { BenchmarkObservationEvidence } from './metrics.js'
 import { fail } from './errors.js'
 import { FileEventStore } from './events.js'
@@ -43,7 +43,8 @@ program.command('approve <run-id-or-decision> [decision-or-run-id]').description
 program.command('authorize <run-id-or-decision> [decision-or-run-id]').description('Authorize or reject declared external tracking. Accepts <run-id> <decision> or <decision> <run-id>.').option('--by <actor>', 'approval actor', 'human').action(async (first: string, second: string | undefined, command: { readonly by: string }) => { const args = decisionArgs(first, second); print(await authorizeRun({ configPath: options().config, ...args, actor: command.by })) })
 program.command('retry').description('Create a new implementation attempt after a blocked or stale run.').action(async () => print(await retryRun({ configPath: options().config })))
 program.command('cancel [run-id]').description('Cancel an active run.').option('--by <actor>', 'cancellation actor', 'human').option('--reason <reason>', 'cancellation reason', 'Run cancelled by a human.').action(async (runId: string | undefined, command: { readonly by: string; readonly reason: string }) => print(await cancelRun({ configPath: options().config, runId, reason: command.reason, actor: command.by })))
-program.command('status').description('Show the latest run.').action(() => { const loaded = loadConfig(options().config); print(loadLatestRun(loaded.stateDir) ?? { state: 'CLARIFYING', message: 'No run exists.' }) })
+program.command('status').description('Show the latest run after reconciling its audit evidence.').action(async () => { const loaded = loadConfig(options().config); print(loadLatestRun(loaded.stateDir) ? await reconcileRun({ configPath: options().config }) : { state: 'CLARIFYING', message: 'No run exists.' }) })
+program.command('audit [run-id]').description('Reconcile a run projection with its verified lifecycle decisions.').action(async (runId?: string) => print(await reconcileRun({ configPath: options().config, runId })))
 const events = program.command('events').description('Inspect the lifecycle audit log.')
 events.command('verify [run-id]').description('Verify the latest or selected event log hash chain.').action((runId?: string) => { const loaded = loadConfig(options().config); const run = runId ? { runId } : loadLatestRun(loaded.stateDir); const selectedRunId = run?.runId ?? fail('No verification run exists.', 'NO_RUN'); print(new FileEventStore(loaded.stateDir).verify(selectedRunId)) })
 const benchmark = program.command('benchmark').description('Aggregate reproducible metrics from historical runs.').option('--manifest <path>', 'benchmark manifest for baseline comparison').action((command: { readonly manifest?: string }) => { const loaded = loadConfig(options().config); print(benchmarkRuns(loaded.stateDir, command.manifest ? loadBenchmarkManifest(command.manifest) : undefined)) })

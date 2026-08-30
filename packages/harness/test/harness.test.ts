@@ -3,7 +3,7 @@ import { mkdirSync, mkdtempSync, readFileSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { expect, it } from 'vitest'
-import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, FileEventStore, loadConfig, loadLatestRun, planRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
+import { approveRun, authorizeRun, cancelRun, cleanTaskArtifacts, FileEventStore, loadConfig, loadLatestRun, planRun, reconcileRun, retryRun, startRun, validateConfig, verifyRun } from '../src/index.js'
 import type { TrackingConfig, VerificationCheck, VerificationConfig } from '../src/index.js'
 
 const quote = (value: string): string => `'${value.replaceAll("'", "'\"'\"'")}'`
@@ -41,6 +41,22 @@ it('rejects approval when the verification projection is tampered with', async (
   const verified = await runToVerify(fixture)
   writeFileSync(join(fixture.stateDir, 'runs', verified.runId, 'run.json'), `${JSON.stringify({ ...verified, outcomes: verified.outcomes.map((outcome) => ({ ...outcome, statement: 'tampered' })) }, null, 2)}\n`)
   await expect(approveRun({ configPath: fixture.configPath, decision: 'approved' })).rejects.toThrow(/attestation/)
+})
+
+it('reconciles terminal decisions and rejects post-approval tampering', async () => {
+  const fixture = project([{ id: 'logic', category: 'logic', command: evidenceCommand({ status: 'passed', criteria: ['outcome-0'] }), evidence: 'structured' }])
+  const verified = await runToVerify(fixture)
+  const approved = await approveRun({ configPath: fixture.configPath, decision: 'approved' })
+  expect(await reconcileRun({ configPath: fixture.configPath })).toMatchObject({ status: 'verified', runId: approved.runId, state: 'COMPLETE', verificationDigest: verified.verificationDigest })
+  const runPath = join(fixture.stateDir, 'runs', approved.runId, 'run.json')
+  const originalRun = readFileSync(runPath, 'utf8')
+  writeFileSync(runPath, `${JSON.stringify({ ...approved, state: 'COMPLETE', humanApproval: { ...approved.humanApproval, verificationDigest: 'tampered' } }, null, 2)}\n`)
+  await expect(reconcileRun({ configPath: fixture.configPath })).rejects.toThrow(/projection|attestation/)
+  writeFileSync(runPath, originalRun)
+  const eventPath = join(fixture.stateDir, 'runs', approved.runId, 'events.ndjson')
+  const eventLines = readFileSync(eventPath, 'utf8').trim().split('\n')
+  writeFileSync(eventPath, `${eventLines.slice(0, -1).join('\n')}\n`)
+  await expect(reconcileRun({ configPath: fixture.configPath })).rejects.toThrow(/approval event/)
 })
 
 it('refuses to plan while ambiguities remain', async () => {

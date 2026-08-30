@@ -150,6 +150,15 @@ export interface VerificationRun {
   readonly authorization?: { readonly actor: 'human'; readonly at: string; readonly target: string; readonly sourceRevision: string; readonly contractHash: string; readonly verificationDigest?: string }
 }
 
+export interface RunReconciliation {
+  readonly status: 'verified'
+  readonly runId: string
+  readonly state: RunState
+  readonly eventCount: number
+  readonly headHash?: string
+  readonly verificationDigest?: string
+}
+
 export interface StateTransition {
   readonly from: RunState | null
   readonly to: RunState

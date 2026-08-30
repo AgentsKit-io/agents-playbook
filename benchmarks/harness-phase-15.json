@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-15",
+  "name": "AgentsKit Harness Phase 15",
+  "tasks": [
+    {
+      "id": "harness-terminal-reconciliation",
+      "title": "Reconcile terminal projections before reporting completion",
+      "acceptanceCriteria": [
+        "A complete run is semantically reconciled against its verification and human decision events.",
+        "Tampering with a terminal projection or removing its decision event is rejected.",
+        "The public API and status CLI expose the same reconciliation result."
+      ]
+    }
+  ],
+  "observations": []
+}

@@ -71,6 +71,10 @@ hash-chained `approval.recorded` or `authorization.recorded` events bound to
 that digest, source revision, and contract hash. The stable `run.json` remains
 the CLI projection and evidence index.
 
+Use `ak-harness audit [run-id]` to reconcile a run projection with its verified
+events. `ak-harness status` performs the same reconciliation before reporting
+the current state, so a post-approval edit cannot appear as `COMPLETE`.
+
 Profiles are optional declarative overlays in `.codex/verification.json`. They
 inherit in order, override existing checks by ID, and are resolved before the
 contract is frozen:
