@@ -8,7 +8,7 @@
   "contract": {
     "intent": "Implement and validate the portable AgentsKit Harness package and its CLI.",
     "scope": {
-    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "scripts/verify-harness-controlled-benchmark.mjs", "benchmarks/harness-phase-22.json", ".codex/verification.json"],
+    "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-consumer.mjs", "scripts/verify-harness-cli-flow.mjs", "scripts/verify-harness-benchmark.mjs", "scripts/verify-harness-benchmark-record.mjs", "scripts/verify-harness-controlled-benchmark.mjs", "benchmarks/harness-phase-22.json", "doc-bridge.config.json", ".codex/verification.json"],
       "outOfScope": ["marketing redesign", "provider-specific agent adapters", "automatic git push or PR creation"]
     },
     "ambiguities": [],
@@ -56,7 +56,7 @@
   "checks": [
     { "id": "harness-tests", "category": "logic", "command": "pnpm --filter @agentskit/harness test", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-build", "category": "build", "command": "pnpm --filter @agentskit/harness build", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-cli", "category": "cli", "execution": "real", "command": "pnpm exec ak-harness --version && pnpm exec ak-harness --help >/dev/null && pnpm exec ak-harness doctor --json", "evidence": "structured", "timeoutMs": 30000 },
+    { "id": "harness-cli", "category": "cli", "execution": "real", "command": "node packages/harness/dist/cli.js --version && node packages/harness/dist/cli.js --help >/dev/null && node packages/harness/dist/cli.js doctor --json", "evidence": "structured", "timeoutMs": 30000 },
     { "id": "harness-cli-flow", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-cli-flow.mjs", "evidence": "structured", "timeoutMs": 60000 },
     { "id": "harness-consumer", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-consumer.mjs", "evidence": "structured", "timeoutMs": 180000 },
     { "id": "harness-contract", "category": "logic", "command": "pnpm --filter @agentskit/harness test:contract", "evidence": "structured", "timeoutMs": 120000 },
