@@ -131,6 +131,8 @@ export interface BenchmarkComparison {
     readonly attempts: number
     readonly retryCount: number
     readonly completedRuns: number
+    readonly durationSamplesMs: readonly number[]
+    readonly medianDurationMs?: number
     readonly latestState: RunState | 'NOT_RUN'
     readonly latestRunId?: string
     readonly latestDurationMs?: number
@@ -467,12 +469,17 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest,
   const baselineEvidenceComplete = baselineEvidenceCoverageRate === 1
   const comparable = baseline !== undefined && baseline.status !== 'not-run' && baselineEvidenceComplete && latest?.state === 'COMPLETE'
   const comparability = comparable ? 'comparable' : baseline === undefined ? 'missing-baseline' : baseline.status === 'not-run' ? 'baseline-not-run' : !baselineEvidenceComplete ? 'baseline-evidence-missing' : latest === undefined ? 'harness-not-run' : 'harness-not-complete'
-  const durationRate = comparable ? improvementRate(baseline?.durationMs, latest?.durationMs) : null
-  const attemptsRate = comparable ? improvementRate(baseline?.attempts, taskRuns.length) : null
+  const completedTaskRuns = taskRuns.filter((run) => run.state === 'COMPLETE')
+  const durationSamplesMs = completedTaskRuns.flatMap((run) => run.durationMs === undefined ? [] : [run.durationMs])
+  const medianDurationMs = median(durationSamplesMs)
+  const retryCount = count(taskRuns, (run) => run.supersedes !== undefined)
+  const attempts = retryCount + (taskRuns.length ? 1 : 0)
+  const durationRate = comparable ? improvementRate(baseline?.durationMs, medianDurationMs ?? undefined) : null
+  const attemptsRate = comparable ? improvementRate(baseline?.attempts, attempts) : null
   const reviewRate = comparable ? improvementRate(baseline?.reviewMinutes, latest?.humanReviewMinutes) : null
   const escapedIncompleteRate = comparable ? improvementRate(baseline?.escapedIncomplete, latest?.escapedIncomplete) : null
-  const completedRuns = count(taskRuns, (run) => run.state === 'COMPLETE')
-  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts: taskRuns.length, retryCount: Math.max(0, taskRuns.length - 1), completedRuns, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baseline?.durationMs !== undefined && latest?.durationMs !== undefined ? { durationDeltaMs: latest.durationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: taskRuns.length - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(comparable && baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
+  const completedRuns = completedTaskRuns.length
+  return { taskId: task.id, title: task.title, comparability, comparable, baselineEvidenceCoverageRate, improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts, retryCount, completedRuns, durationSamplesMs, ...(medianDurationMs === null ? {} : { medianDurationMs }), latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baseline?.durationMs !== undefined && medianDurationMs !== null ? { durationDeltaMs: medianDurationMs - baseline.durationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: attempts - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(comparable && baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
 })
 
 export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): BenchmarkReport => {

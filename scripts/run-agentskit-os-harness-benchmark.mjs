@@ -13,20 +13,23 @@ const root = resolve(import.meta.dirname, '..')
 const manifestPath = resolve(root, arg('--manifest', 'benchmarks/agentskit-os-phase-28.json'))
 const manifest = loadBenchmarkManifest(manifestPath)
 const mode = process.argv.includes('--self-test') ? 'self-test' : process.argv.includes('--collect') ? 'collect' : process.argv.includes('--execute') ? 'execute' : 'prepare'
+const repeatCount = Number(arg('--repeats', '1'))
+if (!Number.isInteger(repeatCount) || repeatCount < 1) throw new Error('--repeats must be a positive integer.')
 const phaseRoot = resolve(root, arg('--phase-root', '.codex/verification/phase-30'))
 const configRoot = join(phaseRoot, 'configs')
 const stateRoot = join(phaseRoot, 'runs')
 const cli = resolve(root, 'packages/harness/dist/cli.js')
 const shellQuote = (value) => `'${value.replaceAll("'", "'\\''")}'`
 
-const taskConfig = (task, destination) => {
+const taskConfig = (task, destination, sample) => {
   if (mode === 'execute' && !process.env.AGENTSKIT_OS_ROOT) throw new Error('AGENTSKIT_OS_ROOT is required for benchmark execution.')
-  const stateDir = relative(root, join(destination, 'runs', task.id)).replaceAll('\\', '/')
-  const reportDir = relative(root, join(destination, 'runs', task.id, 'reports')).replaceAll('\\', '/')
+  const sampleRoot = join(destination, 'runs', task.id, `sample-${sample}`)
+  const stateDir = relative(root, sampleRoot).replaceAll('\\', '/')
+  const reportDir = relative(root, join(sampleRoot, 'reports')).replaceAll('\\', '/')
   const target = process.env.AGENTSKIT_OS_ROOT ? ` --target ${shellQuote(process.env.AGENTSKIT_OS_ROOT)}` : ''
   return {
   schemaVersion: 1,
-  project: `agents-playbook-harness-phase-31-${task.id}`,
+  project: `agents-playbook-harness-phase-33-${task.id}-sample-${sample}`,
   root: '../../../../../',
   stateDir,
   profile: 'strict',
@@ -45,22 +48,27 @@ const taskConfig = (task, destination) => {
   }
 }
 
-const prepare = (destination = phaseRoot) => {
+const prepare = (destination = phaseRoot, repeats = repeatCount) => {
   const configs = join(destination, 'configs')
   mkdirSync(configs, { recursive: true })
-  for (const task of manifest.tasks) writeFileSync(join(configs, `${task.id}.json`), `${JSON.stringify(taskConfig(task, destination), null, 2)}\n`)
-  return { suiteId: manifest.suiteId, taskCount: manifest.tasks.length, configRoot: configs, stateRoot: join(destination, 'runs'), tasks: manifest.tasks.map((task) => ({ taskId: task.id, config: join(configs, `${task.id}.json`), stateDir: join(destination, 'runs', task.id) })) }
+  const tasks = manifest.tasks.flatMap((task) => Array.from({ length: repeats }, (_, index) => {
+    const sample = index + 1
+    const config = join(configs, `${task.id}-sample-${sample}.json`)
+    writeFileSync(config, `${JSON.stringify(taskConfig(task, destination, sample), null, 2)}\n`)
+    return { taskId: task.id, sample, config, stateDir: join(destination, 'runs', task.id, `sample-${sample}`) }
+  }))
+  return { suiteId: manifest.suiteId, taskCount: manifest.tasks.length, sampleCount: repeats, configRoot: configs, stateRoot: join(destination, 'runs'), tasks }
 }
 
 const runCli = (args, env) => JSON.parse(execFileSync(process.execPath, [cli, '--config', args.config, ...args.command, '--json'], { cwd: root, encoding: 'utf8', env: { ...process.env, ...env } }).trim().split(/\r?\n/).at(-1))
 
 if (mode === 'self-test') {
   const fixture = mkdtempSync(join(tmpdir(), 'agentskit-harness-phase-30-'))
-  const prepared = prepare(fixture)
+  const prepared = prepare(fixture, 2)
   const configs = readdirSync(prepared.configRoot).filter((file) => file.endsWith('.json'))
-  if (configs.length !== manifest.tasks.length) throw new Error('one harness config was not prepared per task')
+  if (configs.length !== manifest.tasks.length * 2) throw new Error('one harness config was not prepared per task sample')
   const first = JSON.parse(readFileSync(join(prepared.configRoot, configs[0]), 'utf8'))
-  if (first.root !== '../../../../../' || first.benchmark?.suiteId !== manifest.suiteId || first.benchmark?.mode !== 'harness' || !first.checks?.[0]?.command.includes('--harness')) throw new Error('harness benchmark binding is incomplete')
+  if (first.root !== '../../../../../' || first.benchmark?.suiteId !== manifest.suiteId || first.benchmark?.mode !== 'harness' || !first.checks?.[0]?.command.includes('--harness') || (process.env.AGENTSKIT_OS_ROOT && !first.checks?.[0]?.command.includes('--target'))) throw new Error('harness benchmark binding is incomplete')
   const emptyMetrics = benchmarkRuns(join(fixture, 'empty'), manifest)
   if (emptyMetrics.manifest?.comparableTaskCount !== 0 || emptyMetrics.comparisons.some((comparison) => comparison.comparability !== 'harness-not-run')) throw new Error('empty benchmark must remain non-comparable')
   console.log(JSON.stringify({ status: 'passed', criteria: ['harness-runner', 'measurement-integrity'], suiteId: manifest.suiteId, taskCount: manifest.tasks.length }))
@@ -90,9 +98,13 @@ const combined = mkdtempSync(join(tmpdir(), 'agentskit-harness-phase-30-metrics-
   mkdirSync(join(combined, 'runs'), { recursive: true })
   const runs = []
   for (const task of manifest.tasks) {
-    const source = join(stateRoot, task.id, 'runs')
-    if (!existsSync(source)) continue
-    for (const entry of readdirSync(source)) cpSync(join(source, entry), join(combined, 'runs', entry), { recursive: true })
+    const taskRoot = join(stateRoot, task.id)
+    if (!existsSync(taskRoot)) continue
+    for (const sample of readdirSync(taskRoot, { withFileTypes: true }).filter((entry) => entry.isDirectory())) {
+      const source = join(taskRoot, sample.name, 'runs')
+      if (!existsSync(source)) continue
+      for (const entry of readdirSync(source)) cpSync(join(source, entry), join(combined, 'runs', entry), { recursive: true })
+    }
   }
   const report = benchmarkRuns(combined, manifest)
   console.log(JSON.stringify({ status: 'passed', criteria: ['measurement-integrity'], suiteId: manifest.suiteId, report }))

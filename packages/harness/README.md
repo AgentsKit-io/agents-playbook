@@ -358,10 +358,14 @@ establish causality or productivity improvement alone.
 
 For paired real-provider measurements, `scripts/run-agentskit-os-harness-benchmark.mjs`
 prepares one frozen contract per manifest task, binds each run to the suite and
-task ID, and leaves the lifecycle at the human approval gate. Run `--collect`
-after approvals to aggregate the isolated task state directories. Pending or
-blocked task runs remain non-comparable; only `COMPLETE` runs produce directional
-improvement values.
+task ID, and leaves the lifecycle at the human approval gate. Use
+`--repeats 3` for three independent samples per task; each sample has its own
+state directory and must be approved separately. Run `--collect` after
+approvals to aggregate the isolated task state directories. Pending or blocked
+task runs remain non-comparable; only `COMPLETE` runs produce directional
+improvement values. Duration comparisons use the median of completed samples,
+while retry metrics count only superseded retry lineages, so experimental
+replication is not misreported as agent retry cost.
 
 The AgentsKit OS benchmark runner can expose the built `ak-verify` CLI inside
 its disposable fixture. The fixture contract is prepared by CI, the provider
