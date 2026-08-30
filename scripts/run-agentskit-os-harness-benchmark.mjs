@@ -71,7 +71,9 @@ if (mode === 'self-test') {
     const env = { AGENTSKIT_OS_ROOT: process.env.AGENTSKIT_OS_ROOT ?? '' }
     let result
     try {
-      runCli({ config, command: ['plan', 'prepared', '--by', 'ci', '--allow-dirty'] }, env)
+      let retried = false
+      try { runCli({ config, command: ['retry'] }, env); retried = true } catch {}
+      if (!retried) runCli({ config, command: ['plan', 'prepared', '--by', 'ci', '--allow-dirty'] }, env)
       runCli({ config, command: ['start'] }, env)
       result = runCli({ config, command: ['verify'] }, env)
     } catch (error) {
@@ -81,13 +83,13 @@ if (mode === 'self-test') {
   }
   console.log(JSON.stringify({ status: runs.every((run) => ['AWAITING_HUMAN_APPROVAL', 'COMPLETE'].includes(run.state)) ? 'passed' : 'blocked', criteria: ['harness-runner'], suiteId: manifest.suiteId, runs }))
 } else {
-  const combined = mkdtempSync(join(tmpdir(), 'agentskit-harness-phase-30-metrics-'))
-  mkdirSync(combined, { recursive: true })
+const combined = mkdtempSync(join(tmpdir(), 'agentskit-harness-phase-30-metrics-'))
+  mkdirSync(join(combined, 'runs'), { recursive: true })
   const runs = []
   for (const task of manifest.tasks) {
     const source = join(stateRoot, task.id, 'runs')
     if (!existsSync(source)) continue
-    for (const entry of readdirSync(source)) cpSync(join(source, entry), join(combined, entry), { recursive: true })
+    for (const entry of readdirSync(source)) cpSync(join(source, entry), join(combined, 'runs', entry), { recursive: true })
   }
   const report = benchmarkRuns(combined, manifest)
   console.log(JSON.stringify({ status: 'passed', criteria: ['measurement-integrity'], suiteId: manifest.suiteId, report }))
