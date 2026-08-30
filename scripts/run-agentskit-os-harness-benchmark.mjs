@@ -17,10 +17,13 @@ const phaseRoot = resolve(root, arg('--phase-root', '.codex/verification/phase-3
 const configRoot = join(phaseRoot, 'configs')
 const stateRoot = join(phaseRoot, 'runs')
 const cli = resolve(root, 'packages/harness/dist/cli.js')
+const shellQuote = (value) => `'${value.replaceAll("'", "'\\''")}'`
 
 const taskConfig = (task, destination) => {
+  if (mode === 'execute' && !process.env.AGENTSKIT_OS_ROOT) throw new Error('AGENTSKIT_OS_ROOT is required for benchmark execution.')
   const stateDir = relative(root, join(destination, 'runs', task.id)).replaceAll('\\', '/')
   const reportDir = relative(root, join(destination, 'runs', task.id, 'reports')).replaceAll('\\', '/')
+  const target = process.env.AGENTSKIT_OS_ROOT ? ` --target ${shellQuote(process.env.AGENTSKIT_OS_ROOT)}` : ''
   return {
   schemaVersion: 1,
   project: `agents-playbook-harness-phase-31-${task.id}`,
@@ -34,7 +37,7 @@ const taskConfig = (task, destination) => {
     outcomes: [{ id: 'task-delivery', statement: 'The real provider completes and validates the benchmark task.', checks: ['real-task'] }],
   },
   surfaces: { logic: true, endpoint: { required: false, reason: 'No endpoint.' }, database: { required: false, reason: 'No database.' }, cli: { required: false, reason: 'No CLI.' }, mcp: { required: false, reason: 'No MCP.' }, ui: { required: false, reason: 'No UI.' }, docs: { required: false, reason: 'No docs.' } },
-  checks: [{ id: 'real-task', category: 'logic', execution: 'real', command: `AGENTSKIT_OS_ROOT=\"$AGENTSKIT_OS_ROOT\" node scripts/run-agentskit-os-baseline.mjs --manifest ${manifestPath} --target \"$AGENTSKIT_OS_ROOT\" --output ${reportDir} --task-id ${task.id} --harness`, evidence: 'structured', timeoutMs: 240000 }],
+  checks: [{ id: 'real-task', category: 'logic', execution: 'real', command: `node scripts/run-agentskit-os-baseline.mjs --manifest ${shellQuote(manifestPath)}${target} --output ${shellQuote(reportDir)} --task-id ${shellQuote(task.id)} --harness`, evidence: 'structured', timeoutMs: 240000 }],
   tracking: { required: false, reason: 'Local benchmark measurement.' },
   budget: { maxDurationMs: 300000 },
   cleanup: { roots: ['.codex/verification/tmp'] },
