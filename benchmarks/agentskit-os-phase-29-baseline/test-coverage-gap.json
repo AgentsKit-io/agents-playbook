@@ -1,0 +1,75 @@
+{
+  "type": "agentskit-harness-baseline-observation",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-os-coding-phase-28",
+  "taskId": "test-coverage-gap",
+  "sourceRevision": "ca60d270d840f66ae429cb3b54593f15b33cf22b",
+  "providerIds": [
+    "codex"
+  ],
+  "recordedAt": "2026-08-30T13:47:51.097Z",
+  "attempts": 1,
+  "durationMs": 141440,
+  "status": "failed",
+  "escapedIncomplete": 1,
+  "providerReport": {
+    "kind": "add-test",
+    "prompt": "# test: coverage gap in `slidingWindow`\n\n`tests/slice-window.test.ts` covers the happy path only. The boundary cases below are untested.\n\n## Goal\n\n- Add tests in `tests/slice-window.test.ts` for:\n  - empty input (`[]`)\n  - `n` larger than the input length\n  - `n <= 0`\n  - input length exactly equal to `n`\n- Do **not** modify `src/slice-window.ts` as part of this task.\n- Use `vitest` style (`describe`, `it`, `expect`).\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+    "dryRun": false,
+    "isolateWorktrees": false,
+    "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-test-coverage-gap-0yyC8H",
+    "rows": [
+      {
+        "providerId": "codex",
+        "status": "partial",
+        "durationMs": 141440,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "costUsd": 0,
+        "fileEditCount": 1,
+        "completenessScore": 56,
+        "errorCode": "VERIFICATION_TOOL_MISSING",
+        "summary": "Added all requested boundary tests in tests/slice-window.test.ts; 6 tests pass via npx Vitest. Exact npm test and ak-verify are unavailable because dependencies/tools are missing.",
+        "editedPaths": [
+          "tests/slice-window.test.ts"
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "status": "failed",
+    "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+    "exitCode": 1,
+    "failures": [
+      "boundary test marker missing: <=",
+      "boundary test marker missing: exactly"
+    ]
+  },
+  "evidence": [
+    {
+      "criterion": "Tests cover empty input.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "Tests cover n larger than the input length.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "Tests cover n <= 0.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "Tests cover input length exactly equal to n.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/test-coverage-gap.json"
+    },
+    {
+      "criterion": "The implementation is not modified.",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/test-coverage-gap.json"
+    }
+  ]
+}

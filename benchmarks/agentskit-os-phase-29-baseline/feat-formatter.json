@@ -1,0 +1,69 @@
+{
+  "type": "agentskit-harness-baseline-observation",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-os-coding-phase-28",
+  "taskId": "feat-formatter",
+  "sourceRevision": "ca60d270d840f66ae429cb3b54593f15b33cf22b",
+  "providerIds": [
+    "codex"
+  ],
+  "recordedAt": "2026-08-30T13:49:20.498Z",
+  "attempts": 1,
+  "durationMs": 88566,
+  "status": "failed",
+  "escapedIncomplete": 1,
+  "providerReport": {
+    "kind": "free-form",
+    "prompt": "# feat: pretty-print mode for `formatReport`\n\n`src/format-report.ts` currently emits compact JSON. Add an optional pretty mode.\n\n## Goal\n\n- Extend `formatReport(report, opts?: { pretty?: boolean })`.\n- When `pretty: true`, return a multi-line table-style string with provider, status, cost ($USD), and duration (ms).\n- Default behavior (no opts, or `pretty: false`) must remain compact JSON — existing callers should not break.\n- Add tests covering both modes.\n\nReturn a single coding-task JSON object as defined by the dev-orchestrator contract.\n",
+    "dryRun": false,
+    "isolateWorktrees": false,
+    "repoRoot": "/var/folders/xy/l6cc1gt960g0tx6jvtp8czxh0000gn/T/agentskit-os-phase-29-feat-formatter-HhGhjW",
+    "rows": [
+      {
+        "providerId": "codex",
+        "status": "partial",
+        "durationMs": 88566,
+        "inputTokens": 0,
+        "outputTokens": 0,
+        "costUsd": 0,
+        "fileEditCount": 3,
+        "completenessScore": 48,
+        "errorCode": "VALIDATION_BLOCKED",
+        "summary": "Implemented pretty mode and tests. Vitest passes via npx; npm test and ak-verify are blocked by missing local tools.",
+        "editedPaths": [
+          "src/format-report.ts",
+          "tests/format-report.test.ts",
+          "node_modules/"
+        ]
+      }
+    ]
+  },
+  "validation": {
+    "status": "passed",
+    "command": "/Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark/node_modules/.bin/vitest run --reporter=dot",
+    "exitCode": 0,
+    "failures": []
+  },
+  "evidence": [
+    {
+      "criterion": "formatReport accepts an optional pretty mode.",
+      "status": "passed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/feat-formatter.json"
+    },
+    {
+      "criterion": "Pretty mode returns provider, status, cost, and duration.",
+      "status": "passed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/feat-formatter.json"
+    },
+    {
+      "criterion": "Compact JSON remains the default behavior.",
+      "status": "passed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/feat-formatter.json"
+    },
+    {
+      "criterion": "Tests cover both modes.",
+      "status": "passed",
+      "source": "benchmarks/agentskit-os-phase-29-baseline/feat-formatter.json"
+    }
+  ]
+}

@@ -45,6 +45,20 @@ scope, and provider report shape. Provider status and heuristic scores remain
 observations: they do not grant human acceptance. With no controlled baseline,
 improvement is reported as unavailable rather than inferred.
 
+Phase 29 adds a reproducible real-provider baseline runner for the AgentsKit OS
+seed corpus. It uses disposable fixture copies, the existing OS benchmark
+runner, and task-specific validation:
+
+```bash
+node scripts/run-agentskit-os-baseline.mjs \
+  --target /path/to/agentskit-os \
+  --provider codex \
+  --output benchmarks/agentskit-os-phase-29-baseline
+```
+
+The observations are not an improvement claim until equivalent harness runs
+exist.
+
 ## Contract
 
 Every repository supplies `.codex/verification.json` with explicit scope, outcomes, applicable surfaces, and executable checks. Each check must declare `evidence: "structured"`; its final output line must be JSON and map to the outcome IDs it proves:

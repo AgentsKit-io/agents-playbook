@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-28",
+  "project": "agents-playbook-harness-phase-29",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-28",
+  "stateDir": ".codex/verification/harness-phase-29",
   "profile": "strict",
   "contract": {
-    "intent": "Define and validate a provenance-bearing bridge from the AgentsKit OS coding benchmark to honest harness evidence.",
+    "intent": "Collect and validate the first repeatable real-provider baseline for the AgentsKit OS coding benchmark.",
     "scope": {
-      "inScope": ["packages/harness", "benchmarks/agentskit-os-phase-28.json", "scripts/verify-harness-agentskit-os-benchmark.mjs", ".codex/verification.json"],
-      "outOfScope": ["paid provider execution", "changing agentskit-os product code", "browser, database, and MCP adapters", "central observability", "KMS and external identity integration"]
+      "inScope": ["benchmarks/agentskit-os-phase-28.json", "benchmarks/agentskit-os-phase-29-baseline", "scripts/run-agentskit-os-baseline.mjs", "scripts/verify-agentskit-os-baseline.mjs", ".codex/verification.json"],
+      "outOfScope": ["harness-equivalent runs", "human review-time comparison", "changing agentskit-os product code", "browser, database, and MCP adapters", "central observability", "KMS and external identity integration"]
     },
     "ambiguities": [],
     "outcomes": [
-      { "id": "benchmark-corpus", "statement": "The manifest identifies a reproducible AgentsKit OS task corpus with immutable source and prompt provenance.", "checks": ["harness-benchmark-corpus"] },
-      { "id": "benchmark-integrity", "statement": "The harness validates manifest metadata and rejects malformed or non-comparable benchmark inputs.", "checks": ["harness-benchmark-integrity"] },
-      { "id": "agentskit-os-bridge", "statement": "A real AgentsKit OS benchmark configuration and report can be validated without converting heuristic provider output into human acceptance.", "checks": ["harness-agentskit-os-bridge"] },
-      { "id": "docs", "statement": "The package documents the portable benchmark bridge and its current measurement limits.", "checks": ["harness-docs"] }
+      { "id": "baseline-corpus", "statement": "The baseline covers every manifest task against the pinned AgentsKit OS source and records no fabricated observation.", "checks": ["harness-baseline-corpus"] },
+      { "id": "baseline-evidence", "statement": "Each baseline task has reproducible provider and acceptance evidence, including the validation command result.", "checks": ["harness-baseline-evidence"] },
+      { "id": "baseline-integrity", "statement": "Baseline reports are rejected when task identity, source revision, provider result, or criterion evidence is incomplete.", "checks": ["harness-baseline-integrity"] },
+      { "id": "docs", "statement": "The package documents baseline scope, provider limitations, and why improvement remains unclaimed until a harness-equivalent run exists.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -28,9 +28,9 @@
     "docs": true
   },
   "checks": [
-    { "id": "harness-benchmark-corpus", "category": "logic", "command": "node scripts/verify-harness-agentskit-os-benchmark.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-benchmark-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:benchmark-bridge", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-agentskit-os-bridge", "category": "cli", "execution": "real", "command": "node scripts/verify-harness-agentskit-os-benchmark.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\" --report \"$AGENTSKIT_OS_BENCHMARK_REPORT\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-baseline-corpus", "category": "logic", "command": "node scripts/verify-agentskit-os-baseline.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\" --reports benchmarks/agentskit-os-phase-29-baseline", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-baseline-evidence", "category": "cli", "execution": "real", "command": "node scripts/verify-agentskit-os-baseline.mjs --manifest benchmarks/agentskit-os-phase-28.json --target \"$AGENTSKIT_OS_ROOT\" --reports benchmarks/agentskit-os-phase-29-baseline --require-validation", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-baseline-integrity", "category": "logic", "command": "pnpm --filter @agentskit/harness test:benchmark-bridge", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },
