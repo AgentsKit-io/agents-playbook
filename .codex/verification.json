@@ -13,7 +13,8 @@
     "ambiguities": [],
     "outcomes": [
       { "id": "package", "statement": "The package tests, built CLI, and packed consumer path remain valid.", "checks": ["harness-tests", "harness-cli", "harness-consumer"] },
-      { "id": "ci-evidence", "statement": "CI runs the official harness contract and preserves its run directory for human review without self-approving completion.", "checks": ["harness-ci", "harness-ci-evidence"] },
+      { "id": "ci-dogfood", "statement": "CI explicitly installs, tests, invokes, and consumes the harness on Node 22.", "checks": ["harness-ci"] },
+      { "id": "ci-evidence", "statement": "CI runs the official harness contract and preserves its run directory for human review without self-approving completion.", "checks": ["harness-ci-evidence"] },
       { "id": "docs", "statement": "The package documents CI evidence retention and records the structural decision.", "checks": ["harness-docs"] }
     ]
   },
