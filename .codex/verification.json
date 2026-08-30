@@ -7,7 +7,7 @@
   "contract": {
     "intent": "Collect independent real baseline samples and record them atomically for statistically comparable performance claims.",
     "scope": {
-      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0037-replicated-baseline-collection.md", ".codex/verification.json"],
+      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "benchmarks/agentskit-os-phase-28.json", "benchmarks/agentskit-os-phase-35-baseline/*.json", "packages/harness/README.md", "packages/harness/CHANGELOG.md", "packages/harness/docs/ADR-0037-replicated-baseline-collection.md", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],

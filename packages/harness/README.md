@@ -67,7 +67,7 @@ node scripts/run-agentskit-os-baseline.mjs \
   --target /path/to/agentskit-os \
   --provider codex \
   --repeats 3 \
-  --output .codex/verification/phase-35/baseline \
+  --output benchmarks/agentskit-os-phase-35-baseline \
   --record-manifest benchmarks/agentskit-os-phase-28.json
 ```
 
