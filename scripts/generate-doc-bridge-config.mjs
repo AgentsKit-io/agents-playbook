@@ -66,6 +66,11 @@ const config = {
     capabilities: { enabled: true, outFile: '.doc-bridge/capabilities.json' },
   },
   gates: { preset: 'standard' },
+  reconciliation: {
+    scope: 'package',
+    requiredRelationKinds: ['depends-on'],
+    requiredRelationTargets: 'internal',
+  },
   surfaces: {
     cli: { bin: 'ak-docs', defaultFormat: 'json' },
     mcp: { enabled: true, transport: 'stdio' },

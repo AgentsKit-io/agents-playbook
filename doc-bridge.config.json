@@ -1225,7 +1225,9 @@
   },
   "reconciliation": {
     "scope": "package",
-    "requiredRelationKinds": ["depends-on"],
+    "requiredRelationKinds": [
+      "depends-on"
+    ],
     "requiredRelationTargets": "internal"
   },
   "surfaces": {
