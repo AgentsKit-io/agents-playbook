@@ -8,6 +8,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 
 ### Added
 
+- Playbook CI dogfooding for the package test suite, built CLI, and clean packed consumer.
 - Strict TypeScript modular core with generated declarations and source maps.
 - Contract-frozen lifecycle, structured evidence, stale detection, human approval, retry, and cleanup.
 - Explicit human cancellation and superseded retry history.

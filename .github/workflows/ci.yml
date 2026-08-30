@@ -23,6 +23,9 @@ jobs:
           node-version: 22
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm harness:test
+      - run: pnpm harness:cli
+      - run: node scripts/verify-harness-consumer.mjs
       - run: pnpm check:okf-type
       - run: pnpm check:doc-bridge-config
       - run: pnpm docs:bridge:index

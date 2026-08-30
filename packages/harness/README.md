@@ -327,6 +327,9 @@ pnpm --filter @agentskit/harness build
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for changes, tests, and release expectations. See [CHANGELOG.md](./CHANGELOG.md) for version history.
 
+The Playbook CI dogfoods the package with `harness:test`, `harness:cli`, and a
+clean packed-consumer probe before the broader repository checks run.
+
 ## License
 
 MIT. See [LICENSE](./LICENSE).

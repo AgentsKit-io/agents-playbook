@@ -16,7 +16,7 @@
     "build:discovery": "node scripts/build-discovery.mjs",
     "harness:test": "pnpm --filter @agentskit/harness test",
     "harness:build": "pnpm --filter @agentskit/harness build",
-    "harness:cli": "pnpm harness:build && pnpm exec ak-harness --help",
+    "harness:cli": "pnpm harness:build && node packages/harness/dist/cli.js --version && node packages/harness/dist/cli.js --help >/dev/null && node packages/harness/dist/cli.js doctor --json",
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
