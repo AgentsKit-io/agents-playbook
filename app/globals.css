@@ -198,6 +198,12 @@ html, body {
 
 /* The host owns stacking and the shared 56px header rhythm only. */
 #ak-eco { z-index: 60 !important; min-height: 56px !important; }
+#ak-eco a {
+  box-sizing: border-box;
+  display: inline-flex !important;
+  min-height: 44px !important;
+  align-items: center;
+}
 
 /* Keep the assistant launcher usable before its client bundle hydrates. */
 .ak-ask-fab {
