@@ -394,6 +394,20 @@ improvement values. Duration comparisons use the median of completed samples,
 while retry metrics count only superseded retry lineages, so experimental
 replication is not misreported as agent retry cost.
 
+When one sample is blocked or times out, prepare a distinct replacement without
+overwriting the original evidence:
+
+```bash
+node scripts/run-agentskit-os-harness-benchmark.mjs \
+  --execute --task-id feat-formatter --sample 4 \
+  --phase-root .codex/verification/phase-39/harness
+```
+
+`--sample` requires a positive sample number and refuses an existing config or
+state directory. The original blocked run remains part of the audit trail;
+replacement runs add evidence and do not retroactively turn the blocked sample
+into success.
+
 The AgentsKit OS benchmark runner can expose the built `ak-verify` CLI inside
 its disposable fixture. The fixture contract is prepared by CI, the provider
 inherits a fixture-local PATH entry, and human approval is never synthesized.

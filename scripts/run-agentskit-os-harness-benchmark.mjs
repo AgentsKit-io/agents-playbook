@@ -15,6 +15,13 @@ const manifest = loadBenchmarkManifest(manifestPath)
 const mode = process.argv.includes('--self-test') ? 'self-test' : process.argv.includes('--collect') ? 'collect' : process.argv.includes('--execute') ? 'execute' : 'prepare'
 const repeatCount = Number(arg('--repeats', '1'))
 if (!Number.isInteger(repeatCount) || repeatCount < 1) throw new Error('--repeats must be a positive integer.')
+const taskId = arg('--task-id')
+const requestedSample = arg('--sample')
+const sampleNumber = requestedSample === undefined ? undefined : Number(requestedSample)
+if (taskId && !manifest.tasks.some((task) => task.id === taskId)) throw new Error(`unknown benchmark task: ${taskId}`)
+if (requestedSample !== undefined && (!Number.isInteger(sampleNumber) || sampleNumber < 1)) throw new Error('--sample must be a positive integer.')
+if (requestedSample !== undefined && repeatCount !== 1) throw new Error('--sample cannot be combined with --repeats greater than 1.')
+const selectedTasks = taskId ? manifest.tasks.filter((task) => task.id === taskId) : manifest.tasks
 const phaseRoot = resolve(root, arg('--phase-root', '.codex/verification/phase-30'))
 const configRoot = join(phaseRoot, 'configs')
 const stateRoot = join(phaseRoot, 'runs')
@@ -51,13 +58,15 @@ const taskConfig = (task, destination, sample) => {
 const prepare = (destination = phaseRoot, repeats = repeatCount) => {
   const configs = join(destination, 'configs')
   mkdirSync(configs, { recursive: true })
-  const tasks = manifest.tasks.flatMap((task) => Array.from({ length: repeats }, (_, index) => {
-    const sample = index + 1
+  const samples = sampleNumber === undefined ? Array.from({ length: repeats }, (_, index) => index + 1) : [sampleNumber]
+  const tasks = selectedTasks.flatMap((task) => samples.map((sample) => {
     const config = join(configs, `${task.id}-sample-${sample}.json`)
+    const stateDir = join(destination, 'runs', task.id, `sample-${sample}`)
+    if (requestedSample !== undefined && (existsSync(config) || existsSync(stateDir))) throw new Error(`replacement sample already exists: ${task.id}/sample-${sample}`)
     writeFileSync(config, `${JSON.stringify(taskConfig(task, destination, sample), null, 2)}\n`)
-    return { taskId: task.id, sample, config, stateDir: join(destination, 'runs', task.id, `sample-${sample}`) }
+    return { taskId: task.id, sample, config, stateDir }
   }))
-  return { suiteId: manifest.suiteId, taskCount: manifest.tasks.length, sampleCount: repeats, configRoot: configs, stateRoot: join(destination, 'runs'), tasks }
+  return { suiteId: manifest.suiteId, taskCount: selectedTasks.length, sampleCount: samples.length, configRoot: configs, stateRoot: join(destination, 'runs'), tasks }
 }
 
 const runCli = (args, env) => JSON.parse(execFileSync(process.execPath, [cli, '--config', args.config, ...args.command, '--json'], { cwd: root, encoding: 'utf8', env: { ...process.env, ...env } }).trim().split(/\r?\n/).at(-1))

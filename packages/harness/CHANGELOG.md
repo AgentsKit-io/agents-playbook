@@ -11,6 +11,8 @@
 - Baseline reports now expose artifact acceptance separately from protocol
   completion, preserving useful outcome data without weakening fail-closed
   comparison gates.
+- Benchmark execution now supports collision-safe task-specific replacement
+  samples, preserving blocked and timed-out evidence.
 
 All notable changes to `@agentskit/harness` are documented here.
 

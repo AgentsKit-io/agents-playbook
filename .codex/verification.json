@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-39",
+  "project": "agents-playbook-harness-phase-40",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-39",
+  "stateDir": ".codex/verification/harness-phase-40",
   "profile": "strict",
   "contract": {
-    "intent": "Run the same benchmark corpus under the harness with independent samples and preserve human approval gates.",
+    "intent": "Add a safe replacement-sample workflow that preserves blocked benchmark evidence and prevents accidental overwrites.",
     "scope": {
-      "inScope": ["scripts/run-agentskit-os-harness-benchmark.mjs", "benchmarks/agentskit-os-phase-28.json", ".codex/verification.json"],
+      "inScope": ["scripts/run-agentskit-os-harness-benchmark.mjs", "packages/harness/README.md", "packages/harness/CHANGELOG.md", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
       "outcomes": [
-      { "id": "harness-corpus", "statement": "The same corpus has three independent harness-bound runs per task, with every terminal state retained as evidence.", "checks": ["harness-corpus"] },
-      { "id": "harness-evidence", "statement": "The harness collection preserves bound run evidence without auto-approving, discarding pending samples, or relabeling blocked work as success.", "checks": ["harness-evidence"] },
-      { "id": "comparison-integrity", "statement": "The paired report exposes the fresh baseline artifact rates and keeps duration unavailable until every harness sample is complete.", "checks": ["comparison-integrity"] }
+      { "id": "replacement-runner", "statement": "The benchmark CLI can prepare one task-specific replacement sample without overwriting an existing sample.", "checks": ["replacement-runner"] },
+      { "id": "history-preservation", "statement": "Existing blocked evidence remains addressable while replacement preparation creates a distinct sample directory.", "checks": ["history-preservation"] },
+      { "id": "docs", "statement": "The replacement workflow and its non-comparability implications are documented.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -27,9 +27,9 @@
     "docs": { "required": false, "reason": "No documentation behavior is changed in this data-collection phase." }
   },
   "checks": [
-    { "id": "harness-corpus", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-harness-benchmark.mjs && node -e \"const fs=require('fs'); const root='.codex/verification/phase-39/harness/runs'; const tasks=['bug-off-by-one','test-coverage-gap','feat-formatter']; const states=[]; for(const task of tasks){const d=root+'/'+task; const samples=fs.existsSync(d)?fs.readdirSync(d,{withFileTypes:true}).filter(e=>e.isDirectory()):[]; if(samples.length!==3) process.exit(1); for(const sample of samples){const runs=fs.readdirSync(d+'/'+sample.name+'/runs',{withFileTypes:true}).filter(e=>e.isDirectory()); if(runs.length!==1) process.exit(1); const x=JSON.parse(fs.readFileSync(d+'/'+sample.name+'/runs/'+runs[0].name+'/run.json')); states.push(x.state); if(!['AWAITING_HUMAN_APPROVAL','COMPLETE','BLOCKED'].includes(x.state)) process.exit(1)}} console.log(JSON.stringify({status:'passed',criteria:['harness-corpus'],taskCount:tasks.length,samples:states.length,states}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-evidence", "category": "logic", "execution": "real", "command": "node -e \"const fs=require('fs'); const root='.codex/verification/phase-39/harness/runs'; const files=[]; const walk=(d)=>{for(const e of fs.readdirSync(d,{withFileTypes:true})){const p=d+'/'+e.name; if(e.isDirectory()) walk(p); else if(e.name==='run.json') files.push(p)}}; walk(root); const ok=files.length===9 && files.every(p=>{const x=JSON.parse(fs.readFileSync(p)); return x.benchmark?.suiteId==='agentskit-os-coding-phase-28' && x.benchmark?.mode==='harness' && ['AWAITING_HUMAN_APPROVAL','COMPLETE','BLOCKED'].includes(x.state)}); if(!ok) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['harness-evidence'],runCount:files.length}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "comparison-integrity", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness build && node -e \"const {spawnSync}=require('child_process'); const r=spawnSync(process.execPath,['scripts/run-agentskit-os-harness-benchmark.mjs','--collect','--repeats','3','--phase-root','.codex/verification/phase-39/harness'],{encoding:'utf8'}); const x=JSON.parse(r.stdout.trim().split(/\\r?\\n/).at(-1)); const ok=x.report.qualityGate.status==='insufficient-data' && x.report.comparisons.every(c=>c.improvement.duration==='unavailable' && c.baselineArtifactAcceptanceRate!==null); if(!ok) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['comparison-integrity'],qualityGate:x.report.qualityGate.status,artifactAcceptanceRates:x.report.comparisons.map(c=>c.baselineArtifactAcceptanceRate)}))\"", "evidence": "structured", "timeoutMs": 120000 }
+    { "id": "replacement-runner", "category": "cli", "execution": "real", "command": "node --check scripts/run-agentskit-os-harness-benchmark.mjs && node -e \"const {spawnSync}=require('child_process'); const args=['scripts/run-agentskit-os-harness-benchmark.mjs','--prepare','--task-id','feat-formatter','--sample','4','--phase-root','.codex/verification/phase-40/replacement']; const r=spawnSync(process.execPath,args,{encoding:'utf8'}); if(r.status!==0) process.exit(r.status??1); const x=JSON.parse(r.stdout.trim().split(/\\r?\\n/).at(-1)); const collision=spawnSync(process.execPath,args,{encoding:'utf8'}); const ok=x.taskCount===1 && x.sampleCount===1 && x.tasks?.[0]?.sample===4 && x.tasks?.[0]?.taskId==='feat-formatter' && collision.status!==0 && collision.stderr.includes('replacement sample already exists'); if(!ok) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['replacement-runner'],task:x.tasks[0],collisionRejected:true}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "history-preservation", "category": "logic", "execution": "real", "command": "node -e \"const fs=require('fs'); const root='.codex/verification/phase-39/harness/runs'; const blocked=['test-coverage-gap/sample-3','feat-formatter/sample-2']; const ok=blocked.every(p=>{const d=root+'/'+p; return fs.existsSync(d) && fs.readdirSync(d+'/runs',{withFileTypes:true}).some(e=>e.isDirectory())}); if(!ok) process.exit(1); if(!fs.existsSync('.codex/verification/phase-40/replacement/configs/feat-formatter-sample-4.json')) process.exit(1); console.log(JSON.stringify({status:'passed',criteria:['history-preservation'],blockedSamples:blocked,replacement:'feat-formatter/sample-4'}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured" }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },
   "budget": { "maxDurationMs": 300000 },
