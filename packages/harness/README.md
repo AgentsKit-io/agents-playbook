@@ -155,12 +155,17 @@ const turn = session.startTurn(inputHash)
 const action = session.requestTool({ turnId: turn.payload.turnId, toolId: 'shell', argumentsHash })
 await session.executeTool({ actionId: action.payload.actionId, arguments: { command: 'echo ok' } })
 session.end('completed')
+
+// After a process interruption, recover the same session from events.ndjson.
+const resumed = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: session.sessionId, resume: true })
 ```
 
 The recorder enforces turn-before-tool, one terminal result per action, no
 pending actions or unresolved approvals at session end, and no calls after
-termination. It is an observation seam; tool execution and policy decisions
-remain separate kernel phases.
+termination. With `resume: true`, it reconstructs turns, pending actions, and
+approval decisions from the hash-chained event log; completed actions are not
+replayed. It is an observation seam; tool execution and policy decisions remain
+separate kernel phases.
 
 Every session also requires a policy gate. The built-in gate is an ordered
 allow/block/approve list with deny-by-default behavior:

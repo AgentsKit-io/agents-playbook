@@ -15,8 +15,9 @@ tool arguments, results, or chain-of-thought into persisted application data.
 Expose a small `AgentAdapter` descriptor and `createSessionRecorder` API. The
 recorder accepts hashes and metadata, writes correlated session, turn, and tool
 events to the existing append-only run log, and rejects invalid local ordering.
-It can start only from `IMPLEMENTING`; it does not execute tools or make policy
-decisions.
+It can start only from `IMPLEMENTING`; with `resume: true`, it reconstructs
+unfinished actions from the event log and emits a `session.resumed` event. It
+does not execute tools or make policy decisions.
 
 ## Consequences
 
@@ -24,5 +25,7 @@ decisions.
 - Session evidence is reproducible and correlated by run, session, turn, and
   action IDs.
 - Raw content stays outside the harness event log.
+- An interrupted process can resume pending approvals and actions without
+  replaying completed tools or bypassing the policy gate.
 - A later policy gate or runtime adapter can consume this protocol without
   changing the verification kernel.

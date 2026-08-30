@@ -123,6 +123,27 @@ it('requires human approval before sensitive tools execute and records rejection
   expect(executions).toBe(1)
 })
 
+it('resumes pending approvals from the event log without replaying completed tools', async () => {
+  const { root, run } = await fixture()
+  let executions = 0
+  const policy = createPolicyGate({ rules: [{ id: 'approve-sensitive', effect: 'approve', toolIds: ['sensitive'], reason: 'sensitive tool requires review' }] })
+  const runtime = createToolRuntime({ tools: [{ toolId: 'sensitive', execute: async () => { executions += 1; return 'resumed' } }] })
+  const stateDir = join(root, '.codex', 'verification')
+  const interrupted = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: 'recoverable-session' })
+  interrupted.startTurn('input-hash', 'recoverable-turn')
+  interrupted.requestTool({ turnId: 'recoverable-turn', actionId: 'recoverable-action', toolId: 'sensitive', argumentsHash: 'recoverable-arguments' })
+
+  const resumed = createSessionRecorder({ stateDir, run, adapter, policy, runtime, sessionId: 'recoverable-session', resume: true })
+  await expect(resumed.executeTool({ actionId: 'recoverable-action', arguments: { beforeApproval: true } })).rejects.toThrow(/not pending/)
+  resumed.approveTool({ actionId: 'recoverable-action', decision: 'approved' })
+  await expect(resumed.executeTool({ actionId: 'recoverable-action', arguments: { afterApproval: true } })).resolves.toMatchObject({ status: 'completed' })
+  resumed.end('completed')
+  expect(executions).toBe(1)
+  const events = new FileEventStore(stateDir).read(run.runId)
+  expect(events.some((event) => event.type === 'session.resumed' && event.sessionId === 'recoverable-session')).toBe(true)
+  expect(events.filter((event) => event.type === 'tool.completed' && event.payload.actionId === 'recoverable-action')).toHaveLength(1)
+})
+
 it('persists runtime attestation with the terminal tool event', async () => {
   const { root, run } = await fixture()
   const runtimeWithEvidence = {
