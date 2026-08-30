@@ -7,7 +7,7 @@
   "contract": {
     "intent": "Collect a fresh replicated real-provider baseline with separate artifact-acceptance and protocol-completion evidence.",
     "scope": {
-      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "benchmarks/agentskit-os-phase-28.json", "benchmarks/agentskit-os-phase-37-baseline/*.json", "packages/harness/src/metrics.ts", ".codex/verification.json"],
+      "inScope": ["scripts/run-agentskit-os-baseline.mjs", "scripts/verify-agentskit-os-baseline.mjs", "benchmarks/agentskit-os-phase-28.json", "benchmarks/agentskit-os-phase-37-baseline/*.json", "packages/harness/src/metrics.ts", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],

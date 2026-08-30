@@ -15,6 +15,11 @@ const targetPath = arg('--target', process.env.AGENTSKIT_OS_ROOT)
 const reportsDir = resolve(root, arg('--reports', 'benchmarks/agentskit-os-phase-29-baseline'))
 const requireValidation = process.argv.includes('--require-validation')
 const failures = []
+const median = (values) => {
+  const sorted = [...values].sort((left, right) => left - right)
+  const middle = Math.floor(sorted.length / 2)
+  return sorted.length % 2 ? sorted[middle] : (sorted[middle - 1] + sorted[middle]) / 2
+}
 if (!targetPath) failures.push('AGENTSKIT_OS_ROOT or --target is required.')
 const target = targetPath ? resolve(targetPath) : undefined
 if (target && !existsSync(target)) failures.push(`AgentsKit OS target does not exist: ${target}`)
@@ -37,12 +42,19 @@ for (const task of manifest.tasks) {
     if (report.type !== 'agentskit-harness-baseline-observation' || report.schemaVersion !== 1) failures.push(`invalid baseline envelope: ${task.id}`)
     if (report.suiteId !== manifest.suiteId || report.taskId !== task.id || report.sourceRevision !== manifest.provenance?.revision) failures.push(`baseline identity mismatch: ${task.id}`)
     if (!Number.isInteger(report.attempts) || report.attempts < 1 || !Number.isFinite(report.durationMs) || report.durationMs < 0) failures.push(`baseline metrics are invalid: ${task.id}`)
-    const providerReport = validateExternalCodingBenchmarkReport(report.providerReport)
-    if (JSON.stringify(report.providerIds) !== JSON.stringify(providerReport.rows.map((row) => row.providerId))) failures.push(`provider identity mismatch: ${task.id}`)
-    if (report.validation?.command === undefined || report.validation?.exitCode === undefined) failures.push(`validation evidence is missing: ${task.id}`)
-    const validationIsRecorded = report.validation?.status === 'passed' || report.validation?.status === 'failed'
-    const validationExitIsConsistent = report.validation?.status === 'passed' ? report.validation.exitCode === 0 : report.validation?.exitCode !== 0
-    if (requireValidation && (!validationIsRecorded || !validationExitIsConsistent || !Array.isArray(report.evidence) || report.evidence.length !== task.acceptanceCriteria.length || report.evidence.some((entry) => !['passed', 'failed'].includes(entry.status) || !task.acceptanceCriteria.includes(entry.criterion)))) failures.push(`baseline acceptance evidence is incomplete: ${task.id}`)
+    const samples = report.providerReport?.samples
+    if (!Array.isArray(samples) || samples.length === 0) failures.push(`baseline samples are missing: ${task.id}`)
+    else {
+      const providerReports = samples.map((sample) => validateExternalCodingBenchmarkReport(sample.providerReport))
+      const providerIds = providerReports[0]?.rows.map((row) => row.providerId) ?? []
+      if (JSON.stringify(report.providerIds) !== JSON.stringify(providerIds) || providerReports.some((providerReport) => JSON.stringify(providerReport.rows.map((row) => row.providerId)) !== JSON.stringify(providerIds))) failures.push(`provider identity mismatch: ${task.id}`)
+      if (!Array.isArray(report.durationSamplesMs) || report.durationSamplesMs.length !== samples.length || report.durationMs !== median(report.durationSamplesMs)) failures.push(`baseline duration samples are inconsistent: ${task.id}`)
+      const artifactSamples = samples.filter((sample) => sample.validation?.status === 'passed').length
+      const expectedArtifactAcceptanceRate = Number((artifactSamples / samples.length).toFixed(4))
+      if (report.artifactAcceptanceRate !== expectedArtifactAcceptanceRate) failures.push(`artifact acceptance rate is inconsistent: ${task.id}`)
+      const invalidValidation = samples.some((sample) => sample.validation?.command === undefined || sample.validation?.exitCode === undefined || !['passed', 'failed'].includes(sample.validation?.status) || (sample.validation.status === 'passed' ? sample.validation.exitCode !== 0 : sample.validation.exitCode === 0))
+      if (requireValidation && (invalidValidation || !Array.isArray(report.evidence) || report.evidence.length !== task.acceptanceCriteria.length || report.evidence.some((entry) => !['passed', 'failed'].includes(entry.status) || !task.acceptanceCriteria.includes(entry.criterion)))) failures.push(`baseline acceptance evidence is incomplete: ${task.id}`)
+    }
   } catch (error) { failures.push(`${task.id}: ${error instanceof Error ? error.message : String(error)}`) }
 }
 
