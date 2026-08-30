@@ -88,6 +88,9 @@ The bundle includes the run projection, event log, and referenced check outputs,
 each with a SHA-256 digest. A trust store can mark keys `active` or `revoked` to
 support controlled key rotation. Treat exported outputs as potentially sensitive.
 
+The signed bundle is self-contained: it can be copied to an isolated directory
+and verified there with only the bundle and the trusted public key.
+
 Profiles are optional declarative overlays in `.codex/verification.json`. They
 inherit in order, override existing checks by ID, and are resolved before the
 contract is frozen:

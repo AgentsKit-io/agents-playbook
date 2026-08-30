@@ -1,4 +1,4 @@
-import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
 import { generateKeyPairSync } from 'node:crypto'
 import { tmpdir } from 'node:os'
@@ -7,6 +7,7 @@ import { join, resolve } from 'node:path'
 const packageRoot = resolve(import.meta.dirname, '../packages/harness')
 const cli = resolve(packageRoot, 'dist/cli.js')
 const fixtureRoot = mkdtempSync(join(tmpdir(), 'agentskit-harness-cli-flow-'))
+const portableRoot = mkdtempSync(join(tmpdir(), 'agentskit-harness-portable-bundle-'))
 const configPath = join(fixtureRoot, '.codex', 'verification.json')
 const quote = (value) => `'${value.replaceAll("'", "'\"'\"'")}'`
 const evidence = JSON.stringify({ status: 'passed', criteria: ['package'] })
@@ -26,6 +27,11 @@ const config = {
 const runCli = (args) => {
   const result = spawnSync(process.execPath, [cli, ...args, '--config', configPath, '--json'], { cwd: fixtureRoot, encoding: 'utf8' })
   if (result.status !== 0) throw new Error(`ak-harness ${args.join(' ')} failed: ${result.stderr || result.stdout}`)
+  return JSON.parse(result.stdout.trim().split(/\r?\n/).at(-1))
+}
+const runPortableCli = (args) => {
+  const result = spawnSync(process.execPath, [cli, ...args, '--json'], { cwd: portableRoot, encoding: 'utf8' })
+  if (result.status !== 0) throw new Error(`portable ak-harness ${args.join(' ')} failed: ${result.stderr || result.stdout}`)
   return JSON.parse(result.stdout.trim().split(/\r?\n/).at(-1))
 }
 
@@ -57,13 +63,19 @@ try {
   writeFileSync(trustStorePath, JSON.stringify({ schemaVersion: 1, keys: [{ keyId: 'cli-fixture-v1', publicKeyPem: publicKey.export({ type: 'spki', format: 'pem' }).toString(), status: 'active' }] }))
   const exported = runCli(['events', 'export', secondVerified.runId, '--output', bundlePath, '--private-key', privateKeyPath, '--key-id', 'cli-fixture-v1'])
   const bundle = runCli(['events', 'verify-bundle', bundlePath, '--trusted-key-store', trustStorePath])
-  if (approved.state !== 'COMPLETE' || exported.runId !== secondVerified.runId || bundle.status !== 'verified' || bundle.runId !== secondVerified.runId) throw new Error('signed evidence bundle CLI flow did not verify')
+  const portableBundlePath = join(portableRoot, 'evidence.json')
+  const portableTrustStorePath = join(portableRoot, 'trust-store.json')
+  copyFileSync(bundlePath, portableBundlePath)
+  copyFileSync(trustStorePath, portableTrustStorePath)
+  const portableBundle = runPortableCli(['events', 'verify-bundle', portableBundlePath, '--trusted-key-store', portableTrustStorePath])
+  if (approved.state !== 'COMPLETE' || exported.runId !== secondVerified.runId || bundle.status !== 'verified' || bundle.runId !== secondVerified.runId || portableBundle.status !== 'verified' || portableBundle.runId !== secondVerified.runId) throw new Error('signed evidence bundle CLI flow did not verify')
   const benchmark = runCli(['benchmark'])
   if (benchmark.type !== 'agentskit-harness-benchmark' || benchmark.summary.totalRuns !== 2 || benchmark.summary.retriedRuns !== 1 || benchmark.summary.evidenceCoverageRate !== 1) throw new Error('benchmark did not aggregate the CLI lifecycle history')
-  console.log(JSON.stringify({ status: 'passed', criteria: ['package', 'metrics', 'terminal-reconciliation', 'lock-recovery', 'signed-evidence', 'key-trust'], finalState: approved.state, supersededRunId: verified.runId, benchmark: benchmark.summary }))
+  console.log(JSON.stringify({ status: 'passed', criteria: ['package', 'metrics', 'terminal-reconciliation', 'lock-recovery', 'signed-evidence', 'evidence-portability', 'key-trust'], finalState: approved.state, supersededRunId: verified.runId, benchmark: benchmark.summary }))
 } catch (error) {
   console.log(JSON.stringify({ status: 'failed', criteria: ['package'], failures: [error instanceof Error ? error.message : String(error)] }))
   process.exitCode = 1
 } finally {
   rmSync(fixtureRoot, { recursive: true, force: true })
+  rmSync(portableRoot, { recursive: true, force: true })
 }
