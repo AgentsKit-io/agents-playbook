@@ -26,6 +26,14 @@ jobs:
       - run: pnpm harness:test
       - run: pnpm harness:cli
       - run: node scripts/verify-harness-consumer.mjs
+      - run: node scripts/run-harness-ci-evidence.mjs
+      - if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: harness-verification-${{ github.run_id }}
+          path: .codex/verification/harness-phase-24
+          if-no-files-found: error
+          retention-days: 14
       - run: pnpm check:okf-type
       - run: pnpm check:doc-bridge-config
       - run: pnpm docs:bridge:index

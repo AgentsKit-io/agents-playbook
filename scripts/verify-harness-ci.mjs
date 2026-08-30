@@ -8,6 +8,9 @@ const required = [
   '- run: pnpm harness:test',
   '- run: pnpm harness:cli',
   '- run: node scripts/verify-harness-consumer.mjs',
+  '- run: node scripts/run-harness-ci-evidence.mjs',
+  'uses: actions/upload-artifact@v4',
+  'path: .codex/verification/harness-phase-24',
 ]
 const failures = required.filter((entry) => !workflow.includes(entry)).map((entry) => `missing CI step: ${entry}`)
 console.log(JSON.stringify(failures.length ? { status: 'failed', criteria: ['ci-dogfood'], failures } : { status: 'passed', criteria: ['ci-dogfood'] }))

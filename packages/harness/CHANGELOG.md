@@ -9,6 +9,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and 
 ### Added
 
 - Playbook CI dogfooding for the package test suite, built CLI, and clean packed consumer.
+- Playbook CI now preserves the official harness run as an auditable artifact for human review.
 - Strict TypeScript modular core with generated declarations and source maps.
 - Contract-frozen lifecycle, structured evidence, stale detection, human approval, retry, and cleanup.
 - Explicit human cancellation and superseded retry history.

@@ -329,6 +329,8 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for changes, tests, and release expecta
 
 The Playbook CI dogfoods the package with `harness:test`, `harness:cli`, and a
 clean packed-consumer probe before the broader repository checks run.
+It also uploads the resulting `.codex/verification/harness-phase-24` run
+directory so a human can inspect the exact evidence before approval.
 
 ## License
 
