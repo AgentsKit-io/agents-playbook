@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-17",
+  "name": "AgentsKit Harness Phase 17",
+  "tasks": [
+    {
+      "id": "harness-signed-evidence-bundle",
+      "title": "Export and independently verify signed evidence",
+      "acceptanceCriteria": [
+        "A complete run exports its projection, hash-chained event log, and referenced check outputs.",
+        "The bundle carries a deterministic payload hash and Ed25519 signature.",
+        "Independent verification rejects changed files, payloads, or signatures."
+      ]
+    }
+  ],
+  "observations": []
+}

@@ -1,5 +1,6 @@
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { spawnSync } from 'node:child_process'
+import { generateKeyPairSync } from 'node:crypto'
 import { tmpdir } from 'node:os'
 import { join, resolve } from 'node:path'
 
@@ -46,9 +47,18 @@ try {
   if (cancelled.state !== 'CANCELLED') throw new Error(`expected CANCELLED, got ${cancelled.state}`)
   const retried = runCli(['retry'])
   if (retried.state !== 'IMPLEMENTING' || retried.supersedes !== verified.runId) throw new Error('retry did not supersede the cancelled run')
+  const secondVerified = runCli(['run'])
+  const approved = runCli(['approve', secondVerified.runId, 'approved', '--by', 'human'])
+  const { privateKey } = generateKeyPairSync('ed25519')
+  const privateKeyPath = join(fixtureRoot, 'private.pem')
+  const bundlePath = join(fixtureRoot, 'evidence.json')
+  writeFileSync(privateKeyPath, privateKey.export({ type: 'pkcs8', format: 'pem' }))
+  const exported = runCli(['events', 'export', secondVerified.runId, '--output', bundlePath, '--private-key', privateKeyPath])
+  const bundle = runCli(['events', 'verify-bundle', bundlePath])
+  if (approved.state !== 'COMPLETE' || exported.runId !== secondVerified.runId || bundle.status !== 'verified' || bundle.runId !== secondVerified.runId) throw new Error('signed evidence bundle CLI flow did not verify')
   const benchmark = runCli(['benchmark'])
-  if (benchmark.type !== 'agentskit-harness-benchmark' || benchmark.summary.totalRuns !== 2 || benchmark.summary.retriedRuns !== 1 || benchmark.summary.evidenceCoverageRate !== 0.5) throw new Error('benchmark did not aggregate the CLI lifecycle history')
-  console.log(JSON.stringify({ status: 'passed', criteria: ['package', 'metrics', 'terminal-reconciliation', 'lock-recovery'], finalState: retried.state, supersededRunId: verified.runId, benchmark: benchmark.summary }))
+  if (benchmark.type !== 'agentskit-harness-benchmark' || benchmark.summary.totalRuns !== 2 || benchmark.summary.retriedRuns !== 1 || benchmark.summary.evidenceCoverageRate !== 1) throw new Error('benchmark did not aggregate the CLI lifecycle history')
+  console.log(JSON.stringify({ status: 'passed', criteria: ['package', 'metrics', 'terminal-reconciliation', 'lock-recovery', 'signed-evidence'], finalState: approved.state, supersededRunId: verified.runId, benchmark: benchmark.summary }))
 } catch (error) {
   console.log(JSON.stringify({ status: 'failed', criteria: ['package'], failures: [error instanceof Error ? error.message : String(error)] }))
   process.exitCode = 1

@@ -77,6 +77,16 @@ the current state, so a post-approval edit cannot appear as `COMPLETE`.
 Concurrent event writers are serialized by an atomic per-run lock and fail
 closed if the log is busy.
 
+Export a reconciled `COMPLETE` run for external review with an Ed25519 key:
+
+```bash
+ak-harness events export <run-id> --output evidence.json --private-key private.pem
+ak-harness events verify-bundle evidence.json
+```
+
+The bundle includes the run projection, event log, and referenced check outputs,
+each with a SHA-256 digest. Treat exported outputs as potentially sensitive.
+
 Profiles are optional declarative overlays in `.codex/verification.json`. They
 inherit in order, override existing checks by ID, and are resolved before the
 contract is frozen:
