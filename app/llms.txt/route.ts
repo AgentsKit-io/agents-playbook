@@ -107,8 +107,8 @@ export async function GET() {
 
   const header = `# Agents Playbook
 
-> The open engineering harness for coding agents.
-> Rules, prompts, memory, evals, and executable gates train repeatable behavior, not model weights.
+ > The open engineering harness for coding agents.
+ > Rules, prompts, memory, evals, and executable gates train repeatable behavior, not model weights.
 > Built by AgentsKit (https://www.agentskit.io) — the agent-native platform this playbook is distilled from.
 
 - Site: ${SITE}

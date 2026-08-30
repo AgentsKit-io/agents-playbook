@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-6",
+  "name": "AgentsKit Harness Phase 6",
+  "tasks": [
+    {
+      "id": "harness-runtime-attestation",
+      "title": "Bind sandbox identity and profile evidence to tool events",
+      "acceptanceCriteria": [
+        "A Docker action resolves and records the actual local image digest before execution.",
+        "Terminal tool events carry a hash of the effective sandbox profile and typed security/resource attributes.",
+        "Unavailable images or Docker daemons fail closed with structured evidence and do not execute the tool.",
+        "Custom runtimes remain compatible when runtime evidence is absent."
+      ],
+      "observations": []
+    }
+  ]
+}

@@ -3,6 +3,12 @@ type: Index
 package: playbook
 title: Welcome
 description: The open engineering harness for coding agents — train repeatable behavior, not model weights.
+docbridge:
+  relations:
+    - from: package:agents-playbook
+      to: package:@agentskit/harness
+      kind: depends-on
+      detection: static
 ---
 
 The **Agents Playbook** is an open engineering harness for coding agents. It turns rules, prompts, memory, evals, gates, and review patterns into repeatable repository behavior for agents like Claude, Cursor, Copilot, and Codex — without changing or fine-tuning the underlying model.

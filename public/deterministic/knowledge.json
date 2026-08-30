@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:338a08daf4cd3151692952b8372441c9d652e375e502076f09d7d7e81a80e298",
+  "contentHash": "sha256:fb533def15aa28a39e6129f0be9007e5d5dc3467df9a96668ad6f37670281e59",
   "generatedAt": "2026-07-14T00:00:00.000Z",
   "entries": [
     {
@@ -1526,6 +1526,32 @@
             "id": "doc:pillars:quality:agent-eval-framework-pattern",
             "title": "Agent Eval Framework Pattern",
             "href": "https://playbook.agentskit.io/docs/pillars/quality/agent-eval-framework-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:quality:agent-harness-pattern",
+      "kind": "document",
+      "label": "Agent Harness Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/quality/agent-harness-pattern",
+          "pillars/quality/agent-harness-pattern.md",
+          "agent-harness-pattern",
+          "Agent Harness Pattern",
+          "Agent Harness",
+          "playbook Agent Harness Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Agent Harness Pattern\n\nHow to make coding-agent delivery evidence-backed instead of trust-based.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/agent-harness-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/agent-harness-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:quality:agent-harness-pattern",
+            "title": "Agent Harness Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/quality/agent-harness-pattern"
           }
         ]
       }

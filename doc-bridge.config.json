@@ -638,6 +638,15 @@
             "pnpm check:all"
           ]
         },
+        "agent-harness-pattern": {
+          "path": "content/docs/pillars/quality/agent-harness-pattern.md",
+          "purpose": "How to make coding-agent delivery evidence-backed instead of trust-based.",
+          "agentDoc": "content/docs/pillars/quality/agent-harness-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/quality/agent-harness-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
         "alerting-runbooks-pattern": {
           "path": "content/docs/pillars/quality/alerting-runbooks-pattern.md",
           "purpose": "How to turn observability data into a healthy alerting setup — pages that matter, runbooks that work, alert hygiene that prevents pager fatigue.",
@@ -1303,6 +1312,13 @@
   },
   "gates": {
     "preset": "standard"
+  },
+  "reconciliation": {
+    "scope": "package",
+    "requiredRelationKinds": [
+      "depends-on"
+    ],
+    "requiredRelationTargets": "internal"
   },
   "surfaces": {
     "cli": {

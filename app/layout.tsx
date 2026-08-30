@@ -54,6 +54,7 @@ export const metadata: Metadata = {
     "OpenAI Codex",
     "AGENTS.md",
     "playbook",
+    "open engineering harness",
     "guardrails",
     "ADR",
     "RFC",

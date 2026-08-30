@@ -16,7 +16,7 @@ describe('Playbook deterministic discovery', () => {
       expectedSiteId: config.siteId,
     })
     expect(verified.ok).toBe(true)
-    expect(result.artifact.entries).toHaveLength(154)
+    expect(result.artifact.entries).toHaveLength(155)
     expect(result.bytes).toBeLessThan(512 * 1024)
     expect(result.serialized).toBe(readFileSync(join(ROOT, 'public/deterministic/knowledge.json'), 'utf8'))
     expect(`${JSON.stringify(config, null, 2)}\n`).toBe(readFileSync(join(ROOT, 'public/deterministic/site-config.json'), 'utf8'))

@@ -14,6 +14,9 @@
     "postinstall": "fumadocs-mdx",
     "build:bundle": "node scripts/build-bundle.mjs",
     "build:discovery": "node scripts/build-discovery.mjs",
+    "harness:test": "pnpm --filter @agentskit/harness test",
+    "harness:build": "pnpm --filter @agentskit/harness build",
+    "harness:cli": "pnpm harness:build && pnpm exec ak-harness --help",
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
@@ -33,7 +36,7 @@
     "docs:bridge:doctor": "ak-docs doctor",
     "docs:bridge:conformance": "ak-docs conformance run documentation-standard-v1 --text",
     "check:doc-bridge-score": "node scripts/check-doc-bridge-score.mjs",
-    "check:all": "pnpm check:okf-type && pnpm check:playbook-package && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:doc-bridge-score && pnpm check:readme-standard && pnpm test && pnpm test:playbook-package && pnpm lint && pnpm build"
+    "check:all": "pnpm check:okf-type && pnpm check:playbook-package && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:doc-bridge-score && pnpm check:readme-standard && pnpm harness:test && pnpm test && pnpm test:playbook-package && pnpm lint && pnpm build"
   },
   "dependencies": {
     "@agentskit/chat": "0.4.0",
@@ -50,7 +53,8 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@agentskit/doc-bridge": "1.1.1",
+    "@agentskit/harness": "workspace:*",
+    "@agentskit/doc-bridge": "1.7.45",
     "@playwright/test": "^1.55.0",
     "@tailwindcss/postcss": "^4.0.0",
     "@types/mdx": "^2.0.13",

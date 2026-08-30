@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-13",
+  "name": "AgentsKit Harness Phase 13",
+  "tasks": [
+    {
+      "id": "harness-verification-attestation",
+      "title": "Bind verification projections to the audit log",
+      "acceptanceCriteria": [
+        "A completed verification records a digest of its checks, outcomes, and metrics in run.json and the lifecycle log.",
+        "Human approval rejects a run projection whose verification result no longer matches its attestation.",
+        "The dogfood consumer can produce and verify the attestation through the public API."
+      ]
+    }
+  ],
+  "observations": []
+}

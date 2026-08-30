@@ -1,0 +1,66 @@
+{
+  "name": "@agentskit/harness",
+  "version": "0.1.0",
+  "description": "Portable, evidence-backed development harness for coding agents.",
+  "type": "module",
+  "bin": { "ak-harness": "dist/cli.js", "ak-verify": "dist/cli.js" },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "CHANGELOG.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "SECURITY.md", "LICENSE", "docs"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "build": "tsup && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "pnpm typecheck && vitest run --config ../../vitest.config.ts test && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\"",
+    "test:contract": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/contract.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['protocol']}))\"",
+    "test:extensibility": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/extensibility.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['extensibility']}))\"",
+    "test:event-log": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/extensibility.test.ts test/harness.test.ts -t \"ordered append-only lifecycle log|complete typed task through human approval|authorization only when tracking|human rejection\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['event-log','verification-attestation','approval-attestation']}))\"",
+    "test:reconciliation": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/harness.test.ts -t \"reconciles terminal decisions\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['terminal-reconciliation']}))\"",
+    "test:lock-recovery": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/lock.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['lock-recovery']}))\"",
+    "test:signed-bundle": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/bundle.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['signed-evidence']}))\"",
+    "test:key-trust": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/bundle.test.ts -t \"trust store|revoked|rotation\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['key-trust']}))\"",
+    "test:human-tool-approval": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts -t \"human approval|approval\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['human-tool-approval']}))\"",
+    "test:session-recovery": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts -t \"resume|recovery\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['session-recovery']}))\"",
+    "test:safe-action-recovery": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts -t \"possibly started action\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['safe-action-recovery']}))\"",
+    "test:profiles": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/profiles.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['profiles']}))\"",
+    "test:context": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context']}))\"",
+    "test:doc-bridge": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/doc-bridge.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['doc-bridge-adapter']}))\"",
+    "test:context-binding": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts -t \"binds context\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context-binding']}))\"",
+    "test:context-cli": "pnpm typecheck && node ../../scripts/verify-harness-context-cli.mjs && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context-cli']}))\"",
+    "test:context-integrity": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/context.test.ts -t \"rejects\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['context-integrity']}))\"",
+    "test:metrics": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/metrics.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['metrics']}))\"",
+    "test:benchmark-record": "pnpm typecheck && node ../../scripts/verify-harness-benchmark-record.mjs",
+    "test:agent-protocol": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['agent-protocol']}))\"",
+    "test:policy-gate": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/policy.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['policy-gate','agent-protocol']}))\"",
+    "test:runtime": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['runtime','agent-protocol']}))\"",
+    "test:process-runtime": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts test/agent.test.ts && node -e \"console.log(JSON.stringify({status:'passed',criteria:['process-runtime','runtime']}))\"",
+    "test:docker-runtime": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts -t \"Docker sandbox\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docker-runtime']}))\"",
+    "test:runtime-attestation": "pnpm typecheck && vitest run --config ../../vitest.config.ts test/runtime.test.ts test/agent.test.ts -t \"attestation|Docker sandbox\" && node -e \"console.log(JSON.stringify({status:'passed',criteria:['runtime-attestation']}))\"",
+    "prepublishOnly": "pnpm typecheck && pnpm build && pnpm test"
+  },
+  "dependencies": {
+    "commander": "^14.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.7.2",
+    "vitest": "^4.1.10"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AgentsKit-io/agents-playbook.git",
+    "directory": "packages/harness"
+  },
+  "bugs": { "url": "https://github.com/AgentsKit-io/agents-playbook/issues" },
+  "homepage": "https://github.com/AgentsKit-io/agents-playbook/tree/main/packages/harness",
+  "author": "AgentsKit Contributors",
+  "sideEffects": false
+}

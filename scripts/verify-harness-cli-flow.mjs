@@ -1,0 +1,69 @@
+import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
+import { spawnSync } from 'node:child_process'
+import { generateKeyPairSync } from 'node:crypto'
+import { tmpdir } from 'node:os'
+import { join, resolve } from 'node:path'
+
+const packageRoot = resolve(import.meta.dirname, '../packages/harness')
+const cli = resolve(packageRoot, 'dist/cli.js')
+const fixtureRoot = mkdtempSync(join(tmpdir(), 'agentskit-harness-cli-flow-'))
+const configPath = join(fixtureRoot, '.codex', 'verification.json')
+const quote = (value) => `'${value.replaceAll("'", "'\"'\"'")}'`
+const evidence = JSON.stringify({ status: 'passed', criteria: ['package'] })
+const checkCommand = `${quote(process.execPath)} -e ${quote(`console.log(${JSON.stringify(evidence)})`)}`
+const config = {
+  schemaVersion: 1,
+  project: 'cli-flow-fixture',
+  root: '..',
+  stateDir: '.codex/verification',
+  profile: 'strict',
+  contract: { intent: 'Exercise the public CLI lifecycle.', scope: { inScope: ['fixture'], outOfScope: ['production'] }, ambiguities: [], outcomes: [{ id: 'package', statement: 'The public CLI reaches human approval and preserves cancelled history.', checks: ['fixture-check'] }] },
+  surfaces: { logic: true, endpoint: { required: false, reason: 'fixture' }, database: { required: false, reason: 'fixture' }, cli: { required: false, reason: 'fixture' }, mcp: { required: false, reason: 'fixture' }, ui: { required: false, reason: 'fixture' }, docs: { required: false, reason: 'fixture' } },
+  checks: [{ id: 'fixture-check', category: 'logic', command: checkCommand, evidence: 'structured' }],
+  tracking: { required: false, reason: 'fixture' },
+}
+
+const runCli = (args) => {
+  const result = spawnSync(process.execPath, [cli, ...args, '--config', configPath, '--json'], { cwd: fixtureRoot, encoding: 'utf8' })
+  if (result.status !== 0) throw new Error(`ak-harness ${args.join(' ')} failed: ${result.stderr || result.stdout}`)
+  return JSON.parse(result.stdout.trim().split(/\r?\n/).at(-1))
+}
+
+try {
+  if (!existsSync(cli)) throw new Error(`missing built CLI: ${cli}`)
+  mkdirSync(join(fixtureRoot, '.codex'), { recursive: true })
+  writeFileSync(configPath, `${JSON.stringify(config, null, 2)}\n`)
+  runCli(['plan', 'approved', '--by', 'human'])
+  const started = runCli(['start'])
+  if (started.state !== 'IMPLEMENTING') throw new Error(`expected IMPLEMENTING, got ${started.state}`)
+  const verified = runCli(['run'])
+  if (verified.state !== 'AWAITING_HUMAN_APPROVAL') throw new Error(`expected AWAITING_HUMAN_APPROVAL, got ${verified.state}`)
+  const status = runCli(['status'])
+  const audit = runCli(['audit', verified.runId])
+  const lock = runCli(['events', 'lock', verified.runId])
+  const unlock = runCli(['events', 'unlock', verified.runId, '--max-age-ms', '1'])
+  if (status.status !== 'verified' || status.state !== verified.state || audit.status !== 'verified' || audit.runId !== verified.runId || lock.status !== 'unlocked' || unlock.status !== 'unlocked') throw new Error('status/audit/lock commands did not reconcile the verified run')
+  const cancelled = runCli(['cancel', '--by', 'human', '--reason', 'CLI flow fixture cancellation.'])
+  if (cancelled.state !== 'CANCELLED') throw new Error(`expected CANCELLED, got ${cancelled.state}`)
+  const retried = runCli(['retry'])
+  if (retried.state !== 'IMPLEMENTING' || retried.supersedes !== verified.runId) throw new Error('retry did not supersede the cancelled run')
+  const secondVerified = runCli(['run'])
+  const approved = runCli(['approve', secondVerified.runId, 'approved', '--by', 'human'])
+  const { privateKey, publicKey } = generateKeyPairSync('ed25519')
+  const privateKeyPath = join(fixtureRoot, 'private.pem')
+  const bundlePath = join(fixtureRoot, 'evidence.json')
+  const trustStorePath = join(fixtureRoot, 'trust-store.json')
+  writeFileSync(privateKeyPath, privateKey.export({ type: 'pkcs8', format: 'pem' }))
+  writeFileSync(trustStorePath, JSON.stringify({ schemaVersion: 1, keys: [{ keyId: 'cli-fixture-v1', publicKeyPem: publicKey.export({ type: 'spki', format: 'pem' }).toString(), status: 'active' }] }))
+  const exported = runCli(['events', 'export', secondVerified.runId, '--output', bundlePath, '--private-key', privateKeyPath, '--key-id', 'cli-fixture-v1'])
+  const bundle = runCli(['events', 'verify-bundle', bundlePath, '--trusted-key-store', trustStorePath])
+  if (approved.state !== 'COMPLETE' || exported.runId !== secondVerified.runId || bundle.status !== 'verified' || bundle.runId !== secondVerified.runId) throw new Error('signed evidence bundle CLI flow did not verify')
+  const benchmark = runCli(['benchmark'])
+  if (benchmark.type !== 'agentskit-harness-benchmark' || benchmark.summary.totalRuns !== 2 || benchmark.summary.retriedRuns !== 1 || benchmark.summary.evidenceCoverageRate !== 1) throw new Error('benchmark did not aggregate the CLI lifecycle history')
+  console.log(JSON.stringify({ status: 'passed', criteria: ['package', 'metrics', 'terminal-reconciliation', 'lock-recovery', 'signed-evidence', 'key-trust'], finalState: approved.state, supersededRunId: verified.runId, benchmark: benchmark.summary }))
+} catch (error) {
+  console.log(JSON.stringify({ status: 'failed', criteria: ['package'], failures: [error instanceof Error ? error.message : String(error)] }))
+  process.exitCode = 1
+} finally {
+  rmSync(fixtureRoot, { recursive: true, force: true })
+}

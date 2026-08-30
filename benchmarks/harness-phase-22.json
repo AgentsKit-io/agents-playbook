@@ -1,0 +1,33 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-22",
+  "name": "AgentsKit Harness Phase 22",
+  "tasks": [
+    {
+      "id": "harness-completion-integrity",
+      "title": "Measure escaped incomplete delivery",
+      "acceptanceCriteria": [
+        "The baseline records criterion evidence and an escaped-incomplete count.",
+        "A completed harness run reports zero escaped incomplete results when every configured criterion passes."
+      ]
+    }
+  ],
+  "observations": [
+    {
+      "taskId": "harness-completion-integrity",
+      "mode": "baseline",
+      "status": "passed",
+      "source": "controlled-naive-workflow-fixture",
+      "recordedAt": "2026-08-30T00:00:00.000Z",
+      "attempts": 1,
+      "durationMs": 1200,
+      "reviewMinutes": 10,
+      "escapedIncomplete": 1,
+      "evidence": [
+        { "criterion": "The baseline records criterion evidence and an escaped-incomplete count.", "status": "passed", "source": "controlled-naive-workflow-fixture" },
+        { "criterion": "A completed harness run reports zero escaped incomplete results when every configured criterion passes.", "status": "failed", "source": "controlled-naive-workflow-fixture" }
+      ]
+    }
+  ]
+}

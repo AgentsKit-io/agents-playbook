@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-4",
+  "name": "AgentsKit Harness Phase 4",
+  "tasks": [
+    {
+      "id": "harness-process-sandbox",
+      "title": "Execute tool actions through a bounded child process",
+      "acceptanceCriteria": [
+        "Allowed tools run without shell interpolation in a separate child process.",
+        "Timeouts terminate the child and return structured retryable evidence.",
+        "Output limits terminate noisy children without persisting their output.",
+        "A failed action closes cleanly so recovery requires a fresh policy-approved action."
+      ]
+    }
+  ],
+  "observations": []
+}

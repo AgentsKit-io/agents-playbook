@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-3",
+  "name": "AgentsKit Harness Phase 3",
+  "tasks": [
+    {
+      "id": "harness-runtime-executor",
+      "title": "Execute allowed tool actions through a bounded runtime",
+      "acceptanceCriteria": [
+        "An allowed action reaches only its registered runtime handler.",
+        "Runtime completion persists a result hash and duration, never the raw result.",
+        "Missing tools, handler errors, and timeouts become structured failures.",
+        "A blocked action cannot reach the runtime executor."
+      ]
+    }
+  ],
+  "observations": []
+}

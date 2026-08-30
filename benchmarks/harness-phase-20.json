@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-20",
+  "name": "AgentsKit Harness Phase 20",
+  "tasks": [
+    {
+      "id": "harness-session-recovery",
+      "title": "Resume interrupted agent sessions from the event log",
+      "acceptanceCriteria": [
+        "A session can reconstruct its turns and pending actions after process interruption.",
+        "An approval-required action remains blocked until its human decision is recorded.",
+        "Completed actions are not replayed or executed a second time during recovery."
+      ]
+    }
+  ],
+  "observations": []
+}

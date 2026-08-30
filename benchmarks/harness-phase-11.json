@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-11",
+  "name": "AgentsKit Harness Phase 11",
+  "tasks": [
+    {
+      "id": "harness-benchmark-integrity",
+      "title": "Preserve baseline evidence integrity",
+      "acceptanceCriteria": [
+        "The CLI records a SHA-256 digest for the evidence file used by a baseline observation.",
+        "Manifest validation preserves valid digests and rejects malformed digests.",
+        "Benchmark reports retain the digest without treating it as proof of an external source."
+      ]
+    }
+  ],
+  "observations": []
+}

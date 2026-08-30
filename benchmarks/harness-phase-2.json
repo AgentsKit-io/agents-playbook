@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-2",
+  "name": "AgentsKit Harness Phase 2",
+  "tasks": [
+    {
+      "id": "harness-policy-gate",
+      "title": "Guard tool actions with a deterministic policy gate",
+      "acceptanceCriteria": [
+        "A tool action is evaluated against ordered policy rules before entering the pending execution lifecycle.",
+        "The default decision is block when no rule explicitly allows the tool.",
+        "Blocked attempts are correlated in the event log and cannot be completed as successful tool actions.",
+        "Malformed rules and policy decisions fail closed at the API boundary."
+      ]
+    }
+  ],
+  "observations": []
+}

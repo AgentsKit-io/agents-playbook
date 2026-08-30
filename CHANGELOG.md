@@ -14,6 +14,9 @@ All notable changes to Agents Playbook are documented here. The format follows [
 - Unit, onboarding, desktop/mobile Playwright, build, and continuous-integration gates.
 - Cached same-origin ecosystem star aggregation to avoid public API failures in browsers.
 - Explicit analytics opt-in so an invalid PostHog project cannot emit errors on public pages.
+- Human approvals, rejections, and external tracking authorizations now carry attested lifecycle events bound to the verified digest, source revision, and contract.
+- Terminal run reporting now reconciles the mutable projection with its verified lifecycle events before exposing `COMPLETE`.
+- Concurrent lifecycle writers now fail closed behind an atomic per-run event-log lock.
 
 ### Changed
 

@@ -1,0 +1,17 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-21",
+  "name": "AgentsKit Harness Phase 21",
+  "tasks": [
+    {
+      "id": "harness-safe-action-recovery",
+      "title": "Recover interrupted tool actions safely",
+      "acceptanceCriteria": [
+        "Actions that may have entered the runtime require an explicit human retry or abandonment decision.",
+        "Recovery never silently reexecutes or bypasses the policy gate."
+      ],
+      "observations": []
+    }
+  ]
+}

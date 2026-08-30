@@ -1,0 +1,19 @@
+{
+  "evidence": [
+    {
+      "criterion": "A baseline observation covers every acceptance criterion with explicit evidence.",
+      "status": "passed",
+      "source": "manual-run-2026-08-29"
+    },
+    {
+      "criterion": "Missing, duplicate, or unknown criterion evidence is rejected.",
+      "status": "passed",
+      "source": "manual-run-2026-08-29"
+    },
+    {
+      "criterion": "A comparison is comparable only with complete baseline evidence and a completed harness run.",
+      "status": "passed",
+      "source": "manual-run-2026-08-29"
+    }
+  ]
+}

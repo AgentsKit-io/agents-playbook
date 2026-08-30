@@ -30,6 +30,7 @@ jobs:
       - run: git diff --exit-code -- doc-bridge.config.json .doc-bridge
       - run: pnpm docs:bridge:gate
       - run: pnpm check:readme-standard
+      - run: docker pull node:22.13.0-bookworm-slim
       - run: pnpm test
       - run: pnpm lint
       - run: pnpm build

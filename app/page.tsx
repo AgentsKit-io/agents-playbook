@@ -19,6 +19,8 @@ import {
   FileWarning,
   Repeat,
   Star,
+  MessageSquare,
+  BookMarked,
 } from "lucide-react";
 import { EcosystemShowcase } from "@/components/ecosystem-showcase";
 import stats from "./stats.snapshot.json";

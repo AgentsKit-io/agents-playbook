@@ -1,0 +1,18 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-19",
+  "name": "AgentsKit Harness Phase 19",
+  "tasks": [
+    {
+      "id": "harness-human-tool-approval",
+      "title": "Require human approval for sensitive tool actions",
+      "acceptanceCriteria": [
+        "Policy decisions can require human approval before a tool enters the runtime.",
+        "Approved actions execute once and rejected or unresolved actions remain fail-closed.",
+        "Approval requests and decisions are recorded without raw prompts, arguments, or results."
+      ]
+    }
+  ],
+  "observations": []
+}

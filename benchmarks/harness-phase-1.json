@@ -1,0 +1,19 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-harness-phase-1",
+  "name": "AgentsKit Harness Phase 1",
+  "tasks": [
+    {
+      "id": "harness-agent-protocol",
+      "title": "Capture agent sessions and tool calls",
+      "acceptanceCriteria": [
+        "A typed adapter seam starts a session only during implementation.",
+        "Turns and tool actions are correlated in an append-only event log.",
+        "Invalid ordering and unfinished actions are rejected before session completion.",
+        "Raw prompts, tool arguments, and results are not persisted by the protocol."
+      ]
+    }
+  ],
+  "observations": []
+}
