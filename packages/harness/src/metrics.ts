@@ -3,8 +3,8 @@ import { join } from 'node:path'
 import { tmpdir } from 'node:os'
 import { fail } from './errors.js'
 import { readJson, readRun } from './files.js'
-import { RUN_STATES } from './types.js'
-import type { BenchmarkBinding, RunState, VerificationRun } from './types.js'
+import { RUN_STATES, SURFACE_NAMES } from './types.js'
+import type { BenchmarkBinding, RunState, SurfaceName, VerificationRun } from './types.js'
 
 export const BENCHMARK_SCHEMA_VERSION = 1 as const
 
@@ -34,6 +34,8 @@ export interface BenchmarkTask {
   readonly id: string
   readonly title: string
   readonly acceptanceCriteria: readonly string[]
+  /** Product/runtime surfaces exercised by the task. */
+  readonly surfaces?: readonly SurfaceName[]
   readonly kind?: string
   readonly prompt?: BenchmarkTaskFile
   readonly source?: BenchmarkTaskSource
@@ -406,6 +408,15 @@ const taskScope = (value: unknown, label: string): BenchmarkTaskScope | undefine
   return { read: stringList(raw['read'], `${label}.read`), write: stringList(raw['write'], `${label}.write`) }
 }
 
+const taskSurfaces = (value: unknown, label: string): readonly SurfaceName[] | undefined => {
+  if (value === undefined) return undefined
+  if (!Array.isArray(value) || !value.length) return fail(`${label} must be a non-empty array.`, 'INVALID_CONFIG')
+  const surfaces = value.map((item, index) => nonEmptyString(item, `${label}[${index}]`))
+  if (surfaces.some((surface) => !(SURFACE_NAMES as readonly string[]).includes(surface))) fail(`${label} contains an unknown surface.`, 'INVALID_CONFIG')
+  if (new Set(surfaces).size !== surfaces.length) fail(`${label} must contain unique surfaces.`, 'INVALID_CONFIG')
+  return surfaces as SurfaceName[]
+}
+
 const benchmarkPolicy = (value: unknown): BenchmarkPolicy | undefined => {
   if (value === undefined) return undefined
   if (typeof value !== 'object' || value === null || Array.isArray(value)) return fail('benchmark.policy must be an object.', 'INVALID_CONFIG')
@@ -434,7 +445,8 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
     const prompt = taskFile(task['prompt'], `benchmark.tasks[${index}].prompt`)
     const source = taskSource(task['source'], `benchmark.tasks[${index}].source`)
     const scope = taskScope(task['scope'], `benchmark.tasks[${index}].scope`)
-    return { id: nonEmptyString(task['id'], `benchmark.tasks[${index}].id`), title: nonEmptyString(task['title'], `benchmark.tasks[${index}].title`), acceptanceCriteria: stringList(task['acceptanceCriteria'], `benchmark.tasks[${index}].acceptanceCriteria`), ...(kind === undefined ? {} : { kind }), ...(prompt === undefined ? {} : { prompt }), ...(source === undefined ? {} : { source }), ...(scope === undefined ? {} : { scope }) }
+    const surfaces = taskSurfaces(task['surfaces'], `benchmark.tasks[${index}].surfaces`)
+    return { id: nonEmptyString(task['id'], `benchmark.tasks[${index}].id`), title: nonEmptyString(task['title'], `benchmark.tasks[${index}].title`), acceptanceCriteria: stringList(task['acceptanceCriteria'], `benchmark.tasks[${index}].acceptanceCriteria`), ...(surfaces === undefined ? {} : { surfaces }), ...(kind === undefined ? {} : { kind }), ...(prompt === undefined ? {} : { prompt }), ...(source === undefined ? {} : { source }), ...(scope === undefined ? {} : { scope }) }
   })
   if (new Set(tasks.map((task) => task.id)).size !== tasks.length) fail('benchmark task ids must be unique.', 'INVALID_CONFIG')
   const taskIds = new Set(tasks.map((task) => task.id))

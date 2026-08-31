@@ -20,9 +20,16 @@ it('rejects duplicate providers and preserves manifest provenance', () => {
   const manifest = validateBenchmarkManifest({
     type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Suite',
     provenance: { repository: 'repo', revision: 'abc', taskDefinition: 'fixtures/tasks.json' },
-    tasks: [{ id: 'task', title: 'Task', kind: 'edit', prompt: { path: 'fixtures/task.md', sha256: 'a'.repeat(64) }, source: { repository: 'repo', path: 'fixtures/task.md', revision: 'abc' }, scope: { read: ['src/**'], write: ['src/**'] }, acceptanceCriteria: ['done'] }],
+    tasks: [{ id: 'task', title: 'Task', kind: 'edit', surfaces: ['logic'], prompt: { path: 'fixtures/task.md', sha256: 'a'.repeat(64) }, source: { repository: 'repo', path: 'fixtures/task.md', revision: 'abc' }, scope: { read: ['src/**'], write: ['src/**'] }, acceptanceCriteria: ['done'] }],
     observations: [],
   })
   expect(manifest.provenance?.revision).toBe('abc')
   expect(manifest.tasks[0]?.prompt?.sha256).toBe('a'.repeat(64))
+  expect(manifest.tasks[0]?.surfaces).toEqual(['logic'])
+})
+
+it('rejects unknown or duplicate benchmark surfaces', () => {
+  const base = { type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Suite', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['done'] }], observations: [] }
+  expect(() => validateBenchmarkManifest({ ...base, tasks: [{ ...base.tasks[0], surfaces: ['unknown'] }] })).toThrow(/unknown surface/)
+  expect(() => validateBenchmarkManifest({ ...base, tasks: [{ ...base.tasks[0], surfaces: ['logic', 'logic'] }] })).toThrow(/unique surfaces/)
 })

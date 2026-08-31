@@ -19,6 +19,9 @@
   separately from artifact acceptance and performance comparability.
 - Protocol and artifact acceptance comparisons now expose absolute deltas when
   relative improvement is undefined because the baseline is zero.
+- Benchmark tasks can declare typed surface coverage; the AgentsKit OS corpus
+  now includes executable CLI and documentation tasks with real acceptance
+  validation.
 
 All notable changes to `@agentskit/harness` are documented here.
 

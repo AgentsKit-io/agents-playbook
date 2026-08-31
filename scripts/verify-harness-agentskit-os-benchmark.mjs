@@ -13,8 +13,15 @@ const root = resolve(import.meta.dirname, '..')
 const manifestPath = resolve(root, valueFor('--manifest') ?? 'benchmarks/agentskit-os-phase-28.json')
 const targetPath = valueFor('--target')
 const reportPath = valueFor('--report')
+const requiredSurfaces = (valueFor('--require-surface-coverage') ?? '').split(',').map((surface) => surface.trim()).filter(Boolean)
 const failures = []
 const manifest = loadBenchmarkManifest(manifestPath)
+
+if (requiredSurfaces.length) {
+  const covered = new Set(manifest.tasks.flatMap((task) => task.surfaces ?? []))
+  if (manifest.tasks.some((task) => !task.surfaces?.length)) failures.push('every task must declare at least one benchmark surface.')
+  for (const surface of requiredSurfaces) if (!covered.has(surface)) failures.push(`benchmark surface is not covered: ${surface}`)
+}
 
 if (!targetPath?.trim()) failures.push('AGENTSKIT_OS_ROOT is required for a real benchmark bridge check.')
 const target = targetPath?.trim() ? resolve(targetPath) : undefined

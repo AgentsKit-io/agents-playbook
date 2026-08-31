@@ -79,7 +79,8 @@ if (mode === 'self-test') {
   const first = JSON.parse(readFileSync(join(prepared.configRoot, configs[0]), 'utf8'))
   if (first.root !== '../../../../../' || first.benchmark?.suiteId !== manifest.suiteId || first.benchmark?.mode !== 'harness' || !first.checks?.[0]?.command.includes('--harness') || (process.env.AGENTSKIT_OS_ROOT && !first.checks?.[0]?.command.includes('--target'))) throw new Error('harness benchmark binding is incomplete')
   const emptyMetrics = benchmarkRuns(join(fixture, 'empty'), manifest)
-  if (emptyMetrics.manifest?.comparableTaskCount !== 0 || emptyMetrics.comparisons.some((comparison) => comparison.comparability !== 'harness-not-run')) throw new Error('empty benchmark must remain non-comparable')
+  const expectedEmptyComparability = manifest.observations.length ? 'harness-not-run' : 'missing-baseline'
+  if (emptyMetrics.manifest?.comparableTaskCount !== 0 || emptyMetrics.comparisons.some((comparison) => comparison.comparability !== expectedEmptyComparability)) throw new Error('empty benchmark must remain non-comparable')
   console.log(JSON.stringify({ status: 'passed', criteria: ['harness-runner', 'measurement-integrity'], suiteId: manifest.suiteId, taskCount: manifest.tasks.length }))
 } else if (mode === 'prepare') {
   console.log(JSON.stringify({ status: 'passed', criteria: ['harness-runner'], ...prepare() }))

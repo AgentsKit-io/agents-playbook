@@ -45,6 +45,23 @@ scope, and provider report shape. Provider status and heuristic scores remain
 observations: they do not grant human acceptance. With no controlled baseline,
 improvement is reported as unavailable rather than inferred.
 
+The phase-45 corpus adds explicit task surfaces and keeps the task definition
+bound to the real AgentsKit OS fixture. It covers logic, CLI, and documentation
+surfaces; the added CLI task executes compact, pretty, and invalid-input paths,
+while the documentation task checks the API contract and its reproducible test
+command:
+
+```bash
+node scripts/verify-harness-agentskit-os-benchmark.mjs \
+  --manifest benchmarks/agentskit-os-phase-45.json \
+  --target /path/to/agentskit-os \
+  --require-surface-coverage logic,cli,docs
+```
+
+Corpus coverage is a readiness gate, not a performance claim. Live provider
+samples and human approval remain required before the expanded tasks become
+comparable benchmark evidence.
+
 Phase 29 adds a reproducible real-provider baseline runner for the AgentsKit OS
 seed corpus. It uses disposable fixture copies, the existing OS benchmark
 runner, and task-specific validation:

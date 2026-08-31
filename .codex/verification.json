@@ -1,20 +1,21 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-44",
+  "project": "agents-playbook-harness-phase-45",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-44",
+  "stateDir": ".codex/verification/harness-phase-45",
   "profile": "strict",
   "contract": {
-    "intent": "Expose absolute acceptance and protocol deltas when relative improvement has a zero baseline.",
+    "intent": "Expand the real AgentsKit OS benchmark corpus with executable CLI and documentation surfaces.",
     "scope": {
-      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "scripts/run-agentskit-os-baseline.mjs", "scripts/verify-agentskit-os-baseline.mjs", "packages/harness/README.md", "packages/harness/docs/ADR-0039-artifact-and-protocol-metrics.md", "packages/harness/CHANGELOG.md", ".codex/verification.json"],
-      "outOfScope": ["agentskit-os product code", "provider implementation changes", "benchmark reruns", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
+      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "scripts/run-agentskit-os-baseline.mjs", "scripts/verify-agentskit-os-baseline.mjs", "scripts/verify-harness-agentskit-os-benchmark.mjs", "scripts/verify-agentskit-os-harness-benchmark.mjs", "benchmarks/agentskit-os-phase-45.json", "packages/harness/README.md", "packages/harness/docs/ADR-0040-benchmark-corpus-surfaces.md", "packages/harness/CHANGELOG.md", ".codex/verification.json"],
+      "outOfScope": ["live provider benchmark execution", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
       "outcomes": [
-      { "id": "zero-baseline-delta", "statement": "Comparisons expose absolute artifact and protocol deltas when relative improvement has a zero baseline.", "checks": ["metrics"] },
-      { "id": "fail-closed", "statement": "Protocol completion metrics do not make incomplete baseline or harness data comparable.", "checks": ["metrics"] },
-      { "id": "docs", "statement": "The metric contract and its limitations are documented.", "checks": ["harness-docs"] }
+      { "id": "typed-surfaces", "statement": "The benchmark manifest records valid task surfaces and covers logic, CLI, and documentation cases.", "checks": ["metrics", "benchmark-corpus"] },
+      { "id": "real-corpus", "statement": "The manifest is bound to the real AgentsKit OS task definition and all prompt provenance is verified.", "checks": ["benchmark-corpus"] },
+      { "id": "executable-surfaces", "statement": "The expanded runner has executable validation for the added CLI and documentation surfaces.", "checks": ["benchmark-runner"] },
+      { "id": "docs", "statement": "The expanded corpus contract and its current measurement limits are documented.", "checks": ["harness-docs"] }
     ]
   },
   "surfaces": {
@@ -27,7 +28,9 @@
     "docs": true
   },
   "checks": [
-    { "id": "metrics", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['zero-baseline-delta','fail-closed']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "metrics", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['typed-surfaces']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "benchmark-corpus", "category": "logic", "execution": "real", "command": "node scripts/verify-harness-agentskit-os-benchmark.mjs --manifest benchmarks/agentskit-os-phase-45.json --target /Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark --require-surface-coverage logic,cli,docs && pnpm --dir /Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark --filter @agentskit/os-templates test >/dev/null && node -e \"console.log(JSON.stringify({status:'passed',criteria:['typed-surfaces','real-corpus']}))\"", "evidence": "structured", "timeoutMs": 240000 },
+    { "id": "benchmark-runner", "category": "cli", "execution": "real", "command": "node scripts/verify-agentskit-os-harness-benchmark.mjs --manifest benchmarks/agentskit-os-phase-45.json --target /Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured" }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },
