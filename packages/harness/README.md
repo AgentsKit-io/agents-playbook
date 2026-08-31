@@ -383,6 +383,11 @@ the report exposes their delta and direction. A positive improvement rate
 means the harness used less of that measured resource; these metrics do not
 establish causality or productivity improvement alone.
 
+When a structured check includes `artifactAcceptanceRate` directly or inside
+its benchmark `reports`, comparisons also expose the harness rate, contributing
+sample count, and acceptance improvement. Missing rates remain uncounted and
+never become a failed artifact implicitly.
+
 For paired real-provider measurements, `scripts/run-agentskit-os-harness-benchmark.mjs`
 prepares one frozen contract per manifest task, binds each run to the suite and
 task ID, and leaves the lifecycle at the human approval gate. Use

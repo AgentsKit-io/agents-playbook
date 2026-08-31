@@ -8,6 +8,10 @@ fraction whose task-specific artifact validation passed. The observation
 resource metrics when the baseline delivery and criterion evidence are
 complete.
 
+Harness runs may expose the same metric through structured check evidence. The
+benchmark report aggregates the available run-level rates and reports their
+sample count; missing evidence is not converted to an acceptance failure.
+
 ## Rationale
 
 An agent can produce a correct artifact while failing to provide the required

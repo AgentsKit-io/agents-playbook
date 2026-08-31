@@ -13,6 +13,8 @@
   comparison gates.
 - Benchmark execution now supports collision-safe task-specific replacement
   samples, preserving blocked and timed-out evidence.
+- Benchmark comparisons now expose artifact acceptance rates from structured
+  harness evidence, including the number of samples contributing to the rate.
 
 All notable changes to `@agentskit/harness` are documented here.
 

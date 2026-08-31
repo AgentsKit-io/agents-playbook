@@ -70,10 +70,10 @@ it('does not claim duration improvement from an incomplete baseline', () => {
 
 it('reports artifact acceptance without making an incomplete baseline comparable', () => {
   const stateDir = mkdtempSync(join(tmpdir(), 'agentskit-harness-artifact-acceptance-'))
-  writeRun(stateDir, '1-harness', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' } })
+  writeRun(stateDir, '1-harness', 'COMPLETE', { benchmark: { suiteId: 'suite', taskId: 'task', mode: 'harness' }, checks: [{ id: 'check', category: 'logic', status: 'passed', evidence: { status: 'passed', criteria: ['outcome'], artifactAcceptanceRate: 1 } }] })
   const manifest = validateBenchmarkManifest({ type: 'agentskit-harness-benchmark-manifest', schemaVersion: 1, suiteId: 'suite', name: 'Fixture', tasks: [{ id: 'task', title: 'Task', acceptanceCriteria: ['criterion'] }], observations: [{ taskId: 'task', status: 'failed', source: 'fixture', recordedAt: '2026-01-01T00:00:00.000Z', durationMs: 200, artifactAcceptanceRate: 0.6667, evidence: [{ criterion: 'criterion', status: 'passed', source: 'fixture' }] }] })
   const comparison = benchmarkRuns(stateDir, manifest).comparisons[0]
-  expect(comparison).toMatchObject({ comparable: false, comparability: 'baseline-incomplete', baselineArtifactAcceptanceRate: 0.6667, improvement: { duration: 'unavailable' } })
+  expect(comparison).toMatchObject({ comparable: false, comparability: 'baseline-incomplete', baselineArtifactAcceptanceRate: 0.6667, improvement: { duration: 'unavailable', artifactAcceptanceRate: 0.4999, artifactAcceptance: 'improved' }, harness: { artifactAcceptanceRate: 1, artifactAcceptanceSampleCount: 1 } })
 })
 
 it('fails closed when the baseline has fewer samples than policy requires', () => {
