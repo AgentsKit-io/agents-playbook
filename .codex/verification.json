@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-41",
+  "project": "agents-playbook-harness-phase-42",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-41",
+  "stateDir": ".codex/verification/harness-phase-42",
   "profile": "strict",
   "contract": {
     "intent": "Expose harness artifact acceptance metrics from structured benchmark evidence without weakening fail-closed comparability.",
