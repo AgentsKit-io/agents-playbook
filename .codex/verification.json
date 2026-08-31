@@ -1,39 +1,43 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-45",
+  "project": "agents-playbook-harness-phase-48-release",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-45",
+  "stateDir": ".codex/verification/harness-phase-48",
   "profile": "strict",
   "contract": {
-    "intent": "Expand the real AgentsKit OS benchmark corpus with executable CLI and documentation surfaces.",
+    "intent": "release",
     "scope": {
-      "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "scripts/run-agentskit-os-baseline.mjs", "scripts/verify-agentskit-os-baseline.mjs", "scripts/verify-harness-agentskit-os-benchmark.mjs", "scripts/verify-agentskit-os-harness-benchmark.mjs", "benchmarks/agentskit-os-phase-45.json", "packages/harness/README.md", "packages/harness/docs/ADR-0040-benchmark-corpus-surfaces.md", "packages/harness/CHANGELOG.md", ".codex/verification.json"],
-      "outOfScope": ["live provider benchmark execution", "provider implementation changes", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
+      "inScope": ["packages/harness", "scripts/verify-harness-package.mjs", "scripts/verify-harness-context-cli.mjs", "scripts/verify-harness-benchmark-record.mjs", "packages/harness/README.md", "packages/harness/docs", "packages/harness/CHANGELOG.md", ".codex/verification.json"],
+      "outOfScope": ["provider benchmark execution", "AgentsKit OS implementation changes", "UI and real-browser validation", "endpoint and database adapters", "external tracking", "enterprise release claim when any strict gate is blocked"]
     },
     "ambiguities": [],
-      "outcomes": [
-      { "id": "typed-surfaces", "statement": "The benchmark manifest records valid task surfaces and covers logic, CLI, and documentation cases.", "checks": ["metrics", "benchmark-corpus"] },
-      { "id": "real-corpus", "statement": "The manifest is bound to the real AgentsKit OS task definition and all prompt provenance is verified.", "checks": ["benchmark-corpus"] },
-      { "id": "executable-surfaces", "statement": "The expanded runner has executable validation for the added CLI and documentation surfaces.", "checks": ["benchmark-runner"] },
-      { "id": "docs", "statement": "The expanded corpus contract and its current measurement limits are documented.", "checks": ["harness-docs"] }
+    "outcomes": [
+      { "id": "protocol", "statement": "The state machine, append-only evidence, approval, authorization, recovery, policy, and signed-evidence protocol pass their executable checks.", "checks": ["protocol"] },
+      { "id": "integrations", "statement": "Doc-bridge, context binding, benchmark bridge, metrics, and CI approval integrations pass their executable checks.", "checks": ["integrations"] },
+      { "id": "package", "statement": "The published package typechecks and builds with its package contract intact.", "checks": ["package"] },
+      { "id": "docs", "statement": "The package documentation and repository documentation contracts are valid.", "checks": ["docs"] },
+      { "id": "cli", "statement": "The public harness CLI context validation command executes successfully.", "checks": ["cli"] },
+      { "id": "runtime-isolation", "statement": "The real Docker runtime proves the configured isolation controls and records image-digest evidence.", "checks": ["runtime-isolation"] }
     ]
   },
   "surfaces": {
     "logic": true,
-    "endpoint": { "required": false, "reason": "No endpoint behavior is changed." },
-    "database": { "required": false, "reason": "No database behavior is changed." },
-    "cli": { "required": false, "reason": "No CLI behavior is changed." },
-    "mcp": { "required": false, "reason": "No MCP behavior is changed." },
-    "ui": { "required": false, "reason": "No UI is changed." },
+    "endpoint": { "required": false, "reason": "The release gate changes no HTTP endpoint." },
+    "database": { "required": false, "reason": "The release gate changes no database behavior." },
+    "cli": true,
+    "mcp": { "required": false, "reason": "No MCP adapter is part of this package release gate." },
+    "ui": { "required": false, "reason": "The package has no UI surface." },
     "docs": true
   },
   "checks": [
-    { "id": "metrics", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['typed-surfaces']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "benchmark-corpus", "category": "logic", "execution": "real", "command": "node scripts/verify-harness-agentskit-os-benchmark.mjs --manifest benchmarks/agentskit-os-phase-45.json --target /Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark --require-surface-coverage logic,cli,docs && pnpm --dir /Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark --filter @agentskit/os-templates test >/dev/null && node -e \"console.log(JSON.stringify({status:'passed',criteria:['typed-surfaces','real-corpus']}))\"", "evidence": "structured", "timeoutMs": 240000 },
-    { "id": "benchmark-runner", "category": "cli", "execution": "real", "command": "node scripts/verify-agentskit-os-harness-benchmark.mjs --manifest benchmarks/agentskit-os-phase-45.json --target /Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured" }
+    { "id": "protocol", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:contract && pnpm --filter @agentskit/harness test:extensibility && pnpm --filter @agentskit/harness test:event-log && pnpm --filter @agentskit/harness test:reconciliation && pnpm --filter @agentskit/harness test:lock-recovery && pnpm --filter @agentskit/harness test:signed-bundle && pnpm --filter @agentskit/harness test:key-trust && pnpm --filter @agentskit/harness test:human-tool-approval && pnpm --filter @agentskit/harness test:session-recovery && pnpm --filter @agentskit/harness test:safe-action-recovery && pnpm --filter @agentskit/harness test:agent-protocol && pnpm --filter @agentskit/harness test:policy-gate && node -e \"console.log(JSON.stringify({status:'passed',criteria:['protocol']}))\"", "evidence": "structured", "timeoutMs": 300000 },
+    { "id": "integrations", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:profiles && pnpm --filter @agentskit/harness test:context && pnpm --filter @agentskit/harness test:doc-bridge && pnpm --filter @agentskit/harness test:context-binding && pnpm --filter @agentskit/harness test:context-integrity && pnpm --filter @agentskit/harness test:metrics && pnpm --filter @agentskit/harness test:ci-approval && pnpm --filter @agentskit/harness test:benchmark-record && pnpm --filter @agentskit/harness test:benchmark-bridge && node -e \"console.log(JSON.stringify({status:'passed',criteria:['integrations']}))\"", "evidence": "structured", "timeoutMs": 300000 },
+    { "id": "cli", "category": "cli", "execution": "real", "command": "pnpm --filter @agentskit/harness test:context-cli && node -e \"console.log(JSON.stringify({status:'passed',criteria:['cli']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "package", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness typecheck && pnpm --filter @agentskit/harness build && node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\"", "evidence": "structured", "timeoutMs": 300000 },
+    { "id": "docs", "category": "docs", "execution": "real", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured", "timeoutMs": 180000 },
+    { "id": "runtime-isolation", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:docker-runtime", "evidence": "structured", "timeoutMs": 120000 }
   ],
-  "tracking": { "required": false, "reason": "Local deterministic protocol validation." },
-  "budget": { "maxDurationMs": 300000 },
+  "tracking": { "required": false, "reason": "Local release validation; no external tracking mutation is authorized." },
+  "budget": { "maxDurationMs": 900000 },
   "cleanup": { "roots": [".codex/verification/tmp"] }
 }
