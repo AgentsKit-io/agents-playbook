@@ -35,7 +35,7 @@
     { "id": "cli", "category": "cli", "execution": "real", "command": "pnpm --filter @agentskit/harness test:context-cli && node -e \"console.log(JSON.stringify({status:'passed',criteria:['cli']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "package", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness typecheck && pnpm --filter @agentskit/harness build && node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['package']}))\"", "evidence": "structured", "timeoutMs": 300000 },
     { "id": "docs", "category": "docs", "execution": "real", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured", "timeoutMs": 180000 },
-    { "id": "runtime-isolation", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:docker-runtime", "evidence": "structured", "timeoutMs": 120000 }
+    { "id": "runtime-isolation", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:docker-runtime && node -e \"console.log(JSON.stringify({status:'passed',criteria:['runtime-isolation']}))\"", "evidence": "structured", "timeoutMs": 120000 }
   ],
   "tracking": { "required": false, "reason": "Local release validation; no external tracking mutation is authorized." },
   "budget": { "maxDurationMs": 900000 },
