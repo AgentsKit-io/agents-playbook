@@ -1,36 +1,31 @@
 # Changelog
 
-## Unreleased
-
-- Added replicated baseline collection with independent disposable samples,
-  median duration recording, and atomic complete-manifest replacement.
-- Baseline samples now use the same end-to-end measurement boundary as the
-  harness check, while retaining provider-only duration for diagnosis.
-- Incomplete baselines no longer qualify for duration or resource comparisons;
-  escape reduction remains visible as a separate outcome metric.
-- Baseline reports now expose artifact acceptance separately from protocol
-  completion, preserving useful outcome data without weakening fail-closed
-  comparison gates.
-- Benchmark execution now supports collision-safe task-specific replacement
-  samples, preserving blocked and timed-out evidence.
-- Benchmark comparisons now expose artifact acceptance rates from structured
-  harness evidence, including the number of samples contributing to the rate.
-- Baseline and harness comparisons now expose protocol completion rates
-  separately from artifact acceptance and performance comparability.
-- Protocol and artifact acceptance comparisons now expose absolute deltas when
-  relative improvement is undefined because the baseline is zero.
-- Benchmark tasks can declare typed surface coverage; the AgentsKit OS corpus
-  now includes executable CLI and documentation tasks with real acceptance
-  validation.
-
 All notable changes to `@agentskit/harness` are documented here.
 
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the package follows Semantic Versioning.
 
-## [Unreleased]
+## [0.1.0] - 2026-08-31
 
 ### Added
 
+- Replicated baseline collection with independent disposable samples, median
+  duration recording, and atomic complete-manifest replacement.
+- Baseline samples use the same end-to-end measurement boundary as the harness
+  check while retaining provider-only duration for diagnosis.
+- Incomplete baselines no longer qualify for duration or resource comparisons;
+  escape reduction remains visible as a separate outcome metric.
+- Baseline reports expose artifact acceptance separately from protocol
+  completion, preserving useful outcome data without weakening fail-closed
+  comparison gates.
+- Benchmark execution supports collision-safe task-specific replacement
+  samples, preserving blocked and timed-out evidence.
+- Benchmark comparisons expose artifact acceptance rates and protocol
+  completion rates separately from performance comparability.
+- Protocol and artifact acceptance comparisons expose absolute deltas when
+  relative improvement is undefined because the baseline was zero.
+- Benchmark tasks declare typed surface coverage; the AgentsKit OS corpus
+  includes executable CLI and documentation tasks with real acceptance
+  validation.
 - Fail-closed baseline sample policy and median baseline duration support for fair replicated comparisons.
 - Independent benchmark samples with median-duration comparisons and retry metrics that do not confuse replication with retries.
 - Configurable benchmark quality gates, confidence labels, and explicit retry metrics.
