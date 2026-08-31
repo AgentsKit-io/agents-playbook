@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
-  "project": "agents-playbook-harness-phase-43",
+  "project": "agents-playbook-harness-phase-44",
   "root": "..",
-  "stateDir": ".codex/verification/harness-phase-43",
+  "stateDir": ".codex/verification/harness-phase-44",
   "profile": "strict",
   "contract": {
-    "intent": "Expose baseline and harness protocol completion metrics without weakening fail-closed comparability.",
+    "intent": "Expose absolute acceptance and protocol deltas when relative improvement has a zero baseline.",
     "scope": {
       "inScope": ["packages/harness/src/metrics.ts", "packages/harness/test/metrics.test.ts", "scripts/run-agentskit-os-baseline.mjs", "scripts/verify-agentskit-os-baseline.mjs", "packages/harness/README.md", "packages/harness/docs/ADR-0039-artifact-and-protocol-metrics.md", "packages/harness/CHANGELOG.md", ".codex/verification.json"],
       "outOfScope": ["agentskit-os product code", "provider implementation changes", "benchmark reruns", "UI and real-browser validation", "database and MCP adapters", "external tracking", "enterprise release claim"]
     },
     "ambiguities": [],
       "outcomes": [
-      { "id": "protocol-metric", "statement": "Baseline and harness comparisons expose protocol completion rates and contributing sample counts.", "checks": ["metrics", "baseline-validator"] },
+      { "id": "zero-baseline-delta", "statement": "Comparisons expose absolute artifact and protocol deltas when relative improvement has a zero baseline.", "checks": ["metrics"] },
       { "id": "fail-closed", "statement": "Protocol completion metrics do not make incomplete baseline or harness data comparable.", "checks": ["metrics"] },
       { "id": "docs", "statement": "The metric contract and its limitations are documented.", "checks": ["harness-docs"] }
     ]
@@ -27,8 +27,7 @@
     "docs": true
   },
   "checks": [
-    { "id": "metrics", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['protocol-metric','fail-closed']}))\"", "evidence": "structured", "timeoutMs": 120000 },
-    { "id": "baseline-validator", "category": "logic", "execution": "real", "command": "node scripts/verify-agentskit-os-baseline.mjs --target /Users/rebecabraun/orca/workspaces/agentskit-os/harness-phase-28-agentskit-os-benchmark --manifest benchmarks/agentskit-os-phase-43.json --reports benchmarks/agentskit-os-phase-43-baseline --require-validation && node -e \"console.log(JSON.stringify({status:'passed',criteria:['protocol-metric']}))\"", "evidence": "structured", "timeoutMs": 120000 },
+    { "id": "metrics", "category": "logic", "execution": "real", "command": "pnpm --filter @agentskit/harness test:metrics && node -e \"console.log(JSON.stringify({status:'passed',criteria:['zero-baseline-delta','fail-closed']}))\"", "evidence": "structured", "timeoutMs": 120000 },
     { "id": "harness-docs", "category": "docs", "command": "node scripts/verify-harness-package.mjs && pnpm check:doc-bridge-config && pnpm check:readme-standard && node -e \"console.log(JSON.stringify({status:'passed',criteria:['docs']}))\"", "evidence": "structured" }
   ],
   "tracking": { "required": false, "reason": "Local deterministic protocol validation." },

@@ -393,6 +393,9 @@ measures whether the verification protocol completed independently of artifact
 acceptance. A protocol rate does not override the fail-closed comparability
 rules.
 
+When a baseline rate is zero, relative improvement remains `unavailable`; the
+report still exposes the absolute acceptance or protocol completion delta.
+
 For paired real-provider measurements, `scripts/run-agentskit-os-harness-benchmark.mjs`
 prepares one frozen contract per manifest task, binds each run to the suite and
 task ID, and leaves the lifecycle at the human approval gate. Use

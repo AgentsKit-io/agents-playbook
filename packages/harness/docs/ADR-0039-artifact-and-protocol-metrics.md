@@ -17,6 +17,10 @@ samples whose provider completed the verification protocol. Harness reports
 expose the corresponding per-task rate and sample count. This makes protocol
 reliability measurable without treating an incomplete baseline as comparable.
 
+Relative improvement remains unavailable for a zero baseline. The comparison
+also records an absolute delta and derives its direction from that delta, so
+zero-to-positive outcomes remain visible without invalid division.
+
 ## Rationale
 
 An agent can produce a correct artifact while failing to provide the required
