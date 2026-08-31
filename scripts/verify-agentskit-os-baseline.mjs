@@ -52,6 +52,9 @@ for (const task of manifest.tasks) {
       const artifactSamples = samples.filter((sample) => sample.validation?.status === 'passed').length
       const expectedArtifactAcceptanceRate = Number((artifactSamples / samples.length).toFixed(4))
       if (report.artifactAcceptanceRate !== expectedArtifactAcceptanceRate) failures.push(`artifact acceptance rate is inconsistent: ${task.id}`)
+      const protocolSamples = samples.filter((sample) => sample.protocolComplete === true).length
+      const expectedProtocolCompletionRate = Number((protocolSamples / samples.length).toFixed(4))
+      if (report.protocolCompletionRate !== expectedProtocolCompletionRate) failures.push(`protocol completion rate is inconsistent: ${task.id}`)
       const invalidValidation = samples.some((sample) => sample.validation?.command === undefined || sample.validation?.exitCode === undefined || !['passed', 'failed'].includes(sample.validation?.status) || (sample.validation.status === 'passed' ? sample.validation.exitCode !== 0 : sample.validation.exitCode === 0))
       if (requireValidation && (invalidValidation || !Array.isArray(report.evidence) || report.evidence.length !== task.acceptanceCriteria.length || report.evidence.some((entry) => !['passed', 'failed'].includes(entry.status) || !task.acceptanceCriteria.includes(entry.criterion)))) failures.push(`baseline acceptance evidence is incomplete: ${task.id}`)
     }

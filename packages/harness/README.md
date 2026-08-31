@@ -388,6 +388,11 @@ its benchmark `reports`, comparisons also expose the harness rate, contributing
 sample count, and acceptance improvement. Missing rates remain uncounted and
 never become a failed artifact implicitly.
 
+Baseline and harness comparisons also expose `protocolCompletionRate`, which
+measures whether the verification protocol completed independently of artifact
+acceptance. A protocol rate does not override the fail-closed comparability
+rules.
+
 For paired real-provider measurements, `scripts/run-agentskit-os-harness-benchmark.mjs`
 prepares one frozen contract per manifest task, binds each run to the suite and
 task ID, and leaves the lifecycle at the human approval gate. Use

@@ -1,0 +1,225 @@
+{
+  "type": "agentskit-harness-benchmark-manifest",
+  "schemaVersion": 1,
+  "suiteId": "agentskit-os-coding-phase-28",
+  "name": "AgentsKit OS coding benchmark bridge (seed corpus)",
+  "provenance": {
+    "repository": "AgentsKit-io/agentskit-os",
+    "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b",
+    "taskDefinition": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/benchmark-config.json"
+  },
+  "tasks": [
+    {
+      "id": "bug-off-by-one",
+      "title": "Fix slidingWindow final window",
+      "acceptanceCriteria": [
+        "The final slidingWindow window is included.",
+        "A regression test asserts the expected output.",
+        "The public API is unchanged."
+      ],
+      "kind": "edit",
+      "prompt": {
+        "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/bug-off-by-one.md",
+        "sha256": "3bd58fcd22cc69f1fd6c94385bb9f21ae20d47a099e577b2128814c9e0870372"
+      },
+      "source": {
+        "repository": "AgentsKit-io/agentskit-os",
+        "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/bug-off-by-one.md",
+        "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b"
+      },
+      "scope": {
+        "read": [
+          "src/**",
+          "tests/**"
+        ],
+        "write": [
+          "src/**"
+        ]
+      }
+    },
+    {
+      "id": "test-coverage-gap",
+      "title": "Cover slidingWindow boundary cases",
+      "acceptanceCriteria": [
+        "Tests cover empty input.",
+        "Tests cover n larger than the input length.",
+        "Tests cover n <= 0.",
+        "Tests cover input length exactly equal to n.",
+        "The implementation is not modified."
+      ],
+      "kind": "test",
+      "prompt": {
+        "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/test-coverage-gap.md",
+        "sha256": "d7bf9422c17c4d173862ef26e9a0101e21861f33ba22ae66f7dfcd32469defde"
+      },
+      "source": {
+        "repository": "AgentsKit-io/agentskit-os",
+        "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/test-coverage-gap.md",
+        "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b"
+      },
+      "scope": {
+        "read": [
+          "src/**",
+          "tests/**"
+        ],
+        "write": [
+          "tests/**"
+        ]
+      }
+    },
+    {
+      "id": "feat-formatter",
+      "title": "Add pretty mode to formatReport",
+      "acceptanceCriteria": [
+        "formatReport accepts an optional pretty mode.",
+        "Pretty mode returns provider, status, cost, and duration.",
+        "Compact JSON remains the default behavior.",
+        "Tests cover both modes."
+      ],
+      "kind": "free-form",
+      "prompt": {
+        "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/feat-formatter.md",
+        "sha256": "081ae4a40430f017d0ac4773a3b9d38956bf32aa098c3d573f001eaeeff97552"
+      },
+      "source": {
+        "repository": "AgentsKit-io/agentskit-os",
+        "path": "packages/os-templates/templates/coding/dev-orchestrator-benchmark-demo/fixtures/issues/feat-formatter.md",
+        "revision": "ca60d270d840f66ae429cb3b54593f15b33cf22b"
+      },
+      "scope": {
+        "read": [
+          "src/**"
+        ],
+        "write": [
+          "src/**"
+        ]
+      }
+    }
+  ],
+  "observations": [
+    {
+      "taskId": "bug-off-by-one",
+      "mode": "baseline",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-43-baseline/bug-off-by-one.json",
+      "recordedAt": "2026-08-31T02:05:49.270Z",
+      "attempts": 1,
+      "durationMs": 171966,
+      "durationSamplesMs": [
+        100583,
+        174473,
+        171966
+      ],
+      "artifactAcceptanceRate": 1,
+      "protocolCompletionRate": 0,
+      "escapedIncomplete": 3,
+      "evidence": [
+        {
+          "criterion": "The final slidingWindow window is included.",
+          "status": "passed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/bug-off-by-one.json"
+        },
+        {
+          "criterion": "A regression test asserts the expected output.",
+          "status": "passed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/bug-off-by-one.json"
+        },
+        {
+          "criterion": "The public API is unchanged.",
+          "status": "passed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/bug-off-by-one.json"
+        }
+      ]
+    },
+    {
+      "taskId": "test-coverage-gap",
+      "mode": "baseline",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-43-baseline/test-coverage-gap.json",
+      "recordedAt": "2026-08-31T02:10:03.663Z",
+      "attempts": 1,
+      "durationMs": 113254,
+      "durationSamplesMs": [
+        113254,
+        24923,
+        116213
+      ],
+      "artifactAcceptanceRate": 0.6667,
+      "protocolCompletionRate": 0,
+      "escapedIncomplete": 3,
+      "evidence": [
+        {
+          "criterion": "Tests cover empty input.",
+          "status": "failed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/test-coverage-gap.json"
+        },
+        {
+          "criterion": "Tests cover n larger than the input length.",
+          "status": "failed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/test-coverage-gap.json"
+        },
+        {
+          "criterion": "Tests cover n <= 0.",
+          "status": "failed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/test-coverage-gap.json"
+        },
+        {
+          "criterion": "Tests cover input length exactly equal to n.",
+          "status": "failed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/test-coverage-gap.json"
+        },
+        {
+          "criterion": "The implementation is not modified.",
+          "status": "failed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/test-coverage-gap.json"
+        }
+      ]
+    },
+    {
+      "taskId": "feat-formatter",
+      "mode": "baseline",
+      "status": "failed",
+      "source": "benchmarks/agentskit-os-phase-43-baseline/feat-formatter.json",
+      "recordedAt": "2026-08-31T02:17:13.577Z",
+      "attempts": 1,
+      "durationMs": 159964,
+      "durationSamplesMs": [
+        178776,
+        159964,
+        91173
+      ],
+      "artifactAcceptanceRate": 1,
+      "protocolCompletionRate": 0,
+      "escapedIncomplete": 3,
+      "evidence": [
+        {
+          "criterion": "formatReport accepts an optional pretty mode.",
+          "status": "passed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/feat-formatter.json"
+        },
+        {
+          "criterion": "Pretty mode returns provider, status, cost, and duration.",
+          "status": "passed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/feat-formatter.json"
+        },
+        {
+          "criterion": "Compact JSON remains the default behavior.",
+          "status": "passed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/feat-formatter.json"
+        },
+        {
+          "criterion": "Tests cover both modes.",
+          "status": "passed",
+          "source": "benchmarks/agentskit-os-phase-43-baseline/feat-formatter.json"
+        }
+      ]
+    }
+  ],
+  "policy": {
+    "minComparableTasks": 3,
+    "maxDurationRegressionRate": 0.2,
+    "minCompletedRunsPerTask": 3,
+    "minBaselineSamplesPerTask": 3,
+    "requireZeroEscapedIncomplete": true
+  }
+}

@@ -12,6 +12,11 @@ Harness runs may expose the same metric through structured check evidence. The
 benchmark report aggregates the available run-level rates and reports their
 sample count; missing evidence is not converted to an acceptance failure.
 
+Baseline observations also record `protocolCompletionRate`: the fraction of
+samples whose provider completed the verification protocol. Harness reports
+expose the corresponding per-task rate and sample count. This makes protocol
+reliability measurable without treating an incomplete baseline as comparable.
+
 ## Rationale
 
 An agent can produce a correct artifact while failing to provide the required

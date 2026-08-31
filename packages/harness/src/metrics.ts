@@ -73,6 +73,8 @@ export interface BenchmarkObservation {
   readonly durationSamplesMs?: readonly number[]
   /** Fraction of repeated samples whose task artifact passed acceptance validation. */
   readonly artifactAcceptanceRate?: number
+  /** Fraction of repeated samples whose verification protocol completed. */
+  readonly protocolCompletionRate?: number
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
   readonly evidence?: readonly BenchmarkObservationEvidence[]
@@ -126,6 +128,7 @@ export interface BenchmarkComparison {
   readonly baselineEvidenceCoverageRate: number | null
   readonly baselineSampleCount: number
   readonly baselineArtifactAcceptanceRate: number | null
+  readonly baselineProtocolCompletionRate: number | null
   readonly baselineMedianDurationMs?: number
   readonly improvement: {
     readonly durationRate: number | null
@@ -136,6 +139,8 @@ export interface BenchmarkComparison {
     readonly review: BenchmarkImprovementDirection
     readonly artifactAcceptanceRate: number | null
     readonly artifactAcceptance: BenchmarkImprovementDirection
+    readonly protocolCompletionRate: number | null
+    readonly protocolCompletion: BenchmarkImprovementDirection
     readonly escapedIncompleteRate: number | null
     readonly escapedIncomplete: BenchmarkImprovementDirection
   }
@@ -153,6 +158,8 @@ export interface BenchmarkComparison {
     readonly evidenceCoverageRate: number | null
     readonly artifactAcceptanceRate?: number
     readonly artifactAcceptanceSampleCount: number
+    readonly protocolCompletionRate: number | null
+    readonly protocolCompletionSampleCount: number
     readonly humanApproved: boolean
     readonly escapedIncomplete?: number
     readonly humanReviewMinutes?: number
@@ -210,6 +217,7 @@ export interface BenchmarkObservationInput {
   readonly durationMs?: number
   readonly durationSamplesMs?: readonly number[]
   readonly artifactAcceptanceRate?: number
+  readonly protocolCompletionRate?: number
   readonly reviewMinutes?: number
   readonly escapedIncomplete?: number
   readonly evidence?: readonly BenchmarkObservationEvidence[]
@@ -440,6 +448,7 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
     const durationSamplesMs = observation['durationSamplesMs'] === undefined ? undefined : Array.isArray(observation['durationSamplesMs']) ? observation['durationSamplesMs'].map((sample, sampleIndex) => nonNegativeNumber(sample, `benchmark.observations[${index}].durationSamplesMs[${sampleIndex}]`) ?? fail(`benchmark.observations[${index}].durationSamplesMs must contain numbers.`, 'INVALID_CONFIG')) : fail(`benchmark.observations[${index}].durationSamplesMs must be an array.`, 'INVALID_CONFIG')
     if (durationSamplesMs && !durationSamplesMs.length) fail(`benchmark.observations[${index}].durationSamplesMs must not be empty.`, 'INVALID_CONFIG')
     const artifactAcceptanceRate = rate(observation['artifactAcceptanceRate'], `benchmark.observations[${index}].artifactAcceptanceRate`)
+    const protocolCompletionRate = rate(observation['protocolCompletionRate'], `benchmark.observations[${index}].protocolCompletionRate`)
     const reviewMinutes = nonNegativeNumber(observation['reviewMinutes'], `benchmark.observations[${index}].reviewMinutes`)
     const escapedIncomplete = nonNegativeInteger(observation['escapedIncomplete'], `benchmark.observations[${index}].escapedIncomplete`)
     const evidenceDigest = sha256(observation['evidenceDigest'], `benchmark.observations[${index}].evidenceDigest`)
@@ -454,7 +463,7 @@ export const validateBenchmarkManifest = (value: unknown): BenchmarkManifest => 
       return { criterion, status: evidenceStatus as BenchmarkObservationStatus, source: nonEmptyString(entry['source'], `benchmark.observations[${index}].evidence[${evidenceIndex}].source`) }
     })
     if (evidence && new Set(evidence.map((entry) => entry.criterion)).size !== evidence.length) fail(`benchmark.observations[${index}].evidence criteria must be unique.`, 'INVALID_CONFIG')
-    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(durationSamplesMs === undefined ? {} : { durationSamplesMs }), ...(artifactAcceptanceRate === undefined ? {} : { artifactAcceptanceRate }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }), ...(evidenceDigest === undefined ? {} : { evidenceDigest }) }
+    return { taskId, mode: 'baseline' as const, status: status as BenchmarkObservationStatus, source: nonEmptyString(observation['source'], `benchmark.observations[${index}].source`), recordedAt: timestamp(observation['recordedAt'], `benchmark.observations[${index}].recordedAt`), ...(attempts === undefined ? {} : { attempts }), ...(durationMs === undefined ? {} : { durationMs }), ...(durationSamplesMs === undefined ? {} : { durationSamplesMs }), ...(artifactAcceptanceRate === undefined ? {} : { artifactAcceptanceRate }), ...(protocolCompletionRate === undefined ? {} : { protocolCompletionRate }), ...(reviewMinutes === undefined ? {} : { reviewMinutes }), ...(escapedIncomplete === undefined ? {} : { escapedIncomplete }), ...(evidence === undefined ? {} : { evidence }), ...(evidenceDigest === undefined ? {} : { evidenceDigest }) }
   })
   if (new Set(observations.map((observation) => observation.taskId)).size !== observations.length) fail('benchmark allows at most one baseline observation per task.', 'INVALID_CONFIG')
   const provenance = suiteSource(raw['provenance'], 'benchmark.provenance')
@@ -484,6 +493,7 @@ export const recordBenchmarkObservation = (path: string, input: BenchmarkObserva
       ...(input.durationMs === undefined ? {} : { durationMs: input.durationMs }),
       ...(input.durationSamplesMs === undefined ? {} : { durationSamplesMs: input.durationSamplesMs }),
       ...(input.artifactAcceptanceRate === undefined ? {} : { artifactAcceptanceRate: input.artifactAcceptanceRate }),
+      ...(input.protocolCompletionRate === undefined ? {} : { protocolCompletionRate: input.protocolCompletionRate }),
       ...(input.reviewMinutes === undefined ? {} : { reviewMinutes: input.reviewMinutes }),
       ...(input.escapedIncomplete === undefined ? {} : { escapedIncomplete: input.escapedIncomplete }),
       ...(input.evidence === undefined ? {} : { evidence: input.evidence }),
@@ -527,9 +537,11 @@ const comparisons = (runs: readonly BenchmarkRun[], manifest: BenchmarkManifest,
   const acceptanceSamples = taskRuns.flatMap((run) => run.artifactAcceptanceRate === undefined ? [] : [run.artifactAcceptanceRate])
   const harnessArtifactAcceptanceRate = acceptanceSamples.length ? Number((acceptanceSamples.reduce((total, rate) => total + rate, 0) / acceptanceSamples.length).toFixed(4)) : null
   const artifactAcceptanceImprovementRate = increaseRate(baseline?.artifactAcceptanceRate, harnessArtifactAcceptanceRate ?? undefined)
-  const escapedIncompleteRate = improvementRate(baseline?.escapedIncomplete, latest?.escapedIncomplete)
   const completedRuns = completedTaskRuns.length
-  return { taskId: task.id, title: task.title, comparability, comparable, baselineDeliveryComplete, baselineEvidenceCoverageRate, baselineSampleCount: baselineDurationSamples.length, baselineArtifactAcceptanceRate: baseline?.artifactAcceptanceRate ?? null, ...(baselineMedianDurationMs === null ? {} : { baselineMedianDurationMs }), improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), artifactAcceptanceRate: artifactAcceptanceImprovementRate, artifactAcceptance: improvementDirection(artifactAcceptanceImprovementRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts, retryCount, completedRuns, durationSamplesMs, ...(medianDurationMs === null ? {} : { medianDurationMs }), ...(harnessArtifactAcceptanceRate === null ? {} : { artifactAcceptanceRate: harnessArtifactAcceptanceRate }), artifactAcceptanceSampleCount: acceptanceSamples.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baselineMedianDurationMs !== null && medianDurationMs !== null ? { durationDeltaMs: medianDurationMs - baselineMedianDurationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: attempts - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
+  const harnessProtocolCompletionRate = taskRuns.length ? percentage(completedRuns, taskRuns.length) : null
+  const protocolCompletionImprovementRate = increaseRate(baseline?.protocolCompletionRate, harnessProtocolCompletionRate ?? undefined)
+  const escapedIncompleteRate = improvementRate(baseline?.escapedIncomplete, latest?.escapedIncomplete)
+  return { taskId: task.id, title: task.title, comparability, comparable, baselineDeliveryComplete, baselineEvidenceCoverageRate, baselineSampleCount: baselineDurationSamples.length, baselineArtifactAcceptanceRate: baseline?.artifactAcceptanceRate ?? null, baselineProtocolCompletionRate: baseline?.protocolCompletionRate ?? null, ...(baselineMedianDurationMs === null ? {} : { baselineMedianDurationMs }), improvement: { durationRate, duration: improvementDirection(durationRate), attemptsRate, attempts: improvementDirection(attemptsRate), reviewRate, review: improvementDirection(reviewRate), artifactAcceptanceRate: artifactAcceptanceImprovementRate, artifactAcceptance: improvementDirection(artifactAcceptanceImprovementRate), protocolCompletionRate: protocolCompletionImprovementRate, protocolCompletion: improvementDirection(protocolCompletionImprovementRate), escapedIncompleteRate, escapedIncomplete: improvementDirection(escapedIncompleteRate) }, ...(baseline ? { baseline } : {}), harness: { attempts, retryCount, completedRuns, durationSamplesMs, ...(medianDurationMs === null ? {} : { medianDurationMs }), ...(harnessArtifactAcceptanceRate === null ? {} : { artifactAcceptanceRate: harnessArtifactAcceptanceRate }), artifactAcceptanceSampleCount: acceptanceSamples.length, protocolCompletionRate: harnessProtocolCompletionRate, protocolCompletionSampleCount: taskRuns.length, latestState: latest?.state ?? 'NOT_RUN', ...(latest ? { latestRunId: latest.runId } : {}), ...(latest?.durationMs === undefined ? {} : { latestDurationMs: latest.durationMs }), checkPassRate: latest ? percentage(latest.checks.passed, latest.checks.total) : null, outcomePassRate: latest ? percentage(latest.outcomes.passed, latest.outcomes.total) : null, evidenceCoverageRate: latest ? percentage(latest.evidence.attached, latest.evidence.total) : null, ...(latest?.escapedIncomplete === undefined ? {} : { escapedIncomplete: latest.escapedIncomplete }), ...(latest?.humanReviewMinutes === undefined ? {} : { humanReviewMinutes: latest.humanReviewMinutes }), humanApproved: latest?.humanApproved ?? false }, confidence: confidence(comparable, completedRuns, policy), ...(comparable && baselineMedianDurationMs !== null && medianDurationMs !== null ? { durationDeltaMs: medianDurationMs - baselineMedianDurationMs } : {}), ...(comparable && baseline?.attempts !== undefined ? { attemptDelta: attempts - baseline.attempts } : {}), ...(comparable && baseline?.reviewMinutes !== undefined && latest?.humanReviewMinutes !== undefined ? { reviewDeltaMinutes: latest.humanReviewMinutes - baseline.reviewMinutes } : {}), ...(baseline?.escapedIncomplete !== undefined && latest?.escapedIncomplete !== undefined ? { escapedIncompleteDelta: latest.escapedIncomplete - baseline.escapedIncomplete } : {}) }
 })
 
 export const benchmarkRuns = (stateDir: string, manifest?: BenchmarkManifest): BenchmarkReport => {

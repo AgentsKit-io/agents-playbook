@@ -15,6 +15,8 @@
   samples, preserving blocked and timed-out evidence.
 - Benchmark comparisons now expose artifact acceptance rates from structured
   harness evidence, including the number of samples contributing to the rate.
+- Baseline and harness comparisons now expose protocol completion rates
+  separately from artifact acceptance and performance comparability.
 
 All notable changes to `@agentskit/harness` are documented here.
 
