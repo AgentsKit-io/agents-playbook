@@ -1,6 +1,5 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import type { ReactNode } from "react";
-import Link from "next/link";
 import { Sparkles, Download, FileText } from "lucide-react";
 import { source } from "@/lib/source";
 
@@ -10,12 +9,12 @@ export default function Layout({ children }: { children: ReactNode }) {
       tree={source.pageTree}
       nav={{
         title: (
-          <Link href="/" className="flex items-center gap-2 font-semibold tracking-tight">
+          <span className="flex items-center gap-2 font-semibold tracking-tight">
             <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-accent-gradient text-white">
               <Sparkles className="h-3.5 w-3.5" aria-hidden />
             </span>
             <span>Agents Playbook</span>
-          </Link>
+          </span>
         ),
         url: "/",
       }}

@@ -83,6 +83,13 @@ the current state, so a post-approval edit cannot appear as `COMPLETE`.
 Concurrent event writers are serialized by an atomic per-run lock and fail
 closed if the log is busy.
 
+Each harness event may also carry an optional `correlation` envelope. Its
+`operationId` is the stable identity used when a lifecycle crosses into
+AgentsKit, Chat, Doc Bridge, or Code Review; the optional `runId`, `sessionId`,
+`turnId`, `actionId`, and `traceId` remain local identities. The envelope is
+bounded metadata only and never contains prompts, arguments, results, or
+secrets.
+
 Export a reconciled `COMPLETE` run for external review with an Ed25519 key:
 
 ```bash

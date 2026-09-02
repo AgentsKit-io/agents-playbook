@@ -1,10 +1,11 @@
 import "./globals.css";
 import { Inter, JetBrains_Mono } from "next/font/google";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { RootProvider } from "fumadocs-ui/provider";
 import Script from "next/script";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { AskWidget } from "@/components/ask-widget";
+import { AccessibleSearch } from "@/components/accessible-search";
 import { SharedEcosystemBar } from "@/components/shared-ecosystem-bar";
 
 const inter = Inter({
@@ -84,10 +85,15 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = { colorScheme: "dark", themeColor: "#0b0f14" };
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <body className={`${inter.variable} ${mono.variable} font-sans`}>
+        <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-violet-500 focus:px-3 focus:py-2 focus:text-white">
+          Skip to content
+        </a>
         <Script
           id="jsonld-website"
           type="application/ld+json"
@@ -100,8 +106,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             theme={{ defaultTheme: "dark", forcedTheme: "dark" }}
             search={{ options: { api: "/api/search" } }}
           >
+            <AccessibleSearch />
             <SharedEcosystemBar />
-            {children}
+            <div id="main-content">{children}</div>
             <AskWidget
               corpus="playbook"
               title="Ask the Playbook"
