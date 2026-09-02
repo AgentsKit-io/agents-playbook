@@ -1,0 +1,48 @@
+diff --git a/fromFile.js b/fromFile.js
+new file mode 100644
+index 0000000000000000000000000000000000000000..78f393fd6c2310649113de174754cb8df1a77026
+--- /dev/null
++++ b/fromFile.js
+@@ -0,0 +1,22 @@
++"use strict";
++
++const fs = require("node:fs");
++const path = require("node:path");
++const { imageSize } = require("./dist/index.js");
++
++const MAX_INPUT_SIZE = 512 * 1024;
++
++async function imageSizeFromFile(filePath) {
++  const handle = await fs.promises.open(path.resolve(filePath), "r");
++  try {
++    const { size } = await handle.stat();
++    if (size <= 0) throw new Error("Empty file");
++    const input = new Uint8Array(Math.min(size, MAX_INPUT_SIZE));
++    await handle.read(input, 0, input.length, 0);
++    return imageSize(input);
++  } finally {
++    await handle.close();
++  }
++}
++
++exports.imageSizeFromFile = imageSizeFromFile;
+diff --git a/package.json b/package.json
+index ac3cf3ca9eecb87aca0d3f40abf93a74e1d9908c..49f2ee42f7ee4d135423d0655bfff2cf5305ab0e 100644
+--- a/package.json
++++ b/package.json
+@@ -4,9 +4,14 @@
+   "description": "Community-maintained 1.x line of image-size with CVE-2025-71329 / CVE-2025-71330 fixed. For Metro and other image-size@^1.x consumers.",
+   "main": "dist/index.js",
+   "types": "dist/index.d.ts",
++  "exports": {
++    ".": "./dist/index.js",
++    "./fromFile": "./fromFile.js"
++  },
+   "files": [
+     "dist",
+-    "bin/image-size-next.js"
++    "bin/image-size-next.js",
++    "fromFile.js"
+   ],
+   "engines": {
+     "node": ">=16.x"

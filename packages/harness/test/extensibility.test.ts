@@ -71,3 +71,17 @@ it('records an ordered append-only lifecycle log bound to a real verification ru
   writeFileSync(join(root, '.codex', 'verification', 'runs', planned.runId, 'events.ndjson'), `${JSON.stringify({ ...first, payload: { ...(first.payload as Record<string, unknown>), project: 'tampered' } })}\n${lines.slice(1).join('\n')}\n`)
   expect(() => new FileEventStore(join(root, '.codex', 'verification')).verify(planned.runId)).toThrow(/hash chain is invalid/)
 })
+
+it('preserves the optional cross-repository correlation envelope', () => {
+  const root = mkdtempSync(join(tmpdir(), 'agentskit-harness-correlation-test-'))
+  const store = new FileEventStore(join(root, '.codex', 'verification'))
+  const event = store.append({
+    runId: 'run-1', sourceRevision: 'revision-1', configHash: 'config-1',
+    correlation: { operationId: 'op-1', runId: 'run-1', traceId: 'trace-1' },
+    type: 'run.created', payload: { project: 'fixture', baselineRevision: 'baseline-1', baselineStatusHash: 'hash-1' },
+  })
+
+  expect(event.correlation).toEqual({ operationId: 'op-1', runId: 'run-1', traceId: 'trace-1' })
+  expect(store.read('run-1')[0]?.correlation?.operationId).toBe('op-1')
+  expect(store.verify('run-1')).toMatchObject({ status: 'verified', eventCount: 1 })
+})

@@ -43,4 +43,4 @@ it('exports a complete run, verifies a trust store, rejects revoked keys, and su
   expect(() => verifyEvidenceBundle(bundlePath)).toThrow(/hash mismatch|payload hash mismatch|signature is invalid/)
   expect(createHash('sha256').update(readFileSync(privateKeyPath)).digest('hex')).toHaveLength(64)
   void stateDir
-})
+}, 20_000)

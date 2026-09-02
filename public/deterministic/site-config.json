@@ -4,7 +4,7 @@
   "siteId": "playbook",
   "artifact": {
     "href": "/deterministic/knowledge.json",
-    "contentHash": "sha256:fb533def15aa28a39e6129f0be9007e5d5dc3467df9a96668ad6f37670281e59"
+    "contentHash": "sha256:22ee78f08dda26ca88d6c184580f4ac64e97e99f1039654dd26a269fee37a23f"
   },
   "fallback": {
     "mode": "backend"
