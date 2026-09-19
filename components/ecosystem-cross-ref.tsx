@@ -6,13 +6,12 @@ import { EcosystemLink } from "@/components/ecosystem-link";
  * Foundation → starting point → discipline → operation, with optional peers
  * available in the fuller grid below.
  */
-const ORDER = ["agentskit", "registry", "playbook", "akos"] as const;
+const ORDER = ["agentskit", "registry", "playbook"] as const;
 
 const CLAUSE: Record<string, { lead: string; label: string }> = {
   agentskit: { lead: "build on the", label: "AgentsKit foundation" },
   registry: { lead: "start from the", label: "Registry" },
   playbook: { lead: "ship with the", label: "Playbook" },
-  akos: { lead: "operate on", label: "AKOS" },
 };
 
 function productHome(id: string): string {

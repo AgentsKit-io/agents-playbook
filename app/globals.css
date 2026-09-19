@@ -107,8 +107,8 @@ html, body {
   .card-lift { transition: none !important; }
 }
 
-/* ─── AKOS-family polish utilities (landing) ─────────────────────────────
- * Glass panels + accent ring-glow + hairline, mirroring akos.agentskit.io. */
+/* ─── Landing polish utilities ───────────────────────────────────────────
+ * Glass panels + accent ring-glow + hairline. */
 @utility glass {
   background: color-mix(in oklch, var(--surface-1) 72%, transparent);
   backdrop-filter: saturate(180%) blur(18px);

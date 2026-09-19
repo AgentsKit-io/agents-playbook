@@ -1,8 +1,8 @@
 import { expect, test } from '@playwright/test'
 
-const PRODUCT_LABELS = ['AgentsKit', 'Registry', 'Chat', 'Playbook', 'Doc Bridge', 'AKOS']
+const PRODUCT_LABELS = ['AgentsKit', 'Registry', 'Chat', 'Playbook', 'Doc Bridge']
 
-test('renders six-product navigation and the shared ecosystem showcase', async ({ page }) => {
+test('renders public product navigation and the shared ecosystem showcase', async ({ page }) => {
   await page.goto('/')
 
   const bar = page.getByRole('navigation', { name: 'AgentsKit ecosystem' })
@@ -63,10 +63,10 @@ test('publishes the agent route, canonical raw root, and contextual handoffs', a
   await page.goto('/docs')
   await expect(page.getByRole('link', { name: 'View raw .md' })).toHaveAttribute('href', '/raw/index.md')
   const handoff = page.getByRole('heading', { name: 'Continue when the problem changes' }).locator('..')
-  await expect(handoff.getByRole('link')).toHaveCount(4)
+  await expect(handoff.getByRole('link')).toHaveCount(3)
   await expect(handoff.getByRole('link').first()).toHaveCSS('text-decoration-line', 'none')
   await expect(handoff).toContainText('Doc Bridge')
   await expect(handoff).toContainText('AgentsKit Chat')
   await expect(handoff).toContainText('AgentsKit Code Review')
-  await expect(handoff).toContainText('AgentsKit OS')
+  await expect(handoff).not.toContainText('AgentsKit OS')
 })

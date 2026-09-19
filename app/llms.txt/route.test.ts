@@ -7,17 +7,16 @@ const ecosystem = [
   ["AgentsKit Chat", "https://chat.agentskit.io/llms.txt"],
   ["Agents Playbook", "https://playbook.agentskit.io/llms.txt"],
   ["Doc Bridge", "https://doc-bridge.agentskit.io/llms.txt"],
-  ["AgentsKit OS", "https://akos.agentskit.io/llms.txt"],
 ] as const;
 
 describe("Playbook llms.txt ecosystem discovery", () => {
-  it("links all six public products through their machine-readable routes", async () => {
+  it("links all public products through their machine-readable routes", async () => {
     const body = await (await GET()).text();
 
     for (const [name, llms] of ecosystem) {
       expect(body, `missing ${name}`).toContain(llms);
     }
-    expect(new Set(ecosystem.map(([, llms]) => llms)).size).toBe(6);
+    expect(new Set(ecosystem.map(([, llms]) => llms)).size).toBe(5);
     expect(body).toContain("[AgentsKit Chat](https://chat.agentskit.io/docs)");
     expect(body).toContain("[Doc Bridge](https://doc-bridge.agentskit.io/)");
     expect(body).not.toContain("[AgentsKit Chat](https://github.com/AgentsKit-io/agentskit-chat)");
