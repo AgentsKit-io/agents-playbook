@@ -63,7 +63,7 @@ test('publishes the agent route, canonical raw root, and contextual handoffs', a
   await page.goto('/docs')
   await expect(page.getByRole('link', { name: 'View raw .md' })).toHaveAttribute('href', '/raw/index.md')
   const handoff = page.getByRole('heading', { name: 'Continue when the problem changes' }).locator('..')
-  await expect(handoff.getByRole('link')).toHaveCount(4)
+  await expect(handoff.getByRole('link')).toHaveCount(3)
   await expect(handoff.getByRole('link').first()).toHaveCSS('text-decoration-line', 'none')
   await expect(handoff).toContainText('Doc Bridge')
   await expect(handoff).toContainText('AgentsKit Chat')
