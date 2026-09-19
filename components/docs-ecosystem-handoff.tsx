@@ -5,7 +5,6 @@ const HANDOFFS: { id: ProductId; when: string }[] = [
   { id: "doc-bridge", when: "Make repository documentation executable" },
   { id: "agentskit-chat", when: "Build a reusable conversational experience" },
   { id: "code-review", when: "Verify an agent-authored change before merge" },
-  { id: "akos", when: "Move governance and operations to enterprise scale" },
 ];
 
 export function DocsEcosystemHandoff() {

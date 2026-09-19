@@ -12,18 +12,14 @@ The seven products form one workflow. `ecosystem.json` is the identity and route
 | Agents Playbook | Discipline | Keep agent-authored code safe and shippable. |
 | Doc Bridge | Understanding | Make repository documentation executable for agents. |
 | AgentsKit Code Review | Verification | Review agent-authored changes before merge. |
-| AKOS | Operation | Run and govern agents in production. |
 
-The shared narrative is: build on AgentsKit, start from the Registry, deliver the experience with AgentsKit Chat, keep delivery disciplined with the Playbook, connect documentation through Doc Bridge, verify with Code Review, and operate at enterprise scale with AKOS.
 
 ## Surface rules
 
 - Global navigation lists all seven products in manifest order and marks the current product.
-- Each non-AKOS product landing page shows one large six-peer continuation component.
 - Documentation language links to Doc Bridge at the point of need.
 - Chat or conversational UI language links to AgentsKit Chat.
 - Review-before-merge language links to AgentsKit Code Review.
-- Enterprise governance or production-operation language links to AKOS.
 - README, docs, `for-agents`, `llms.txt`, `llms-full.txt`, raw source, sitemap, and deterministic discovery use the same canonical routes.
 - Numeric claims must be generated or omitted; do not hardcode volatile counts in ecosystem copy.
 
@@ -47,7 +43,6 @@ The centrally hosted `https://www.agentskit.io/ecosystem-bar.js` remains the run
 ## Validation checklist
 
 - [ ] Seven unique product IDs in workflow order.
-- [ ] Six peer links on every non-AKOS product landing.
 - [ ] Canonical route and contextual-hook tests pass.
 - [ ] Mobile, tablet, and desktop views have no hidden focus targets or overflow.
 - [ ] README and machine surfaces stay within their content budgets.

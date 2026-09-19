@@ -18,7 +18,7 @@ const OUTCOMES: readonly { label: string; desc: string; icon: LucideIcon }[] = [
   },
   {
     label: "Secure",
-    desc: "Patterns and gates for secrets, auth boundaries, and safe defaults — security designed into the contract, not bolted on after a leak. Production runtime enforcement lives in AKOS when you need it.",
+    desc: "Patterns and gates for secrets, auth boundaries, and safe defaults — security designed into the contract, not bolted on after a leak.",
     icon: ShieldCheck,
   },
   {

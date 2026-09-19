@@ -156,6 +156,5 @@ Agents Playbook is the open engineering harness in the AgentsKit ecosystem:
 - [Registry](https://registry.agentskit.io/docs) — copy ready-made agents and own the source.
 - [AgentsKit Chat](https://chat.agentskit.io/docs) — define one conversational experience across interfaces.
 - [Doc Bridge](https://doc-bridge.agentskit.io/) — turn repository docs into executable agent handoffs.
-- [AKOS](https://akos.agentskit.io/docs) — run and govern agents in production.
 
 **Topics:** `ai-agents` · `coding-agents` · `agent-governance` · `software-architecture` · `quality-gates` · `fumadocs` · `llms-txt` · `developer-experience`
