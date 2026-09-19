@@ -8,7 +8,6 @@ Make the Playbook the reference implementation of the shared ecosystem continuat
 
 - The canonical manifest contains the seven ecosystem products in workflow order.
 - The Playbook ecosystem section renders exactly six peers and remains usable at 375, 768, 1280, and 1440 px.
-- Documentation, chat, review, and enterprise language links respectively to Doc Bridge, AgentsKit Chat, Code Review, and AKOS at the point of need.
 - `/for-agents`, `/llms.txt`, `/llms-full.txt`, raw Markdown, sitemap, README, and deterministic discovery agree on canonical URLs.
 - The docs stay concise: visual cards and a small routing table replace duplicated prose.
 - Doc Bridge remains exactly 100/100 and the existing product, unit, build, and E2E gates pass.
