@@ -1,21 +1,33 @@
 import { describe, expect, it } from "vitest";
+import ecosystem from "../ecosystem.json";
 import {
   ecosystemPeers,
   ecosystemProduct,
   ecosystemProducts,
   PRODUCT_IDS,
+  SHARED_NAV_PRODUCT_IDS,
+  sharedNavProducts,
 } from "./ecosystem";
 
 describe("ecosystem contract", () => {
-  it("keeps one canonical seven-product workflow", () => {
+  it("mirrors the canonical catalog order", () => {
     expect(ecosystemProducts.map((product) => product.id)).toEqual(PRODUCT_IDS);
-    expect(new Set(ecosystemProducts.map((product) => product.id))).toHaveLength(7);
+    expect(ecosystem.properties.map((property) => property.id)).toEqual([
+      "agentskit",
+      "playbook",
+      "registry",
+    ]);
   });
 
-  it("gives the Playbook exactly six continuation targets", () => {
+  it("lists exactly six products in shared navigation, without the Playbook", () => {
+    expect(sharedNavProducts.map((product) => product.id)).toEqual(SHARED_NAV_PRODUCT_IDS);
+    expect(ecosystemProduct("playbook").navigation.showInBar).toBe(false);
+    expect(ecosystem.properties.find((property) => property.id === "playbook")?.showInBar).toBe(false);
+  });
+
+  it("gives the Playbook the six shared products as continuation targets", () => {
     const peers = ecosystemPeers("playbook");
-    expect(peers).toHaveLength(6);
-    expect(peers.map((product) => product.id)).not.toContain("playbook");
+    expect(peers.map((product) => product.id)).toEqual(SHARED_NAV_PRODUCT_IDS);
   });
 
   it("routes strategic hooks to canonical documentation surfaces", () => {
@@ -28,8 +40,8 @@ describe("ecosystem contract", () => {
     expect(ecosystemProduct("doc-bridge").surfaces.docs).toBe(
       "https://doc-bridge.agentskit.io/",
     );
-    expect(ecosystemProduct("akos").surfaces.docs).toBe(
-      "https://akos.agentskit.io/docs",
+    expect(ecosystemProduct("harness").surfaces.docs).toBe(
+      "https://harness.agentskit.io/docs",
     );
   });
 
@@ -37,5 +49,11 @@ describe("ecosystem contract", () => {
     for (const product of ecosystemProducts) {
       expect(product.surfaces.llms).toMatch(/^https:\/\//);
     }
+  });
+
+  it("keeps retired products out of the public catalog", () => {
+    const raw = JSON.stringify(ecosystem).toLowerCase();
+    expect(raw).not.toContain("akos");
+    expect(raw).not.toContain("agentskit os");
   });
 });

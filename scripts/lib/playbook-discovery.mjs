@@ -144,13 +144,13 @@ const fixedEntries = [
     id: 'ecosystem:code-review', kind: 'ecosystem', label: 'AgentsKit Code Review',
     values: ['agentskit code review', 'code review cli', 'review before merge'],
     markdown: 'Use AgentsKit Code Review to run a focused, low-noise verification pass before an agent-authored change is merged.',
-    title: 'AgentsKit Code Review', href: 'https://github.com/AgentsKit-io/code-review-cli#readme',
+    title: 'AgentsKit Code Review', href: 'https://code-review.agentskit.io/docs',
   },
   {
-    id: 'ecosystem:akos', kind: 'ecosystem', label: 'AKOS',
-    values: ['akos', 'agentskit os', 'enterprise agents', 'production governance'],
-    markdown: 'Use AKOS when the system needs enterprise orchestration, governance, identity, audit, permissions, and production controls.',
-    title: 'AKOS documentation', href: 'https://akos.agentskit.io/docs',
+    id: 'ecosystem:harness', kind: 'ecosystem', label: 'AgentsKit Harness',
+    values: ['agentskit harness', 'sdlc loop', 'keep-pushing loop'],
+    markdown: 'Use AgentsKit Harness to run the keep-pushing delivery loop that takes agent work through your SDLC with a human approving what reaches production.',
+    title: 'AgentsKit Harness', href: 'https://harness.agentskit.io/docs',
   },
 ].map((entry) => ({
   id: entry.id,
