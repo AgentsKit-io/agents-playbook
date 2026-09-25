@@ -48,8 +48,13 @@
   color-scheme: dark;
 }
 
-html, body {
+html {
   background: var(--background);
+}
+
+/* Transparent so the shared <agentskit-aurora> layer shows behind content. */
+body {
+  background: transparent;
   color: var(--foreground);
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
@@ -196,14 +201,9 @@ html, body {
 .prose a:hover { text-decoration-color: var(--accent-strong); }
 .prose .not-prose a { text-decoration: none; }
 
-/* The host owns stacking and the shared 56px header rhythm only. */
-#ak-eco { z-index: 60 !important; min-height: 56px !important; }
-#ak-eco a {
-  box-sizing: border-box;
-  display: inline-flex !important;
-  min-height: 44px !important;
-  align-items: center;
-}
+/* Shell v1 owns the bar's layout and sizing; the host only keeps it above
+ * the sticky Fumadocs chrome. */
+#ak-eco { z-index: 60 !important; }
 
 /* Keep the assistant launcher usable before its client bundle hydrates. */
 .ak-ask-fab {

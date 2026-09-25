@@ -3,7 +3,7 @@ import { createElement } from "react";
 export function EcosystemShowcase() {
   return createElement(
     "agentskit-ecosystem",
-    { current: "playbook" },
+    { current: "playbook", "data-visual": "agentskit-home" },
     <section className="relative z-10 border-y border-[color:var(--border)] px-6 py-20">
       <div className="mx-auto max-w-6xl">
         <p className="font-mono text-xs uppercase tracking-[0.2em] text-[color:var(--muted)]">The AgentsKit ecosystem</p>

@@ -1,6 +1,6 @@
 import { expect, test } from '@playwright/test'
 
-const PRODUCT_LABELS = ['AgentsKit', 'Registry', 'Chat', 'Playbook', 'Doc Bridge']
+const PRODUCT_LABELS = ['AgentsKit', 'Registry', 'Chat', 'Doc Bridge', 'Code Review', 'Harness']
 
 test('renders public product navigation and the shared ecosystem showcase', async ({ page }) => {
   await page.goto('/')
@@ -11,7 +11,10 @@ test('renders public product navigation and the shared ecosystem showcase', asyn
     await expect(productLink).toBeVisible()
     await expect(productLink).not.toHaveAttribute('target', '_blank')
   }
-  await expect(bar.locator('.ak-eco-link', { hasText: 'Playbook' })).toHaveAttribute('aria-current', 'page')
+  await expect(bar.locator('.ak-eco-link', { hasText: 'Playbook' })).toHaveCount(0)
+  await expect(bar.locator('[aria-current="page"]')).toHaveCount(0)
+  await expect(page.locator('agentskit-footer[current="playbook"]')).toBeAttached()
+  await expect(page.locator('agentskit-aurora')).toHaveCount(1)
 
   await expect(page.locator('agentskit-ecosystem[current="playbook"]')).toBeVisible()
   await expect(page.getByRole('heading', { name: 'Build the agent. Then take it all the way.' })).toBeVisible()
@@ -36,10 +39,8 @@ test('keeps the ecosystem bar inside the mobile viewport', async ({ page, isMobi
   })
   expect(flow).toEqual({ display: 'flex', flexWrap: 'nowrap', overflowX: 'auto' })
 
-  const current = await bar.locator('[aria-current="page"]').boundingBox()
-  expect(current).not.toBeNull()
-  expect(current!.x).toBeGreaterThanOrEqual(0)
-  expect(current!.x + current!.width).toBeLessThanOrEqual(viewport!.width)
+  const bodyWidth = await page.evaluate(() => document.documentElement.scrollWidth)
+  expect(bodyWidth).toBeLessThanOrEqual(viewport!.width)
 })
 
 test('certifies ecosystem layout across required mobile and desktop widths', async ({ page }, testInfo) => {
@@ -48,7 +49,7 @@ test('certifies ecosystem layout across required mobile and desktop widths', asy
     await page.setViewportSize({ width, height: 900 })
     await page.goto('/')
     const bar = page.getByRole('navigation', { name: 'AgentsKit ecosystem' })
-    await expect(bar.locator('.ak-eco-link', { hasText: 'Playbook' })).toBeInViewport()
+    await expect(bar.locator('.ak-eco-link', { hasText: 'AgentsKit' }).first()).toBeInViewport()
     const bodyWidth = await page.evaluate(() => document.documentElement.scrollWidth)
     expect(bodyWidth).toBeLessThanOrEqual(width)
     await expect(page.getByRole('heading', { name: 'Build the agent. Then take it all the way.' })).toBeVisible()

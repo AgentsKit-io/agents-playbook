@@ -6,7 +6,12 @@ import Script from "next/script";
 import { PostHogProvider } from "@/components/posthog-provider";
 import { AskWidget } from "@/components/ask-widget";
 import { AccessibleSearch } from "@/components/accessible-search";
-import { SharedEcosystemBar } from "@/components/shared-ecosystem-bar";
+import {
+  AgentsKitAurora,
+  AgentsKitFooter,
+  AgentsKitShellScript,
+  AgentsKitShellStylesheet,
+} from "@/components/agentskit-shell";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -91,6 +96,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning className="dark">
       <body className={`${inter.variable} ${mono.variable} font-sans`}>
+        <AgentsKitShellStylesheet />
+        <AgentsKitAurora />
         <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded focus:bg-violet-500 focus:px-3 focus:py-2 focus:text-white">
           Skip to content
         </a>
@@ -107,8 +114,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             search={{ options: { api: "/api/search" } }}
           >
             <AccessibleSearch />
-            <SharedEcosystemBar />
             <div id="main-content">{children}</div>
+            <AgentsKitFooter />
             <AskWidget
               corpus="playbook"
               title="Ask the Playbook"
@@ -119,6 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             />
           </RootProvider>
         </PostHogProvider>
+        <AgentsKitShellScript />
       </body>
     </html>
   );

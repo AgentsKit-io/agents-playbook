@@ -1,6 +1,7 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import type { ReactNode } from "react";
-import { Sparkles, Download, FileText } from "lucide-react";
+import { Download, FileText } from "lucide-react";
+import { ProductWordmark } from "@/components/product-wordmark";
 import { source } from "@/lib/source";
 
 export default function Layout({ children }: { children: ReactNode }) {
@@ -8,14 +9,7 @@ export default function Layout({ children }: { children: ReactNode }) {
     <DocsLayout
       tree={source.pageTree}
       nav={{
-        title: (
-          <span className="flex items-center gap-2 font-semibold tracking-tight">
-            <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-accent-gradient text-white">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden />
-            </span>
-            <span>Agents Playbook</span>
-          </span>
-        ),
+        title: <ProductWordmark />,
         url: "/",
       }}
       links={[
@@ -35,7 +29,6 @@ export default function Layout({ children }: { children: ReactNode }) {
           external: true,
         },
       ]}
-      githubUrl="https://github.com/AgentsKit-io/agents-playbook"
       sidebar={{
         defaultOpenLevel: 1,
         collapsible: true,
