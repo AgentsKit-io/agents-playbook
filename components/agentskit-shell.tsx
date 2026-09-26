@@ -4,6 +4,7 @@ import { sharedNavProducts } from "@/lib/ecosystem";
 import {
   SHELL_CURRENT,
   SHELL_CURRENT_REPO,
+  SHELL_LICENSE,
   SHELL_SCRIPT_URL,
   SHELL_STYLESHEET_URL,
 } from "@/lib/shell";
@@ -44,7 +45,7 @@ export function AgentsKitFooter() {
   const repoUrl = `https://github.com/${SHELL_CURRENT_REPO}`;
   return createElement(
     "agentskit-footer",
-    { current: SHELL_CURRENT, repo: SHELL_CURRENT_REPO },
+    { current: SHELL_CURRENT, repo: SHELL_CURRENT_REPO, license: SHELL_LICENSE },
     <footer className="ak-footer-fallback" aria-label="AgentsKit ecosystem">
       <nav aria-label="AgentsKit products">
         <ul>
@@ -58,9 +59,9 @@ export function AgentsKitFooter() {
       <p>
         <a href={repoUrl}>{SHELL_CURRENT_REPO}</a>
         {" · "}
-        <a href={`${repoUrl}/blob/main/LICENSE-CONTENT`}>Content CC-BY-4.0</a>
+        <a href={`${repoUrl}/blob/main/LICENSE`}>MIT (code)</a>
         {" · "}
-        <a href={`${repoUrl}/blob/main/LICENSE`}>Code MIT</a>
+        <a href={`${repoUrl}/blob/main/LICENSE-CONTENT`}>CC-BY-4.0 (docs)</a>
       </p>
     </footer>,
   );

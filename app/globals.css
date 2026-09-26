@@ -96,6 +96,11 @@ body {
   background-size: 64px 64px;
 }
 
+@utility bg-fade-bottom {
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 480px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 480px), transparent 100%);
+}
+
 @utility card-lift {
   transition:
     transform var(--duration-normal) var(--ease-emphasized),

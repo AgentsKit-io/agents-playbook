@@ -12,3 +12,6 @@ export const SHELL_STYLESHEET_URL = `${SHELL_ORIGIN}/shell/v1.css`;
 /** Playbook loads the shell but is not listed in shared navigation. */
 export const SHELL_CURRENT = "playbook";
 export const SHELL_CURRENT_REPO = "AgentsKit-io/agents-playbook";
+
+/** Matches LICENSE (code, MIT) and LICENSE-CONTENT (docs corpus, CC BY 4.0). */
+export const SHELL_LICENSE = "MIT (code) · CC-BY-4.0 (docs)";

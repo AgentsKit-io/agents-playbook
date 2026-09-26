@@ -49,6 +49,8 @@ describe("Playbook public shell", () => {
     expect(components).toContain('"agentskit-aurora"');
     expect(components).toContain('"agentskit-footer"');
     expect(components).toContain("sharedNavProducts.map");
+    expect(components).toContain("license: SHELL_LICENSE");
+    expect(shell).toContain('SHELL_LICENSE = "MIT (code) · CC-BY-4.0 (docs)"');
 
     const layout = read("app/layout.tsx");
     for (const part of ["<AgentsKitShellStylesheet />", "<AgentsKitAurora />", "<AgentsKitFooter />", "<AgentsKitShellScript />"]) {
