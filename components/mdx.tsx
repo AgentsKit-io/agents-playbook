@@ -1,5 +1,7 @@
 import defaultMdxComponents from "fumadocs-ui/mdx";
+import type { AnchorHTMLAttributes } from "react";
 import type { MDXComponents } from "mdx/types";
+import { isNonPageHref } from "@/lib/links";
 import { Callout } from "fumadocs-ui/components/callout";
 import { Card, Cards } from "fumadocs-ui/components/card";
 import { Tab, Tabs } from "fumadocs-ui/components/tabs";
@@ -7,6 +9,13 @@ import { Step, Steps } from "fumadocs-ui/components/steps";
 import { TypeTable } from "fumadocs-ui/components/type-table";
 import { Accordion, Accordions } from "fumadocs-ui/components/accordion";
 import { File, Folder, Files } from "fumadocs-ui/components/files";
+
+const DefaultLink = defaultMdxComponents.a;
+
+function MdxLink(props: AnchorHTMLAttributes<HTMLAnchorElement>) {
+  if (isNonPageHref(props.href)) return <a {...props} />;
+  return <DefaultLink {...props} />;
+}
 
 /**
  * MDX component map for the docs. Beyond the fumadocs defaults (syntax-
@@ -18,6 +27,7 @@ import { File, Folder, Files } from "fumadocs-ui/components/files";
 export function getMDXComponents(components?: MDXComponents): MDXComponents {
   return {
     ...defaultMdxComponents,
+    a: MdxLink,
     Callout,
     Card,
     Cards,

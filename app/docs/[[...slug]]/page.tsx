@@ -9,7 +9,6 @@ import { notFound } from "next/navigation";
 import { getMDXComponents } from "@/components/mdx";
 import { CopyMarkdown } from "@/components/copy-markdown";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { DocsEcosystemHandoff } from "@/components/docs-ecosystem-handoff";
 
@@ -97,13 +96,13 @@ export default async function Page(props: {
       ) : null}
       <div className="mb-6 flex flex-wrap items-center gap-2 text-xs">
         <CopyMarkdown rawPath={rawPath} />
-        <Link
+        <a
           href={rawPath}
           className="inline-flex items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-2.5 py-1 text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)]"
         >
           <ExternalLink className="h-3 w-3" aria-hidden />
           View raw .md
-        </Link>
+        </a>
       </div>
       <DocsBody>
         <MDX components={getMDXComponents()} />
