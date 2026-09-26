@@ -64,8 +64,8 @@ importers:
         version: 4.6.5
     devDependencies:
       '@agentskit/doc-bridge':
-        specifier: ^1.11.2
-        version: 1.11.2(@agentskit/core@1.12.9)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)(react@19.3.0)
+        specifier: ^1.12.0
+        version: 1.12.0(@agentskit/core@1.12.9)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)(react@19.3.0)
       '@agentskit/harness':
         specifier: workspace:*
         version: link:packages/harness
@@ -183,8 +183,8 @@ packages:
   '@agentskit/core@1.12.9':
     resolution: {integrity: sha512-Ou6WB9cDB9o85XpUZKWGfC699OuPzgnP8oXekVRktYBHj+Ww7FX5o10nHVPiG/2a7mJ9paQdyvUbNe5n+RZSlg==}
 
-  '@agentskit/doc-bridge@1.11.2':
-    resolution: {integrity: sha512-izYQmC+wW6DjraTjNrrRQJW6noRUGm5wwbl+MAOiThN6WKb/79UQoxofva/PgTjoONnoqv24Z+CrLkBS0qKPew==}
+  '@agentskit/doc-bridge@1.12.0':
+    resolution: {integrity: sha512-Hft7ekdi1cCjn0HDWjYkD1FPLugQXrS+rgxarNAAIGU8sp32I+Q6Dp9dRIQRYkvvckjJI43ckCPy/NdjkbGuTg==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -2266,6 +2266,10 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
+  ignore@7.0.10:
+    resolution: {integrity: sha512-HpbUakT7xp5miBUywCHf36ZEuAJNklBJDDsGpUIjMzOSmM8ELSfA9Sa/QDPeNeqeoN31u+UTCkL4klCOVvRm4Q==}
+    engines: {node: '>= 4'}
+
   image-size-next@1.2.2:
     resolution: {integrity: sha512-Pd3CJ2+Ifk2H2jWikkoz2BSZgnuF3Qsea4gQmj2gtiOtYpGWBl7elj8EXnFMiY5PaYNruTTLD0hQ0UWK7pz9xA==}
     engines: {node: '>=16.x'}
@@ -3519,7 +3523,7 @@ snapshots:
 
   '@agentskit/core@1.12.9': {}
 
-  '@agentskit/doc-bridge@1.11.2(@agentskit/core@1.12.9)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)(react@19.3.0)':
+  '@agentskit/doc-bridge@1.12.0(@agentskit/core@1.12.9)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)(react@19.3.0)':
     dependencies:
       '@agentskit/harness': 0.11.0(@types/react@19.3.0)
       github-slugger: 2.0.0
@@ -3528,6 +3532,7 @@ snapshots:
       graphology-dag: 0.4.1(graphology-types@0.24.8)
       graphology-metrics: 2.4.2(graphology-types@0.24.8)
       graphology-shortest-path: 2.1.0(graphology-types@0.24.8)
+      ignore: 7.0.10
       knap: 0.5.1
       mdast-util-to-string: 4.0.0
       mermaid: 11.17.2
@@ -5487,6 +5492,8 @@ snapshots:
   iconv-lite@0.6.3:
     dependencies:
       safer-buffer: 2.1.2
+
+  ignore@7.0.10: {}
 
   image-size-next@1.2.2(patch_hash=d94b707b0a8db4fb0ed88a32672e643673e68599de8bd810111026b2447c71db):
     dependencies:
