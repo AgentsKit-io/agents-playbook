@@ -186,10 +186,10 @@ export default function HomePage() {
   return (
     <main className="relative min-h-screen overflow-hidden">
       {/* Background layers */}
-      {/* Both layers fade out before the page ends so the shared footer and
-          aurora continue without a hard edge. */}
+      {/* The grid mesh comes from the shared <agentskit-aurora>. The hero
+          gradient fades out before the page ends so the footer continues
+          without a hard edge. */}
       <div className="pointer-events-none absolute inset-0 bg-hero-gradient bg-fade-bottom" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-grid bg-fade-bottom opacity-40" aria-hidden />
 
       <SiteHeader />
 

@@ -89,13 +89,6 @@ body {
   color: var(--accent-strong);
 }
 
-@utility bg-grid {
-  background-image:
-    linear-gradient(to right, oklch(0.96 0.005 280 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0.96 0.005 280 / 0.04) 1px, transparent 1px);
-  background-size: 64px 64px;
-}
-
 @utility bg-fade-bottom {
   mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 480px), transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 480px), transparent 100%);
