@@ -73,12 +73,15 @@ body {
     radial-gradient(ellipse at bottom right, oklch(0.72 0.16 295 / 0.10), transparent 50%);
 }
 
+/* Filled accent surfaces carry white text, so every stop keeps WCAG AA
+ * (>= 4.5:1 against #fff): 0.52 -> #7544cd (6.05:1), 0.56 -> #8054d6 (5.06:1),
+ * hover 0.58 -> #855dd7 (4.62:1). */
 @utility bg-accent-gradient {
-  background-image: linear-gradient(135deg, oklch(0.66 0.19 295), oklch(0.72 0.16 295));
+  background-image: linear-gradient(135deg, oklch(0.52 0.2 295), oklch(0.56 0.19 295));
 }
 
 @utility bg-accent-gradient-hover {
-  background-image: linear-gradient(135deg, oklch(0.72 0.19 295), oklch(0.78 0.16 295));
+  background-image: linear-gradient(135deg, oklch(0.54 0.2 295), oklch(0.58 0.18 295));
 }
 
 @utility shadow-glow-purple {

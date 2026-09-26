@@ -29,6 +29,9 @@ export default function Layout({ children }: { children: ReactNode }) {
           external: true,
         },
       ]}
+      // Playbook is dark-only (forcedTheme in the root layout), so a theme
+      // toggle would be a control that does nothing.
+      themeSwitch={{ enabled: false }}
       sidebar={{
         defaultOpenLevel: 1,
         collapsible: true,

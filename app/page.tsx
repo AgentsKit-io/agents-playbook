@@ -246,12 +246,12 @@ function SiteHeader() {
           >
             Glossary
           </Link>
-          <Link
+          <a
             href="/llms.txt"
             className="hidden min-h-11 items-center px-2 text-sm text-[color:var(--muted-foreground)] hover:text-[color:var(--foreground)] xl:inline-flex"
           >
             llms.txt
-          </Link>
+          </a>
           <EcosystemLink
             href="https://www.agentskit.io/"
             placement="header"
@@ -631,18 +631,18 @@ function TrainYourAgent() {
           Train your agent
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-0.5" aria-hidden />
         </Link>
-        <Link
+        <a
           href="/llms-full.txt"
           className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
         >
           <code className="font-mono text-[0.85em]">llms-full.txt</code>
-        </Link>
-        <Link
+        </a>
+        <a
           href="/llms.txt"
           className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
         >
           <code className="font-mono text-[0.85em]">llms.txt</code>
-        </Link>
+        </a>
       </div>
     </section>
   );
