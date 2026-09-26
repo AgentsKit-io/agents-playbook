@@ -11,22 +11,19 @@ import {
   Activity,
   Palette,
   Bot,
-  Github,
   Boxes,
   AlertTriangle,
   GitMerge,
   GitBranch,
   FileWarning,
   Repeat,
-  Star,
   MessageSquare,
   BookMarked,
 } from "lucide-react";
 import { EcosystemShowcase } from "@/components/ecosystem-showcase";
 import stats from "./stats.snapshot.json";
-import ecosystem from "@/ecosystem.json";
 import { EcosystemLink } from "@/components/ecosystem-link";
-import { EcosystemStars } from "@/components/ecosystem-stars";
+import { ProductWordmark } from "@/components/product-wordmark";
 import { EcosystemCrossRef } from "@/components/ecosystem-cross-ref";
 import { CopyPrompt } from "@/components/copy-prompt";
 import { AgentConvergence } from "@/components/agent-convergence";
@@ -189,8 +186,10 @@ export default function HomePage() {
   return (
     <main className="relative min-h-screen overflow-hidden">
       {/* Background layers */}
-      <div className="pointer-events-none absolute inset-0 bg-hero-gradient" aria-hidden />
-      <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" aria-hidden />
+      {/* The grid mesh comes from the shared <agentskit-aurora>. The hero
+          gradient fades out before the page ends so the footer continues
+          without a hard edge. */}
+      <div className="pointer-events-none absolute inset-0 bg-hero-gradient bg-fade-bottom" aria-hidden />
 
       <SiteHeader />
 
@@ -211,24 +210,7 @@ export default function HomePage() {
       <EcosystemShowcase />
 
       <CTASection />
-
-      <SiteFooter />
     </main>
-  );
-}
-
-function BrandMark({ className = "h-7 w-7" }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 72 64" fill="none" className={className} aria-hidden>
-      <g stroke="var(--accent-strong)" strokeWidth="3" strokeLinecap="round">
-        <line x1="12" y1="52" x2="36" y2="12" />
-        <line x1="36" y1="12" x2="60" y2="52" />
-        <line x1="12" y1="52" x2="60" y2="52" />
-      </g>
-      <circle cx="36" cy="12" r="6" fill="var(--accent-strong)" />
-      <circle cx="12" cy="52" r="6" fill="var(--accent-strong)" />
-      <circle cx="60" cy="52" r="6" fill="var(--accent-strong)" />
-    </svg>
   );
 }
 
@@ -240,8 +222,7 @@ function SiteHeader() {
           href="/"
           className="inline-flex min-h-11 items-center gap-2 font-semibold tracking-tight"
         >
-          <BrandMark className="h-6 w-6" />
-          <span>Agents Playbook</span>
+          <ProductWordmark />
         </Link>
         <nav
           className="flex min-w-0 items-center gap-1 sm:gap-2"
@@ -279,18 +260,6 @@ function SiteHeader() {
             AgentsKit ↗
           </EcosystemLink>
           <SiteSearchTrigger />
-          <div className="hidden xl:block">
-            <EcosystemStars repos={ecosystem.properties.map((p) => p.repo)} />
-          </div>
-          <EcosystemLink
-            href="https://github.com/AgentsKit-io/agents-playbook"
-            placement="header"
-            event="community_clicked"
-            className="hidden min-h-11 items-center gap-1 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-3 text-sm text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)] xl:inline-flex"
-          >
-            <Github className="h-3.5 w-3.5" aria-hidden />
-            GitHub
-          </EcosystemLink>
         </nav>
       </div>
     </header>
@@ -574,15 +543,6 @@ function CTASection() {
               Train your agent
               <ArrowRight className="h-4 w-4" aria-hidden />
             </Link>
-            <EcosystemLink
-              href="https://github.com/AgentsKit-io/agents-playbook"
-              placement="cta"
-              event="community_clicked"
-              className="group inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] bg-[color:var(--surface-1)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
-            >
-              <Star className="h-4 w-4 text-[color:var(--warning)] transition group-hover:scale-110" aria-hidden />
-              Star on GitHub
-            </EcosystemLink>
             <Link
               href="/docs"
               className="inline-flex items-center gap-2 rounded-md border border-[color:var(--border)] px-5 py-2.5 text-sm font-semibold text-[color:var(--foreground)] hover:bg-[color:var(--surface-2)]"
@@ -591,16 +551,7 @@ function CTASection() {
             </Link>
           </div>
           <p className="mx-auto mt-5 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
-            Free and open (CC-BY-4.0). If the playbook saved you a code review,{" "}
-            <EcosystemLink
-              href="https://github.com/AgentsKit-io/agents-playbook"
-              placement="cta"
-              event="community_clicked"
-              className="font-semibold text-[color:var(--foreground)] underline decoration-[color:var(--border)] underline-offset-4 hover:decoration-current"
-            >
-              drop a star ↗
-            </EcosystemLink>{" "}
-            — it helps other teams find it.
+            Free and open (CC-BY-4.0). Adapt freely; attribution appreciated.
           </p>
           <p className="mx-auto mt-8 max-w-xl text-pretty text-sm text-[color:var(--muted-foreground)]">
             Want the platform these practices run on?{" "}
@@ -694,37 +645,5 @@ function TrainYourAgent() {
         </Link>
       </div>
     </section>
-  );
-}
-
-function SiteFooter() {
-  return (
-    <footer className="relative z-10 border-t border-[color:var(--border)]">
-      <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-6 py-10 text-sm text-[color:var(--muted-foreground)] sm:flex-row sm:items-center">
-        <div>
-          <div className="font-semibold text-[color:var(--foreground)]">Agents Playbook</div>
-          <div className="mt-1">CC-BY-4.0 · Adapt freely · Attribution appreciated.</div>
-          <div className="mt-1">
-            Built by{" "}
-            <EcosystemLink
-              href="https://www.agentskit.io/"
-              placement="footer"
-              className="font-medium text-[color:var(--foreground)] hover:underline"
-            >
-              AgentsKit
-            </EcosystemLink>{" "}
-            — the agent-native platform.
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-5">
-          <Link href="/docs" className="hover:text-[color:var(--foreground)]">Docs</Link>
-          <Link href="/docs/glossary" className="hover:text-[color:var(--foreground)]">Glossary</Link>
-          <Link href="/docs/matrix" className="hover:text-[color:var(--foreground)]">Matrix</Link>
-          <Link href="/llms.txt" className="hover:text-[color:var(--foreground)]">llms.txt</Link>
-          <EcosystemLink href="https://www.agentskit.io/" placement="footer" className="hover:text-[color:var(--foreground)]">AgentsKit ↗</EcosystemLink>
-          <EcosystemLink href="https://github.com/AgentsKit-io/agents-playbook" placement="footer" event="community_clicked" className="hover:text-[color:var(--foreground)]">GitHub</EcosystemLink>
-        </div>
-      </div>
-    </footer>
   );
 }

@@ -74,7 +74,10 @@ const config = {
       include: ['**/*.md', '**/*.mdx'],
       exclude: ['**/node_modules/**'],
     },
-    human: { plugin: 'fumadocs', options: { contentDir: 'content/docs', urlPrefix: '/docs' } },
+    human: [
+      { plugin: 'fumadocs', options: { contentDir: 'content/docs', urlPrefix: '/docs' } },
+      { plugin: 'plain-markdown', options: { root: '.', include: ['README.md'], urlPrefix: '/docs' } },
+    ],
   },
   routing: { options: { ownership } },
   index: {
@@ -86,6 +89,31 @@ const config = {
     },
     capabilities: { enabled: true, outFile: '.doc-bridge/capabilities.json' },
   },
+  conformance: { documentationStandardV1: {
+    rawSources: ['README.md', 'content/docs/index.mdx', 'content/docs/getting-started.mdx'],
+    contributionPaths: ['CONTRIBUTING.md'],
+    metadata: [{ path: 'app/layout.tsx', contains: ['export const metadata', 'title:', 'description:', 'openGraph:'] }],
+    links: [
+      ['https://www.agentskit.io/docs', 'AgentsKit'],
+      ['https://registry.agentskit.io/docs', 'Registry'],
+      ['https://chat.agentskit.io/docs', 'AgentsKit Chat'],
+      ['https://doc-bridge.agentskit.io/', 'Doc Bridge'],
+      ['https://code-review.agentskit.io/docs', 'Code Review'],
+      ['https://harness.agentskit.io/', 'Harness'],
+      ['https://playbook.agentskit.io/docs', 'Agents Playbook'],
+    ].map(([url]) => ({ url, paths: ['README.md', 'content/docs/index.mdx'] })),
+    ecosystemContract: { manifest: 'ecosystem.json', claims: 'ecosystem-claims.json', productId: 'playbook' },
+    quickstarts: [{
+      id: 'getting-started',
+      doc: 'content/docs/getting-started.mdx',
+      test: 'scripts/onboarding-proof.test.mjs',
+      command: 'pnpm test:onboarding',
+      testContains: ['keeps every advertised onboarding surface present and connected'],
+    }],
+    visuals: ['app/icon.svg'],
+    diagrams: [{ path: 'content/docs/discovery.mdx', contains: ['```mermaid'] }],
+    exceptions: [],
+  } },
   gates: { preset: 'standard' },
   reconciliation: {
     scope: 'package',

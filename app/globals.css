@@ -48,8 +48,13 @@
   color-scheme: dark;
 }
 
-html, body {
+html {
   background: var(--background);
+}
+
+/* Transparent so the shared <agentskit-aurora> layer shows behind content. */
+body {
+  background: transparent;
   color: var(--foreground);
   font-feature-settings: "ss01", "cv11";
   -webkit-font-smoothing: antialiased;
@@ -84,11 +89,9 @@ html, body {
   color: var(--accent-strong);
 }
 
-@utility bg-grid {
-  background-image:
-    linear-gradient(to right, oklch(0.96 0.005 280 / 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, oklch(0.96 0.005 280 / 0.04) 1px, transparent 1px);
-  background-size: 64px 64px;
+@utility bg-fade-bottom {
+  mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 480px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 calc(100% - 480px), transparent 100%);
 }
 
 @utility card-lift {
@@ -196,13 +199,23 @@ html, body {
 .prose a:hover { text-decoration-color: var(--accent-strong); }
 .prose .not-prose a { text-decoration: none; }
 
-/* The host owns stacking and the shared 56px header rhythm only. */
-#ak-eco { z-index: 60 !important; min-height: 56px !important; }
-#ak-eco a {
+/* Shell v1 owns the bar's layout and sizing; the host only keeps it above
+ * the sticky Fumadocs chrome. */
+#ak-eco { z-index: 60 !important; }
+
+/* Fumadocs pins its product chrome (mobile #nd-subnav, desktop #nd-sidebar)
+ * to the top of the viewport. On docs pages keep the shell bar pinned above
+ * it and offset Fumadocs by the bar height, so the Playbook wordmark, search
+ * and menu stay visible at every width. */
+body:has(#nd-subnav) {
+  --fd-banner-height: 56px;
+}
+body:has(#nd-subnav) #ak-eco {
+  position: sticky !important;
+  top: 0;
   box-sizing: border-box;
-  display: inline-flex !important;
-  min-height: 44px !important;
-  align-items: center;
+  height: var(--fd-banner-height);
+  min-height: 0;
 }
 
 /* Keep the assistant launcher usable before its client bundle hydrates. */

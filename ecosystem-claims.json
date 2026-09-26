@@ -14,13 +14,13 @@
           "id": "packages",
           "value": 22,
           "noun": "packages",
-          "conservativeFloor": 22,
           "evidence": {
             "type": "repository-derivation",
             "repo": "AgentsKit-io/agentskit",
             "path": "scripts/compute-stats.mjs",
             "summary": "Published non-private @agentskit/* package directories."
-          }
+          },
+          "conservativeFloor": 22
         },
         {
           "id": "framework-bindings",
@@ -37,65 +37,65 @@
           "id": "native-adapters",
           "value": 25,
           "noun": "native adapters",
-          "conservativeFloor": 25,
           "evidence": {
             "type": "repository-derivation",
             "repo": "AgentsKit-io/agentskit",
             "path": "scripts/compute-stats.mjs",
             "summary": "Provider exports in the adapters package excluding composition helpers."
-          }
+          },
+          "conservativeFloor": 25
         },
         {
           "id": "integrations",
           "value": 50,
           "noun": "integrations",
-          "conservativeFloor": 50,
           "evidence": {
             "type": "repository-derivation",
             "repo": "AgentsKit-io/agentskit",
             "path": "scripts/compute-stats.mjs",
             "summary": "Service directories in the integrations catalog."
-          }
+          },
+          "conservativeFloor": 50
         },
         {
           "id": "catalog-providers",
-          "value": 140,
+          "value": 222,
           "noun": "providers",
-          "conservativeFloor": 140,
           "evidence": {
             "type": "repository-derivation",
             "repo": "AgentsKit-io/agentskit",
             "path": "scripts/compute-stats.mjs",
             "summary": "Providers in the committed model catalog snapshot."
-          }
+          },
+          "conservativeFloor": 220
         },
         {
           "id": "catalog-models",
-          "value": 5162,
+          "value": 7870,
           "noun": "models",
-          "conservativeFloor": 5000,
           "evidence": {
             "type": "repository-derivation",
             "repo": "AgentsKit-io/agentskit",
             "path": "scripts/compute-stats.mjs",
             "summary": "Models in the committed provider catalog snapshot."
-          }
+          },
+          "conservativeFloor": 7000
         },
         {
           "id": "skills",
-          "value": 21,
+          "value": 22,
           "noun": "ready-made skills",
-          "conservativeFloor": 21,
           "evidence": {
             "type": "repository-derivation",
             "repo": "AgentsKit-io/agentskit",
             "path": "scripts/compute-stats.mjs",
             "summary": "Concrete skill modules excluding registry and composition helpers."
-          }
+          },
+          "conservativeFloor": 22
         },
         {
           "id": "memory-backends",
-          "value": 17,
+          "value": 18,
           "noun": "memory backends",
           "evidence": {
             "type": "repository-derivation",
@@ -106,15 +106,15 @@
         },
         {
           "id": "recipes",
-          "value": 69,
+          "value": 71,
           "noun": "recipes",
-          "conservativeFloor": 69,
           "evidence": {
             "type": "repository-derivation",
             "repo": "AgentsKit-io/agentskit",
             "path": "scripts/compute-stats.mjs",
             "summary": "Published recipe MDX pages excluding indexes and metadata."
-          }
+          },
+          "conservativeFloor": 71
         },
         {
           "id": "core-size-kb-gzip",
@@ -148,15 +148,6 @@
       "claims": []
     },
     {
-      "productId": "playbook",
-      "source": {
-        "type": "endpoint",
-        "url": "https://playbook.agentskit.io/api/stats.json"
-      },
-      "verification": "declared",
-      "claims": []
-    },
-    {
       "productId": "doc-bridge",
       "source": {
         "type": "repository",
@@ -169,16 +160,25 @@
       "productId": "code-review",
       "source": {
         "type": "repository",
-        "repo": "AgentsKit-io/code-review-cli"
+        "repo": "AgentsKit-io/code-review"
       },
       "verification": "declared",
       "claims": []
     },
     {
-      "productId": "akos",
+      "productId": "harness",
       "source": {
         "type": "endpoint",
-        "url": "https://akos.agentskit.io/api/stats.json"
+        "url": "https://harness.agentskit.io/api/stats.json"
+      },
+      "verification": "declared",
+      "claims": []
+    },
+    {
+      "productId": "playbook",
+      "source": {
+        "type": "endpoint",
+        "url": "https://playbook.agentskit.io/api/stats.json"
       },
       "verification": "declared",
       "claims": []

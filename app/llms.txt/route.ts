@@ -87,7 +87,7 @@ function ecosystemBlock(): string {
       }>;
     };
     const products = eco.products.filter(
-      (product) => product.id !== 'akos' && product.navigation.showInBar !== false,
+      (product) => product.navigation.showInBar !== false,
     ).sort(
       (left, right) => left.navigation.order - right.navigation.order,
     );

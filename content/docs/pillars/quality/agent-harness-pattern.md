@@ -71,7 +71,7 @@ After a failure, fix the code and run `ak-harness retry`. The new run preserves 
 
 ## Dogfood
 
-The harness should validate itself in the Playbook and then run a separate, task-scoped contract at the root of `agentskit-os`. Do not reuse an unrelated repository contract or turn the entire monorepo into a mandatory check for every small change.
+The harness should validate itself in the Playbook and then run a separate, task-scoped contract at the root of each consuming repository. Do not reuse an unrelated repository contract or turn the entire monorepo into a mandatory check for every small change.
 
 ## See also
 

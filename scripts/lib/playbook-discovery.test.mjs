@@ -38,7 +38,7 @@ describe('Playbook deterministic discovery', () => {
     expect(resolver.resolve('check-no-any.example.mjs')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
     expect(resolver.resolve('onboard my agent')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
     expect(resolver.resolve('review before merge')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
-    expect(resolver.resolve('production governance')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
+    expect(resolver.resolve('keep-pushing loop')).toMatchObject({ outcome: 'answer', provenance: { source: 'local' } })
     expect(resolver.resolve('universal')).toMatchObject({ outcome: 'choices', confidence: { basis: 'ambiguous' } })
     expect(resolver.resolve('How should I adapt several patterns to a Rust monorepo?')).toMatchObject({ outcome: 'escalation', reason: 'miss' })
   })
