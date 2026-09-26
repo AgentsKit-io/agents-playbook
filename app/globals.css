@@ -205,6 +205,21 @@ body {
  * the sticky Fumadocs chrome. */
 #ak-eco { z-index: 60 !important; }
 
+/* Fumadocs pins its product chrome (mobile #nd-subnav, desktop #nd-sidebar)
+ * to the top of the viewport. On docs pages keep the shell bar pinned above
+ * it and offset Fumadocs by the bar height, so the Playbook wordmark, search
+ * and menu stay visible at every width. */
+body:has(#nd-subnav) {
+  --fd-banner-height: 56px;
+}
+body:has(#nd-subnav) #ak-eco {
+  position: sticky !important;
+  top: 0;
+  box-sizing: border-box;
+  height: var(--fd-banner-height);
+  min-height: 0;
+}
+
 /* Keep the assistant launcher usable before its client bundle hydrates. */
 .ak-ask-fab {
   --ask-bg: #0b1017;

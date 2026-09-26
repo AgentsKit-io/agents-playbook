@@ -29,6 +29,12 @@ describe("Playbook public shell", () => {
     expect(page).toContain("min-h-11");
   });
 
+  it("offsets pinned Fumadocs chrome below the shell bar on docs pages", () => {
+    expect(read("app/globals.css")).toMatch(
+      /body:has\(#nd-subnav\)\s*\{[^}]*--fd-banner-height:\s*56px/s,
+    );
+  });
+
   it("adopts AgentsKit shell v1 without listing the Playbook as a product", () => {
     const shell = read("lib/shell.ts");
     expect(shell).toContain("NEXT_PUBLIC_AGENTSKIT_SHELL_ORIGIN");
