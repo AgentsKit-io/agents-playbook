@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "project": "agents-playbook",
+  "root": "..",
+  "stateDir": ".ak-harness/verification",
+  "profile": "strict",
+  "contract": {
+    "intent": "Validate the Playbook corpus documentation contracts with the published @agentskit/harness.",
+    "scope": {
+      "inScope": ["content/docs", "doc-bridge.config.json", "README.md", "readme-standard-v1.json", "scripts/verify-playbook-docs.mjs"],
+      "outOfScope": ["@agentskit/harness source (canonical repo AgentsKit-io/harness)", "automatic git push or PR creation"]
+    },
+    "ambiguities": [],
+    "outcomes": [
+      { "id": "docs", "statement": "The Doc Bridge configuration is current and the README satisfies README Standard v1.", "checks": ["playbook-docs"] }
+    ]
+  },
+  "surfaces": {
+    "logic": { "required": false, "reason": "Documentation-only contract." },
+    "endpoint": { "required": false, "reason": "No endpoint behavior." },
+    "database": { "required": false, "reason": "No database-backed behavior." },
+    "cli": { "required": false, "reason": "No CLI behavior." },
+    "mcp": { "required": false, "reason": "No MCP behavior." },
+    "ui": { "required": false, "reason": "UI is covered by Playwright in CI." },
+    "docs": true
+  },
+  "checks": [
+    { "id": "playbook-docs", "category": "docs", "command": "node scripts/verify-playbook-docs.mjs", "evidence": "structured", "timeoutMs": 120000 }
+  ],
+  "tracking": { "required": false, "reason": "Local-first; external tracking is conditional per task contract." },
+  "budget": { "maxDurationMs": 300000 },
+  "cleanup": { "roots": [".ak-harness/verification/tmp"] }
+}

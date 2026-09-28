@@ -12,6 +12,8 @@ How to make coding-agent delivery evidence-backed instead of trust-based.
 
 Use `@agentskit/harness` (`ak-harness`) to freeze a human-approved task contract, resolve ambiguities before implementation, run every applicable check, record structured evidence, and refuse `COMPLETE` without human approval.
 
+The harness lives in its own repository, [`AgentsKit-io/harness`](https://github.com/AgentsKit-io/harness), and ships on npm as [`@agentskit/harness`](https://www.npmjs.com/package/@agentskit/harness) (`npm install -D @agentskit/harness`). This Playbook documents the pattern; it does not vendor the package.
+
 The harness is agent-agnostic. An agent only needs to read the contract, run the CLI, and emit the common evidence format. Doc Bridge and the Playbook can enrich context, but the core protocol remains usable without either integration.
 
 ## Lifecycle
@@ -71,7 +73,7 @@ After a failure, fix the code and run `ak-harness retry`. The new run preserves 
 
 ## Dogfood
 
-The harness should validate itself in the Playbook and then run a separate, task-scoped contract at the root of each consuming repository. Do not reuse an unrelated repository contract or turn the entire monorepo into a mandatory check for every small change.
+The harness validates itself in its own repository. Each consuming repository installs the published package and runs a separate, task-scoped contract at its root (default path `.ak-harness/verification.json`). The Playbook does exactly that: its contract covers only the corpus documentation checks, and `pnpm harness:doctor` validates it with the published CLI. Do not reuse an unrelated repository contract or turn the entire monorepo into a mandatory check for every small change.
 
 ## See also
 

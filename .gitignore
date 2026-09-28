@@ -29,3 +29,6 @@ public/playbook-bundle.zip
 .vercel
 test-results/
 playwright-report/
+
+# ak-harness run state
+.ak-harness/verification/
