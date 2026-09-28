@@ -1,5 +1,6 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
-import { join, relative, sep } from 'node:path'
+import { join } from 'node:path'
+import { relativePosix } from '@agentskit/cross-platform'
 import {
   DETERMINISTIC_ARTIFACT_MAX_BYTES,
   DETERMINISTIC_KNOWLEDGE_PROTOCOL,
@@ -26,14 +27,12 @@ const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((entry) 
   return entry.isDirectory() ? walk(path) : [/\.mdx?$/, /\.mjs$/].some((pattern) => pattern.test(entry.name)) ? [path] : []
 })
 
-const routeFor = (path) => relative(DOCS_ROOT, path)
-  .split(sep)
-  .join('/')
+const routeFor = (path) => relativePosix(DOCS_ROOT, path)
   .replace(/\.mdx?$/, '')
   .replace(/\/index$/, '')
   .replace(/^(index|README)$/, '')
 
-const rawHrefFor = (path) => `${SITE}/raw/${relative(DOCS_ROOT, path).split(sep).join('/')}`
+const rawHrefFor = (path) => `${SITE}/raw/${relativePosix(DOCS_ROOT, path)}`
 
 const unique = (values) => {
   const seen = new Set()
@@ -55,7 +54,7 @@ const contentRevision = (root) => {
 
 const pageEntry = (root, path) => {
   const body = readFileSync(path, 'utf8')
-  const relativePath = relative(join(root, DOCS_ROOT), path).split(sep).join('/')
+  const relativePath = relativePosix(join(root, DOCS_ROOT), path)
   const route = routeFor(path)
   const slug = route.split('/').at(-1) ?? route
   const title = frontmatterValue(body, 'title') || body.match(/^#\s+(.+)$/m)?.[1]?.trim() || slug

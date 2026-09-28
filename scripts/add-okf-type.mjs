@@ -11,9 +11,10 @@
  * Run: node scripts/add-okf-type.mjs   (add --check to fail if any doc is untyped)
  */
 import { readdir, readFile, writeFile } from "node:fs/promises";
-import { join, relative } from "node:path";
+import { join } from "node:path";
+import { moduleDir, relativePosix } from "@agentskit/cross-platform";
 
-const ROOT = new URL("..", import.meta.url).pathname;
+const ROOT = join(moduleDir(import.meta.url), "..");
 const DOCS = join(ROOT, "content/docs");
 
 /** Map a doc's path (relative to content/docs) to its OKF `type`. */
@@ -52,7 +53,7 @@ let changed = 0;
 const untyped = [];
 
 for await (const file of walk(DOCS)) {
-  const rel = relative(DOCS, file);
+  const rel = relativePosix(DOCS, file);
   const src = await readFile(file, "utf8");
 
   const m = src.match(/^---\s*\n([\s\S]*?)\n---/);

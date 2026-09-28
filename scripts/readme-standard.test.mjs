@@ -1,9 +1,11 @@
 import { execFileSync } from 'node:child_process'
 import { readFileSync, readdirSync } from 'node:fs'
+import { resolve } from 'node:path'
+import { moduleDir } from '@agentskit/cross-platform'
 import { describe, expect, it } from 'vitest'
 import { auditReadme } from './lib/readme-standard.mjs'
 
-const root = new URL('..', import.meta.url).pathname.replace(/\/$/, '')
+const root = resolve(moduleDir(import.meta.url), '..')
 
 describe('README Standard v1', () => {
   it('passes every declared dimension, budget, example, and freshness gate', () => {

@@ -1,12 +1,15 @@
 #!/usr/bin/env node
-import { execFileSync } from 'node:child_process'
 import { join } from 'node:path'
+import { runCommand } from '@agentskit/cross-platform'
 
-const output = execFileSync(join(process.cwd(), 'node_modules', '.bin', 'ak-docs'), ['doctor'], {
-  cwd: process.cwd(),
-  encoding: 'utf8',
-})
-const report = JSON.parse(output)
+// node_modules/.bin/ak-docs is ak-docs.cmd on Windows; runCommand resolves the shim.
+const doctor = await runCommand(join(process.cwd(), 'node_modules', '.bin', 'ak-docs'), ['doctor'], { cwd: process.cwd() })
+if (doctor.code !== 0) {
+  process.stderr.write(doctor.stderr)
+  console.error(`ak-docs doctor exited with code ${doctor.code}`)
+  process.exit(1)
+}
+const report = JSON.parse(doctor.stdout)
 
 if (report.ok !== true || report.score !== 100 || report.grade !== 'A') {
   console.error(`Doc Bridge certification failed: ${report.score ?? 'unknown'}/100 ${report.grade ?? 'unknown'}`)

@@ -20,6 +20,7 @@ All notable changes to Agents Playbook are documented here. The format follows [
 
 ### Changed
 
+- Repository scripts use `@agentskit/cross-platform` for module paths, POSIX-relative paths and `.cmd` shim resolution (`pnpm`, `node_modules/.bin/ak-docs`), and `pnpm lint` runs its portability ratchet against `.cross-platform-baseline.json`.
 - Prepared `@agentskit/playbook@0.1.1` with an explicit dual-license boundary:
   CLI software under MIT and the Playbook content corpus under CC BY 4.0.
 - Updated Doc Bridge to 1.1.1.
