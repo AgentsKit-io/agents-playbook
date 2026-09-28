@@ -9,9 +9,7 @@
     "examples",
     "content/docs/scripts"
   ],
-  "exclude": [
-    "packages/harness"
-  ],
+  "exclude": [],
   "entries": {
     "app/llms-full.txt/route.test.ts": {
       "manual-slash-normalize": 1
@@ -122,21 +120,6 @@
       "manual-slash-normalize": 1
     },
     "scripts/test-pre-commit-hook.mjs": {
-      "child-process-import": 1
-    },
-    "scripts/verify-harness-benchmark-record.mjs": {
-      "child-process-import": 1
-    },
-    "scripts/verify-harness-benchmark.mjs": {
-      "child-process-import": 1
-    },
-    "scripts/verify-harness-cli-flow.mjs": {
-      "child-process-import": 1
-    },
-    "scripts/verify-harness-consumer.mjs": {
-      "child-process-import": 1
-    },
-    "scripts/verify-harness-context-cli.mjs": {
       "child-process-import": 1
     }
   }
