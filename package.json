@@ -17,7 +17,8 @@
     "harness:test": "pnpm --filter @agentskit/harness test",
     "harness:build": "pnpm --filter @agentskit/harness build",
     "harness:cli": "pnpm harness:build && pnpm exec ak-harness --help",
-    "lint": "tsc --noEmit",
+    "lint": "pnpm check:cross-platform && tsc --noEmit",
+    "check:cross-platform": "agentskit-cross-platform check",
     "test": "vitest run",
     "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
     "test:onboarding": "vitest run scripts/onboarding-proof.test.mjs",
@@ -53,8 +54,9 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@agentskit/harness": "workspace:*",
+    "@agentskit/cross-platform": "^0.1.0",
     "@agentskit/doc-bridge": "^1.12.0",
+    "@agentskit/harness": "workspace:*",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/mdx": "^2.0.14",

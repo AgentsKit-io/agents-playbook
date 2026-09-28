@@ -1,4 +1,4 @@
-import { spawnSync } from 'node:child_process'
+import { spawnProcess } from '@agentskit/cross-platform'
 
 const commands = [
   ['pnpm', ['check:doc-bridge-config']],
@@ -6,8 +6,9 @@ const commands = [
 ]
 const failures = []
 for (const [command, args] of commands) {
-  const result = spawnSync(command, args, { stdio: 'inherit', encoding: 'utf8' })
-  if (result.status !== 0) failures.push(`${command} ${args.join(' ')}`)
+  // pnpm is pnpm.cmd on Windows; spawnProcess resolves the shim without a shell.
+  const result = await spawnProcess(command, args, { stdin: 'inherit', stdout: 'inherit', stderr: 'inherit' }).exited.catch(() => ({ code: 1 }))
+  if (result.code !== 0) failures.push(`${command} ${args.join(' ')}`)
 }
 if (failures.length) {
   console.log(JSON.stringify({ status: 'failed', criteria: ['docs'], failures }))

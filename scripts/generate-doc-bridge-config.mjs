@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { readFileSync, readdirSync, statSync, writeFileSync } from 'node:fs'
-import { join, relative, sep } from 'node:path'
+import { join, sep } from 'node:path'
+import { relativePosix } from '@agentskit/cross-platform'
 
 const root = process.cwd()
 const docsRoot = join(root, 'content', 'docs')
@@ -47,8 +48,8 @@ for (const [id, [path, purpose]] of Object.entries(infrastructureOwnership)) {
 }
 
 for (const path of files) {
-  const sourcePath = relative(root, path).split(sep).join('/')
-  const route = relative(docsRoot, path).split(sep).join('/').replace(/\.mdx?$/, '').replace(/\/index$/, '').replace(/^(index|README)$/, '')
+  const sourcePath = relativePosix(root, path)
+  const route = relativePosix(docsRoot, path).replace(/\.mdx?$/, '').replace(/\/index$/, '').replace(/^(index|README)$/, '')
   const basename = path.split(sep).at(-1)?.replace(/\.mdx?$/, '') ?? route
   const id = route === '' ? 'playbook' : counts.get(basename) === 1 ? basename : route.replaceAll('/', '--')
   const { title, description } = metadata(path)

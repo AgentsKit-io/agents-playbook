@@ -1,10 +1,11 @@
 import { execFileSync } from 'node:child_process'
 import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import { tmpdir } from 'node:os'
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
+import { moduleDir } from '@agentskit/cross-platform'
 import { describe, expect, it } from 'vitest'
 
-const root = new URL('..', import.meta.url).pathname.replace(/\/$/, '')
+const root = resolve(moduleDir(import.meta.url), '..')
 
 describe('Playbook onboarding proof', () => {
   it('keeps every advertised onboarding surface present and connected', () => {

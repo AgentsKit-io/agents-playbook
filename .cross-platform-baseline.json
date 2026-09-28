@@ -1,0 +1,143 @@
+{
+  "version": 1,
+  "include": [
+    "packages",
+    "scripts",
+    "app",
+    "lib",
+    "components",
+    "examples",
+    "content/docs/scripts"
+  ],
+  "exclude": [
+    "packages/harness"
+  ],
+  "entries": {
+    "app/llms-full.txt/route.test.ts": {
+      "manual-slash-normalize": 1
+    },
+    "app/llms.txt/route.ts": {
+      "split-newline": 2
+    },
+    "components/ask-widget.tsx": {
+      "split-newline": 1
+    },
+    "content/docs/scripts/check-completeness.example.mjs": {
+      "split-newline": 2,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-error-raw.example.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-file-size.example.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-intl.example.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-named-exports.example.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-native-html.example.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-no-any.example.mjs": {
+      "split-newline": 3,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-pr-intent.example.mjs": {
+      "child-process-import": 1,
+      "split-newline": 3
+    },
+    "content/docs/scripts/check-quality-gates.example.mjs": {
+      "child-process-import": 1
+    },
+    "content/docs/scripts/check-secrets.example.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "content/docs/scripts/check-tokens.example.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/bin/agents-playbook.mjs": {
+      "child-process-import": 1
+    },
+    "packages/playbook/gates/check-completeness.mjs": {
+      "split-newline": 2,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-error-raw.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-file-size.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-intl.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-named-exports.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-native-html.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-no-any.mjs": {
+      "split-newline": 3,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-pr-intent.mjs": {
+      "child-process-import": 1,
+      "split-newline": 3
+    },
+    "packages/playbook/gates/check-secrets.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/gates/check-tokens.mjs": {
+      "split-newline": 1,
+      "manual-slash-normalize": 1
+    },
+    "packages/playbook/test/cli.test.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/onboarding-proof.test.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/readme-standard.test.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/run-pre-commit-hook.mjs": {
+      "child-process-import": 1,
+      "manual-slash-normalize": 1
+    },
+    "scripts/test-pre-commit-hook.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/verify-harness-benchmark-record.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/verify-harness-benchmark.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/verify-harness-cli-flow.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/verify-harness-consumer.mjs": {
+      "child-process-import": 1
+    },
+    "scripts/verify-harness-context-cli.mjs": {
+      "child-process-import": 1
+    }
+  }
+}
