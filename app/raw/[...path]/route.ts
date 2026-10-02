@@ -30,6 +30,27 @@ async function resolve(segments: string[]): Promise<string | null> {
   return null;
 }
 
+// Workers (OpenNext) have no filesystem: the same candidates, looked up in the
+// build-time index of content/docs (scripts/build-raw-index.mjs).
+async function resolveFromIndex(segments: string[]): Promise<{ name: string; body: string } | null> {
+  const { default: files } = await import("@/lib/raw-index.generated.json");
+  const base = segments.join("/");
+  const candidates = [
+    ...(base.endsWith(".mjs") ? [base] : []),
+    `${base}.md`,
+    `${base}.mdx`,
+    `${base}/index.md`,
+    `${base}/index.mdx`,
+    `${base}/README.md`,
+    `${base}/README.mdx`,
+  ];
+  for (const candidate of candidates) {
+    const body = files[candidate.replace(/^\/+/, "")];
+    if (typeof body === "string") return { name: candidate, body };
+  }
+  return null;
+}
+
 export async function GET(
   _req: Request,
   ctx: { params: Promise<{ path: string[] }> },
@@ -46,12 +67,13 @@ export async function GET(
   }
 
   const file = await resolve(segs);
-  if (!file) return new Response("Not found", { status: 404 });
+  const found = file ? { name: file, body: await readFile(file, "utf8") } : await resolveFromIndex(segs);
+  if (!found) return new Response("Not found", { status: 404 });
 
-  const body = await readFile(file, "utf8");
+  const body = found.body;
   return new Response(body, {
     headers: {
-      "content-type": file.endsWith(".mjs") ? "text/javascript; charset=utf-8" : "text/markdown; charset=utf-8",
+      "content-type": found.name.endsWith(".mjs") ? "text/javascript; charset=utf-8" : "text/markdown; charset=utf-8",
       "cache-control": "public, max-age=300, s-maxage=3600",
     },
   });

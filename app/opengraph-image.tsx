@@ -3,7 +3,8 @@ import stats from "./stats.snapshot.json";
 
 const C = stats.counts;
 
-export const runtime = "edge";
+// Node runtime: OpenNext on Cloudflare Workers does not run `runtime = "edge"` routes;
+// next/og works the same on the Node runtime (Vercel and Workers).
 export const alt = "Agents Playbook";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -20,8 +21,9 @@ export default async function OGImage() {
           justifyContent: "center",
           alignItems: "flex-start",
           padding: "80px",
-          background:
-            "radial-gradient(ellipse at top left, rgba(140,100,255,0.30), transparent 55%), radial-gradient(ellipse at bottom right, rgba(140,100,255,0.16), transparent 50%), #0b0a13",
+          backgroundColor: "#0b0a13",
+          backgroundImage:
+            "radial-gradient(ellipse at top left, rgba(140,100,255,0.30), transparent 55%), radial-gradient(ellipse at bottom right, rgba(140,100,255,0.16), transparent 50%)",
           color: "white",
           fontFamily: "Inter, system-ui",
         }}

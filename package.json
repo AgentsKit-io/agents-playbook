@@ -5,12 +5,15 @@
   "type": "module",
   "scripts": {
     "dev": "next dev --turbo",
-    "prebuild": "node scripts/gen-stats-snapshot.mjs && node scripts/build-discovery.mjs && node scripts/build-bundle.mjs",
+    "prebuild": "node scripts/gen-stats-snapshot.mjs && node scripts/build-discovery.mjs && node scripts/build-bundle.mjs && node scripts/build-raw-index.mjs",
     "gen:stats": "node scripts/gen-stats-snapshot.mjs",
     "gen:okf-type": "node scripts/add-okf-type.mjs",
     "check:okf-type": "node scripts/add-okf-type.mjs --check",
     "build": "next build",
     "start": "next start",
+    "cf:build": "opennextjs-cloudflare build",
+    "cf:preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
+    "cf:deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "postinstall": "fumadocs-mdx",
     "build:bundle": "node scripts/build-bundle.mjs",
     "build:discovery": "node scripts/build-discovery.mjs",
@@ -46,7 +49,7 @@
     "fumadocs-mdx": "11.6.4",
     "fumadocs-ui": "15.6.5",
     "lucide-react": "^0.460.0",
-    "next": "^15.5.25",
+    "next": "^15.5.27",
     "posthog-js": "^1.433.6",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
@@ -64,7 +67,9 @@
     "@types/react-dom": "^19.3.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
-    "vitest": "^4.1.11"
+    "vitest": "^4.1.11",
+    "@opennextjs/cloudflare": "1.20.7",
+    "wrangler": "^4.146.0"
   },
   "packageManager": "pnpm@10.34.4",
   "engines": {

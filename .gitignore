@@ -32,3 +32,9 @@ playwright-report/
 
 # ak-harness run state
 .ak-harness/verification/
+
+# Cloudflare (OpenNext / wrangler)
+.open-next/
+.wrangler/
+.dev.vars
+lib/raw-index.generated.json
