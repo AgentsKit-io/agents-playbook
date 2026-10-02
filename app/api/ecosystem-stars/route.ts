@@ -1,12 +1,16 @@
 import { NextResponse } from 'next/server'
 import { ecosystemProducts } from '@/lib/ecosystem'
 
-export const revalidate = 21_600
+// Dynamic + CDN cache (s-maxage below) instead of ISR: the same 6 h freshness on Vercel and on
+// Cloudflare Workers, where the static-assets cache has no revalidation.
+export const dynamic = 'force-dynamic'
+const revalidate = 21_600
 
 const starCount = async (repo: string): Promise<number> => {
   try {
     const response = await fetch(`https://api.github.com/repos/${repo}`, {
-      headers: { accept: 'application/vnd.github+json' },
+      // GitHub rejects API requests without a User-Agent (Workers' fetch sends none).
+      headers: { accept: 'application/vnd.github+json', 'user-agent': 'agents-playbook' },
       next: { revalidate },
       signal: AbortSignal.timeout(4_000),
     })
