@@ -10,5 +10,7 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // Guard against runaway invocations (Workers Paid; default would be 30 s).
+  "limits": { "cpu_ms": 5000 }
 }
