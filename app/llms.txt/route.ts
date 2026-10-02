@@ -1,14 +1,12 @@
 // /llms.txt — the emerging convention for LLM-readable site map.
 // Lists every doc with a one-line description so an LLM can decide what to fetch.
 
-import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
-import { existsSync, readFileSync } from "node:fs";
 import { formatEcosystemLlmsBlock } from "../../lib/ecosystem-llms-block";
+import { readDocSources } from "@/lib/doc-sources";
+import ecosystem from "../../ecosystem.json";
 
 export const dynamic = "force-static";
 
-const ROOT = join(process.cwd(), "content", "docs");
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 
 type Doc = { url: string; rawUrl: string; title: string; description: string };
@@ -33,49 +31,39 @@ const scriptDescription = (body: string): string | undefined => {
 
 async function collect(): Promise<Doc[]> {
   const docs: Doc[] = [];
-  async function walk(dir: string, prefix: string[]): Promise<void> {
-    const entries = await readdir(dir, { withFileTypes: true });
-    for (const e of entries) {
-      const next = [...prefix, e.name];
-      const full = join(dir, e.name);
-      if (e.isDirectory()) {
-        await walk(full, next);
-      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx") || e.name.endsWith(".mjs")) {
-        const body = await readFile(full, "utf8");
-        const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
-        const title = yamlScalar(frontmatter.match(/^title:\s*(.+)$/m)?.[1]) ?? body.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? e.name.replace(/\.(md|mdx|mjs)$/, "");
-        const declaredDescription = yamlScalar(frontmatter.match(/^description:\s*(.+)$/m)?.[1]);
-        const isScript = e.name.endsWith(".mjs");
-        const firstPara = declaredDescription ?? (isScript ? scriptDescription(body) : undefined) ?? body
-          .replace(/^---\r?\n[\s\S]*?\r?\n---/, "")
-          .split("\n")
-          .find((line) => line.trim() && !line.startsWith("#") && !line.startsWith(">") && !line.startsWith("//"))
-          ?.replace(/^[*\-\s]+/, "")
-          .trim() ?? "";
-        const description = firstPara.length > 180 ? firstPara.slice(0, 177) + "…" : firstPara;
-        const stem = isScript ? next.join("/") : next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
-        const cleanStem = stem
-          .replace(/\/index$/, "")
-          .replace(/\/README$/, "")
-          .replace(/^(index|README)$/, "");
-        docs.push({
-          url: isScript ? `${SITE}/raw/${cleanStem}` : cleanStem ? `${SITE}/docs/${cleanStem}` : `${SITE}/docs`,
-          rawUrl: isScript ? `${SITE}/raw/${cleanStem}` : cleanStem ? `${SITE}/raw/${cleanStem}.md` : `${SITE}/raw/index.md`,
-          title,
-          description,
-        });
-      }
-    }
+  for (const { rel, body } of await readDocSources()) {
+    const next = rel.split("/");
+    const e = { name: next[next.length - 1] };
+    const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
+    const title = yamlScalar(frontmatter.match(/^title:\s*(.+)$/m)?.[1]) ?? body.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? e.name.replace(/\.(md|mdx|mjs)$/, "");
+    const declaredDescription = yamlScalar(frontmatter.match(/^description:\s*(.+)$/m)?.[1]);
+    const isScript = e.name.endsWith(".mjs");
+    const firstPara = declaredDescription ?? (isScript ? scriptDescription(body) : undefined) ?? body
+      .replace(/^---\r?\n[\s\S]*?\r?\n---/, "")
+      .split("\n")
+      .find((line) => line.trim() && !line.startsWith("#") && !line.startsWith(">") && !line.startsWith("//"))
+      ?.replace(/^[*\-\s]+/, "")
+      .trim() ?? "";
+    const description = firstPara.length > 180 ? firstPara.slice(0, 177) + "…" : firstPara;
+    const stem = isScript ? next.join("/") : next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
+    const cleanStem = stem
+      .replace(/\/index$/, "")
+      .replace(/\/README$/, "")
+      .replace(/^(index|README)$/, "");
+    docs.push({
+      url: isScript ? `${SITE}/raw/${cleanStem}` : cleanStem ? `${SITE}/docs/${cleanStem}` : `${SITE}/docs`,
+      rawUrl: isScript ? `${SITE}/raw/${cleanStem}` : cleanStem ? `${SITE}/raw/${cleanStem}.md` : `${SITE}/raw/index.md`,
+      title,
+      description,
+    });
   }
-  if (existsSync(ROOT)) await walk(ROOT, []);
   return docs;
 }
 
 /** Canonical public-product mesh from ecosystem.json (shared template). */
 function ecosystemBlock(): string {
   try {
-    const raw = readFileSync(join(process.cwd(), "ecosystem.json"), "utf8");
-    const eco = JSON.parse(raw) as {
+    const eco = ecosystem as {
       products: Array<{
         id: string;
         name: string;

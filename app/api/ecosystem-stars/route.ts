@@ -1,7 +1,10 @@
 import { NextResponse } from 'next/server'
 import { ecosystemProducts } from '@/lib/ecosystem'
 
-export const revalidate = 21_600
+// Dynamic + CDN cache (s-maxage below) instead of ISR: the same 6 h freshness on Vercel and on
+// Cloudflare Workers, where the static-assets cache has no revalidation.
+export const dynamic = 'force-dynamic'
+const revalidate = 21_600
 
 const starCount = async (repo: string): Promise<number> => {
   try {

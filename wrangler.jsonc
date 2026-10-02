@@ -10,13 +10,5 @@
     "directory": ".open-next/assets",
     "binding": "ASSETS"
   },
-  "services": [
-    // Self-reference used by OpenNext for ISR revalidation.
-    { "binding": "WORKER_SELF_REFERENCE", "service": "agents-playbook" }
-  ],
-  "kv_namespaces": [
-    // ISR / route-handler revalidate cache (api/ecosystem-stars revalidates every 6 h).
-    { "binding": "NEXT_INC_CACHE_KV", "id": "7d78c01fc1ed4e0abb51ee05ad07fd9c" }
-  ],
   "observability": { "enabled": true }
 }

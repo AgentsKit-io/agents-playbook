@@ -1,37 +1,24 @@
 // /llms-full.txt — single-file dump of every doc, separated by clear delimiters.
 // Optimised for one-shot RAG indexing by an LLM agent.
 
-import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
-import { existsSync } from "node:fs";
+import { readDocSources } from "@/lib/doc-sources";
 
 export const dynamic = "force-static";
 
-const ROOT = join(process.cwd(), "content", "docs");
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 
 async function collect(): Promise<{ path: string; body: string }[]> {
   const out: { path: string; body: string }[] = [];
-  async function walk(dir: string, prefix: string[]): Promise<void> {
-    const entries = await readdir(dir, { withFileTypes: true });
-    for (const e of entries) {
-      const next = [...prefix, e.name];
-      const full = join(dir, e.name);
-      if (e.isDirectory()) {
-        await walk(full, next);
-      } else if (e.name.endsWith(".md") || e.name.endsWith(".mdx") || e.name.endsWith(".mjs")) {
-        const body = await readFile(full, "utf8");
-        const isScript = e.name.endsWith(".mjs");
-        const stem = isScript ? next.join("/") : next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
-        const cleaned = stem
-          .replace(/\/index$/, "")
-          .replace(/\/README$/, "")
-          .replace(/^(index|README)$/, "");
-        out.push({ path: isScript ? `/raw/${cleaned}` : cleaned ? `/docs/${cleaned}` : "/docs", body });
-      }
-    }
+  for (const { rel, body } of await readDocSources()) {
+    const next = rel.split("/");
+    const isScript = rel.endsWith(".mjs");
+    const stem = isScript ? next.join("/") : next.map((s) => s.replace(/\.mdx?$/, "")).join("/");
+    const cleaned = stem
+      .replace(/\/index$/, "")
+      .replace(/\/README$/, "")
+      .replace(/^(index|README)$/, "");
+    out.push({ path: isScript ? `/raw/${cleaned}` : cleaned ? `/docs/${cleaned}` : "/docs", body });
   }
-  if (existsSync(ROOT)) await walk(ROOT, []);
   return out;
 }
 
