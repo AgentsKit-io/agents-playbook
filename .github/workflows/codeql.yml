@@ -22,6 +22,7 @@ jobs:
     uses: AgentsKit-io/.github/.github/workflows/codeql.yml@5a584290feaaa0a800a28d24583d16f15102bea1 # main
     with:
       languages: javascript-typescript
+      build-mode: none
     permissions:
       actions: read
       contents: read
