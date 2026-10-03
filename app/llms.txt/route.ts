@@ -3,6 +3,7 @@
 
 import { formatEcosystemLlmsBlock } from "../../lib/ecosystem-llms-block";
 import { readDocSources } from "@/lib/doc-sources";
+import { frontmatterString, parseFrontmatter } from "@/lib/frontmatter.mjs";
 import ecosystem from "../../ecosystem.json";
 
 export const dynamic = "force-static";
@@ -10,14 +11,6 @@ export const dynamic = "force-static";
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? "https://playbook.agentskit.io";
 
 type Doc = { url: string; rawUrl: string; title: string; description: string };
-
-const yamlScalar = (value: string | undefined): string | undefined => {
-  const trimmed = value?.trim();
-  if (!trimmed) return undefined;
-  if (trimmed.startsWith("'") && trimmed.endsWith("'")) return trimmed.slice(1, -1).replace(/''/g, "'");
-  if (trimmed.startsWith('"') && trimmed.endsWith('"')) return trimmed.slice(1, -1).replace(/\\"/g, '"');
-  return trimmed;
-};
 
 const scriptDescription = (body: string): string | undefined => {
   const comments: string[] = [];
@@ -34,9 +27,9 @@ async function collect(): Promise<Doc[]> {
   for (const { rel, body } of await readDocSources()) {
     const next = rel.split("/");
     const e = { name: next[next.length - 1] };
-    const frontmatter = body.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? "";
-    const title = yamlScalar(frontmatter.match(/^title:\s*(.+)$/m)?.[1]) ?? body.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? e.name.replace(/\.(md|mdx|mjs)$/, "");
-    const declaredDescription = yamlScalar(frontmatter.match(/^description:\s*(.+)$/m)?.[1]);
+    const frontmatter = parseFrontmatter(body);
+    const title = frontmatterString(frontmatter, "title") ?? body.match(/^#\s+(.+)$/m)?.[1]?.trim() ?? e.name.replace(/\.(md|mdx|mjs)$/, "");
+    const declaredDescription = frontmatterString(frontmatter, "description");
     const isScript = e.name.endsWith(".mjs");
     const firstPara = declaredDescription ?? (isScript ? scriptDescription(body) : undefined) ?? body
       .replace(/^---\r?\n[\s\S]*?\r?\n---/, "")
