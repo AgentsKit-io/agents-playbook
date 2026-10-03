@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:fe0b909edd55dcee282d7ad483bca369c11c90a6b9bec61ccfcff713338d4fdb",
+  "contentHash": "sha256:2d61dccbe7916c53f48fb5f14482d4f40eab64312a07954a35a7e56cd87427c0",
   "generatedAt": "2026-09-02T06:09:01.000Z",
   "entries": [
     {
@@ -286,7 +286,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Phase 03 — Build\n\nWhere most of the agent-augmented work happens. Discipline shifts from ''writing code'' to ''stating intent, then verifying output against it''.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/03-build)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/03-build/index.md)",
+        "markdown": "## Phase 03 — Build\n\nWhere most of the agent-augmented work happens. Discipline shifts from 'writing code' to 'stating intent, then verifying output against it'.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/03-build)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/03-build/index.md)",
         "citations": [
           {
             "id": "doc:phases:03-build",
@@ -311,7 +311,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Phase 04 — Test\n\nHow ''tests pass'' stops being a feeling and starts being a contract.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/04-test)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/04-test/index.md)",
+        "markdown": "## Phase 04 — Test\n\nHow 'tests pass' stops being a feeling and starts being a contract.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/04-test)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/04-test/index.md)",
         "citations": [
           {
             "id": "doc:phases:04-test",
@@ -361,7 +361,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Phase 06 — Operate\n\nWhat ''running it'' looks like after agents have shipped the first release.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/06-operate)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/06-operate/index.md)",
+        "markdown": "## Phase 06 — Operate\n\nWhat 'running it' looks like after agents have shipped the first release.\n\nType: **SDLC Phase**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/phases/06-operate)\n[Read raw Markdown](https://playbook.agentskit.io/raw/phases/06-operate/index.md)",
         "citations": [
           {
             "id": "doc:phases:06-operate",
@@ -491,7 +491,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Hallucination Reduction Pattern\n\nMake model output you can put your name on — grounding, constrained generation, verification, and abstention — so the system says \"I don''t know\" instead of confidently inventing.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/hallucination-reduction-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/hallucination-reduction-pattern.md)",
+        "markdown": "## Hallucination Reduction Pattern\n\nMake model output you can put your name on — grounding, constrained generation, verification, and abstention — so the system says \"I don't know\" instead of confidently inventing.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/hallucination-reduction-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/hallucination-reduction-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:ai-collaboration:hallucination-reduction-pattern",
@@ -877,7 +877,7 @@
         ]
       },
       "answer": {
-        "markdown": "## API Gateway Pattern\n\nThe edge between clients and your services — what belongs there, what doesn''t, and how to keep it from becoming a monolith in disguise.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/api-gateway-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/api-gateway-pattern.md)",
+        "markdown": "## API Gateway Pattern\n\nThe edge between clients and your services — what belongs there, what doesn't, and how to keep it from becoming a monolith in disguise.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/architecture/api-gateway-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/architecture/api-gateway-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:architecture:api-gateway-pattern",
@@ -1339,7 +1339,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Pillar — Governance\n\nHow multiple agents (and humans) coordinate work in one repo without subtracting each other''s progress.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/index.md)",
+        "markdown": "## Pillar — Governance\n\nHow multiple agents (and humans) coordinate work in one repo without subtracting each other's progress.\n\nType: **Pillar**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/index.md)",
         "citations": [
           {
             "id": "doc:pillars:governance",
@@ -1417,7 +1417,7 @@
         ]
       },
       "answer": {
-        "markdown": "## PR Intent Pattern\n\nThe manifest that makes a PR''s claims verifiable.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance/pr-intent-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/pr-intent-pattern.md)",
+        "markdown": "## PR Intent Pattern\n\nThe manifest that makes a PR's claims verifiable.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/governance/pr-intent-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/governance/pr-intent-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:governance:pr-intent-pattern",
@@ -1778,7 +1778,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Observability Pattern\n\nHow to know what the system is doing in production, beyond ''tests passed''.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/observability-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/observability-pattern.md)",
+        "markdown": "## Observability Pattern\n\nHow to know what the system is doing in production, beyond 'tests passed'.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/observability-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/observability-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:quality:observability-pattern",
@@ -1804,7 +1804,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Performance Budgets Pattern\n\nHow to keep ''it''s fast enough'' from drifting into ''why is it slow?''\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/performance-budgets-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/performance-budgets-pattern.md)",
+        "markdown": "## Performance Budgets Pattern\n\nHow to keep 'it's fast enough' from drifting into 'why is it slow?'\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/quality/performance-budgets-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/quality/performance-budgets-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:quality:performance-budgets-pattern",
@@ -2192,7 +2192,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Governance Posture Pattern\n\nExpose the system''s live security and governance posture as a read-only, machine-readable signal — so agents, dashboards, and auditors can see what is enforced without admin rights.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/governance-posture-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/governance-posture-pattern.md)",
+        "markdown": "## Governance Posture Pattern\n\nExpose the system's live security and governance posture as a read-only, machine-readable signal — so agents, dashboards, and auditors can see what is enforced without admin rights.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/governance-posture-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/governance-posture-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:security:governance-posture-pattern",
@@ -2321,7 +2321,7 @@
         ]
       },
       "answer": {
-        "markdown": "## RBAC Pattern\n\nHow to model ''who can do what'' so the checks survive multi-agent edits.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/rbac-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/rbac-pattern.md)",
+        "markdown": "## RBAC Pattern\n\nHow to model 'who can do what' so the checks survive multi-agent edits.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/security/rbac-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/security/rbac-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:security:rbac-pattern",
@@ -2656,7 +2656,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Internationalisation Deep Pattern\n\nBeyond ''wrap every string in `t()`'' — the substance of locale-correct UI: plural rules, gender, ICU formatting, RTL, dates, numbers, currency, sorting, search.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/i18n-deep-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/i18n-deep-pattern.md)",
+        "markdown": "## Internationalisation Deep Pattern\n\nBeyond 'wrap every string in `t()`' — the substance of locale-correct UI: plural rules, gender, ICU formatting, RTL, dates, numbers, currency, sorting, search.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ui-ux/i18n-deep-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ui-ux/i18n-deep-pattern.md)",
         "citations": [
           {
             "id": "doc:pillars:ui-ux:i18n-deep-pattern",
@@ -3033,7 +3033,7 @@
         ]
       },
       "answer": {
-        "markdown": "## Sub-agent Recipe — Explore\n\nRead-only fan-out search agent. Orchestrator delegates ''find me X'' tasks here.\n\nType: **Sub-agent Recipe**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/subagent-explore)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/subagent-explore.md)",
+        "markdown": "## Sub-agent Recipe — Explore\n\nRead-only fan-out search agent. Orchestrator delegates 'find me X' tasks here.\n\nType: **Sub-agent Recipe**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/prompts/subagent-explore)\n[Read raw Markdown](https://playbook.agentskit.io/raw/prompts/subagent-explore.md)",
         "citations": [
           {
             "id": "doc:prompts:subagent-explore",
@@ -3574,7 +3574,7 @@
         ]
       },
       "answer": {
-        "markdown": "## AGENTS.md template\n\nDrop at repo root. The routing table that answers ''which package owns X?'' before an agent makes the wrong edit.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/AGENTS.md.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/AGENTS.md.template.md)",
+        "markdown": "## AGENTS.md template\n\nDrop at repo root. The routing table that answers 'which package owns X?' before an agent makes the wrong edit.\n\nType: **Template**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/templates/AGENTS.md.template)\n[Read raw Markdown](https://playbook.agentskit.io/raw/templates/AGENTS.md.template.md)",
         "citations": [
           {
             "id": "doc:templates:AGENTS.md.template",

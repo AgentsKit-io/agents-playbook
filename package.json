@@ -59,6 +59,7 @@
     "@agentskit/cross-platform": "^0.1.0",
     "@agentskit/doc-bridge": "^1.12.0",
     "@agentskit/harness": "^0.22.3",
+    "@opennextjs/cloudflare": "1.20.7",
     "@playwright/test": "^1.63.0",
     "@tailwindcss/postcss": "^4.3.3",
     "@types/mdx": "^2.0.14",
@@ -68,8 +69,8 @@
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
     "vitest": "^4.1.11",
-    "@opennextjs/cloudflare": "1.20.7",
-    "wrangler": "^4.146.0"
+    "wrangler": "^4.146.0",
+    "yaml": "2.9.1"
   },
   "packageManager": "pnpm@10.34.4",
   "engines": {

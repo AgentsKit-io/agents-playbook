@@ -1,6 +1,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { relativePosix } from '@agentskit/cross-platform'
+import { frontmatterString, parseFrontmatter } from '../../lib/frontmatter.mjs'
 import {
   DETERMINISTIC_ARTIFACT_MAX_BYTES,
   DETERMINISTIC_KNOWLEDGE_PROTOCOL,
@@ -14,13 +15,6 @@ import {
 
 const SITE = 'https://playbook.agentskit.io'
 const DOCS_ROOT = join('content', 'docs')
-
-const unquote = (value) => value.replace(/^(['"])(.*)\1$/, '$2')
-
-const frontmatterValue = (body, key) => {
-  const block = body.match(/^---\r?\n([\s\S]*?)\r?\n---/)?.[1] ?? ''
-  return unquote(block.match(new RegExp(`^${key}:\\s*(.+)$`, 'm'))?.[1]?.trim() ?? '')
-}
 
 const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
   const path = join(dir, entry.name)
@@ -54,12 +48,13 @@ const contentRevision = (root) => {
 
 const pageEntry = (root, path) => {
   const body = readFileSync(path, 'utf8')
+  const frontmatter = parseFrontmatter(body)
   const relativePath = relativePosix(join(root, DOCS_ROOT), path)
   const route = routeFor(path)
   const slug = route.split('/').at(-1) ?? route
-  const title = frontmatterValue(body, 'title') || body.match(/^#\s+(.+)$/m)?.[1]?.trim() || slug
-  const description = frontmatterValue(body, 'description') || `Agents Playbook source: ${title}.`
-  const type = frontmatterValue(body, 'type') || (path.endsWith('.mjs') ? 'Gate Script' : 'Documentation')
+  const title = frontmatterString(frontmatter, 'title') || body.match(/^#\s+(.+)$/m)?.[1]?.trim() || slug
+  const description = frontmatterString(frontmatter, 'description') || `Agents Playbook source: ${title}.`
+  const type = frontmatterString(frontmatter, 'type') || (path.endsWith('.mjs') ? 'Gate Script' : 'Documentation')
   const isScript = path.endsWith('.mjs')
   const entryId = `doc:${(route || 'index').replaceAll('/', ':')}`
   const pageHref = isScript ? `${SITE}/raw/${relativePath}` : route ? `${SITE}/docs/${route}` : `${SITE}/docs`
