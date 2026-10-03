@@ -19,15 +19,10 @@ concurrency:
 jobs:
   analyze:
     name: Analyze (javascript-typescript)
-    runs-on: ubuntu-latest
+    uses: AgentsKit-io/.github/.github/workflows/codeql.yml@5a584290feaaa0a800a28d24583d16f15102bea1 # main
+    with:
+      languages: javascript-typescript
     permissions:
+      actions: read
+      contents: read
       security-events: write
-      packages: read
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-        with:
-          persist-credentials: false
-      - uses: github/codeql-action/init@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4.37.3
-        with:
-          languages: javascript-typescript
-      - uses: github/codeql-action/analyze@e4fba868fa4b1b91e1fdab776edc8cfbe6e9fb81 # v4.37.3
