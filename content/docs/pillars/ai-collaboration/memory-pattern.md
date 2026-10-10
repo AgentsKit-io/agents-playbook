@@ -140,3 +140,4 @@ There is no automatic gate for memory — it is private to each agent's working 
 - [`bootstrap-doc-pattern.md`](/docs/pillars/ai-collaboration/bootstrap-doc-pattern) — `MEMORY.md` loads alongside the bootstrap doc.
 - [`../../templates/MEMORY.md.template.md`](/docs/templates/MEMORY.md.template) — copy-paste skeleton.
 - [`universal.md`](/docs/pillars/ai-collaboration/universal) — Rule 10 (lessons land the moment they happen).
+- [`doc-bridge-pattern.md`](/docs/pillars/ai-collaboration/doc-bridge-pattern) — a reviewed, draft-only route from `.agent-memory/` notes into project docs.

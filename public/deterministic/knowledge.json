@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:2d61dccbe7916c53f48fb5f14482d4f40eab64312a07954a35a7e56cd87427c0",
+  "contentHash": "sha256:e2aa960b75e725c3982e2845d52c3a7882546a34e0aa67b1f7765ff7cb62591a",
   "generatedAt": "2026-09-02T06:09:01.000Z",
   "entries": [
     {
@@ -471,6 +471,32 @@
             "id": "doc:pillars:ai-collaboration:context-management-pattern",
             "title": "Context Management Pattern",
             "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/context-management-pattern"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:pillars:ai-collaboration:doc-bridge-pattern",
+      "kind": "document",
+      "label": "Doc Bridge Pattern",
+      "match": {
+        "type": "exact",
+        "values": [
+          "pillars/ai-collaboration/doc-bridge-pattern",
+          "pillars/ai-collaboration/doc-bridge-pattern.md",
+          "doc-bridge-pattern",
+          "Doc Bridge Pattern",
+          "Doc Bridge",
+          "playbook Doc Bridge Pattern"
+        ]
+      },
+      "answer": {
+        "markdown": "## Doc Bridge Pattern\n\nMake repository documentation agent-first: plain knowledge files, self-describing indexes, per-task handoffs, and a draft-only path from agent memory back into the docs.\n\nType: **Playbook Pattern**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/pillars/ai-collaboration/doc-bridge-pattern)\n[Read raw Markdown](https://playbook.agentskit.io/raw/pillars/ai-collaboration/doc-bridge-pattern.md)",
+        "citations": [
+          {
+            "id": "doc:pillars:ai-collaboration:doc-bridge-pattern",
+            "title": "Doc Bridge Pattern",
+            "href": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/doc-bridge-pattern"
           }
         ]
       }
