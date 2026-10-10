@@ -281,6 +281,15 @@
             "pnpm check:all"
           ]
         },
+        "doc-bridge-pattern": {
+          "path": "content/docs/pillars/ai-collaboration/doc-bridge-pattern.md",
+          "purpose": "Make repository documentation agent-first: plain knowledge files, self-describing indexes, per-task handoffs, and a draft-only path from agent memory back into the docs.",
+          "agentDoc": "content/docs/pillars/ai-collaboration/doc-bridge-pattern.md",
+          "humanDoc": "https://playbook.agentskit.io/docs/pillars/ai-collaboration/doc-bridge-pattern",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
         "hallucination-reduction-pattern": {
           "path": "content/docs/pillars/ai-collaboration/hallucination-reduction-pattern.md",
           "purpose": "Make model output you can put your name on — grounding, constrained generation, verification, and abstention — so the system says \"I don''t know\" instead of confidently inventing.",

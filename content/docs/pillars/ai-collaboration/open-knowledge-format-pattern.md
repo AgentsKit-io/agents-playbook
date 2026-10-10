@@ -90,4 +90,5 @@ Skip it when the knowledge is tiny, single-consumer, and already adjacent to the
 - [`self-describe-pattern.md`](/docs/pillars/ai-collaboration/self-describe-pattern) — the capability complement to OKF's knowledge.
 - [`agent-compatibility-pattern.md`](/docs/pillars/ai-collaboration/agent-compatibility-pattern) — one knowledge source, every agent.
 - [`bootstrap-doc-pattern.md`](/docs/pillars/ai-collaboration/bootstrap-doc-pattern) — the bundle's entry point.
+- [`doc-bridge-pattern.md`](/docs/pillars/ai-collaboration/doc-bridge-pattern) — the knowledge, self-describe, and handoff artifacts combined for a repository.
 - OKF spec — `github.com/GoogleCloudPlatform/knowledge-catalog` (`/okf`).

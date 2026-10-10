@@ -70,3 +70,4 @@ Agents differ in what they can do. Degrade gracefully:
 - [`../../onboard-your-agent.md`](/docs/onboard-your-agent) — the ready-to-paste prompt that trains any agent on the whole playbook.
 - [`hallucination-reduction-pattern.md`](/docs/pillars/ai-collaboration/hallucination-reduction-pattern) — verify the current filename convention against live docs, don't trust a static list.
 - [`memory-pattern.md`](/docs/pillars/ai-collaboration/memory-pattern) — file-based memory works for any agent.
+- [`doc-bridge-pattern.md`](/docs/pillars/ai-collaboration/doc-bridge-pattern) — one ownership and handoff source, served to every agent through MCP or the CLI.
