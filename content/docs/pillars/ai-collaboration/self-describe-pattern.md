@@ -85,3 +85,4 @@ Each capability should advertise the permission/scope it requires — by **name*
 - [`../security/governance-posture-pattern.md`](/docs/pillars/security/governance-posture-pattern) — expose the system's *security posture* the same machine-readable way.
 - [`../architecture/contracts-zod-pattern.md`](/docs/pillars/architecture/contracts-zod-pattern) — the contracts the manifest references.
 - [`../quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern) — the freshness gate is one of these.
+- [`doc-bridge-pattern.md`](/docs/pillars/ai-collaboration/doc-bridge-pattern) — a repository-scale example: a generated index and capability map kept apart from the knowledge they describe.

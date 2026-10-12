@@ -63,6 +63,7 @@ How to make an agent productive in your repo on day one and durably good across 
 - `concurrent-agent-pattern.md`
 - `self-describe-pattern.md`
 - `open-knowledge-format-pattern.md`
+- `doc-bridge-pattern.md`
 - `tool-design-pattern.md`
 - `prompt-versioning-pattern.md`
 - `context-management-pattern.md`
