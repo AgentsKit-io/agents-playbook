@@ -72,7 +72,7 @@
     "wrangler": "^4.146.0",
     "yaml": "2.9.1"
   },
-  "packageManager": "pnpm@10.34.4",
+  "packageManager": "pnpm@10.34.7",
   "engines": {
     "node": "22.x"
   }
