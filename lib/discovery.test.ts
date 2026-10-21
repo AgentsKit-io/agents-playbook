@@ -1,6 +1,11 @@
 import { describe, expect, it, vi } from 'vitest'
 import type { AdapterFactory, AdapterRequest, StreamChunk } from '@agentskit/core'
-import { createPlaybookDiscoveryAdapter, loadPlaybookDiscovery } from './discovery'
+import {
+  ASK_ENDPOINT_MISSING_MESSAGE,
+  createPlaybookDiscoveryAdapter,
+  loadPlaybookDiscovery,
+  unconfiguredBackendAdapter,
+} from './discovery'
 import siteConfig from '../public/deterministic/site-config.json'
 import artifact from '../public/deterministic/knowledge.json'
 
@@ -52,6 +57,12 @@ describe('Playbook discovery adapter', () => {
     expect(decisions).toContain('answer:exact')
     expect(decisions).toContain('escalation:miss')
     expect(decisions.some((decision) => decision.startsWith('answer:backend'))).toBe(true)
+  })
+
+  it('fails with a clear configuration error when no backend endpoint is configured', async () => {
+    const chunks = await read(unconfiguredBackendAdapter, 'ADR Pattern')
+    expect(chunks).toEqual([{ type: 'error', content: ASK_ENDPOINT_MISSING_MESSAGE }])
+    expect(ASK_ENDPOINT_MISSING_MESSAGE).toContain('NEXT_PUBLIC_ASK_ENDPOINT')
   })
 
   it('keeps degraded provenance truthful and only grounds a completed response', async () => {

@@ -28,7 +28,9 @@ regeneration.
    standard `source-list` component. Unknown records stay inert.
 5. Render `AgentChat` and use native React slots only for Playbook branding,
    linked prose, the composer, loading copy, and citations.
-6. Keep `corpus="playbook"` and `NEXT_PUBLIC_ASK_ENDPOINT` in this host.
+6. Keep `corpus="playbook"` and `NEXT_PUBLIC_ASK_ENDPOINT` in this host. The endpoint has no default; without it
+   the widget answers locally and reports a clear "backend not configured" error
+   when a question needs the backend.
 
 The host shell lives in `components/ask-widget.tsx`; deterministic composition
 lives in `lib/discovery.ts`; artifact generation lives in

@@ -30,7 +30,12 @@ import {
   type AgentChatSlots,
   type StandardComponentProps,
 } from "@agentskit/chat/react";
-import { createPlaybookDiscoveryAdapter, loadPlaybookDiscovery, type PlaybookDiscoveryInputs } from "@/lib/discovery";
+import {
+  createPlaybookDiscoveryAdapter,
+  loadPlaybookDiscovery,
+  unconfiguredBackendAdapter,
+  type PlaybookDiscoveryInputs,
+} from "@/lib/discovery";
 
 const DISCOVERY_RETRY_DELAY_MS = 1_000;
 
@@ -204,7 +209,7 @@ function AskStandardComponent(props: StandardComponentProps) {
 }
 
 export function AskWidget({
-  endpoint = process.env.NEXT_PUBLIC_ASK_ENDPOINT ?? "https://ask.agentskit.io/v1/ask",
+  endpoint = process.env.NEXT_PUBLIC_ASK_ENDPOINT || undefined,
   corpus,
   title,
   fabLabel,
@@ -236,7 +241,7 @@ export function AskWidget({
     return pending;
   }, [discovery]);
   const definition = useMemo(() => {
-    const fallback = createAskAdapter({ endpoint, corpus });
+    const fallback = endpoint ? createAskAdapter({ endpoint, corpus }) : unconfiguredBackendAdapter;
     const answer = createPlaybookDiscoveryAdapter({
       inputs: discovery ?? null,
       fallback,

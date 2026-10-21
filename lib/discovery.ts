@@ -34,6 +34,19 @@ export async function loadPlaybookDiscovery(
   }
 }
 
+export const ASK_ENDPOINT_MISSING_MESSAGE =
+  'Ask backend is not configured: set NEXT_PUBLIC_ASK_ENDPOINT to enable grounded backend answers. Local answers still work.'
+
+/** Backend fallback used when no endpoint is configured; fails with a clear error instead of calling a dead default host. */
+export const unconfiguredBackendAdapter: AdapterFactory = {
+  createSource: () => ({
+    abort() {},
+    async *stream() {
+      yield { type: 'error' as const, content: ASK_ENDPOINT_MISSING_MESSAGE }
+    },
+  }),
+}
+
 export function createPlaybookDiscoveryAdapter({
   inputs,
   fallback,
