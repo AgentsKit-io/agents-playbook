@@ -42,9 +42,9 @@
     "check:all": "pnpm check:okf-type && pnpm check:playbook-package && pnpm check:doc-bridge-config && pnpm docs:bridge:index && pnpm docs:bridge:gate && pnpm check:doc-bridge-score && pnpm check:readme-standard && pnpm harness:doctor && pnpm test && pnpm test:playbook-package && pnpm lint && pnpm build"
   },
   "dependencies": {
-    "@agentskit/chat": "0.4.1",
-    "@agentskit/core": "^1.12.9",
-    "@agentskit/react": "^0.7.6",
+    "@agentskit/chat": "0.6.0",
+    "@agentskit/core": "^1.15.0",
+    "@agentskit/react": "^0.8.10",
     "fumadocs-core": "15.6.5",
     "fumadocs-mdx": "11.6.4",
     "fumadocs-ui": "15.6.5",
