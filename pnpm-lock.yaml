@@ -28,14 +28,14 @@ importers:
   .:
     dependencies:
       '@agentskit/chat':
-        specifier: 0.4.1
-        version: 0.4.1(@agentskit/core@1.12.9)(@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.0))(@agentskit/react@0.7.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(ink@7.1.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
+        specifier: 0.6.0
+        version: 0.6.0(@agentskit/core@1.15.0)(@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.0))(@agentskit/react@0.8.10(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(ink@7.1.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)
       '@agentskit/core':
-        specifier: ^1.12.9
-        version: 1.12.9
+        specifier: ^1.15.0
+        version: 1.15.0
       '@agentskit/react':
-        specifier: ^0.7.6
-        version: 0.7.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+        specifier: ^0.8.10
+        version: 0.8.10(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       fumadocs-core:
         specifier: 15.6.5
         version: 15.6.5(@types/react@19.3.0)(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
@@ -69,7 +69,7 @@ importers:
         version: 0.3.0
       '@agentskit/doc-bridge':
         specifier: ^2.4.0
-        version: 2.4.0(@agentskit/core@1.12.9)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)
+        version: 2.4.0(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)
       '@agentskit/harness':
         specifier: ^0.22.3
         version: 0.22.3(@types/react@19.3.0)
@@ -114,19 +114,21 @@ importers:
 
 packages:
 
-  '@agentskit/chat@0.4.1':
-    resolution: {integrity: sha512-IyfS5wYnvIQUdMw4hHEfwp3RUlKKWiKTEKEHamUiqjO/5NXIZBthwAqrLiP5mcwn2HkYoeiRDG0qkgL91Wg1/A==}
+  '@agentskit/chat@0.6.0':
+    resolution: {integrity: sha512-WZrV/U/7HhtOkhPXsa1AOd+MnfneA5X12JdpHRZqi48FU49YOv9ZWMQZ5RrKJXmiaXyJ40sBtgIcFeTssRGx4g==}
     peerDependencies:
       '@agentskit/angular': ^0.4.6
-      '@agentskit/core': ^1.12.3
+      '@agentskit/core': ^1.15.0
       '@agentskit/ink': ^0.10.1
-      '@agentskit/react': ^0.7.1
-      '@agentskit/react-native': ^0.4.4
-      '@agentskit/solid': ^0.4.4
-      '@agentskit/svelte': ^0.4.4
-      '@agentskit/vue': ^0.4.4
+      '@agentskit/observability': '>=0.13.0 <1'
+      '@agentskit/react': '>=0.7.1 <1'
+      '@agentskit/react-native': '>=0.4.4 <1'
+      '@agentskit/solid': '>=0.4.4 <1'
+      '@agentskit/svelte': '>=0.4.4 <1'
+      '@agentskit/vue': '>=0.4.4 <1'
       '@angular/common': '>=18.1 <22'
       '@angular/core': '>=18.1 <22'
+      drizzle-orm: ^0.45.3
       ink: '>=7.1.0'
       react: '>=18'
       react-native: '*'
@@ -138,6 +140,8 @@ packages:
       '@agentskit/angular':
         optional: true
       '@agentskit/ink':
+        optional: true
+      '@agentskit/observability':
         optional: true
       '@agentskit/react':
         optional: true
@@ -152,6 +156,8 @@ packages:
       '@angular/common':
         optional: true
       '@angular/core':
+        optional: true
+      drizzle-orm:
         optional: true
       ink:
         optional: true
@@ -170,9 +176,6 @@ packages:
 
   '@agentskit/core@1.12.3':
     resolution: {integrity: sha512-fNHrzpEoCaWHDK2fwk/BIhcPseN6zCdy3N0WjzdelnmRuh7zy9/Ki0zcukesK5ZAAmXdz2+Dj8FI7AM32JyOKw==}
-
-  '@agentskit/core@1.12.4':
-    resolution: {integrity: sha512-6ir65nEAVbh1ZuuQP9vxJ8Jmo4wabQyS193BL78SINa519xyC4WuCx71uXUD6mn/yr5kk6A+BpYBcOoCGmotwg==}
 
   '@agentskit/core@1.12.9':
     resolution: {integrity: sha512-Ou6WB9cDB9o85XpUZKWGfC699OuPzgnP8oXekVRktYBHj+Ww7FX5o10nHVPiG/2a7mJ9paQdyvUbNe5n+RZSlg==}
@@ -238,8 +241,9 @@ packages:
     resolution: {integrity: sha512-/i+yoCbFjs+hp7Qs8ygRJDmJRpMIgbNSvl9mjIl2NRH4DHv4YPBclFzmY3t13AHePY/svQvGMLM9DNY3dY046w==}
     engines: {node: '>=20.19'}
 
-  '@agentskit/react@0.7.6':
-    resolution: {integrity: sha512-h1264Q5UZFqc3O2CBAH6PqONYBjRSHdA6VFk24miPvYPYo2dDiDgCkpw9xwGHF+tT2zEpU/tm4kXUIVbGDUgcA==}
+  '@agentskit/react@0.8.10':
+    resolution: {integrity: sha512-Jx4dZF8WloAVdN0f2u+zM3xRchgF5iWBFt9L1B2zVebeTl1/UM2yCcztpVYy8daZ+nLmEEJZMEkiAsPKcRcl2g==}
+    engines: {node: '>=20.19'}
     peerDependencies:
       react: '>=18.0.0'
       react-dom: '>=18.0.0'
@@ -4674,25 +4678,24 @@ packages:
 
 snapshots:
 
-  '@agentskit/chat@0.4.1(@agentskit/core@1.12.9)(@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.0))(@agentskit/react@0.7.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(ink@7.1.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
+  '@agentskit/chat@0.6.0(@agentskit/core@1.15.0)(@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.0))(@agentskit/react@0.8.10(react-dom@19.3.0(react@19.3.0))(react@19.3.0))(ink@7.1.1(@types/react@19.3.0)(react@19.3.0))(react@19.3.0)':
     dependencies:
-      '@agentskit/core': 1.12.9
+      '@agentskit/core': 1.15.0
       '@agentskit/eval': 0.4.19
       '@agentskit/memory': 0.11.10
+      '@agentskit/net': 0.2.3
       '@agentskit/statechart': 0.2.1
       tslib: 2.8.1
       zod: 4.6.5
     optionalDependencies:
       '@agentskit/ink': 0.10.15(@types/react@19.3.0)(react@19.3.0)
-      '@agentskit/react': 0.7.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
+      '@agentskit/react': 0.8.10(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
       ink: 7.1.1(@types/react@19.3.0)(react@19.3.0)
       react: 19.3.0
     transitivePeerDependencies:
       - vectra
 
   '@agentskit/core@1.12.3': {}
-
-  '@agentskit/core@1.12.4': {}
 
   '@agentskit/core@1.12.9': {}
 
@@ -4718,7 +4721,7 @@ snapshots:
       tree-kill: 1.2.2
       which: 2.0.2
 
-  '@agentskit/doc-bridge@2.4.0(@agentskit/core@1.12.9)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)':
+  '@agentskit/doc-bridge@2.4.0(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)':
     dependencies:
       '@agentskit/cross-platform': 0.2.1
       '@agentskit/harness': 0.22.3(@types/react@19.3.0)
@@ -4750,7 +4753,7 @@ snapshots:
       yaml: 2.9.1
       zod: 4.6.5
     optionalDependencies:
-      '@agentskit/core': 1.12.9
+      '@agentskit/core': 1.15.0
       '@agentskit/memory': 0.11.10
     transitivePeerDependencies:
       - '@types/react'
@@ -4801,9 +4804,9 @@ snapshots:
       eventsource-parser: 4.1.2
       ipaddr.js: 2.5.0
 
-  '@agentskit/react@0.7.6(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
+  '@agentskit/react@0.8.10(react-dom@19.3.0(react@19.3.0))(react@19.3.0)':
     dependencies:
-      '@agentskit/core': 1.12.4
+      '@agentskit/core': 1.15.0
       react: 19.3.0
       react-dom: 19.3.0(react@19.3.0)
 
