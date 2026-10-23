@@ -11,7 +11,7 @@ credentials, private customer information, or confidential repository details.
 
 1. **Source the lesson.** Every new rule, gate, or prompt pattern must cite a concrete failure mode it prevents. Link to the originating ADR/RFC/issue/PR where possible.
 2. **Dual-mode.** Every doc has a `## TL;DR (human)` block and a `## For agents` block. The human block is prose; the agent block is structured (sections fixed, no marketing voice).
-3. **Two scope levels.** Add the universal principle first. If a TypeScript-specific recipe makes it land cleanly, add it to `ts-concrete.md` or a `<topic>-pattern.md` sibling — never mix them in one file.
+3. **Two scope levels.** Add the universal principle first. If a TypeScript-specific recipe makes it land cleanly, add it to [`ts-concrete.md`](./content/docs/pillars/architecture/ts-concrete.md) or a `<topic>-pattern.md` sibling — never mix them in one file.
 4. **No bare assertions.** Every "do this" comes with the failure mode it prevents and the gate that enforces it (or a note that the gate is missing).
 5. **English only.** Maximum reach, best RAG retrieval. Translations live as forks.
 6. **Respect the license boundary.** Software contributions are licensed under
@@ -47,7 +47,7 @@ Numbered steps. Concrete. Copy-paste-ready when possible.
 
 ### Gate
 
-How to enforce automatically. Link to `scripts/` if a reference impl exists.
+How to enforce automatically. Link to `content/docs/scripts/` if a reference impl exists.
 
 ### Escape hatch
 
@@ -68,7 +68,7 @@ When a pattern is no longer recommended, **tombstone it** — do not delete:
 
 ## Review
 
-Two-reviewer rule: one human, one agent (the playbook's own [`prompts/code-review.md`](./prompts/code-review.md) when shipped). Both must approve.
+Two-reviewer rule: one human, one agent (for example the playbook's own [code reviewer prompt](./content/docs/prompts/subagent-code-reviewer.md)). Both must approve.
 
 ## Out of scope
 
