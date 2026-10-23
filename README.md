@@ -42,7 +42,7 @@ The source-of-truth counts live in [`app/stats.snapshot.json`](./app/stats.snaps
 
 ## Start in five minutes
 
-Requirements: Node.js 22 and pnpm 9.
+Requirements: Node.js 22 and pnpm 10 (the exact version is pinned in `packageManager`).
 
 ```bash
 pnpm install --frozen-lockfile
@@ -103,7 +103,7 @@ flowchart LR
 - **Humans** get a searchable Fumadocs journey, visual explanations, examples, and contribution paths.
 - **LLMs** get stable raw Markdown, full-corpus exports, explicit ownership, and machine-readable local answers.
 - **Maintainers** get generated statistics, Doc Bridge routing, README certification, tests, and build gates.
-- **Visitors** can use Ask immediately for deterministic questions; backend calls happen only when local evidence cannot answer safely.
+- **Visitors** can use Ask immediately for deterministic questions; the optional backend (set with `NEXT_PUBLIC_ASK_ENDPOINT`) is called only when local evidence cannot answer safely.
 
 See [Discovery and Ask](https://playbook.agentskit.io/docs/discovery) for the decision path, integrity checks, privacy behavior, and failure modes.
 
@@ -117,7 +117,7 @@ See [Discovery and Ask](https://playbook.agentskit.io/docs/discovery) for the de
 | [`components/ask-widget.tsx`](./components/ask-widget.tsx) | Local-first AgentsKit Chat integration |
 | [`scripts`](./scripts) | Generation and quality verification |
 | [`public/deterministic`](./public/deterministic) | Verified static knowledge and site configuration |
-| [`.doc-bridge`](./.doc-bridge) | Generated agent-routing index and capabilities |
+| `.doc-bridge/` | Agent-routing index and capabilities, generated locally by `pnpm docs:bridge:index` (git-ignored) |
 
 ## Quality commands
 

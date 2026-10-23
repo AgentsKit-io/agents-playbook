@@ -145,7 +145,7 @@
         ],
         "compatibility": [
           "Node.js 22",
-          "pnpm 9"
+          "pnpm 10"
         ],
         "contribution": [
           "## Contribute a production lesson",
@@ -193,8 +193,8 @@
         }
       ],
       "freshness": {
-        "reviewedOn": "2026-07-14",
-        "reviewDueOn": "2026-10-12",
+        "reviewedOn": "2026-10-22",
+        "reviewDueOn": "2027-01-20",
         "sources": [
           "README.md",
           "CONTRIBUTING.md",
@@ -204,7 +204,7 @@
           "public/deterministic/knowledge.json",
           "public/deterministic/site-config.json"
         ],
-        "sourceHash": "sha256:89c0b207b02414b4efbb65c5615e3e9b0bed94abd0f041fa178789e1ec0831c1"
+        "sourceHash": "sha256:f71725328fd69770b060bba69a4298c00ef985e1641d55d37020351c943f3590"
       },
       "exceptions": []
     }
