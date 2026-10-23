@@ -57,7 +57,7 @@
   },
   "devDependencies": {
     "@agentskit/cross-platform": "^0.3.0",
-    "@agentskit/doc-bridge": "^1.12.0",
+    "@agentskit/doc-bridge": "^2.4.0",
     "@agentskit/harness": "^0.22.3",
     "@opennextjs/cloudflare": "1.20.12",
     "@playwright/test": "^1.63.0",
