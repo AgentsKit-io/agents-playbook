@@ -21,7 +21,7 @@ test.beforeEach(async ({ page }) => {
 
 test('answers exact facts locally without a backend request', async ({ page }) => {
   let backendRequests = 0
-  await page.route('https://ask.agentskit.io/**', async (route) => {
+  await page.route('https://ask.example.invalid/**', async (route) => {
     backendRequests += 1
     await route.abort()
   })
@@ -39,7 +39,7 @@ test('renders deterministic choices for an ambiguous alias', async ({ page }) =>
 })
 
 test('marks backend provenance only after a response is observed', async ({ page }) => {
-  await page.route('https://ask.agentskit.io/**', async (route) => {
+  await page.route('https://ask.example.invalid/**', async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'text/plain',
@@ -60,7 +60,7 @@ test('retries local artifacts after a transient first-load failure', async ({ pa
     if (artifactRequests === 1) await route.fulfill({ status: 503, body: '{}' })
     else await route.continue()
   })
-  await page.route('https://ask.agentskit.io/**', async (route) => {
+  await page.route('https://ask.example.invalid/**', async (route) => {
     backendRequests += 1
     await route.abort()
   })
@@ -78,7 +78,7 @@ test('retries local artifacts after a transient first-load failure', async ({ pa
 
 test('labels a successful backend answer in degraded artifact mode', async ({ page }) => {
   await page.route('**/deterministic/*.json', (route) => route.fulfill({ status: 503, body: '{}' }))
-  await page.route('https://ask.agentskit.io/**', (route) => route.fulfill({
+  await page.route('https://ask.example.invalid/**', (route) => route.fulfill({
     status: 200,
     contentType: 'text/plain',
     body: 'Degraded mode still returns a verified backend stream.',
@@ -89,7 +89,7 @@ test('labels a successful backend answer in degraded artifact mode', async ({ pa
 })
 
 test('keeps backend failures truthful and the mobile dialog inside the viewport', async ({ page, isMobile }) => {
-  await page.route('https://ask.agentskit.io/**', (route) => route.fulfill({ status: 503, body: 'unavailable' }))
+  await page.route('https://ask.example.invalid/**', (route) => route.fulfill({ status: 503, body: 'unavailable' }))
   await ask(page, 'Synthesize a novel policy that is not in this corpus')
   await expect(page.locator('[data-ak-answer-path="pending"]')).toHaveText('consulting backend')
   await expect(page.getByRole('alert').filter({ hasText: 'Ask request failed' })).toBeVisible()
