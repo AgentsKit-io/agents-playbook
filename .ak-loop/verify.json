@@ -1,0 +1,8 @@
+{ "ranAt": "2026-10-24T19:20:00Z", "command": "pnpm install --frozen-lockfile && pnpm run lint && pnpm run test && pnpm run build && pnpm docs:bridge:index && pnpm docs:bridge:gate", "exitCode": 0, "outcomes": [
+  { "id": "o1", "status": "passed", "evidence": "Only D entry: docs/ecosystem-doc-quality-plan.md (finished plan; its for-agents page, seven-product manifest and tests exist). No ADRs/CHANGELOGs touched." },
+  { "id": "o2", "status": "passed", "evidence": "git grep -i ecosystem-doc-quality-plan returned no hits" },
+  { "id": "o3", "status": "passed", "evidence": "docs:bridge:index ok (134 guides); docs:bridge:gate exit 0" },
+  { "id": "o4", "status": "passed", "evidence": "lint, 35 tests passed, next build compiled 294 pages" },
+  { "id": "o5", "status": "passed", "evidence": "diff touches only the deleted file; no generated files changed" },
+  { "id": "o6", "status": "passed", "evidence": "single commit 'docs: delete historical plans and audits', unpushed" }
+] }

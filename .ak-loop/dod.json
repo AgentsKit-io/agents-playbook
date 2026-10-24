@@ -1,0 +1,12 @@
+{ "project": [
+  { "id": "test-for-new-code", "status": "passed", "evidence": "Not applicable: no new behaviour, deletion of one finished plan doc only; existing suite (35 tests) passes." },
+  { "id": "no-todo", "status": "passed", "evidence": "No files under src/** changed." }
+],
+"outcomes": [
+  { "id": "o1", "status": "passed", "evidence": "Only docs/ecosystem-doc-quality-plan.md deleted; no archive copy." },
+  { "id": "o2", "status": "passed", "evidence": "git grep for path and basename: no hits." },
+  { "id": "o3", "status": "passed", "evidence": "docs:bridge:index and docs:bridge:gate exit 0." },
+  { "id": "o4", "status": "passed", "evidence": "install, lint, test, build all passed." },
+  { "id": "o5", "status": "passed", "evidence": "No reviewedOn/reviewDueOn lines in diff." },
+  { "id": "o6", "status": "passed", "evidence": "Single commit with required header." }
+] }
