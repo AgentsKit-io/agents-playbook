@@ -1,0 +1,10 @@
+{"project":[
+{"id":"test-for-new-code","status":"passed","evidence":"No new behaviour: deletion-only change; existing 35 tests pass. No test file changed."},
+{"id":"no-todo","status":"passed","evidence":"No files under src/ changed"}],
+"outcomes":[
+{"id":"o1","status":"passed","evidence":"Only D docs/ecosystem-doc-quality-plan.md"},
+{"id":"o2","status":"passed","evidence":"git grep path/basename returned nothing"},
+{"id":"o3","status":"passed","evidence":"docs:bridge:gate ok:true"},
+{"id":"o4","status":"passed","evidence":"lint, test, build passed"},
+{"id":"o5","status":"passed","evidence":"no reviewedOn/reviewDueOn lines in diff"},
+{"id":"o6","status":"passed","evidence":"one commit, header as required"}]}

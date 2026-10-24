@@ -1,0 +1,7 @@
+{"ranAt":"2026-10-24T20:10:00Z","command":"pnpm install --frozen-lockfile && pnpm run lint && pnpm run test && pnpm run build","exitCode":0,"outcomes":[
+{"id":"o1","status":"passed","evidence":"D docs/ecosystem-doc-quality-plan.md only; no A/R entries"},
+{"id":"o2","status":"passed","evidence":"git grep for path and basename: no hits"},
+{"id":"o3","status":"passed","evidence":"docs:bridge:index ok; gate ok:true"},
+{"id":"o4","status":"passed","evidence":"lint, 35 tests, build all passed"},
+{"id":"o5","status":"passed","evidence":"diff only deletes one file without reviewedOn fields"},
+{"id":"o6","status":"passed","evidence":"single commit with the required header"}]}
