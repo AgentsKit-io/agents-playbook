@@ -65,6 +65,10 @@ for (const path of files) {
   }
 }
 
+// Published guides for readers advise other repositories; they never describe this repo's code.
+const readerGuideFolders = ['pillars', 'phases', 'prompts', 'templates']
+const readerGuideReason = "Published Playbook guides for readers; they give advice for other repositories and do not describe this repository's code."
+
 const config = {
   schemaVersion: 1,
   project: { name: 'agents-playbook' },
@@ -79,6 +83,11 @@ const config = {
       { plugin: 'fumadocs', options: { contentDir: 'content/docs', urlPrefix: '/docs' } },
       { plugin: 'plain-markdown', options: { root: '.', include: ['README.md'], urlPrefix: '/docs' } },
     ],
+  },
+  analysis: {
+    documents: {
+      exclude: readerGuideFolders.map((folder) => ({ pattern: `content/docs/${folder}/**`, reason: readerGuideReason })),
+    },
   },
   routing: { options: { ownership } },
   index: {
