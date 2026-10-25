@@ -29,7 +29,7 @@ importers:
     dependencies:
       '@agentskit/chat':
         specifier: 0.6.0
-        version: 0.6.0(@agentskit/core@1.15.0)(@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.1))(@agentskit/react@0.8.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(ink@7.1.1(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)
+        version: 0.6.0(@agentskit/core@1.15.0)(@agentskit/ink@0.10.16(@types/react@19.3.0)(react@19.3.1))(@agentskit/react@0.8.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(ink@7.1.1(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)
       '@agentskit/core':
         specifier: ^1.15.0
         version: 1.15.0
@@ -68,8 +68,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@agentskit/doc-bridge':
-        specifier: ^2.4.0
-        version: 2.4.0(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)
+        specifier: ^2.4.2
+        version: 2.4.2(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)
       '@agentskit/harness':
         specifier: ^0.22.3
         version: 0.22.3(@types/react@19.3.0)
@@ -180,25 +180,17 @@ packages:
   '@agentskit/core@1.12.9':
     resolution: {integrity: sha512-Ou6WB9cDB9o85XpUZKWGfC699OuPzgnP8oXekVRktYBHj+Ww7FX5o10nHVPiG/2a7mJ9paQdyvUbNe5n+RZSlg==}
 
-  '@agentskit/core@1.14.1':
-    resolution: {integrity: sha512-7+zyB5+azISWTCXWIWTs3pQVE9LiKUNQf8GfMV+TWSDSKDkkf7c3xlBCsVFs5QBqUVGBH72TERY+iL2JlqiAdg==}
-
   '@agentskit/core@1.15.0':
     resolution: {integrity: sha512-qJxJXAUBbx7BpjfkF/2YCQ9i0voimTfDbDFLRvaOsLkxa2O0ZC5yMQFdTqE8++yGPVPm14Dlc+TMxlNcCaNz9w==}
     engines: {node: '>=20.19'}
-
-  '@agentskit/cross-platform@0.2.1':
-    resolution: {integrity: sha512-RXbvF8hgA1X4dMkdkhx1vRy0L4JIx9eST5BZEu+ErGpTaqcAkX4y8eH0QuEmy9CR66yxFc655s0XxAOqdADw4A==}
-    engines: {node: '>=20.19'}
-    hasBin: true
 
   '@agentskit/cross-platform@0.3.0':
     resolution: {integrity: sha512-UndmyjQkR+3u/3EqUrBfz7sO16hBhWB+dkJoMepvuENcpwQe5c+jcRW5neNKpxmThhrast4KdD6l1Mi92FHT+w==}
     engines: {node: '>=20.19'}
     hasBin: true
 
-  '@agentskit/doc-bridge@2.4.0':
-    resolution: {integrity: sha512-TNK1/hZTR/GIf8WFoEKEq8wcggNNfwLhLKbaSmkMqJ0bOkak2R/SPGZpbHCgwKuxiVejSc9DD1BzDjwFvSTHHA==}
+  '@agentskit/doc-bridge@2.4.2':
+    resolution: {integrity: sha512-d9N2dbdlmFAbu0U+85nOW1LEkhsCs65JKE9XzZ+VYQmNmM5chPiFX5FaWUn0cf63LtYnCE14SReCIy5+tV+uyg==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -224,8 +216,9 @@ packages:
     engines: {node: '>=22'}
     hasBin: true
 
-  '@agentskit/ink@0.10.15':
-    resolution: {integrity: sha512-ZScGOrKtZtQ/MR1oP97FUqWiN0ICmb5J1yAGnXni8z1TxMuZLZB5HbA5iXv2nT2jJcsyWNITtc2uI/t0O4eU6w==}
+  '@agentskit/ink@0.10.16':
+    resolution: {integrity: sha512-mTe4O0POBc3ldka5v74zCw3IpSZNwiFeA08DLPASkoGRCO29z6HX5/EaUgLzhXrx7jXNrX8loap4GcGYBleKsw==}
+    engines: {node: '>=20.19'}
     peerDependencies:
       react: '>=18.0.0'
 
@@ -239,6 +232,10 @@ packages:
 
   '@agentskit/net@0.2.3':
     resolution: {integrity: sha512-/i+yoCbFjs+hp7Qs8ygRJDmJRpMIgbNSvl9mjIl2NRH4DHv4YPBclFzmY3t13AHePY/svQvGMLM9DNY3dY046w==}
+    engines: {node: '>=20.19'}
+
+  '@agentskit/net@0.2.4':
+    resolution: {integrity: sha512-yMtjSm8BerXSaerMVVwSPMxgmBZtLKi7ts+L+SAtP7J1bhVQ9IaqKBJ/5ZKp5aMMpz4dgrdKeV+d1KaezoUgVw==}
     engines: {node: '>=20.19'}
 
   '@agentskit/react@0.8.10':
@@ -2056,6 +2053,10 @@ packages:
     resolution: {integrity: sha512-WpDfL7NO6j7tH88IDBNVdUJxDh9nmCteAVW9dsep846XdwF4naCBK+/tGLX3KJgcpgMRXCFlTM2hKGoK9FsdrQ==}
     engines: {node: '>=12'}
 
+  ansi-regex@6.4.0:
+    resolution: {integrity: sha512-KzTVk2tCWAHtYrvvvaP8bJKJq2pVinhLcGEQdtLIYPbmNGNyYe8QwNaTUYQp2J7/vIsUKt5QCqAfUkYyG9DkOw==}
+    engines: {node: '>=12'}
+
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
     engines: {node: '>=8'}
@@ -2574,8 +2575,8 @@ packages:
     resolution: {integrity: sha512-j6vWzfrGVfyXxge+O0x5sh6cvxAog0a/4Rdd2K36zCMV5eJ+/+tOAngRO8cODMNWbVRdVlmGZQL2YS3yR8bIUA==}
     engines: {node: '>= 0.4'}
 
-  es-toolkit@1.52.0:
-    resolution: {integrity: sha512-XTNEJQh1tY1ZJVcf6ayP/2n4ZPyaHlW2FWs7xvw5ddPuhUVjLD3olQVQS7kf58JbAB48iL0uL/jerTrjtV3lDA==}
+  es-toolkit@1.53.0:
+    resolution: {integrity: sha512-3+AYXp9fmJ/UhHBMYj2/U+RaUouMD90SzoItyDOB2Za7W6dB7fQApFGnZPl2MF6K8/Tv1koh1JyirSx/kju6Pw==}
 
   esast-util-from-estree@2.0.0:
     resolution: {integrity: sha512-4CyanoAudUSBAn5K13H4JhsMH6L9ZP7XbLVe/dKybkxMO7eDyLsT8UHl9TRNrU2Gr9nz+FovfSIjuXWJ81uVwQ==}
@@ -2920,8 +2921,8 @@ packages:
     resolution: {integrity: sha512-IKXpvIzjnC9XTAUbVBcMfGS0EPaIXtW6v+zr+RRp+hqULEpo0owZax6wyRwPOJbWbzjYspQwusTsfVr0ifh4uQ==}
     engines: {node: '>=0.10.0'}
 
-  ignore@7.0.13:
-    resolution: {integrity: sha512-2E8Q6rh+1RRSq/YdaGsNfXsEZy9FVqv6BSSrkmZJP7BnaoPnRfKL+YaofPvP+5rzdk144qSm6i4+hvPgUcbV4Q==}
+  ignore@7.0.14:
+    resolution: {integrity: sha512-wCBiZ77u1tuWde6G/nfOtLaCTYcFDU5yCzARzK10y+rLhzYoL7a7yEemcopcc2Mzow7gZOIjnV2ym1NYmdiJOQ==}
     engines: {node: '>= 4'}
 
   image-size-next@1.2.2:
@@ -3242,8 +3243,8 @@ packages:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
 
-  mdast-util-find-and-replace@3.0.3:
-    resolution: {integrity: sha512-xPgpDNl0/OXHsI7TlaIs22lWnH3KlpvZdXG1ET/m/YT2Hhdkx8lJV4kLphE6l9simyM4KPDFBwas08BgEob6Jw==}
+  mdast-util-find-and-replace@3.0.4:
+    resolution: {integrity: sha512-z4B5c6jrnJ1ltOQemhWYPBSAo6y42Z8Gt2yEgfgNTMcLSU59B8bfj8Z8AnAlJrBGLnqkdAUZ7jdDEqQw3KuipQ==}
 
   mdast-util-from-markdown@2.1.0:
     resolution: {integrity: sha512-KRLgmPaP2H1ul2bpoJkOS+9pAcDAAj9Nu1mqLnh8NLeJG5tlvj42TH80PIGBpROWlRXLk0lDrWNuZCFy/tsB4A==}
@@ -4126,8 +4127,14 @@ packages:
   unist-util-visit-parents@6.0.2:
     resolution: {integrity: sha512-goh1s1TBrqSqukSc8wrjwWhL0hiJxgA8m4kFxGlQ+8FYQ3C/m11FcTs4YYem7V664AhHVvgoQLk890Ssdsr2IQ==}
 
+  unist-util-visit-parents@6.1.0:
+    resolution: {integrity: sha512-vKXxz6O38sKDj1mtx/k2cWvkkFBuYGx6uGrlzBkVeWCRF/F8sdI0j3Wbkz/5rVNRRuVc8UrgRdbCxNhmYXgP3w==}
+
   unist-util-visit@5.1.0:
     resolution: {integrity: sha512-m+vIdyeCOpdr/QeQCu2EzxX/ohgS8KbnPDgFni4dQsfSCtpz8UqDyY5GjRru8PDKuYn7Fq19j1CQ+nJSsGKOzg==}
+
+  unist-util-visit@5.2.0:
+    resolution: {integrity: sha512-fpsYs/VVoZxfGY9/j3FQpZmN8wdLJaV1Pt38AaJNZu9uKIHcFU3halCdBveEq1HGKO1OEfJY65w1zvoFV1b3qQ==}
 
   unpipe@1.0.0:
     resolution: {integrity: sha512-pjy2bYhSsufwWlKwPc+l3cN7+wuJlK6uz0YdJEOlQDbl6jo/YlPi4mb8agUkVC8BF7V8NuzeyPNqRksA3hztKQ==}
@@ -4337,8 +4344,8 @@ packages:
       utf-8-validate:
         optional: true
 
-  ws@8.21.3:
-    resolution: {integrity: sha512-201TZ/kPWxoPr/OKWjquZR1SWKXcvxdH+e1xrx89b3YbmzLMFCLfnaG1HFIgWzJOEWZ7MvpK++odZufgYR50Rw==}
+  ws@8.22.0:
+    resolution: {integrity: sha512-Ydggc987+RO0AnWtZ/7Wq9FtNvcrL1b/RO0ud9mWjUPgDrsAAwQSF51sm2hm1XofbU/4jkpGEsLFsZZxU+1DOg==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
       bufferutil: ^4.0.1
@@ -4399,7 +4406,7 @@ packages:
 
 snapshots:
 
-  '@agentskit/chat@0.6.0(@agentskit/core@1.15.0)(@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.1))(@agentskit/react@0.8.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(ink@7.1.1(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)':
+  '@agentskit/chat@0.6.0(@agentskit/core@1.15.0)(@agentskit/ink@0.10.16(@types/react@19.3.0)(react@19.3.1))(@agentskit/react@0.8.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(ink@7.1.1(@types/react@19.3.0)(react@19.3.1))(react@19.3.1)':
     dependencies:
       '@agentskit/core': 1.15.0
       '@agentskit/eval': 0.4.19
@@ -4409,7 +4416,7 @@ snapshots:
       tslib: 2.8.1
       zod: 4.6.7
     optionalDependencies:
-      '@agentskit/ink': 0.10.15(@types/react@19.3.0)(react@19.3.1)
+      '@agentskit/ink': 0.10.16(@types/react@19.3.0)(react@19.3.1)
       '@agentskit/react': 0.8.10(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       ink: 7.1.1(@types/react@19.3.0)(react@19.3.1)
       react: 19.3.1
@@ -4420,18 +4427,7 @@ snapshots:
 
   '@agentskit/core@1.12.9': {}
 
-  '@agentskit/core@1.14.1': {}
-
   '@agentskit/core@1.15.0': {}
-
-  '@agentskit/cross-platform@0.2.1':
-    dependencies:
-      '@agentskit/core': 1.14.1
-      cross-spawn: 7.0.6
-      graceful-fs: 4.2.11
-      pathe: 2.0.3
-      tree-kill: 1.2.2
-      which: 2.0.2
 
   '@agentskit/cross-platform@0.3.0':
     dependencies:
@@ -4442,12 +4438,12 @@ snapshots:
       tree-kill: 1.2.2
       which: 2.0.2
 
-  '@agentskit/doc-bridge@2.4.0(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)':
+  '@agentskit/doc-bridge@2.4.2(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)':
     dependencies:
-      '@agentskit/cross-platform': 0.2.1
+      '@agentskit/cross-platform': 0.3.0
       '@agentskit/harness': 0.22.3(@types/react@19.3.0)
-      '@agentskit/ink': 0.10.15(@types/react@19.3.0)(react@19.3.0)
-      '@agentskit/net': 0.2.3
+      '@agentskit/ink': 0.10.16(@types/react@19.3.0)(react@19.3.1)
+      '@agentskit/net': 0.2.4
       '@flowershow/remark-wiki-link': 3.4.0
       commander: 14.0.3
       github-slugger: 2.0.0
@@ -4456,21 +4452,21 @@ snapshots:
       graphology-dag: 0.4.1(graphology-types@0.24.8)
       graphology-metrics: 2.4.2(graphology-types@0.24.8)
       graphology-shortest-path: 2.1.0(graphology-types@0.24.8)
-      ignore: 7.0.13
-      ink: 7.1.1(@types/react@19.3.0)(react@19.3.0)
+      ignore: 7.0.14
+      ink: 7.1.1(@types/react@19.3.0)(react@19.3.1)
       knap: 0.6.0
       mdast-util-to-string: 4.0.0
       mermaid: 12.2.0
       minimatch: 10.2.6
       packageurl-js: 2.0.1
-      react: 19.3.0
+      react: 19.3.1
       remark-frontmatter: 5.0.0
       remark-gfm: 4.0.1
       remark-parse: 11.0.0
       semver: 7.8.5
       typescript: 6.0.3
       unified: 11.0.5
-      unist-util-visit: 5.1.0
+      unist-util-visit: 5.2.0
       yaml: 2.9.1
       zod: 4.6.7
     optionalDependencies:
@@ -4502,22 +4498,9 @@ snapshots:
       - react-devtools-core
       - utf-8-validate
 
-  '@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.0)':
+  '@agentskit/ink@0.10.16(@types/react@19.3.0)(react@19.3.1)':
     dependencies:
-      '@agentskit/core': 1.14.1
-      ink: 7.1.1(@types/react@19.3.0)(react@19.3.0)
-      marked: 15.0.12
-      marked-terminal: 7.3.0(marked@15.0.12)
-      react: 19.3.0
-    transitivePeerDependencies:
-      - '@types/react'
-      - bufferutil
-      - react-devtools-core
-      - utf-8-validate
-
-  '@agentskit/ink@0.10.15(@types/react@19.3.0)(react@19.3.1)':
-    dependencies:
-      '@agentskit/core': 1.14.1
+      '@agentskit/core': 1.15.0
       ink: 7.1.1(@types/react@19.3.0)(react@19.3.1)
       marked: 15.0.12
       marked-terminal: 7.3.0(marked@15.0.12)
@@ -4527,13 +4510,18 @@ snapshots:
       - bufferutil
       - react-devtools-core
       - utf-8-validate
-    optional: true
 
   '@agentskit/memory@0.11.10':
     dependencies:
       '@agentskit/core': 1.12.9
 
   '@agentskit/net@0.2.3':
+    dependencies:
+      '@agentskit/core': 1.15.0
+      eventsource-parser: 4.1.2
+      ipaddr.js: 2.5.0
+
+  '@agentskit/net@0.2.4':
     dependencies:
       '@agentskit/core': 1.15.0
       eventsource-parser: 4.1.2
@@ -6592,6 +6580,8 @@ snapshots:
 
   ansi-regex@6.3.0: {}
 
+  ansi-regex@6.4.0: {}
+
   ansi-styles@4.3.0:
     dependencies:
       color-convert: 2.0.1
@@ -7091,7 +7081,7 @@ snapshots:
       has-tostringtag: 1.0.2
       hasown: 2.0.4
 
-  es-toolkit@1.52.0: {}
+  es-toolkit@1.53.0: {}
 
   esast-util-from-estree@2.0.0:
     dependencies:
@@ -7565,7 +7555,7 @@ snapshots:
     dependencies:
       safer-buffer: 2.1.2
 
-  ignore@7.0.13: {}
+  ignore@7.0.14: {}
 
   image-size-next@1.2.2(patch_hash=d94b707b0a8db4fb0ed88a32672e643673e68599de8bd810111026b2447c71db):
     dependencies:
@@ -7590,7 +7580,7 @@ snapshots:
       cli-cursor: 4.0.0
       cli-truncate: 6.1.1
       code-excerpt: 4.0.0
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.0
       indent-string: 5.0.0
       is-in-ci: 2.0.0
       patch-console: 2.0.0
@@ -7605,7 +7595,7 @@ snapshots:
       type-fest: 5.10.0
       widest-line: 6.0.0
       wrap-ansi: 10.0.2
-      ws: 8.21.3
+      ws: 8.22.0
       yoga-layout: 3.2.1
     optionalDependencies:
       '@types/react': 19.3.0
@@ -7624,7 +7614,7 @@ snapshots:
       cli-cursor: 4.0.0
       cli-truncate: 6.1.1
       code-excerpt: 4.0.0
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.0
       indent-string: 5.0.0
       is-in-ci: 2.0.0
       patch-console: 2.0.0
@@ -7639,14 +7629,13 @@ snapshots:
       type-fest: 5.10.0
       widest-line: 6.0.0
       wrap-ansi: 10.0.2
-      ws: 8.21.3
+      ws: 8.22.0
       yoga-layout: 3.2.1
     optionalDependencies:
       '@types/react': 19.3.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
-    optional: true
 
   inline-style-parser@0.2.7: {}
 
@@ -7834,7 +7823,7 @@ snapshots:
   marked-terminal@7.3.0(marked@15.0.12):
     dependencies:
       ansi-escapes: 7.3.0
-      ansi-regex: 6.3.0
+      ansi-regex: 6.4.0
       chalk: 5.6.2
       cli-highlight: 2.1.11
       cli-table3: 0.6.5
@@ -7848,12 +7837,12 @@ snapshots:
 
   math-intrinsics@1.1.0: {}
 
-  mdast-util-find-and-replace@3.0.3:
+  mdast-util-find-and-replace@3.0.4:
     dependencies:
       '@types/mdast': 4.0.4
       escape-string-regexp: 5.0.0
       unist-util-is: 6.0.1
-      unist-util-visit-parents: 6.0.2
+      unist-util-visit-parents: 6.1.0
 
   mdast-util-from-markdown@2.1.0:
     dependencies:
@@ -7888,7 +7877,7 @@ snapshots:
       '@types/mdast': 4.0.4
       ccount: 2.0.1
       devlop: 1.1.0
-      mdast-util-find-and-replace: 3.0.3
+      mdast-util-find-and-replace: 3.0.4
       micromark-util-character: 2.1.1
 
   mdast-util-gfm-footnote@2.1.0:
@@ -8045,7 +8034,7 @@ snapshots:
       dayjs: 1.11.23
       dompurify: 3.4.17
       elkjs: 0.9.3
-      es-toolkit: 1.52.0
+      es-toolkit: 1.53.0
       katex: 0.18.10
       khroma: 2.1.0
       marked: 16.4.2
@@ -8611,7 +8600,6 @@ snapshots:
     dependencies:
       react: 19.3.1
       scheduler: 0.27.0
-    optional: true
 
   react-remove-scroll-bar@2.3.8(@types/react@19.3.0)(react@19.3.1):
     dependencies:
@@ -9129,11 +9117,22 @@ snapshots:
       '@types/unist': 3.0.3
       unist-util-is: 6.0.1
 
+  unist-util-visit-parents@6.1.0:
+    dependencies:
+      '@types/unist': 3.0.3
+      unist-util-is: 6.0.1
+
   unist-util-visit@5.1.0:
     dependencies:
       '@types/unist': 3.0.3
       unist-util-is: 6.0.1
       unist-util-visit-parents: 6.0.2
+
+  unist-util-visit@5.2.0:
+    dependencies:
+      '@types/unist': 3.0.3
+      unist-util-is: 6.0.1
+      unist-util-visit-parents: 6.1.0
 
   unpipe@1.0.0: {}
 
@@ -9295,7 +9294,7 @@ snapshots:
 
   ws@8.21.0: {}
 
-  ws@8.21.3: {}
+  ws@8.22.0: {}
 
   y18n@5.0.8: {}
 
