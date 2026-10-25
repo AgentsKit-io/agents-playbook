@@ -71,7 +71,7 @@ Recommended automated checks:
 2. **Promotion linkage** — every accepted RFC has a matching ADR with the back-pointer.
 3. **No orphan breakers** — no PR is allowed to change a method's params/result schema without referencing an accepted RFC (or an explicit `removes:` justification if the method is being deleted).
 
-Reference impl: [`../../scripts/check-rfc.example.mjs`](/docs/scripts).
+Reference impl: [`../../scripts/check-rfc.example.mjs`](/docs/scripts). The `@agentskit/playbook` CLI runs the packaged copy, `packages/playbook/gates/check-rfc.mjs`.
 
 ### Common failure modes (sourced from production)
 

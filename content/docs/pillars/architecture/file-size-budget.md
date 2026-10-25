@@ -42,7 +42,7 @@ Why shrink-only: prevents adoption from blocking the whole repo on day one; prev
 
 **An over-budget file on the shared branch blocks everyone.** Because the gate fails on any non-baselined file over budget, a single oversized file merged into the main branch fails *every other contributor's* push until it's split — not just the author's. This makes "split, don't baseline" a courtesy to the whole team, and makes catching it in pre-push (below) worth the cost. If CI is ever bypassed and an over-budget file lands, the fix is to split it promptly, not to widen the budget or baseline it.
 
-Reference impl: [`../../scripts/check-file-size.example.mjs`](/docs/scripts). The baseline file lives at `.file-size-baseline.json` in the repo root.
+Reference impl: [`../../scripts/check-file-size.example.mjs`](/docs/scripts). The `@agentskit/playbook` CLI runs the packaged copy, `packages/playbook/gates/check-file-size.mjs`. The baseline file lives at `.file-size-baseline.json` in the repo root.
 
 ### Extraction patterns
 

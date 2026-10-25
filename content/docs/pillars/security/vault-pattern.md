@@ -102,7 +102,7 @@ Even with vault refs in code, secrets can leak via logged objects (e.g. a reques
 
 Redaction is at the logger boundary, not at the call site. Call sites cannot forget.
 
-A **secrets scan gate** (see [`../quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern)) runs on every commit to catch raw secrets that escaped the logger redactor.
+A **secrets scan gate** (see [`../quality/quality-gates-pattern.md`](/docs/pillars/quality/quality-gates-pattern)) runs on every commit to catch raw secrets that escaped the logger redactor. A reference implementation ships as `packages/playbook/gates/check-secrets.mjs`.
 
 ### Per-environment vaults
 

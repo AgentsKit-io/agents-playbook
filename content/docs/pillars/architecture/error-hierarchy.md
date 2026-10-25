@@ -116,7 +116,7 @@ Rules:
 
 ### Lint rules
 
-Ban `throw new Error(` in boundary files:
+Ban `throw new Error(` in boundary files. Without ESLint, the packaged `error-raw` gate, `packages/playbook/gates/check-error-raw.mjs`, enforces the same ban:
 
 ```js
 // .eslintrc.cjs

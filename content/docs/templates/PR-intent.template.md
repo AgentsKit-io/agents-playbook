@@ -61,7 +61,7 @@ merge-override: <reason>   # OPTIONAL. Required if you used `git checkout --thei
 
 ## Gate
 
-Reference impl: [`../scripts/check-pr-intent.example.mjs`](/docs/scripts).
+Reference impl: [`../scripts/check-pr-intent.example.mjs`](/docs/scripts). The `@agentskit/playbook` CLI runs the packaged copy, `packages/playbook/gates/check-pr-intent.mjs`.
 
 The gate:
 
