@@ -68,7 +68,7 @@ Two automated checks pay off:
 1. **Sequence integrity** — no gaps, no duplicates, no missing numbers.
 2. **Status hygiene** — every ADR has a recognised Status value; "Superseded by ADR-NNNN" references a real file.
 
-Reference impl: [`../../scripts/check-adr.example.mjs`](/docs/scripts).
+Reference impl: [`../../scripts/check-adr.example.mjs`](/docs/scripts). The `@agentskit/playbook` CLI runs the packaged copy, `packages/playbook/gates/check-adr.mjs`.
 
 ### Common failure modes (sourced from production)
 

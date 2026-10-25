@@ -6,6 +6,9 @@ editRoots:
   - content/docs
 checks:
   - pnpm check:all
+docbridge:
+  covers:
+    - area:content
 ---
 
 # Agents Playbook agent handoff

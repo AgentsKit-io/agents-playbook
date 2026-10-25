@@ -1,0 +1,563 @@
+{
+  "evalFormatVersion": "2026-04",
+  "name": "agents-playbook-retrieval-v1",
+  "description": "Golden retrieval queries for the Agents Playbook repository: exported symbols, file paths, natural-language questions answered by a maintained guide, and ownership routing. A case passes when one of its expected targets appears in the ranking; a target matches a result by entity id or by repository path. The documentation is English only, so every case is English.",
+  "tags": [
+    "retrieval",
+    "doc-bridge",
+    "deterministic"
+  ],
+  "cases": [
+    {
+      "id": "symbol-read-doc-sources",
+      "input": "readDocSources",
+      "expected": {
+        "regex": {
+          "body": "lib/doc-sources\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "lib/doc-sources.ts"
+        ],
+        "lang": "en",
+        "kind": "symbol"
+      }
+    },
+    {
+      "id": "symbol-format-ecosystem-llms-block",
+      "input": "formatEcosystemLlmsBlock",
+      "expected": {
+        "regex": {
+          "body": "lib/ecosystem-llms-block\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "lib/ecosystem-llms-block.ts"
+        ],
+        "lang": "en",
+        "kind": "symbol"
+      }
+    },
+    {
+      "id": "symbol-parse-frontmatter",
+      "input": "parseFrontmatter",
+      "expected": {
+        "regex": {
+          "body": "lib/frontmatter\\.mjs"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "lib/frontmatter.mjs"
+        ],
+        "lang": "en",
+        "kind": "symbol"
+      }
+    },
+    {
+      "id": "symbol-init-posthog",
+      "input": "initPostHog",
+      "expected": {
+        "regex": {
+          "body": "lib/posthog-client\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "lib/posthog-client.ts"
+        ],
+        "lang": "en",
+        "kind": "symbol"
+      }
+    },
+    {
+      "id": "symbol-is-non-page-href",
+      "input": "isNonPageHref",
+      "expected": {
+        "regex": {
+          "body": "lib/links\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "lib/links.ts"
+        ],
+        "lang": "en",
+        "kind": "symbol"
+      }
+    },
+    {
+      "id": "symbol-load-playbook-discovery",
+      "input": "loadPlaybookDiscovery",
+      "expected": {
+        "regex": {
+          "body": "lib/discovery\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "lib/discovery.ts"
+        ],
+        "lang": "en",
+        "kind": "symbol"
+      }
+    },
+    {
+      "id": "symbol-ecosystem-peers",
+      "input": "ecosystemPeers",
+      "expected": {
+        "regex": {
+          "body": "lib/ecosystem\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "lib/ecosystem.ts"
+        ],
+        "lang": "en",
+        "kind": "symbol"
+      }
+    },
+    {
+      "id": "path-playbook-cli",
+      "input": "packages/playbook/bin/agents-playbook.mjs",
+      "expected": {
+        "regex": {
+          "body": "packages/playbook/bin/agents-playbook\\.mjs"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "packages/playbook/bin/agents-playbook.mjs"
+        ],
+        "lang": "en",
+        "kind": "path"
+      }
+    },
+    {
+      "id": "path-raw-route",
+      "input": "app/raw/[...path]/route.ts",
+      "expected": {
+        "regex": {
+          "body": "app/raw/\\[\\.\\.\\.path\\]/route\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "app/raw/[...path]/route.ts"
+        ],
+        "lang": "en",
+        "kind": "path"
+      }
+    },
+    {
+      "id": "path-llms-route",
+      "input": "app/llms.txt/route.ts",
+      "expected": {
+        "regex": {
+          "body": "app/llms\\.txt/route\\.ts"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "app/llms.txt/route.ts"
+        ],
+        "lang": "en",
+        "kind": "path"
+      }
+    },
+    {
+      "id": "ownership-raw-route",
+      "input": "who owns the raw markdown route",
+      "expected": {
+        "regex": {
+          "body": "docs/for-agents/packages/app-raw\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "docs/for-agents/packages/app-raw.md"
+        ],
+        "lang": "en",
+        "kind": "ownership"
+      }
+    },
+    {
+      "id": "ownership-gate-scripts",
+      "input": "who owns the packaged playbook gate scripts",
+      "expected": {
+        "regex": {
+          "body": "docs/for-agents/packages/playbook-gates\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "docs/for-agents/packages/playbook-gates.md"
+        ],
+        "lang": "en",
+        "kind": "ownership"
+      }
+    },
+    {
+      "id": "ownership-site-components",
+      "input": "who owns the site React components",
+      "expected": {
+        "regex": {
+          "body": "docs/for-agents/packages/components\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "docs/for-agents/packages/components.md"
+        ],
+        "lang": "en",
+        "kind": "ownership"
+      }
+    },
+    {
+      "id": "question-bootstrap-agent",
+      "input": "how do I give an agent a bootstrap file with non-negotiable rules",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/ai-collaboration/bootstrap-doc-pattern\\.md|content/docs/templates/AGENTS\\.md\\.template\\.md|content/docs/templates/CLAUDE\\.md\\.template\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/ai-collaboration/bootstrap-doc-pattern.md",
+          "content/docs/templates/AGENTS.md.template.md",
+          "content/docs/templates/CLAUDE.md.template.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-adr-numbering",
+      "input": "how to record architecture decisions with ADR numbering and status",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/architecture/adr-pattern\\.md|content/docs/templates/ADR\\.template\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/architecture/adr-pattern.md",
+          "content/docs/templates/ADR.template.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-rfc-vs-adr",
+      "input": "when is a decision big enough to need an RFC",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/architecture/rfc-pattern\\.md|content/docs/templates/RFC\\.template\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/architecture/rfc-pattern.md",
+          "content/docs/templates/RFC.template.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-file-size",
+      "input": "agents keep producing 2000 line files, how do we cap file length",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/architecture/file-size-budget\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/architecture/file-size-budget.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-error-hierarchy",
+      "input": "stable error codes the client can switch on instead of parsing error messages",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/architecture/error-hierarchy\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/architecture/error-hierarchy.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-pr-intent",
+      "input": "PR intent manifest that lists what a pull request adds and removes",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/governance/pr-intent-pattern\\.md|content/docs/templates/PR-intent\\.template\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/governance/pr-intent-pattern.md",
+          "content/docs/templates/PR-intent.template.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-mutation-testing",
+      "input": "coverage is high but bugs still slip through, how do I check the tests assert anything",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/quality/mutation-testing-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/quality/mutation-testing-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-test-pyramid",
+      "input": "how many end to end tests versus unit tests should a project have",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/quality/test-pyramid\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/quality/test-pyramid.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-vault",
+      "input": "where should API keys live instead of env files in the repository",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/security/vault-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/security/vault-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-rbac",
+      "input": "authorization model for which users may call which operations",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/security/rbac-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/security/rbac-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-design-tokens",
+      "input": "design tokens instead of hardcoded hex colors",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/ui-ux/design-tokens-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/ui-ux/design-tokens-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-feature-flags",
+      "input": "turn a half finished feature off in production without redeploying",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/architecture/feature-flags-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/architecture/feature-flags-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-chaos",
+      "input": "deliberately inject faults to test how the system survives outages",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/quality/chaos-engineering-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/quality/chaos-engineering-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-sub-agents",
+      "input": "should the main agent hand codebase exploration to a separate agent",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/ai-collaboration/sub-agent-pattern\\.md|content/docs/prompts/subagent-explore\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/ai-collaboration/sub-agent-pattern.md",
+          "content/docs/prompts/subagent-explore.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-agent-memory",
+      "input": "the agent forgets project conventions between sessions",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/ai-collaboration/memory-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/ai-collaboration/memory-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-prompt-injection",
+      "input": "defend an LLM feature against prompt injection and jailbreaks",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/security/ai-llm-safety-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/security/ai-llm-safety-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-tombstone",
+      "input": "delete an old package but leave a pointer for anyone who still looks for it",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/governance/tombstone-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/governance/tombstone-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-run-gates",
+      "input": "run the playbook quality gates with npx without copying scripts",
+      "expected": {
+        "regex": {
+          "body": "content/docs/scripts/index\\.md|packages/playbook/README\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/scripts/index.md",
+          "packages/playbook/README.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-merge-conflicts",
+      "input": "two agents edited the same file, how do I merge without dropping one side",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/governance/merge-rules-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/governance/merge-rules-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-phased-pr",
+      "input": "split a large refactor into a sequence of reviewable pull requests",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/governance/phased-pr-pattern\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/governance/phased-pr-pattern.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    },
+    {
+      "id": "question-threat-model",
+      "input": "template listing attackers, assets and mitigations for my project",
+      "expected": {
+        "regex": {
+          "body": "content/docs/pillars/security/threat-model-template\\.md"
+        }
+      },
+      "metadata": {
+        "expectedTargets": [
+          "content/docs/pillars/security/threat-model-template.md"
+        ],
+        "lang": "en",
+        "kind": "question"
+      }
+    }
+  ]
+}

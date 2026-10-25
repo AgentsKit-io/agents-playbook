@@ -18,4 +18,6 @@ pnpm docs:bridge:query ownership playbook --agent
 pnpm docs:bridge:gate
 ```
 
+`doc-bridge.config.json` is generated from the guides by `scripts/generate-doc-bridge-config.mjs`; edit the generator, not the JSON. Package and area ownership docs live in `docs/for-agents/packages`.
+
 MCP: `ak-docs mcp` exposes `handoff.resolve`, `doc.search`, and `doc.get`.

@@ -43,7 +43,7 @@ A single entry: `pnpm check:quality-gates`. It:
 4. Exits 0 if all pass; non-zero with summary if any fail.
 5. Has flags: `--gate=\<name\>` to run just one; `--explain` for fix recipes; `--baseline` to regenerate baselines.
 
-Reference impl shape: [`../../scripts/README.md`](/docs/scripts).
+Reference impl shape: [`../../scripts/README.md`](/docs/scripts). The packaged form is the `@agentskit/playbook` CLI, `packages/playbook/bin/agents-playbook.mjs`, which runs the scripts in `packages/playbook/gates` and supports `--fast` for the pre-commit subset.
 
 ### Parallelism
 
