@@ -1,0 +1,47 @@
+{
+  "ranAt": "2026-10-25T23:40:00Z",
+  "command": "pnpm run lint && pnpm run test && pnpm run build",
+  "exitCode": 0,
+  "outcomes": [
+    {
+      "id": "o1",
+      "status": "passed",
+      "evidence": "pnpm install --frozen-lockfile: 'Lockfile is up to date, resolution step is skipped' / 'Already up to date'"
+    },
+    {
+      "id": "o2",
+      "status": "passed",
+      "evidence": "pnpm exec vitest --version: 'vitest/5.0.5 linux-x64 node-v22.23.3'"
+    },
+    {
+      "id": "o3",
+      "status": "passed",
+      "evidence": "TypeScript held at 5.9.3 (pnpm exec tsc -v: 'Version 5.9.3'). Blocker: next 15.5.28 next.config.ts loader needs the TS JS API; TS 7.0.2 fails with \"Cannot read properties of undefined (reading 'fileExists')\""
+    },
+    {
+      "id": "o4",
+      "status": "passed",
+      "evidence": "pnpm run lint: '✓ no new cross-platform issues (62 baselined)' and tsc --noEmit exit 0; no compiler options loosened, no any or @ts-ignore added"
+    },
+    {
+      "id": "o5",
+      "status": "passed",
+      "evidence": "pnpm run test on Vitest 5.0.5: 'Test Files 13 passed (13)', 'Tests 35 passed (35)'"
+    },
+    {
+      "id": "o6",
+      "status": "passed",
+      "evidence": "pnpm run build: '✓ Generating static pages (294/294)', next build exit 0"
+    },
+    {
+      "id": "o7",
+      "status": "failed",
+      "evidence": "Ran: frozen install, check:okf-type, check:doc-bridge-config, docs:bridge:index + diff (clean), docs:bridge:gate (ok), docs:bridge:conformance (PASS), check:readme-standard (PASS), test -s bundle (non-empty), stats/deterministic diff (clean), playbook-package sync check and cli test (15/15 pass). NOT verified: test:e2e (Playwright: browser binary missing in sandbox, fails at browserType.launch), pre-commit hook test (pre-commit binary not installed), npm pack --dry-run (npm not allowlisted). origin/main not available to compare."
+    },
+    {
+      "id": "o8",
+      "status": "failed",
+      "evidence": "Commits: chore(deps): typescript 7, fix: drop baseUrl, fix: declare css, chore(deps): vitest 5, chore(deps): hold typescript at 5.9. Headers <=72 and no changeset. Body lines over 100 chars exist in several commits (not rewritten: the branch must not be moved). Nothing pushed."
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "project": [
+    {
+      "id": "test-for-new-code",
+      "status": "failed",
+      "evidence": "No file matching **/{*.spec.ts,*.test.mjs,*.test.ts} changed in this PR. The change is a dependency and config bump with no new behaviour, so no new test was written. Needs a decision from a human: add a test or waive this item."
+    },
+    {
+      "id": "no-todo",
+      "status": "passed",
+      "evidence": "grep for TODO|FIXME in changed files (package.json, tsconfig.json, vitest.config.ts) returned no matches; no src/** file changed"
+    }
+  ],
+  "outcomes": [
+    {
+      "id": "o1",
+      "status": "passed",
+      "evidence": "pnpm install --frozen-lockfile succeeds on the final tree"
+    },
+    {
+      "id": "o2",
+      "status": "passed",
+      "evidence": "vitest/5.0.5 in package.json (^5.0.0) and pnpm-lock.yaml"
+    },
+    {
+      "id": "o3",
+      "status": "passed",
+      "evidence": "TypeScript kept at 5.9.3 for the whole repo. Blocking tool: next 15.5.28 (next.config.ts loader calls ts.sys / ts.findConfigFile). TS 7.0.2 error: Cannot read properties of undefined (reading 'fileExists')"
+    },
+    {
+      "id": "o4",
+      "status": "passed",
+      "evidence": "pnpm run lint passes (cross-platform check plus tsc --noEmit)"
+    },
+    {
+      "id": "o5",
+      "status": "passed",
+      "evidence": "pnpm run test: 13 files, 35 tests passed on Vitest 5.0.5; test files unchanged"
+    },
+    {
+      "id": "o6",
+      "status": "passed",
+      "evidence": "pnpm run build: next build compiled and generated 294 static pages"
+    },
+    {
+      "id": "o7",
+      "status": "failed",
+      "evidence": "Playwright test:e2e fails at browser launch (no Chromium in sandbox); pre-commit hook test and npm pack not run here; origin/main unavailable to compare. See verify.json."
+    },
+    {
+      "id": "o8",
+      "status": "failed",
+      "evidence": "Separate typescript/vitest/fix commits and a hold commit; nothing pushed; no changeset. Several commit body lines exceed 100 characters and are not rewritten to avoid moving the branch."
+    }
+  ]
+}
