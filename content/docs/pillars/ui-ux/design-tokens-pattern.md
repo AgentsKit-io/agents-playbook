@@ -129,7 +129,7 @@ Lint rules:
 
 Escape hatch: `// allow-color-literal: \<reason\>`. Counted; growth fails the gate.
 
-The gate runs at pre-commit on changed files; full sweep in CI.
+The gate runs at pre-commit on changed files; full sweep in CI. A reference implementation ships as `packages/playbook/gates/check-tokens.mjs`.
 
 ### Migration path
 
