@@ -35,6 +35,28 @@
       }
     ]
   },
+  "analysis": {
+    "documents": {
+      "exclude": [
+        {
+          "pattern": "content/docs/pillars/**",
+          "reason": "Published Playbook guides for readers; they give advice for other repositories and do not describe this repository's code."
+        },
+        {
+          "pattern": "content/docs/phases/**",
+          "reason": "Published Playbook guides for readers; they give advice for other repositories and do not describe this repository's code."
+        },
+        {
+          "pattern": "content/docs/prompts/**",
+          "reason": "Published Playbook guides for readers; they give advice for other repositories and do not describe this repository's code."
+        },
+        {
+          "pattern": "content/docs/templates/**",
+          "reason": "Published Playbook guides for readers; they give advice for other repositories and do not describe this repository's code."
+        }
+      ]
+    }
+  },
   "routing": {
     "options": {
       "ownership": {

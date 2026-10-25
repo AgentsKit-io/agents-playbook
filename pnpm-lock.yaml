@@ -68,8 +68,8 @@ importers:
         specifier: ^0.3.0
         version: 0.3.0
       '@agentskit/doc-bridge':
-        specifier: ^2.4.2
-        version: 2.4.2(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)
+        specifier: ^2.5.0
+        version: 2.5.0(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)
       '@agentskit/harness':
         specifier: ^0.22.3
         version: 0.22.3(@types/react@19.3.0)
@@ -189,8 +189,8 @@ packages:
     engines: {node: '>=20.19'}
     hasBin: true
 
-  '@agentskit/doc-bridge@2.4.2':
-    resolution: {integrity: sha512-d9N2dbdlmFAbu0U+85nOW1LEkhsCs65JKE9XzZ+VYQmNmM5chPiFX5FaWUn0cf63LtYnCE14SReCIy5+tV+uyg==}
+  '@agentskit/doc-bridge@2.5.0':
+    resolution: {integrity: sha512-TcQ7YlCLydT9/rBoV9imqVDtS1v1EfAMioTcrPLBNAFs+qC91per/vecjeI0FeLQ0eCB4CwgxmuVcVewp3UwyA==}
     engines: {node: '>=22'}
     hasBin: true
     peerDependencies:
@@ -4438,7 +4438,7 @@ snapshots:
       tree-kill: 1.2.2
       which: 2.0.2
 
-  '@agentskit/doc-bridge@2.4.2(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)':
+  '@agentskit/doc-bridge@2.5.0(@agentskit/core@1.15.0)(@agentskit/memory@0.11.10)(@types/react@19.3.0)(graphology-types@0.24.8)':
     dependencies:
       '@agentskit/cross-platform': 0.3.0
       '@agentskit/harness': 0.22.3(@types/react@19.3.0)
