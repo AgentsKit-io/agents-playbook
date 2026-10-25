@@ -270,7 +270,7 @@
     },
     {
       "id": "question-file-size",
-      "input": "how to keep files reviewable with a line budget when agents write the code",
+      "input": "agents keep producing 2000 line files, how do we cap file length",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/architecture/file-size-budget\\.md"
@@ -286,7 +286,7 @@
     },
     {
       "id": "question-error-hierarchy",
-      "input": "typed error hierarchy so clients can pattern match on error codes",
+      "input": "stable error codes the client can switch on instead of parsing error messages",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/architecture/error-hierarchy\\.md"
@@ -319,7 +319,7 @@
     },
     {
       "id": "question-mutation-testing",
-      "input": "how to score whether unit tests actually catch bugs",
+      "input": "coverage is high but bugs still slip through, how do I check the tests assert anything",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/quality/mutation-testing-pattern\\.md"
@@ -335,7 +335,7 @@
     },
     {
       "id": "question-test-pyramid",
-      "input": "how to mix unit integration and end to end tests",
+      "input": "how many end to end tests versus unit tests should a project have",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/quality/test-pyramid\\.md"
@@ -351,7 +351,7 @@
     },
     {
       "id": "question-vault",
-      "input": "how to store secrets so a leaked log line does not compromise the system",
+      "input": "where should API keys live instead of env files in the repository",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/security/vault-pattern\\.md"
@@ -367,7 +367,7 @@
     },
     {
       "id": "question-rbac",
-      "input": "model who can do what with roles and permission checks",
+      "input": "authorization model for which users may call which operations",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/security/rbac-pattern\\.md"
@@ -399,7 +399,7 @@
     },
     {
       "id": "question-feature-flags",
-      "input": "ship code separately from behavior without a flag graveyard",
+      "input": "turn a half finished feature off in production without redeploying",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/architecture/feature-flags-pattern\\.md"
@@ -415,7 +415,7 @@
     },
     {
       "id": "question-chaos",
-      "input": "find failure modes before customers do with chaos experiments",
+      "input": "deliberately inject faults to test how the system survives outages",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/quality/chaos-engineering-pattern\\.md"
@@ -431,15 +431,16 @@
     },
     {
       "id": "question-sub-agents",
-      "input": "delegate scoped tasks to specialist sub-agents",
+      "input": "should the main agent hand codebase exploration to a separate agent",
       "expected": {
         "regex": {
-          "body": "content/docs/pillars/ai-collaboration/sub-agent-pattern\\.md"
+          "body": "content/docs/pillars/ai-collaboration/sub-agent-pattern\\.md|content/docs/prompts/subagent-explore\\.md"
         }
       },
       "metadata": {
         "expectedTargets": [
-          "content/docs/pillars/ai-collaboration/sub-agent-pattern.md"
+          "content/docs/pillars/ai-collaboration/sub-agent-pattern.md",
+          "content/docs/prompts/subagent-explore.md"
         ],
         "lang": "en",
         "kind": "question"
@@ -447,7 +448,7 @@
     },
     {
       "id": "question-agent-memory",
-      "input": "make agents durably learn from prior sessions",
+      "input": "the agent forgets project conventions between sessions",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/ai-collaboration/memory-pattern\\.md"
@@ -479,7 +480,7 @@
     },
     {
       "id": "question-tombstone",
-      "input": "retire a doc or package without losing the trail",
+      "input": "delete an old package but leave a pointer for anyone who still looks for it",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/governance/tombstone-pattern\\.md"
@@ -512,7 +513,7 @@
     },
     {
       "id": "question-merge-conflicts",
-      "input": "resolve merge conflicts so the merge sums work instead of subtracting it",
+      "input": "two agents edited the same file, how do I merge without dropping one side",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/governance/merge-rules-pattern\\.md"
@@ -528,7 +529,7 @@
     },
     {
       "id": "question-phased-pr",
-      "input": "ship an initiative too big for one pull request",
+      "input": "split a large refactor into a sequence of reviewable pull requests",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/governance/phased-pr-pattern\\.md"
@@ -544,7 +545,7 @@
     },
     {
       "id": "question-threat-model",
-      "input": "skeleton for a per project threat model",
+      "input": "template listing attackers, assets and mitigations for my project",
       "expected": {
         "regex": {
           "body": "content/docs/pillars/security/threat-model-template\\.md"
