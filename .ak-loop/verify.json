@@ -1,0 +1,16 @@
+{
+  "ranAt": "2026-10-25T23:30:00Z",
+  "command": "pnpm install --frozen-lockfile && pnpm run lint && pnpm run test && pnpm run build && docs checks && node --test packages/playbook/test/cli.test.mjs",
+  "exitCode": 0,
+  "outcomes": [
+    { "id": "o1", "status": "passed", "evidence": "pnpm install --frozen-lockfile: Lockfile is up to date, Done" },
+    { "id": "o2", "status": "passed", "evidence": "vitest ^5.0.5; RUN v5.0.5" },
+    { "id": "o3", "status": "passed", "evidence": "Held at ^5.9.3. next build under TS 7: Failed to load next.config.ts: TypeError: Cannot read properties of undefined (reading 'fileExists')" },
+    { "id": "o4", "status": "passed", "evidence": "pnpm run lint: no new cross-platform issues (62 baselined); tsc --noEmit clean" },
+    { "id": "o5", "status": "passed", "evidence": "Test Files 14 passed (14), Tests 37 passed (37)" },
+    { "id": "o6", "status": "passed", "evidence": "next build compiled, 294/294 pages; git status clean for snapshot and public/deterministic" },
+    { "id": "o7", "status": "passed", "evidence": "okf-type, doc-bridge config/index/gate, conformance (7 required passed), README Standard v1 PASS" },
+    { "id": "o8", "status": "passed", "evidence": "node --test cli.test.mjs: tests 15, pass 15, fail 0" },
+    { "id": "o9", "status": "passed", "evidence": "commits: chore(deps): vitest 5; test commit; not pushed" }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "project": [
+    { "id": "test-for-new-code", "status": "passed", "evidence": "scripts/toolchain.test.mjs added (matches *.test.mjs)" },
+    { "id": "no-todo", "status": "passed", "evidence": "No changed file is under src/**; no TODO/FIXME added" }
+  ],
+  "outcomes": [
+    { "id": "o1", "status": "passed", "evidence": "frozen install succeeds" },
+    { "id": "o2", "status": "passed", "evidence": "vitest ^5.0.5" },
+    { "id": "o3", "status": "passed", "evidence": "TS held at 5.x; blocker: next 15.5.28 loading next.config.ts: TypeError: Cannot read properties of undefined (reading 'fileExists')" },
+    { "id": "o4", "status": "passed", "evidence": "pnpm run lint passes" },
+    { "id": "o5", "status": "passed", "evidence": "37 tests passed" },
+    { "id": "o6", "status": "passed", "evidence": "build succeeds; tracked snapshots unchanged" },
+    { "id": "o7", "status": "passed", "evidence": "all docs checks pass" },
+    { "id": "o8", "status": "passed", "evidence": "15/15 CLI tests pass" },
+    { "id": "o9", "status": "passed", "evidence": "see git log; final report in commit/PR summary" }
+  ]
+}
