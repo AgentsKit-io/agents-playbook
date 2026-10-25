@@ -1,0 +1,17 @@
+{
+  "ranAt": "2026-10-25T06:12:00Z",
+  "command": "pnpm check:okf-type && pnpm check:playbook-package && pnpm run lint && pnpm run test && pnpm run build",
+  "exitCode": 0,
+  "outcomes": [
+    { "id": "o1", "status": "passed", "evidence": "package.json ^2.5.0; lockfile resolves @agentskit/doc-bridge@2.5.0; pnpm up succeeded" },
+    { "id": "o2", "status": "passed", "evidence": "check:doc-bridge-config: 'Doc Bridge config is current for 134 guides.'; test scripts/doc-bridge-config.test.mjs passes" },
+    { "id": "o3", "status": "passed", "evidence": "docs:bridge:gate ok:true; conformance 7 required passed, 0 failed; .doc-bridge/ is gitignored so no diff" },
+    { "id": "o4", "status": "passed", "evidence": "doctor: documentsExcluded 121 (93+6+15+7) with the reason on each; connectivity 19% -> 39%, score 78 -> 81" },
+    { "id": "o5", "status": "passed", "evidence": "Before (2.4.0, index built): B 78, connectivity 19%, excluded 0, 119 of 144 docs unlinked. After: B 81, connectivity 39%, excluded 121, 10 of 23 unlinked. Bench: docs/bench/retrieval-suite-v1.json does not exist in the repo (benchmark not-analyzed before and after); ak-docs bench exits ENOENT" },
+    { "id": "o6", "status": "passed", "evidence": "check-doc-bridge-score.mjs unchanged; it fails (exit 1) at B 81, threshold 100/A not met" },
+    { "id": "o7", "status": "passed", "evidence": "README Standard v1 PASS; 3 tests pass; only sourceHash refreshed, reviewedOn/reviewDueOn untouched" },
+    { "id": "o8", "status": "passed", "evidence": "okf-type, playbook-package, lint, test (14 files, 36 tests) and build all succeeded" },
+    { "id": "o9", "status": "blocked", "evidence": "build:bundle passed (153 files). test:e2e fails 20/20: Playwright chromium browser executable not installed in this sandbox (browserType.launch: Executable doesn't exist)" },
+    { "id": "o10", "status": "passed", "evidence": "two requested commits present in order, plus a handoff-only commit; nothing pushed" }
+  ]
+}

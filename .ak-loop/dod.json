@@ -1,0 +1,18 @@
+{
+  "project": [
+    { "id": "test-for-new-code", "status": "passed", "evidence": "Added scripts/doc-bridge-config.test.mjs (vitest, passes)" },
+    { "id": "no-todo", "status": "passed", "evidence": "No changed file is under src/**; no TODO/FIXME added" }
+  ],
+  "outcomes": [
+    { "id": "o1", "status": "passed", "evidence": "doc-bridge 2.5.0 in package.json and lockfile" },
+    { "id": "o2", "status": "passed", "evidence": "generator emits the four exclusions; check:doc-bridge-config passes" },
+    { "id": "o3", "status": "passed", "evidence": "gate and conformance pass; no tracked diff after index" },
+    { "id": "o4", "status": "passed", "evidence": "doctor shows 4 exclusions, 121 documents excluded" },
+    { "id": "o5", "status": "passed", "evidence": "Before B 78 / 19% / 0 excluded; after B 81 / 39% / 121 excluded; bench suite file missing in repo" },
+    { "id": "o6", "status": "passed", "evidence": "script unchanged; fails at B 81" },
+    { "id": "o7", "status": "passed", "evidence": "readme-standard check and tests pass" },
+    { "id": "o8", "status": "passed", "evidence": "quality steps pass" },
+    { "id": "o9", "status": "blocked", "evidence": "bundle passed; e2e could not run, Playwright browsers not installed" },
+    { "id": "o10", "status": "passed", "evidence": "commit headers match, nothing pushed" }
+  ]
+}
