@@ -1,0 +1,17 @@
+{
+  "project": [
+    { "id": "test-for-new-code", "status": "passed", "evidence": "scripts/retrieval-suite.test.mjs added; vitest: 14 files, 39 tests passed" },
+    { "id": "no-todo", "status": "passed", "evidence": "No changed file is under src/**; no TODO or FIXME added" }
+  ],
+  "outcomes": [
+    { "id": "o1", "status": "passed", "evidence": "ak-docs 2.4.2 (@agentskit/doc-bridge)" },
+    { "id": "o2", "status": "failed", "evidence": "95/100 grade B; unmet: connectivity 65% < 80%. Not reachable truthfully: 110 of 155 documents are generic pattern prose with no code to point at." },
+    { "id": "o3", "status": "passed", "evidence": "Reviewer to spot-check docs/for-agents/packages/*.md and the 8 gate citations in content/docs" },
+    { "id": "o4", "status": "passed", "evidence": "34 cases" },
+    { "id": "o5", "status": "passed", "evidence": "hit@3 100%, hit@1 91.2%, MRR 0.956, no misses" },
+    { "id": "o6", "status": "passed", "evidence": "No removed cases, no baseline written, docs not bilingual" },
+    { "id": "o7", "status": "passed", "evidence": "gate passes, readme standard PASS, no reviewedOn/reviewDueOn changes" },
+    { "id": "o8", "status": "failed", "evidence": "build exits 137 (OOM) at static generation in this sandbox; lint and tests pass. Not compared against origin/main." },
+    { "id": "o9", "status": "passed", "evidence": "git log origin/main..HEAD shows conventional headers, nothing pushed" }
+  ]
+}
