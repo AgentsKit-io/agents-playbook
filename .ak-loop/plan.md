@@ -1,0 +1,1 @@
+Scan for status/historical/superseded/archived markers; only docs/ecosystem-doc-quality-plan.md qualified (finished plan, unreferenced). Other "historical" hits are pattern content or ADR material, kept. Delete, regenerate doc-bridge index, verify.
