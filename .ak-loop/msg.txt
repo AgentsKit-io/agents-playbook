@@ -1,0 +1,10 @@
+docs: delete historical plans and audits
+
+Remove the finished ecosystem documentation quality plan. Its delivery
+slices shipped (seven-product manifest, for-agents route, discovery
+artifacts) and no live doc, code, test, config or nav entry referenced
+it. Git history keeps it.
+
+removes: docs/ecosystem-doc-quality-plan.md
+
+Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>
