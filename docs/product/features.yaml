@@ -1,0 +1,83 @@
+product: Agents Playbook
+project: null  # sem projeto Linear dedicado
+version_url: null
+repos:
+  - name: AgentsKit-io/agents-playbook
+features:
+  # estado: publicada (README "What is verified": 89 padrões, 6 pilares, 6 fases, 134 guias; site playbook.agentskit.io)
+  - key: guia-de-padroes
+    group: produto
+    phase: A
+    name: "Consultar padrões de entrega com agentes"
+    description: "Ler padrões de produção, pilares de engenharia e as fases do SDLC com agentes, em um site pesquisável."
+    milestone: null
+    tickets: []
+    acceptance: null
+    how_to_test: "Abrir playbook.agentskit.io/docs e navegar por uma fase."
+    blocked_reason: null
+  # estado: publicada (README: 6 templates, 13 scripts de gate sem dependência em content/docs/scripts)
+  - key: templates-e-gates
+    group: produto
+    phase: A
+    name: "Copiar templates e gates prontos"
+    description: "Usar templates prontos e scripts de verificação sem dependências no próprio repo."
+    milestone: null
+    tickets: []
+    acceptance: null
+    how_to_test: "Copiar um script de content/docs/scripts para um repo e rodá-lo."
+    blocked_reason: null
+  # estado: publicada (@agentskit/playbook 0.1.1 no npm em 29/07; packages/playbook)
+  - key: cli-playbook
+    group: produto
+    phase: A
+    name: "Playbook na linha de comando"
+    description: "Consultar o playbook e aplicar padrões pelo CLI @agentskit/playbook, sem dependências."
+    milestone: null
+    tickets: []
+    acceptance: null
+    how_to_test: "`npx @agentskit/playbook --help`."
+    blocked_reason: null
+  # estado: publicada (README Ask: 156 respostas determinísticas; backend opcional NEXT_PUBLIC_ASK_ENDPOINT)
+  - key: perguntar-ao-playbook
+    group: produto
+    phase: A
+    name: "Perguntar ao playbook"
+    description: "Fazer perguntas no site e receber respostas locais verificadas; só chama um backend quando não há evidência local."
+    milestone: null
+    tickets: []
+    acceptance: null
+    how_to_test: "Usar o Ask no site com uma pergunta da lista determinística."
+    blocked_reason: null
+  # estado: publicada (README: raw Markdown, llms exports, Doc Bridge 100/100 A; #94, #116, #118)
+  - key: leitura-por-agentes
+    group: confianca
+    phase: A
+    name: "Conteúdo pronto para agentes"
+    description: "Agentes leem Markdown cru, exportação completa e roteamento Doc Bridge com nota A."
+    milestone: null
+    tickets: ["gh:#94", "gh:#116", "gh:#118"]
+    acceptance: null
+    how_to_test: "`pnpm docs:bridge:index` e `ak-docs doctor` com nota A."
+    blocked_reason: null
+  # estado: não começada (issue #62 aberta, help wanted, depende de fixture de ciclo de vida)
+  - key: conformidade-ecossistema
+    group: prontidao
+    phase: B
+    name: "Conferir o ecossistema com um comando"
+    description: "Um comando valida localmente os contratos entre os repos AgentsKit e emite evidência por critério."
+    milestone: null
+    tickets: ["gh:#62", "gh:#40"]
+    acceptance: null
+    how_to_test: "Rodar o comando de conformidade e ler o JSON de evidência."
+    blocked_reason: null
+  # estado: em andamento/parado (13 PRs de deps abertos, #122 e #104 com check falhando; CLI sem release desde 29/07)
+  - key: manutencao-e-release
+    group: prontidao
+    phase: A
+    name: "Site e CLI atualizados"
+    description: "Dependências em dia e nova versão do CLI refletindo o conteúdo atual."
+    milestone: null
+    tickets: ["gh:#89", "gh:#104", "gh:#122"]
+    acceptance: null
+    how_to_test: "Conferir PRs do Renovate verdes e `npm view @agentskit/playbook version` > 0.1.1."
+    blocked_reason: null
