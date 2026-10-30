@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 
 vi.mock("@/lib/source", () => ({
   source: {
+    getPageTree: () => ({ name: "Docs", children: [] }),
     getPages: () => [
       {
         path: "pillars/architecture/index.md",
