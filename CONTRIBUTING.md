@@ -78,8 +78,9 @@ Two-reviewer rule: one human, one agent (for example the playbook's own [code re
 
 ## Ecosystem conformance
 
-`pnpm conformance` runs the cross-ecosystem contracts locally and prints criterion-level JSON evidence (`--out <file>` also writes it). Checks: lifecycle/cancellation, redaction (secrets gate), clean consumer (`test:onboarding`), and Doc Bridge/harness documentation checks.
+`pnpm conformance` runs the cross-ecosystem contracts locally and prints criterion-level JSON evidence (`--out <file>` also writes it). Checks: lifecycle (shared `@agentskit/chat/protocol/fixtures` decoded by the `@agentskit/chat/protocol` decoder, in a bounded child), redaction (secrets gate), clean consumer (`test:onboarding`), and Doc Bridge/harness documentation checks.
 
 - Bounds: 180 s per criterion, 600 s total, one process at a time, 512 MB heap per Node child, 64 KiB captured output. Network is offline on a best-effort basis (offline flags and a dead proxy); it is not a sandbox.
-- Fails closed: a failed, timed-out, or unsupported criterion exits non-zero. `lifecycle-cancellation` runs the shared fixture `tests/fixtures/ecosystem/lifecycle.mjs` (start, stream, cancel, cleanup) and is reported `unsupported` if that file is missing.
+- Fails closed: a failed, timed-out, or unsupported criterion exits non-zero (`--allow-unsupported` exits 0 when the only non-passing criteria are unsupported; they stay listed under `unsupported`).
+- Unsupported today: `lifecycle-cancellation` (`@agentskit/chat` publishes no cancellation fixture) and `trust-boundary-evidence` (AgentsKit publishes no shared boundary evidence contract). Only the local `redaction` secrets gate covers the trust boundary meanwhile. Each becomes a real criterion once the upstream fixture/contract exists.
 - Side effect: the `doc-bridge-index` criterion regenerates the Doc Bridge index and `doc-bridge.config.json`, so the working tree may change after a run.

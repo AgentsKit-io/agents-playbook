@@ -17,7 +17,7 @@ export const LIMITS = Object.freeze({
   network: 'offline (best effort: offline flags and a dead proxy; not a sandbox)',
 })
 
-export const LIFECYCLE_FIXTURE = 'tests/fixtures/ecosystem/lifecycle.mjs'
+export const PROTOCOL_CHILD = 'scripts/conformance-protocol-child.mjs'
 const FAKE_TOKEN = 'AKIA1234567890ABCDEF' // allow-secret: synthetic redaction probe
 
 function childEnv() {
@@ -99,15 +99,30 @@ async function withTempDir(fn) {
 
 export const CRITERIA = [
   {
+    id: 'lifecycle-protocol',
+    group: 'lifecycle',
+    // Shared AgentsKit Chat turn fixtures decoded by the shared protocol decoder.
+    async run() {
+      const r = await runBounded(NODE, [PROTOCOL_CHILD])
+      if (r.termination) return { status: 'failed', failures: [`${r.termination} after ${LIMITS.criterionTimeoutMs}ms limit`] }
+      if (r.truncated) return { status: 'failed', failures: [`output exceeded ${LIMITS.outputBytes} bytes`] }
+      let report
+      try {
+        report = JSON.parse(r.output)
+      } catch {
+        return { status: 'failed', failures: [`protocol child exit ${r.code}: unparseable output`] }
+      }
+      const failures = report.failures ?? []
+      if (r.code !== 0 && failures.length === 0) failures.push(`protocol child exit ${r.code}`)
+      return { status: failures.length ? 'failed' : 'passed', failures }
+    },
+  },
+  {
     id: 'lifecycle-cancellation',
     group: 'lifecycle',
+    // @agentskit/chat@0.6.0 publishes no cancellation fixture; fail closed.
     async run() {
-      if (!existsSync(join(root, LIFECYCLE_FIXTURE))) {
-        return { status: 'unsupported', failures: [`shared lifecycle fixture missing: ${LIFECYCLE_FIXTURE}`] }
-      }
-      const r = await runBounded(NODE, [LIFECYCLE_FIXTURE])
-      if (r.termination || r.code !== 0) return { status: 'failed', failures: [`lifecycle fixture exit ${r.code}${r.termination ? ` (${r.termination})` : ''}`] }
-      return { status: 'passed', failures: [] }
+      return { status: 'unsupported', failures: ['missing upstream fixture: @agentskit/chat/protocol/fixtures has no cancellation (cancel/abort turn event) fixture'] }
     },
   },
   {
@@ -139,6 +154,14 @@ export const CRITERIA = [
         if (!/value redacted/.test(leak.output)) failures.push('gate output does not state the value was redacted')
         return { status: failures.length ? 'failed' : 'passed', failures }
       })
+    },
+  },
+  {
+    id: 'trust-boundary-evidence',
+    group: 'trust-boundary',
+    // No AgentsKit package publishes a shared boundary evidence contract yet; fail closed.
+    async run() {
+      return { status: 'unsupported', failures: ['missing upstream contract: no shared trust-boundary evidence contract is published by AgentsKit'] }
     },
   },
   commandCriterion('clean-consumer', 'consumer', 'pnpm', ['test:onboarding']),
@@ -203,5 +226,7 @@ if (isMainModule(import.meta.url)) {
   const outIndex = process.argv.indexOf('--out')
   if (outIndex > 0 && process.argv[outIndex + 1]) writeFileSync(resolve(process.argv[outIndex + 1]), json)
   process.stdout.write(json)
-  process.exit(evidence.status === 'passed' ? 0 : 1)
+  // --allow-unsupported: exit 0 when the only non-passing criteria are unsupported (still listed in the evidence).
+  const onlyUnsupported = evidence.criteria.every((c) => c.status === 'passed' || c.status === 'unsupported')
+  process.exit(evidence.status === 'passed' || (process.argv.includes('--allow-unsupported') && onlyUnsupported) ? 0 : 1)
 }

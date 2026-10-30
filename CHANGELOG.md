@@ -6,7 +6,7 @@ All notable changes to Agents Playbook are documented here. The format follows [
 
 ### Added
 
-- `pnpm conformance`: one bounded, fail-closed command that runs lifecycle/cancellation, redaction, clean-consumer, and Doc Bridge checks and prints deterministic criterion-level JSON evidence.
+- `pnpm conformance`: one bounded, fail-closed command that decodes the shared AgentsKit Chat lifecycle fixtures, runs redaction, clean-consumer, and Doc Bridge checks, and reports cancellation and trust-boundary evidence as unsupported until AgentsKit publishes them and prints deterministic criterion-level JSON evidence.
 - Versioned pre-commit provider for the published `@agentskit/playbook@0.1.0` gates, with staged-snapshot isolation and Linux, macOS, and Windows validation.
 - Local-first Ask Playbook discovery with 150 content-addressed answers, deterministic choices, safe fallback, retry, and truthful provenance.
 - Complete Doc Bridge ownership for 130 guides with a 100/100 A health grade.

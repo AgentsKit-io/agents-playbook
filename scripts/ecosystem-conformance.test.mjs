@@ -37,8 +37,17 @@ describe('ecosystem conformance runner', () => {
     expect(result.criteria[0]).toMatchObject({ status: 'passed', cleanup: { removed: true } })
   })
 
-  it('lifecycle criterion runs the shared fixture and passes', async () => {
-    const result = await runConformance({ criteria: CRITERIA.filter((c) => c.id === 'lifecycle-cancellation') })
+  it('lifecycle-protocol decodes the shared fixtures with the shared decoder', async () => {
+    const result = await runConformance({ criteria: CRITERIA.filter((c) => c.id === 'lifecycle-protocol') })
     expect(result.criteria[0]).toMatchObject({ status: 'passed', failures: [] })
+  })
+
+  it('reports cancellation and trust-boundary evidence as unsupported with the missing upstream named', async () => {
+    const ids = ['lifecycle-cancellation', 'trust-boundary-evidence']
+    const result = await runConformance({ criteria: CRITERIA.filter((c) => ids.includes(c.id)) })
+    expect(result.status).toBe('failed')
+    expect(result.unsupported).toEqual(ids)
+    expect(result.criteria[0].failures[0]).toMatch(/missing upstream fixture/)
+    expect(result.criteria[1].failures[0]).toMatch(/missing upstream contract/)
   })
 })
