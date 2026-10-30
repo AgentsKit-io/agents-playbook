@@ -1,0 +1,47 @@
+# Compares the internal factory manual (fleet repo) with the public edition and opens a PR when the internal one changed.
+name: factory-manual-sync
+on:
+  schedule:
+    - cron: '17 6 * * 1-5'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: AgentsKit-io/fleet
+          token: ${{ secrets.FLEET_READ_TOKEN }}
+          path: .fleet
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Compare manuals
+        id: compare
+        run: |
+          if node scripts/check-factory-manual-sync.mjs .fleet/docs/factory-manual.md --write-drift docs/factory-manual-drift.md; then
+            echo "drift=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "drift=true" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Open PR on drift
+        if: steps.compare.outputs.drift == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          branch=factory-manual-sync/$(date +%Y%m%d)
+          git config user.name "factory-line[bot]"
+          git config user.email "factory-line[bot]@users.noreply.github.com"
+          git checkout -B "$branch"
+          git add docs/factory-manual-drift.md
+          git commit -m "docs: internal factory manual changed, update the public edition"
+          git push --force origin "$branch"
+          gh pr create --base main --head "$branch" \
+            --title "docs: internal factory manual changed, update the public edition" \
+            --body "The internal manual changed. See docs/factory-manual-drift.md for the new hash and section headings; update content/docs/factory-manual.mdx without secrets or customer names." \
+            || gh pr list --head "$branch" --json url
