@@ -18,23 +18,34 @@ jobs:
           token: ${{ secrets.FLEET_READ_TOKEN }}
           path: .fleet
           persist-credentials: false
-      - uses: actions/setup-node@v4
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6.5.0
         with:
           node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
       - name: Compare manuals
         id: compare
         run: |
-          if node scripts/check-factory-manual-sync.mjs .fleet/docs/factory-manual.md --write-drift docs/factory-manual-drift.md; then
-            echo "drift=false" >> "$GITHUB_OUTPUT"
-          else
-            echo "drift=true" >> "$GITHUB_OUTPUT"
-          fi
+          set +e
+          node scripts/check-factory-manual-sync.mjs .fleet/docs/factory-manual.md --write-drift docs/factory-manual-drift.md
+          code=$?
+          set -e
+          case "$code" in
+            0) echo "drift=false" >> "$GITHUB_OUTPUT" ;;
+            1) echo "drift=true" >> "$GITHUB_OUTPUT" ;;
+            *) echo "check failed with exit code $code" >&2; exit "$code" ;;
+          esac
       - name: Open PR on drift
         if: steps.compare.outputs.drift == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          branch=factory-manual-sync/$(date +%Y%m%d)
+          branch=factory-manual-sync/update
+          if [ -n "$(gh pr list --head "$branch" --state open --json number --jq '.[0].number')" ]; then
+            echo "A sync PR is already open for $branch; skipping."
+            exit 0
+          fi
           git config user.name "factory-line[bot]"
           git config user.email "factory-line[bot]@users.noreply.github.com"
           git checkout -B "$branch"
@@ -43,5 +54,4 @@ jobs:
           git push --force origin "$branch"
           gh pr create --base main --head "$branch" \
             --title "docs: internal factory manual changed, update the public edition" \
-            --body "The internal manual changed. See docs/factory-manual-drift.md for the new hash and section headings; update content/docs/factory-manual.mdx without secrets or customer names." \
-            || gh pr list --head "$branch" --json url
+            --body "The internal manual changed. See docs/factory-manual-drift.md for the new hash and section headings; update content/docs/factory-manual.mdx without secrets or customer names."
