@@ -75,3 +75,10 @@ Two-reviewer rule: one human, one agent (for example the playbook's own [code re
 - Tool-specific tutorials ("how to use Cursor's tab key"). The playbook is tool-agnostic; cite tools as examples.
 - Vendor pitches. No "use X SaaS for this".
 - Untested patterns. If you have not run it in a shipped project, it is not ready.
+
+## Ecosystem conformance
+
+`pnpm conformance` runs the cross-ecosystem contracts locally and prints criterion-level JSON evidence (`--out <file>` also writes it). Checks: lifecycle/cancellation, redaction (secrets gate), clean consumer (`test:onboarding`), and Doc Bridge/harness documentation checks.
+
+- Bounds: 180 s per criterion, 600 s total, one process at a time, 512 MB heap per Node child, 64 KiB captured output. Network is offline on a best-effort basis (offline flags and a dead proxy); it is not a sandbox.
+- Fails closed: a failed, timed-out, or unsupported criterion exits non-zero. `lifecycle-cancellation` is reported `unsupported` until the shared fixture `tests/fixtures/ecosystem/lifecycle.mjs` exists (it must exit 0 when the lifecycle contract holds).
