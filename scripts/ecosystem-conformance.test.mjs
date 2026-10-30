@@ -36,4 +36,9 @@ describe('ecosystem conformance runner', () => {
     const result = await runConformance({ criteria: CRITERIA.filter((c) => c.id === 'redaction') })
     expect(result.criteria[0]).toMatchObject({ status: 'passed', cleanup: { removed: true } })
   })
+
+  it('lifecycle criterion runs the shared fixture and passes', async () => {
+    const result = await runConformance({ criteria: CRITERIA.filter((c) => c.id === 'lifecycle-cancellation') })
+    expect(result.criteria[0]).toMatchObject({ status: 'passed', failures: [] })
+  })
 })
