@@ -46,12 +46,12 @@ This is narrower and more useful than “improve type safety.” It names one in
 From the repository root, run only the relevant gate:
 
 ```bash
-npx @agentskit/playbook@0.1.2 run no-any
+npx @agentskit/playbook@0.1.1 run no-any
 ```
 
 The command exits non-zero and reports the file, line, rule, and recovery direction. A failed run is valuable evidence: it proves the check can detect the defect instead of merely going green on the final code.
 
-Use `npx @agentskit/playbook@0.1.2 explain no-any` when a reviewer or contributor needs the rule's purpose and configuration key.
+Use `npx @agentskit/playbook@0.1.1 explain no-any` when a reviewer or contributor needs the rule's purpose and configuration key.
 
 ## 3. Fix the boundary
 
@@ -76,7 +76,7 @@ export function parseResponse(value: unknown): string {
 Run the exact gate again:
 
 ```bash
-npx @agentskit/playbook@0.1.2 run no-any
+npx @agentskit/playbook@0.1.1 run no-any
 ```
 
 The command now exits zero. Review the code as well: a green structural gate proves the absence of unapproved `any`; it does **not** prove that the parser is correct for every input or that the product behavior is safe.
@@ -102,7 +102,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npx --yes @agentskit/playbook@0.1.2 run no-any
+      - run: npx --yes @agentskit/playbook@0.1.1 run no-any
 ```
 
 Pinning the version keeps local and CI behavior aligned. Upgrade it deliberately in a separate, reviewable change.
@@ -110,7 +110,7 @@ Pinning the version keeps local and CI behavior aligned. Upgrade it deliberately
 Once the first gate is useful, expand gradually instead of enabling every rule at once:
 
 ```bash
-npx @agentskit/playbook@0.1.2 run no-any named-exports secrets
+npx @agentskit/playbook@0.1.1 run no-any named-exports secrets
 ```
 
 Use [the gate reference](/docs/scripts) to choose invariants that match your repository. A rule that does not match your architecture should be configured or left disabled, not adopted for the appearance of coverage.
@@ -125,7 +125,7 @@ Add a compact section that reviewers can verify:
 - Claim: public TypeScript boundaries introduce no unapproved `any`.
 - Failure reproduced: `no-any` rejected `src/parse-response.ts` before the fix.
 - Fix: changed the boundary to `unknown` and added runtime narrowing.
-- Local result: `npx @agentskit/playbook@0.1.2 run no-any` passes.
+- Local result: `npx @agentskit/playbook@0.1.1 run no-any` passes.
 - CI result: `Agent review gates / structural-gates` passes on this commit.
 - Remaining review: validate parser behavior and error handling against product requirements.
 ```

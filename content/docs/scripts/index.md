@@ -24,7 +24,7 @@ Run the fast gate subset before every commit without copying scripts:
 ```yaml
 repos:
   - repo: https://github.com/AgentsKit-io/agents-playbook
-    rev: pre-commit-v0.1.2
+    rev: pre-commit-v0.1.0
     hooks:
       - id: agentskit-playbook
 ```
@@ -35,14 +35,14 @@ Save the configuration as `.pre-commit-config.yaml`, then enable it for commits:
 pre-commit install
 ```
 
-The provider pins `@agentskit/playbook@0.1.2`, checks a temporary snapshot of the staged repository, and requires pre-commit 4.4.0+ with Node.js 22+. Unstaged and untracked files cannot block the commit. Override `args` to select exact filesystem gates:
+The provider pins `@agentskit/playbook@0.1.0`, checks a temporary snapshot of the staged repository, and requires pre-commit 4.4.0+ with Node.js 22+. Unstaged and untracked files cannot block the commit. Override `args` to select exact filesystem gates:
 
 ```yaml
       - id: agentskit-playbook
         args: [no-any, secrets, named-exports]
 ```
 
-Run `pre-commit autoupdate` to adopt later provider tags, and `pre-commit run agentskit-playbook --all-files` to verify the staged snapshot immediately. The release process creates the documented `pre-commit-v0.1.2` provider tag before these instructions merge, so the reference is valid as soon as it becomes public.
+Run `pre-commit autoupdate` to adopt later provider tags, and `pre-commit run agentskit-playbook --all-files` to verify the staged snapshot immediately. The release process creates the documented `pre-commit-v0.1.0` provider tag before these instructions merge, so the reference is valid as soon as it becomes public.
 
 ## Status
 
