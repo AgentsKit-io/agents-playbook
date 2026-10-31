@@ -6,7 +6,7 @@ settings:
 
 overrides:
   brace-expansion: '>=5.0.9 <6'
-  minimatch@8>brace-expansion: 2.1.7
+  minimatch@8>brace-expansion: 5.0.12
   dompurify: 3.4.17
   esbuild: '>=0.28.1 <1'
   image-size: npm:image-size-next@2.1.1
@@ -1574,6 +1574,7 @@ packages:
   '@smithy/core@3.36.2':
     resolution: {integrity: sha512-oRw0rB9QSUiCZfEs23G5F4Af+b2rQt1lItIICWu5IejFNd+uPM8SWqiKLMpQ6bX1Q7slsLbjuoE2niErFtkVPQ==}
     engines: {node: '>=18.0.0'}
+    deprecated: Deprecated due to a bug in custom logger data redaction. See https://github.com/aws/aws-sdk-js-v3/issues/8393.
 
   '@smithy/credential-provider-imds@4.5.2':
     resolution: {integrity: sha512-A9uSdn72ozbRUSit0eib0TW7nXuNPlaeM0zcGkJ+nE6tFcSDbnmtwoxbTCFBukVQcszDAyvsd7+rTduPTXpygg==}
