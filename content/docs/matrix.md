@@ -8,7 +8,7 @@ description: 'This is the master content map. Each cell points to the practices 
 
 This is the master content map. Each cell points to the practices that apply when **pillar** meets **SDLC phase**.
 
-Cells marked `(stub)` are scaffold-only; content lands in subsequent sessions. Cells marked `✓` are shipped.
+Every cell in the matrix is shipped; the status tables below mark shipped items with `✓`.
 
 |  | 01 Discover | 02 Design | 03 Build | 04 Test | 05 Ship | 06 Operate |
 |---|---|---|---|---|---|---|
@@ -33,8 +33,6 @@ If you adopt left-to-right (by phase), agents can ramp incrementally. If you ado
 ## Status legend
 
 - ✓ Shipped (read it)
-- ◐ Scaffolded with scope; content partial
-- (stub) README placeholder only; no body content yet
 
 ## Current status (v0)
 
