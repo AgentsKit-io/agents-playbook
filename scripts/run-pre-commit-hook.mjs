@@ -36,7 +36,7 @@ try {
   if (normalized === 0) {
     const result = spawnSync(
       npx.command,
-      [...npx.args, '--yes', '@agentskit/playbook@0.1.0', 'run', ...process.argv.slice(2), '--cwd', snapshot],
+      [...npx.args, '--yes', '@agentskit/playbook@0.1.2', 'run', ...process.argv.slice(2), '--cwd', snapshot],
       { stdio: 'inherit' },
     )
     if (result.error) throw result.error
