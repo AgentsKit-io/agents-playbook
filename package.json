@@ -23,6 +23,7 @@
     "check:cross-platform": "agentskit-cross-platform check",
     "test": "vitest run",
     "test:readme-standard": "vitest run scripts/readme-standard.test.mjs",
+    "conformance": "node scripts/ecosystem-conformance.mjs",
     "test:onboarding": "vitest run scripts/onboarding-proof.test.mjs",
     "test:playbook-package": "node --test packages/playbook/test/cli.test.mjs",
     "test:pre-commit-hook": "node scripts/test-pre-commit-hook.mjs",
