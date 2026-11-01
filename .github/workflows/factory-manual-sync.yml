@@ -54,4 +54,4 @@ jobs:
           git push --force origin "$branch"
           gh pr create --base main --head "$branch" \
             --title "docs: internal factory manual changed, update the public edition" \
-            --body "The internal manual changed. See docs/factory-manual-drift.md for the new hash and section headings; update content/docs/factory-manual.mdx without secrets or customer names."
+            --body "The internal manual changed. See docs/factory-manual-drift.md for the new hash (no internal content is copied here); review the private fleet manual and update content/docs/factory-manual.mdx without secrets or customer names."

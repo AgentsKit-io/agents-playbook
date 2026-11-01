@@ -15,7 +15,6 @@ export const hashManual = (text) => createHash('sha256').update(normalize(text))
 export function recordedHash(page) {
   return page.match(new RegExp(`^${KEY}:\\s*(\\S+)\\s*$`, 'm'))?.[1] ?? null
 }
-export const headings = (text) => splitLines(text).filter((l) => /^#{1,3}\s/.test(l)).map((l) => l.trim())
 
 export function compare(internal, page) {
   const current = hashManual(internal)
@@ -37,18 +36,14 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   }
   console.log(`factory manual drift: recorded ${result.recorded ?? 'none'}, internal ${result.current}`)
   if (flag === '--write-drift' && driftFile) {
-    // Only section headings and the hash are written: the internal body is never copied into this public repo.
+    // Only the new hash and an instruction are written: nothing from the internal manual (headings included) enters this public repo.
     writeFileSync(driftFile, [
       '# Factory manual drift',
       '',
-      'The internal manual changed. Update `content/docs/factory-manual.mdx` (public, no secrets or customer names),',
-      `set \`${KEY}\` to the hash below, then delete this file.`,
+      'The internal manual changed. Review it in the private fleet repo, update `content/docs/factory-manual.mdx`',
+      `(public, no secrets or customer names), set \`${KEY}\` to the hash below, then delete this file.`,
       '',
       `New source hash: \`${result.current}\``,
-      '',
-      '## Internal section headings',
-      '',
-      ...headings(normalize(internal)).map((h) => `- ${h}`),
       '',
     ].join('\n'))
   }
