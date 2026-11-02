@@ -3,7 +3,7 @@
   "version": 1,
   "artifactId": "agents-playbook",
   "siteId": "playbook",
-  "contentHash": "sha256:e2aa960b75e725c3982e2845d52c3a7882546a34e0aa67b1f7765ff7cb62591a",
+  "contentHash": "sha256:d15339e2dd55b4ee4c5ff1b794b6bd09da310376a6249979a8c223b8ab28a7bb",
   "generatedAt": "2026-09-02T06:09:01.000Z",
   "entries": [
     {
@@ -75,6 +75,30 @@
             "id": "doc:discovery",
             "title": "Local-first pattern discovery",
             "href": "https://playbook.agentskit.io/docs/discovery"
+          }
+        ]
+      }
+    },
+    {
+      "id": "doc:factory-manual",
+      "kind": "document",
+      "label": "The factory manual",
+      "match": {
+        "type": "exact",
+        "values": [
+          "factory-manual",
+          "factory-manual.mdx",
+          "The factory manual",
+          "playbook The factory manual"
+        ]
+      },
+      "answer": {
+        "markdown": "## The factory manual\n\nWhat the AgentsKit factory practices today — the MVP grid, evidence, review, risk gates and \"done when\" — as a public showcase.\n\nType: **Guide**\n\n[Open the canonical guide](https://playbook.agentskit.io/docs/factory-manual)\n[Read raw Markdown](https://playbook.agentskit.io/raw/factory-manual.mdx)",
+        "citations": [
+          {
+            "id": "doc:factory-manual",
+            "title": "The factory manual",
+            "href": "https://playbook.agentskit.io/docs/factory-manual"
           }
         ]
       }

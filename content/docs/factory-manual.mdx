@@ -1,0 +1,70 @@
+---
+type: Guide
+title: The factory manual
+description: What the AgentsKit factory practices today — the MVP grid, evidence, review, risk gates and "done when" — as a public showcase.
+factory-manual-source-sha256: 3e9e577a423f69da9266b57348df31a8f568609b83108a6be437bd66fc700665
+---
+
+# The factory manual
+
+This is the public edition of the manual the AgentsKit factory follows internally. It is a showcase of what the house practices, not a spec to copy blindly. It carries no secrets, customer names or internal hostnames; the sync job described at the end keeps it honest when the internal manual changes.
+
+## The MVP grid
+
+Every product starts from a grid of the smallest slices that make it real. Each row is one slice, with an owner, a status and a "done when". `docs/mvp.yaml` is the source of truth for that grid:
+
+```yaml
+- id: onboarding
+  title: A new user reaches first value
+  status: in-progress
+  done_when:
+    - the first-run path works end to end on a clean machine
+  evidence:
+    - tests/e2e/onboarding.spec.ts
+```
+
+Rules of the grid:
+
+- A slice is small enough to ship in one pull request, or it is split.
+- A slice is **done** only when every `done_when` item has evidence attached.
+- The grid is edited in the same PR that changes the product, so it never lags behind.
+
+## Evidence
+
+"It works" is a claim; evidence is what lets someone else check it. Acceptable evidence is a test that fails without the change, a gate output, a link to a run, or a reproducible command. A screenshot or a statement is not enough on its own.
+
+- Each `done_when` item in `docs/mvp.yaml` points at the evidence that proves it.
+- Evidence is checked in or linked from CI, so it can be re-run.
+- A missing proof keeps the slice open, no matter how finished the code looks.
+
+## "Done when"
+
+Every ticket states a checklist of observable outcomes before work starts. The checklist is the contract:
+
+1. Each item is verifiable by someone who did not write the change.
+2. If an item cannot be verified, the ticket is clarified instead of guessed at.
+3. The pull request answers each item, one by one.
+
+## Review
+
+- One ticket, one branch, one pull request; the change stays within what the ticket asks.
+- Required checks (typecheck, lint, tests) must be green before merge.
+- An independent review approves the change against the ticket's "done when", not against taste.
+- Agent-authored changes follow the same bar as human ones; see [Review agent-authored contributions](/docs/review-agent-authored-contributions).
+
+## Risk gates
+
+Changes are classified by what they can break. Low-risk changes merge automatically when checks pass and review approves. High-risk changes wait for a human.
+
+| Touches | Treatment |
+|---|---|
+| secrets, credentials, authentication | human approval required |
+| production data or production deploys | human approval required |
+| irreversible or outward-facing actions | confirm first, then act |
+| docs, tests, internal refactors | automatic merge when green |
+
+Agents never touch secrets, production data or production deploys on their own. When a ticket is too unclear to verify, the agent asks (with a recommended option) instead of guessing.
+
+## Keeping this page in sync
+
+The internal manual is the origin. A scheduled job (`.github/workflows/factory-manual-sync.yml`) compares it with this page via `scripts/check-factory-manual-sync.mjs` and opens a pull request when the internal manual changed. A person then updates this page, removing anything private, and records the new source hash in the front matter.

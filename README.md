@@ -34,8 +34,8 @@ The repository generates and checks its own claims from source:
 | SDLC phases | 6 |
 | Copy-ready templates | 6 |
 | Zero-dependency gate scripts | 13 |
-| Human and agent guides | 134 |
-| Deterministic local answers | 156 |
+| Human and agent guides | 135 |
+| Deterministic local answers | 157 |
 | Doc Bridge health | 100/100 · A |
 
 The source-of-truth counts live in [`app/stats.snapshot.json`](./app/stats.snapshot.json), the local answer catalog in [`public/deterministic/knowledge.json`](./public/deterministic/knowledge.json), and documentation ownership in [`doc-bridge.config.json`](./doc-bridge.config.json). CI rejects drift.
@@ -84,7 +84,7 @@ console.log(`Verified ${verified.value.entries.length} local Playbook answers.`)
 Expected output:
 
 ```text
-Verified 156 local Playbook answers.
+Verified 157 local Playbook answers.
 ```
 
 ## How the system fits together
