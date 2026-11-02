@@ -69,8 +69,8 @@ importers:
         specifier: ^0.22.3
         version: 0.22.3(@types/react@19.3.0)
       '@opennextjs/cloudflare':
-        specifier: 1.20.14
-        version: 1.20.14(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(wrangler@4.156.0(@types/node@22.20.5))
+        specifier: 1.20.15
+        version: 1.20.15(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(wrangler@4.156.0(@types/node@22.20.5))
       '@playwright/test':
         specifier: ^1.64.1
         version: 1.64.1
@@ -1026,8 +1026,8 @@ packages:
     resolution: {integrity: sha512-aC1+mhKTP3IMa2VcuGl3ui92LO/7CPQWldNGzu3BVGKiMNJ70AKJW/R6huuYCSuQyHDGM9oFwiVClsZnFxn67g==}
     engines: {node: '>=18.0.0'}
 
-  '@opennextjs/aws@4.1.13':
-    resolution: {integrity: sha512-uqTOoSFbYEY3NJTU/0gTL7ndY+GHYdC8qUb3bvPOpsfqLrjLvFDprngG2FqgJTIzQUxOlpnoodbjUf2jadJTXg==}
+  '@opennextjs/aws@4.1.14':
+    resolution: {integrity: sha512-jV+rxEi5dNxnQbKBftWuIppVvemMrbfaUj0tXINJMEzX7crk1pkmsMwudgk2kgyak1T03/GSMSEpE8nzOKrkDA==}
     hasBin: true
     peerDependencies:
       diff: ^9.0.0
@@ -1036,8 +1036,8 @@ packages:
       diff:
         optional: true
 
-  '@opennextjs/cloudflare@1.20.14':
-    resolution: {integrity: sha512-Grcok/L8iOuWXNtro/FjCExNYnoG+jUTD8Mp/AQI4Z6iMWD1q/xl+tx+NR354EsoUsQRAGmV0OfB7HH7wfdrbg==}
+  '@opennextjs/cloudflare@1.20.15':
+    resolution: {integrity: sha512-Ft7GdS3oDnZ5cZpAowSqpFsjHuZCZ9zBcTjJwYeJGa7Uq32JG3DOlLXh8GW+gsMVWXTz8YTL20sMxG1u+k4NwQ==}
     hasBin: true
     peerDependencies:
       next: '>=15.5.28 <16'
@@ -2033,10 +2033,6 @@ packages:
   ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
-
-  ansi-regex@6.4.0:
-    resolution: {integrity: sha512-KzTVk2tCWAHtYrvvvaP8bJKJq2pVinhLcGEQdtLIYPbmNGNyYe8QwNaTUYQp2J7/vIsUKt5QCqAfUkYyG9DkOw==}
-    engines: {node: '>=12'}
 
   ansi-regex@6.5.0:
     resolution: {integrity: sha512-zhvbbbdt1kbw7EJ9OQoxmQcuaNR9P5kTj7e/YdmOSU10aHWbycofJxA6jKfoEy3vlLdctOF9ZHaxLtmSm998wQ==}
@@ -5513,7 +5509,7 @@ snapshots:
     dependencies:
       gzip-size: 6.0.0
 
-  '@opennextjs/aws@4.1.13(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))':
+  '@opennextjs/aws@4.1.14(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))':
     dependencies:
       '@ast-grep/napi': 0.45.3
       '@aws-sdk/client-cloudfront': 3.984.0
@@ -5536,11 +5532,11 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@opennextjs/cloudflare@1.20.14(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(wrangler@4.156.0(@types/node@22.20.5))':
+  '@opennextjs/cloudflare@1.20.15(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))(wrangler@4.156.0(@types/node@22.20.5))':
     dependencies:
       '@ast-grep/napi': 0.45.3
       '@dotenvx/dotenvx': 2.38.2
-      '@opennextjs/aws': 4.1.13(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
+      '@opennextjs/aws': 4.1.14(next@15.5.28(@playwright/test@1.64.1)(@types/node@22.20.5)(react-dom@19.3.1(react@19.3.1))(react@19.3.1))
       ci-info: 4.4.0
       cloudflare: 4.5.0
       comment-json: 4.6.2
@@ -6540,8 +6536,6 @@ snapshots:
       environment: 1.1.0
 
   ansi-regex@5.0.1: {}
-
-  ansi-regex@6.4.0: {}
 
   ansi-regex@6.5.0: {}
 
@@ -8951,7 +8945,7 @@ snapshots:
 
   strip-ansi@7.2.0:
     dependencies:
-      ansi-regex: 6.4.0
+      ansi-regex: 6.5.0
 
   style-to-js@1.1.21:
     dependencies:
