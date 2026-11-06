@@ -46,7 +46,7 @@
     "@agentskit/chat": "0.6.0",
     "@agentskit/core": "^1.15.0",
     "@agentskit/react": "^0.8.10",
-    "fumadocs-core": "15.8.5",
+    "fumadocs-core": "16.17.10",
     "fumadocs-mdx": "11.10.1",
     "fumadocs-ui": "15.8.5",
     "lucide-react": "^0.577.0",
