@@ -19,7 +19,7 @@ concurrency:
 jobs:
   analyze:
     name: Analyze (javascript-typescript)
-    uses: AgentsKit-io/.github/.github/workflows/codeql.yml@282a92ae36659bfbedd59034b5fa94d3dc6597e5 # main
+    uses: AgentsKit-io/.github/.github/workflows/codeql.yml@c624db48051670469618d9c74854f3a1affc0138 # main
     with:
       languages: javascript-typescript
       build-mode: none

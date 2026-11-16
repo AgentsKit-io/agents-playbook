@@ -42,14 +42,14 @@ jobs:
     name: Dependency Review
     needs: dependency-graph
     if: needs.dependency-graph.outputs.enabled == 'true'
-    uses: AgentsKit-io/.github/.github/workflows/dependency-review.yml@282a92ae36659bfbedd59034b5fa94d3dc6597e5 # main
+    uses: AgentsKit-io/.github/.github/workflows/dependency-review.yml@c624db48051670469618d9c74854f3a1affc0138 # main
     permissions:
       contents: read
       pull-requests: read
 
   pnpm-audit:
     name: pnpm audit
-    uses: AgentsKit-io/.github/.github/workflows/audit.yml@282a92ae36659bfbedd59034b5fa94d3dc6597e5 # main
+    uses: AgentsKit-io/.github/.github/workflows/audit.yml@c624db48051670469618d9c74854f3a1affc0138 # main
     with:
       package-manager: pnpm
       working-directories: '["."]'
