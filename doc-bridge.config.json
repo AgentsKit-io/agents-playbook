@@ -159,6 +159,15 @@
             "pnpm check:all"
           ]
         },
+        "factory-manual": {
+          "path": "content/docs/factory-manual.mdx",
+          "purpose": "What the AgentsKit factory practices today — the MVP grid, evidence, review, risk gates and \"done when\" — as a public showcase.",
+          "agentDoc": "content/docs/factory-manual.mdx",
+          "humanDoc": "https://playbook.agentskit.io/docs/factory-manual",
+          "checks": [
+            "pnpm check:all"
+          ]
+        },
         "for-agents": {
           "path": "content/docs/for-agents.mdx",
           "purpose": "The shortest reliable path for an agent to retrieve, apply, and verify the Agents Playbook.",
