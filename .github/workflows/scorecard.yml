@@ -13,7 +13,7 @@ permissions:
 jobs:
   analysis:
     name: Scorecard analysis
-    uses: AgentsKit-io/.github/.github/workflows/scorecard.yml@c624db48051670469618d9c74854f3a1affc0138 # main
+    uses: AgentsKit-io/.github/.github/workflows/scorecard.yml@1664307a0481656065b2881f42a272efb0d6b32e # main
     permissions:
       contents: read
       id-token: write
